@@ -1,0 +1,13 @@
+<div class="" *ngFor="let video of videos$ | async">
+  <div class="card" style="width: 18rem;">
+    <img src="{{ video.snippet.thumbnails.default.url }}" alt="{{ video.snippet.title }}"
+      class="card-img-top"
+      width="{{ video.snippet.thumbnails.default.width }}"
+      height="{{ video.snippet.thumbnails.default.height }}">
+    <div class="card-body">
+      <h5 class="card-title">{{ video.snippet.title }}</h5>
+      <p class="card-text">{{ video.snippet.description | slice:0:50 }}</p>
+      <a href="#" class="btn btn-primary">{{ video.id }}</a>
+    </div>
+  </div>
+</div>
