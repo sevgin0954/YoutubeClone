@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+
+.video-container {
+  display: flex;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}
+
+.video-title {
+  font-size: 1.2rem;
+  font-weight: 450;
+}
+
+.video-info {
+  font-size: 0.9rem;
+  color: gray;
+}

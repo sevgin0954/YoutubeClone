@@ -15,8 +15,7 @@ const CLIENT_ID = '576498499876-u841pl14j9pdgemtlaqk1a6tjih8vb2c.apps.googleuser
 export class VideoService {
 
   constructor(
-    private http: HttpClient,
-    private serializer: UrlSerializer) { }
+    private http: HttpClient) { }
 
   getMostPopular(regionCode: string, maxResults: number): Observable<Video[]> {
     const url = new Url(BASE_URL, ['videos'], {
@@ -30,8 +29,7 @@ export class VideoService {
     });
     const data$ = this.http.get(url.toString())
       .pipe(
-        pluck<any, Video[]>('items'),
-        //tap(data => console.log(data))
+        pluck<any, Video[]>('items')
       );
 
     return data$;
