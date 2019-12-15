@@ -1,0 +1,24 @@
+@import "../../variables.scss";
+
+.navbar {
+  background-color: $white;
+}
+
+.navbar-brand {
+  flex-basis: 5rem;
+  color: $blue;
+}
+.navbar-brand:hover, .navbar-brand:focus {
+  color: $blue;
+}
+
+.navbar-menu {
+  margin-right: 0.5rem;
+}
+.navbar-menu:focus {
+  box-shadow: none;
+}
+
+.input-search {
+  flex-basis: 1000px;
+}
