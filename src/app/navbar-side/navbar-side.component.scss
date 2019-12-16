@@ -1,0 +1,20 @@
+@import "./../../variables.scss";
+
+.navbar {
+  background-color: $white;
+  min-width: 185px;
+  flex-direction: row;
+  padding-right: 0;
+}
+
+.navbar .navbar-nav .nav-link {
+  color: black;
+}
+.navbar .navbar-nav>.nav-item>.nav-link:hover, .navbar .active>.nav-link {
+  color: $dark-blue;
+}
+
+.nav-link > i {
+  margin-right: 1rem;
+  font-size: 1.2rem;
+}

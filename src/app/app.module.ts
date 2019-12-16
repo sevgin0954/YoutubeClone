@@ -8,13 +8,15 @@ import { JwtInterceptorService } from './jwt-interceptor.service';
 import { SigninComponent } from './signin/signin.component';
 import { MostPopularComponent } from './most-popular/most-popular.component';
 import { NavbarTopComponent } from './navbar-top/navbar-top.component';
+import { NavbarSideComponent } from './navbar-side/navbar-side.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninComponent,
     MostPopularComponent,
-    NavbarTopComponent
+    NavbarTopComponent,
+    NavbarSideComponent
   ],
   imports: [
     BrowserModule,

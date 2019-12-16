@@ -1,5 +1,15 @@
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
+@import "./variables.scss";
+
+body {
+  background-color: $light-blue;
+}
+
+.navbar {
+  background-color: $white;
+  opacity: 0.96;
+}
 
 .video-container {
   display: flex;
