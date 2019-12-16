@@ -21,9 +21,22 @@ body {
 .video-title {
   font-size: 1.2rem;
   font-weight: 450;
+  color: black;
+}
+.video-title:hover {
+  text-decoration: none;
+  color: black;
 }
 
 .video-info {
   font-size: 0.9rem;
   color: gray;
+}
+
+.channel-name {
+  color: grey;
+}
+.channel-name:hover {
+  text-decoration: none;
+  color: $dark-blue;
 }

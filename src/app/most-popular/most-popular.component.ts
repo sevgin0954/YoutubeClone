@@ -12,6 +12,8 @@ import * as moment from 'moment';
 export class MostPopularComponent implements OnInit {
 
   videos$: Observable<Video[]>;
+  baseVideoUrl: string = 'https://www.youtube.com/watch?v=';
+  baseChannelUrl: string = 'https://www.youtube.com/user/';
 
   constructor(private videoService: VideoService) { }
 
