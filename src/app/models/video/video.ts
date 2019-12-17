@@ -1,5 +1,5 @@
 import {
-  VideoSnippet, VideoContantDetails, VideoThumbnail, VideoPlayer, VideoStreamingDetails,
+  VideoSnippet, VideoContantDetails, VideoPlayer, VideoStreamingDetails,
   VideoLocalization, VideoStatus, VideoStatistics } from '.'
 
 export interface Video {

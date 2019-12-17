@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, OnChanges, DoCheck, AfterViewChecked } from '@angular/core';
 import {Location} from '@angular/common';
 
 @Component({
@@ -6,31 +6,38 @@ import {Location} from '@angular/common';
   templateUrl: './navbar-side.component.html',
   styleUrls: ['./navbar-side.component.scss']
 })
-export class NavbarSideComponent implements OnInit, AfterViewInit {
+export class NavbarSideComponent implements AfterViewChecked {
 
-  @ViewChild('buttonList', {static: false})
+  @ ViewChild('buttonList', {static: false})
   buttonList: ElementRef;
 
   constructor(private location: Location) { }
 
-  ngOnInit() {
+  ngAfterViewChecked(): void {
+    this.selectCurrentPageLink();
   }
 
-  ngAfterViewInit(): void {
-    const currentPath = this.location.path().slice(1);
-
+  private selectCurrentPageLink(): void {
     const ulNodes = this.buttonList.nativeElement.childNodes;
+
+    this.removeClass(ulNodes, 'active');
+
+    const currentPath = this.location.path().slice(1);
     const selectedElement = this.findElementWithAttribute(ulNodes, 'data-route', currentPath);
     selectedElement.classList.add('active');
   }
 
   // TODO: Move to shared class
-  private findElementWithAttribute(elements: NodeList, attributeName: string, attributeValue: string): Element {
-    const elementsAsArray = Array.from(elements);
+  private findElementWithAttribute(nodes: NodeList, attributeName: string, attributeValue: string): Element {
+    const elementsAsArray = Array.from(nodes);
     const selectedElement = elementsAsArray
       .find(n => (n as Element).getAttribute(attributeName) === attributeValue);
 
     return <Element>selectedElement;
+  }
+
+  private removeClass(nodes: NodeList, className: string): void {
+    nodes.forEach(n => (n as Element).classList.remove(className));
   }
 
 }

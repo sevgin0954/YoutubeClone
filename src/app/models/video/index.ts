@@ -1,4 +1,3 @@
-export * from './video-thumbnail';
 export * from './video-snippet';
 export * from './video-content-details';
 export * from './video-status';

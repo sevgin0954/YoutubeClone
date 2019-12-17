@@ -1,4 +1,5 @@
-import { VideoThumbnail } from './video-thumbnail';
+import { Thumbnail } from '../thumbnail';
+
 
 export interface VideoSnippet {
   publishedAt: Date,
@@ -6,10 +7,10 @@ export interface VideoSnippet {
   title: string,
   description: string,
   thumbnails: {
-    default: VideoThumbnail,
-    high: VideoThumbnail,
-    medium: VideoThumbnail,
-    standard: VideoThumbnail
+    default: Thumbnail,
+    high: Thumbnail,
+    medium: Thumbnail,
+    standard: Thumbnail
   },
   channelTitle: string,
   tags: string[],
