@@ -3,8 +3,12 @@
 .navbar {
   background-color: $white;
   min-width: 185px;
-  flex-direction: row;
   padding-right: 0;
+  position: fixed;
+}
+
+.navbar-dummy {
+  min-width: 185px;
 }
 
 .navbar .navbar-nav .nav-link {

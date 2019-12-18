@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ElementRef, OnChanges, DoCheck, AfterViewChecked } from '@angular/core';
-import {Location} from '@angular/common';
+import { Component, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-side',
@@ -11,7 +12,9 @@ export class NavbarSideComponent implements AfterViewChecked {
   @ ViewChild('buttonList', {static: false})
   buttonList: ElementRef;
 
-  constructor(private location: Location) { }
+  constructor(
+    private location: Location,
+    private router: Router) { }
 
   ngAfterViewChecked(): void {
     this.selectCurrentPageLink();
@@ -22,9 +25,11 @@ export class NavbarSideComponent implements AfterViewChecked {
 
     this.removeClass(ulNodes, 'active');
 
-    const currentPath = this.location.path().slice(1);
-    const selectedElement = this.findElementWithAttribute(ulNodes, 'data-route', currentPath);
-    selectedElement.classList.add('active');
+    const currentRoute = this.router.url.slice(1);
+    const selectedElement = this.findElementWithAttribute(ulNodes, 'data-route', currentRoute);
+    if (selectedElement) {
+      selectedElement.classList.add('active');
+    }
   }
 
   // TODO: Move to shared class

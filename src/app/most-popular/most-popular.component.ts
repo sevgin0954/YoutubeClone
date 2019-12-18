@@ -54,5 +54,4 @@ export class MostPopularComponent implements OnInit {
     const maxResults = 50;
     this.videos$ = this.videoService.getMostPopular(regionCode, maxResults);
   }
-
 }
