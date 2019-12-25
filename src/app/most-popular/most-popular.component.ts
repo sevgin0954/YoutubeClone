@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Video } from '../models/video/video';
-import { VideoService } from '../video.service';
-import { Observable } from 'rxjs';
+import { VideoService } from '../services-singleton/video.service';
 import * as moment from 'moment';
 
 @Component({
@@ -11,11 +10,14 @@ import * as moment from 'moment';
 })
 export class MostPopularComponent implements OnInit {
 
-  videos$: Observable<Video[]>;
+  videos: Video[];
+  nextPageToken: string;
   baseVideoUrl: string = 'https://www.youtube.com/watch?v=';
   baseChannelUrl: string = 'https://www.youtube.com/user/';
 
-  constructor(private videoService: VideoService) { }
+  constructor(private videoService: VideoService) {
+    this.videos = [];
+  }
 
   getViewCountString(viewCount: number): string {
     let numberName = '';
@@ -49,9 +51,30 @@ export class MostPopularComponent implements OnInit {
     return result;
   }
 
+  // TODO: unsubscribe or use resolver
   ngOnInit() {
+    this.loadMostPupularMovies();
+  }
+
+  onReachBottom(): void {
+    this.loadMostPupularMovies();
+  }
+
+  // TODO: Reuse
+  @HostListener("window:scroll")
+  onScroll(): void {
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+          this.onReachBottom();
+      }
+  }
+
+  private loadMostPupularMovies(): void {
     const regionCode = 'BG';
-    const maxResults = 50;
-    this.videos$ = this.videoService.getMostPopular(regionCode, maxResults);
+    const maxResults = 25;
+    this.videoService.getMostPopular(regionCode, maxResults, this.nextPageToken)
+      .subscribe(data => {
+        this.nextPageToken = data.nextPageToken;
+        this.videos.push(...data.items);
+      });
   }
 }

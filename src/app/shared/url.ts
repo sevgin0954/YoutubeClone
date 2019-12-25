@@ -9,8 +9,7 @@ export class Url {
     this.queryParams = queryParams;
   }
 
-  // TODO: Make private
-  getWithPaths(): string {
+  private getWithPaths(): string {
     let fullPath = this.basePath;
 
     this.paths.forEach((currentPath) => {
@@ -20,8 +19,7 @@ export class Url {
     return fullPath;
   }
 
-  // TODO: Make private
-  appendQueryParams(path: string): string {
+  private appendQueryParams(path: string): string {
     let fullPath = path;
 
     let isFirst = true;

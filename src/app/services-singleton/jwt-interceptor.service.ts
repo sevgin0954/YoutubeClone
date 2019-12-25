@@ -1,10 +1,10 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
-import { Observable, of, EMPTY, throwError } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
-import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+
+import { Observable, of, EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'

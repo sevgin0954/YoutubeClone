@@ -1,4 +1,4 @@
-<div class="video-container" *ngFor="let video of videos$ | async">
+<div class="video-container" *ngFor="let video of videos">
   <div>
     <a href="{{ baseVideoUrl + video.id }}">
       <img class="thumbnail" src="{{ video.snippet.thumbnails.medium.url }}" alt="{{ video.snippet.title }}">
@@ -21,7 +21,9 @@
     </div>
 
     <div class="video-info">
-      {{ video.snippet.description | slice:0:200 }}
+      {{ video.snippet.description | slice:0:200 }} ...
     </div>
   </div>
 </div>
+
+<div (show)="loadMostPupularMovies()"></div>

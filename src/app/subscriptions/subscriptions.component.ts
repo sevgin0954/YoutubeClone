@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { VideoService } from '../video.service';
-import { Observable } from 'rxjs';
 import { Channel } from '../models/channel/channel';
+import { ChannelService } from '../services-singleton/channel.service';
 
 @Component({
   selector: 'app-subscriptions',
@@ -11,13 +10,20 @@ import { Channel } from '../models/channel/channel';
 export class SubscriptionsComponent implements OnInit {
 
   baseChannelUrl: string = 'https://www.youtube.com/user/';
-  subsciptions$: Observable<Channel[]>;
+  channels: Channel[];
+  nextPageToken: string;
 
-  constructor(private videoService: VideoService) { }
+  constructor(private channelService: ChannelService) {
+    this.channels = [];
+  }
 
   ngOnInit() {
     const maxResults = 50;
-    this.subsciptions$ = this.videoService.getSubscriptions(maxResults);
+    this.channelService.getSubscriptions(maxResults, this.nextPageToken)
+      .subscribe(data => {
+        this.nextPageToken = data.nextPageToken;
+        this.channels.push(...data.items);
+      });
   }
 
 }

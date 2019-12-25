@@ -1,10 +1,10 @@
 <div class="channelsContainer">
-  <a class="channel" href="{{ baseChannelUrl + subsciption.snippet.channelId }}"
-  *ngFor="let subsciption of subsciptions$ | async">
-    <img class="thumbnail" src="{{ subsciption.snippet.thumbnails.medium.url }}" alt="{{ subsciption.snippet.title }}">
+  <a class="channel" href="{{ baseChannelUrl + channel.snippet.channelId }}"
+  *ngFor="let channel of channels">
+    <img class="thumbnail" src="{{ channel.snippet.thumbnails.medium.url }}" alt="{{ channel.snippet.title }}">
 
     <div class="video-info">
-      {{ subsciption.snippet.description | slice:0:50 }}
+      {{ channel.snippet.description | slice:0:100 }} ...
     </div>
   </a>
 </div>
