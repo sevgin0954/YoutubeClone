@@ -67,11 +67,20 @@ export class MostPopularComponent implements OnInit {
 
 
   private loadMostPupularMovies(): void {
+    const maxDescriptionLength = 200;
+
     const regionCode = 'BG';
     const maxResults = 25;
     this.videoService.getMostPopular(regionCode, maxResults, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
+        data.items.forEach(video => {
+          const description = video.snippet.description;
+          if (description.length > maxDescriptionLength) {
+            const conciseDescription = description.slice(0, maxDescriptionLength) + '...';
+            video.snippet.description = conciseDescription;
+          }
+        });
         this.videos.push(...data.items);
       });
   }
