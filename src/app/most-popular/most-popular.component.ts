@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Video } from '../models/video/video';
 import { VideoService } from '../services-singleton/video.service';
 import * as moment from 'moment';
+import { WindowService } from '../services-singleton/window.service';
 
 @Component({
   selector: 'app-most-popular',
@@ -15,7 +16,10 @@ export class MostPopularComponent implements OnInit {
   baseVideoUrl: string = 'https://www.youtube.com/watch?v=';
   baseChannelUrl: string = 'https://www.youtube.com/user/';
 
-  constructor(private videoService: VideoService) {
+  constructor(
+    private videoService: VideoService,
+    private windowService: WindowService
+  ) {
     this.videos = [];
   }
 
@@ -56,17 +60,11 @@ export class MostPopularComponent implements OnInit {
     this.loadMostPupularMovies();
   }
 
-  onReachBottom(): void {
-    this.loadMostPupularMovies();
+  @HostListener("window:scroll")
+  private onReachBottom(): void {
+    this.windowService.onReachBottom(() => this.loadMostPupularMovies());
   }
 
-  // TODO: Reuse
-  @HostListener("window:scroll")
-  onScroll(): void {
-  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-          this.onReachBottom();
-      }
-  }
 
   private loadMostPupularMovies(): void {
     const regionCode = 'BG';

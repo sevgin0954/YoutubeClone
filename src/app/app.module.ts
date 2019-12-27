@@ -7,8 +7,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptorService } from './services-singleton/jwt-interceptor.service';
 import { SigninComponent } from './signin/signin.component';
 import { MostPopularComponent } from './most-popular/most-popular.component';
-import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
+import { SharedModule } from './shared/shared.module';
+import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { NavbarSideComponent } from './navbar-side/navbar-side.component';
 
 @NgModule({
@@ -16,14 +17,15 @@ import { NavbarSideComponent } from './navbar-side/navbar-side.component';
     AppComponent,
     SigninComponent,
     MostPopularComponent,
-    NavbarTopComponent,
+    SubscriptionsComponent,
     NavbarSideComponent,
-    SubscriptionsComponent
+    NavbarTopComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    SharedModule
   ],
   providers: [
     {

@@ -1,5 +1,4 @@
 import { Component, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
-import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,11 +8,10 @@ import { Router } from '@angular/router';
 })
 export class NavbarSideComponent implements AfterViewChecked {
 
-  @ ViewChild('buttonList', {static: false})
+  @ViewChild('buttonList', {static: false})
   buttonList: ElementRef;
 
   constructor(
-    private location: Location,
     private router: Router) { }
 
   ngAfterViewChecked(): void {
@@ -32,7 +30,6 @@ export class NavbarSideComponent implements AfterViewChecked {
     }
   }
 
-  // TODO: Move to shared class
   private findElementWithAttribute(nodes: NodeList, attributeName: string, attributeValue: string): Element {
     const elementsAsArray = Array.from(nodes);
     const selectedElement = elementsAsArray
