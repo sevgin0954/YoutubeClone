@@ -40,3 +40,8 @@ body {
   text-decoration: none;
   color: $dark-blue;
 }
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

@@ -11,6 +11,7 @@ import { SubscriptionsComponent } from './subscriptions/subscriptions.component'
 import { SharedModule } from './shared/shared.module';
 import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { NavbarSideComponent } from './navbar-side/navbar-side.component';
+import { VideoComponent } from './video/video.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NavbarSideComponent } from './navbar-side/navbar-side.component';
     MostPopularComponent,
     SubscriptionsComponent,
     NavbarSideComponent,
-    NavbarTopComponent
+    NavbarTopComponent,
+    VideoComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,9 @@
 export class Url {
   readonly basePath: string;
   readonly paths: string[];
-  readonly queryParams: Record<string, string>;
+  readonly queryParams: any
 
-  constructor(basePath: string, paths: string[], queryParams: {[key: string]: string}) {
+  constructor(basePath: string, paths: string[], queryParams: any) {
     this.basePath = basePath;
     this.paths = paths;
     this.queryParams = queryParams;

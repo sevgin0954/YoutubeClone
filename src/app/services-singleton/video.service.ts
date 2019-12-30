@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Url } from '../shared/url';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ServiceModel } from '../models/service-models/service-model';
 import { Video } from '../models/video/video';
+import { pluck, map, first } from 'rxjs/operators';
+import { RatingType } from '../shared/enums/rating-type';
+import { Config } from 'protractor';
 
 const BASE_URL = 'https://www.googleapis.com/youtube/v3';
 
@@ -19,7 +22,7 @@ export class VideoService {
     // TODO: Slice the descripiton here
   getMostPopular(regionCode: string, maxResults: number, pageToken: string):
     Observable<ServiceModel<Video>> {
-    const queryParams: any = {
+    const queryParams = {
       part: 'snippet,contentDetails,status,statistics,player,liveStreamingDetails,localizations',
       fields: '*',
       mine: 'true',
@@ -39,5 +42,60 @@ export class VideoService {
     if (pageToken) {
       queryParams.pageToken = pageToken;
     }
+  }
+
+  // TODO: Use more concise model
+  getById(id: string): Observable<Video> {
+    const queryParams = {
+      part: 'snippet,contentDetails,statistics',
+      id: id
+    };
+
+    const url = new Url(BASE_URL, ['videos'], queryParams);
+    const data$ = this.http.get(url.toString())
+      .pipe(
+        pluck('items'),
+        map(data => data[0])
+      );
+
+    return data$;
+  }
+
+  getRating(id: string): Observable<RatingType> {
+    const queryParams = {
+      id: id
+    };
+    // TODO: Make queryParams optional (for post requests)
+    const url = new Url(BASE_URL, ['videos', 'getRating'], queryParams);
+    const data$ = this.http.get(url.toString())
+      .pipe(
+        pluck('items'),
+        map<RatingType, RatingType>(data => {
+          const ratingName: string = data[0].rating;
+          const ratingType: RatingType = RatingType[ratingName];
+
+          return ratingType;
+        })
+      );
+
+    return data$;
+  }
+
+  rate(id: string, rating: RatingType): Observable<number> {
+    const queryParams = {
+      id: id,
+      rating: RatingType[rating]
+    };
+    const url = new Url(BASE_URL, ['videos', 'rate'], queryParams);
+    // const data$ = this.http.post<HttpStatusCode>(url.toString(), {});
+    const data$ = this.getConfigPostResponse(url.toString()).pipe(
+      map(data => data.status)
+    );
+
+    return data$;
+  }
+
+  getConfigPostResponse(url: string): Observable<HttpResponse<Config>> {
+    return this.http.post<Config>(url, {}, { observe: 'response' });
   }
 }

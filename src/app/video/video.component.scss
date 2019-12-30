@@ -1,0 +1,19 @@
+@import './../../variables.scss';
+
+#player .ytp-swatch-background-color {
+  background-color: $dark-blue !important;
+}
+
+.thumb-button {
+  font-size: 1.2rem;
+  color: grey;
+  border: none;
+  background-color: inherit;
+}
+.thumb-button:focus {
+  outline: none;
+}
+
+.thumb-active-button {
+  color: $dark-blue;
+}

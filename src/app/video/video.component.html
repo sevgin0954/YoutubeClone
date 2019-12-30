@@ -1,0 +1,28 @@
+<div id="player"></div>
+
+<div *ngIf="video">
+  <div class="video-title">
+    {{ video.snippet.title }}
+  </div>
+
+  <div class="d-flex">
+    <div class="video-info">
+      <a class="channel-name" href="{{ baseChannelUrl + video.snippet.channelId }}">
+        {{ video.snippet.channelTitle }}
+      </a> -
+      {{ formatterService.getConcisedNumberString(video.statistics.viewCount) }} -
+      {{ formatterService.getPublishedDateString(video.snippet.publishedAt) }}
+    </div>
+
+    <div class="ml-auto">
+      <button class="thumb-button" #likeBtn (click)="onThumbClick(RatingType.like)">
+        <i class="fas fa-thumbs-up"></i>
+        {{ formatterService.getConcisedNumberString(video.statistics.likeCount) }}
+      </button>
+      <button class="thumb-button" #dislikeBtn (click)="onThumbClick(RatingType.dislike)" >
+        <i class="fas fa-thumbs-down"></i>
+        {{ formatterService.getConcisedNumberString(video.statistics.dislikeCount) }}
+      </button>
+    </div>
+  </div>
+</div>

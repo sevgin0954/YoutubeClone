@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 const tokenKey = 'token';
 
@@ -7,9 +6,6 @@ const tokenKey = 'token';
   providedIn: 'root'
 })
 export class AuthService {
-
-  constructor(
-    private http: HttpClient) { }
 
   setToken(token: string): void {
     localStorage.setItem(tokenKey, token);

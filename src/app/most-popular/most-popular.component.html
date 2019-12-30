@@ -1,13 +1,13 @@
 <div class="video-container" *ngFor="let video of videos">
   <div>
-    <a href="{{ baseVideoUrl + video.id }}">
+    <a routerLink="/video/{{ video.id }}">
       <img class="thumbnail" src="{{ video.snippet.thumbnails.medium.url }}" alt="{{ video.snippet.title }}">
     </a>
   </div>
 
   <div>
     <div>
-      <a class="video-title" href="{{ baseVideoUrl + video.id }}">
+      <a class="video-title" routerLink="/video/{{ video.id }}">
         {{ video.snippet.title }}
       </a>
     </div>
@@ -16,8 +16,8 @@
       <a class="channel-name" href="{{ baseChannelUrl + video.snippet.channelId }}">
         {{ video.snippet.channelTitle }}
       </a> -
-      {{ getViewCountString(video.statistics.viewCount) }} -
-      {{ getPublishedDateString(video.snippet.publishedAt) }}
+      {{ formatterService.getConcisedNumberString(video.statistics.viewCount) }} -
+      {{ formatterService.getPublishedDateString(video.snippet.publishedAt) }}
     </div>
 
     <div class="video-info">
