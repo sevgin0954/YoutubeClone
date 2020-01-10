@@ -12,15 +12,15 @@
       </a>
     </div>
 
-    <div class="video-info mb-2">
-      <a class="channel-name" href="{{ baseChannelUrl + video.snippet.channelId }}">
+    <div class="info-small mb-2">
+      <a class="channel-title" href="{{ baseChannelUrl + video.snippet.channelId }}">
         {{ video.snippet.channelTitle }}
       </a> -
-      {{ formatterService.getConcisedNumberString(video.statistics.viewCount) }} -
-      {{ formatterService.getPublishedDateString(video.snippet.publishedAt) }}
+      {{ formatterService.getFormattedNumberString(video.statistics.viewCount) }} -
+      {{ formatterService.getDateFromNowString(video.snippet.publishedAt) }}
     </div>
 
-    <div class="video-info">
+    <div class="info-small">
       {{ video.snippet.description }}
     </div>
   </div>

@@ -4,6 +4,7 @@ import { ServiceModel } from 'src/app/models/service-models/service-model';
 import { Url } from 'src/app/shared/url';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap, pluck, map } from 'rxjs/operators';
 
 // TODO: Move to glabal constant
 const BASE_URL = 'https://www.googleapis.com/youtube/v3';
@@ -36,5 +37,20 @@ export class ChannelService {
     if (pageToken) {
       queryParams.pageToken = pageToken;
     }
+  }
+
+  getById(id: string): Observable<Channel> {
+    const queryParams: any = {
+      part: 'snippet,statistics',
+      id: id
+    };
+    const url = new Url(BASE_URL, ['channels'], queryParams);
+    const data$ = this.http.get(url.toString())
+      .pipe(
+        pluck('items'),
+        map<any, Channel>(data => data[0])
+      );
+
+    return data$;
   }
 }

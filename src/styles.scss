@@ -28,15 +28,20 @@ body {
   color: black;
 }
 
-.video-info {
+.info-small {
   font-size: 0.9rem;
   color: gray;
 }
 
-.channel-name {
+.info-medium {
+  font-size: 1.1rem;
+  color: gray;
+}
+
+.channel-title {
   color: grey;
 }
-.channel-name:hover {
+.channel-title:hover {
   text-decoration: none;
   color: $dark-blue;
 }
@@ -44,4 +49,13 @@ body {
 button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.btn-blue {
+  background-color: $dark-blue;
+  color: $white;
+}
+.btn-blue:hover, .btn-blue:focus {
+  box-shadow: none;
+  color: $white;
 }

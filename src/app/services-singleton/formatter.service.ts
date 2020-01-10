@@ -7,33 +7,63 @@ import * as moment from 'moment';
 })
 export class FormatterService {
 
-  getConcisedNumberString(number: number): string {
+  getFormattedNumberString(number: number): string {
+    const hundredsMinLength = 3;
+    const thousandsMinLength = 4;
+    const milionsMinLength = 7;
+    const bilionMinLength = 10;
+
+    const numberAsString = number.toString();
+    const numberLength = numberAsString.length;
+
     let numberName = '';
     let numberResult = '';
 
-    const numberAsString = number.toString();
-    const numberCountLength = numberAsString.length;
-    if (numberCountLength <= 3) {
+    let integerPartLength = -1;
+
+    if (numberLength >= bilionMinLength) {
+      numberName = 'B';
+      integerPartLength = numberLength - bilionMinLength + 1;
+    }
+    else if (numberLength >= milionsMinLength) {
+      numberName = 'M';
+      integerPartLength = numberLength - milionsMinLength + 1;
+    }
+    else if (numberLength >= thousandsMinLength) {
+      numberName = 'K';
+      integerPartLength = numberLength - thousandsMinLength + 1;
+    }
+    else if (numberLength >= hundredsMinLength) {
       numberResult = numberAsString;
     }
-    else if (numberCountLength <= 4) {
-      numberName = 'K';
-    }
-    else if (numberCountLength <= 10) {
-      numberName = 'M';
-    }
-    else if (numberCountLength <= 16) {
-      numberName = 'B';
-    }
 
-    if (numberCountLength > 3) {
-      numberResult = `${numberAsString[0]},${numberAsString[1]}`
+    if (numberLength > hundredsMinLength) {
+      numberResult = this.getConcisedNumberString(numberAsString, integerPartLength);
     }
 
     return numberResult + numberName;
   }
 
-  getPublishedDateString(date: string): string {
+  getConcisedNumberString(number: string, integerPartLength: number): string {
+    let numberResult: string;
+
+    const integerEndIndex = integerPartLength;
+    const integerPart = number.substring(0, integerEndIndex);
+
+    const fractionStartIndex = integerPartLength;
+    const fractionPart = number.substring(fractionStartIndex, fractionStartIndex + 1);
+
+    if (fractionPart === '0') {
+      numberResult = integerPart;
+    }
+    else {
+      numberResult = `${integerPart},${fractionPart}`
+    }
+
+    return numberResult;
+  }
+
+  getDateFromNowString(date: string): string {
     let result = moment(date).fromNow();
 
     return result;

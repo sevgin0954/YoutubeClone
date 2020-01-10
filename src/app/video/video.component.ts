@@ -5,6 +5,9 @@ import { Video } from '../models/video/video';
 import { FormatterService } from '../services-singleton/formatter.service';
 import { YoutubeIframeService } from '../services-singleton/youtube-iframe.service';
 import { RatingType } from '../shared/enums/rating-type';
+import { ChannelService } from '../services-singleton/channel.service';
+import { tap } from 'rxjs/operators';
+import { Channel } from '../models/channel/channel';
 
 @Component({
   selector: 'app-video',
@@ -17,9 +20,10 @@ export class VideoComponent implements OnInit, AfterViewInit {
   baseChannelUrl: string = 'https://www.youtube.com/user/';
 
   RatingType = RatingType;
-  rating: RatingType;
+  currentRating: RatingType;
   videoId: string;
   video: Video;
+  channel: Channel;
   @ViewChild('likeBtn', { static: false }) likeButton: ElementRef;
   @ViewChild('dislikeBtn', { static: false }) dislikeButton: ElementRef;
 
@@ -27,10 +31,11 @@ export class VideoComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private videoService: VideoService,
     private youtubeIframeService: YoutubeIframeService,
+    private channelService: ChannelService,
     public formatterService: FormatterService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     const currentUrl = this.route.snapshot.url;
     this.videoId = currentUrl[1].toString();
 
@@ -38,17 +43,21 @@ export class VideoComponent implements OnInit, AfterViewInit {
 
     this.videoService.getById(this.videoId).subscribe(data => {
       this.video = data;
-      console.log(this.video)
+
+      this.channelService.getById(this.video.snippet.channelId).subscribe(data => {
+        this.channel = data;
+        console.log(this.channel)
+      });
     });
   }
 
   ngAfterViewInit(): void {
     this.videoService.getRating(this.videoId).subscribe(data => {
-      this.rating = data;
-      if (this.rating === RatingType.like) {
+      this.currentRating = data;
+      if (this.currentRating === RatingType.like) {
         this.likeButton.nativeElement.classList.add('thumb-active-button');
       }
-      else if (this.rating === RatingType.dislike) {
+      else if (this.currentRating === RatingType.dislike) {
         this.dislikeButton.nativeElement.classList.add('thumb-active-button');
       }
     });
@@ -60,7 +69,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
 
     let newRating: RatingType;
     // If button is already clicked
-    if (this.rating === clickedRating) {
+    if (this.currentRating === clickedRating) {
       newRating = RatingType.none;
     }
     else {
@@ -68,31 +77,31 @@ export class VideoComponent implements OnInit, AfterViewInit {
     }
 
     this.videoService.rate(this.videoId, newRating).subscribe(data => {
-      const ratingResult = data;
-      if (ratingResult === 204) {
+      const responseCode = data;
+      if (responseCode === 204) {
         this.likeButton.nativeElement.classList.remove('thumb-active-button');
         this.dislikeButton.nativeElement.classList.remove('thumb-active-button');
 
         if (newRating === RatingType.like) {
           this.likeButton.nativeElement.classList.add('thumb-active-button');
           this.video.statistics.likeCount++;
-          if (this.rating === RatingType.dislike) {
+          if (this.currentRating === RatingType.dislike) {
             this.video.statistics.dislikeCount--;
           }
         }
         else if (newRating === RatingType.dislike) {
           this.dislikeButton.nativeElement.classList.add('thumb-active-button');
           this.video.statistics.dislikeCount++;
-          if (this.rating === RatingType.like) {
+          if (this.currentRating === RatingType.like) {
             this.video.statistics.likeCount--;
           }
         }
-        // If we trying to unclick thumb
+        // If we trying to unclick button
         else if (newRating === RatingType.none) {
-          if (this.rating === RatingType.dislike) {
+          if (this.currentRating === RatingType.dislike) {
             this.video.statistics.dislikeCount--;
           }
-          else if (this.rating === RatingType.like) {
+          else if (this.currentRating === RatingType.like) {
             this.video.statistics.likeCount--;
           }
         }
@@ -100,7 +109,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
         this.likeButton.nativeElement.removeAttribute('disabled');
         this.dislikeButton.nativeElement.removeAttribute('disabled');
 
-        this.rating = newRating;
+        this.currentRating = newRating;
       }
       else {
         // TODO: Throw exception

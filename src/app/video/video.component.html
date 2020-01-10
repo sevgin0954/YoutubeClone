@@ -6,23 +6,45 @@
   </div>
 
   <div class="d-flex">
-    <div class="video-info">
-      <a class="channel-name" href="{{ baseChannelUrl + video.snippet.channelId }}">
-        {{ video.snippet.channelTitle }}
-      </a> -
-      {{ formatterService.getConcisedNumberString(video.statistics.viewCount) }} -
-      {{ formatterService.getPublishedDateString(video.snippet.publishedAt) }}
+    <div class="info-medium">
+      {{ formatterService.getFormattedNumberString(video.statistics.viewCount) }} Views -
+      {{ formatterService.getDateFromNowString(video.snippet.publishedAt) }}
     </div>
 
     <div class="ml-auto">
       <button class="thumb-button" #likeBtn (click)="onThumbClick(RatingType.like)">
         <i class="fas fa-thumbs-up"></i>
-        {{ formatterService.getConcisedNumberString(video.statistics.likeCount) }}
+        {{ formatterService.getFormattedNumberString(video.statistics.likeCount) }}
       </button>
       <button class="thumb-button" #dislikeBtn (click)="onThumbClick(RatingType.dislike)" >
         <i class="fas fa-thumbs-down"></i>
-        {{ formatterService.getConcisedNumberString(video.statistics.dislikeCount) }}
+        {{ formatterService.getFormattedNumberString(video.statistics.dislikeCount) }}
       </button>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="d-flex">
+    <div *ngIf="channel">
+      <img
+      class="channel-thumbnail"
+      src="{{ channel.snippet.thumbnails.default.url }}"
+      alt="Yotube channel {{ channel.snippet.title }} thumbnail">
+
+      <div>
+        <a class="channel-title" href="{{ baseChannelUrl + video.snippet.channelId }}">
+          {{ channel.snippet.title }}
+        </a>
+
+        <div class="info-small">
+          {{ formatterService.getFormattedNumberString(channel.statistics.subscriberCount) }} subscribers
+        </div>
+      </div>
+    </div>
+
+    <div class="ml-auto">
+      <button class="btn btn-blue">Subscribe</button>
     </div>
   </div>
 </div>

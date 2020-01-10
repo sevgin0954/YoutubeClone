@@ -70,7 +70,7 @@ export class VideoService {
     const data$ = this.http.get(url.toString())
       .pipe(
         pluck('items'),
-        map<RatingType, RatingType>(data => {
+        map<any, RatingType>(data => {
           const ratingName: string = data[0].rating;
           const ratingType: RatingType = RatingType[ratingName];
 
@@ -87,7 +87,6 @@ export class VideoService {
       rating: RatingType[rating]
     };
     const url = new Url(BASE_URL, ['videos', 'rate'], queryParams);
-    // const data$ = this.http.post<HttpStatusCode>(url.toString(), {});
     const data$ = this.getConfigPostResponse(url.toString()).pipe(
       map(data => data.status)
     );
