@@ -16,7 +16,7 @@
         <i class="fas fa-thumbs-up"></i>
         {{ formatterService.getFormattedNumberString(video.statistics.likeCount) }}
       </button>
-      <button class="thumb-button" #dislikeBtn (click)="onThumbClick(RatingType.dislike)" >
+      <button class="thumb-button" #dislikeBtn (click)="onThumbClick(RatingType.dislike)">
         <i class="fas fa-thumbs-down"></i>
         {{ formatterService.getFormattedNumberString(video.statistics.dislikeCount) }}
       </button>
@@ -26,25 +26,31 @@
   <hr>
 
   <div class="d-flex">
-    <div *ngIf="channel">
-      <img
-      class="channel-thumbnail"
-      src="{{ channel.snippet.thumbnails.default.url }}"
-      alt="Yotube channel {{ channel.snippet.title }} thumbnail">
+    <div class="d-flex" *ngIf="channel">
+      <a href="{{ baseChannelUrl + video.snippet.channelId }}">
+        <img class="channel-thumbnail" src="{{ channel.snippet.thumbnails.default.url }}"
+          alt="Yotube channel {{ channel.snippet.title }} thumbnail">
+      </a>
 
-      <div>
+      <div class="ml-2">
         <a class="channel-title" href="{{ baseChannelUrl + video.snippet.channelId }}">
           {{ channel.snippet.title }}
         </a>
 
         <div class="info-small">
-          {{ formatterService.getFormattedNumberString(channel.statistics.subscriberCount) }} subscribers
+          <span *ngIf="channel.statistics.hiddenSubscriberCount === false">
+            {{ formatterService.getFormattedNumberString(channel.statistics.subscriberCount) }}
+          </span>
+          <span *ngIf="channel.statistics.hiddenSubscriberCount === true">
+            hidden
+          </span> subscribers
         </div>
       </div>
     </div>
 
     <div class="ml-auto">
-      <button class="btn btn-blue">Subscribe</button>
+      <button class="btn btn-blue" *ngIf="isSubscribed === false" (click)="onSubscribe()">Subscribe</button>
+      <button class="btn btn-white" *ngIf="isSubscribed === true" (click)="onUnsubscribe()">Subscribed</button>
     </div>
   </div>
 </div>

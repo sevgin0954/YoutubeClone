@@ -59,3 +59,13 @@ button:disabled {
   box-shadow: none;
   color: $white;
 }
+
+.btn-white {
+  background-color: $white;
+  color: $dark-blue;
+  border: 0.1rem solid $dark-blue;
+}
+.btn-white:hover, .btn-white:focus {
+  box-shadow: none;
+  color: $dark-blue;
+}

@@ -6,8 +6,9 @@ import { FormatterService } from '../services-singleton/formatter.service';
 import { YoutubeIframeService } from '../services-singleton/youtube-iframe.service';
 import { RatingType } from '../shared/enums/rating-type';
 import { ChannelService } from '../services-singleton/channel.service';
-import { tap } from 'rxjs/operators';
 import { Channel } from '../models/channel/channel';
+import { SubscriptionsService } from '../services-singleton/subscriptions.service';
+import { Subscription } from '../models/subscribption/subscription';
 
 @Component({
   selector: 'app-video',
@@ -24,6 +25,8 @@ export class VideoComponent implements OnInit, AfterViewInit {
   videoId: string;
   video: Video;
   channel: Channel;
+  isSubscribed: boolean;
+  subscription: Subscription;
   @ViewChild('likeBtn', { static: false }) likeButton: ElementRef;
   @ViewChild('dislikeBtn', { static: false }) dislikeButton: ElementRef;
 
@@ -32,6 +35,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
     private videoService: VideoService,
     private youtubeIframeService: YoutubeIframeService,
     private channelService: ChannelService,
+    private subscriptionsService: SubscriptionsService,
     public formatterService: FormatterService
   ) { }
 
@@ -46,7 +50,17 @@ export class VideoComponent implements OnInit, AfterViewInit {
 
       this.channelService.getById(this.video.snippet.channelId).subscribe(data => {
         this.channel = data;
-        console.log(this.channel)
+
+        this.subscriptionsService.getById(this.channel.id).subscribe(data => {
+          console.log(data)
+          if (data) {
+            this.isSubscribed = true;
+            this.subscription = data;
+          }
+          else {
+            this.isSubscribed = false;
+          }
+        })
       });
     });
   }
@@ -113,6 +127,22 @@ export class VideoComponent implements OnInit, AfterViewInit {
       }
       else {
         // TODO: Throw exception
+      }
+    });
+  }
+
+  onSubscribe(): void {
+    this.subscriptionsService.subscribe(this.channel.id).subscribe(data => {
+      this.isSubscribed = true;
+      this.subscription = data;
+    });
+  }
+
+  onUnsubscribe(): void {
+    this.subscriptionsService.unsubscribe(this.subscription.id).subscribe(data => {
+      if (data >= 200 && data <= 299) {
+        this.isSubscribed = false;
+        this.subscription = undefined;
       }
     });
   }

@@ -8,7 +8,7 @@ import { pluck, map, first } from 'rxjs/operators';
 import { RatingType } from '../shared/enums/rating-type';
 import { Config } from 'protractor';
 
-const BASE_URL = 'https://www.googleapis.com/youtube/v3';
+const BASE_URL = 'https://www.googleapis.com/youtube/v3/videos';
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +20,7 @@ export class VideoService {
   ) { }
 
     // TODO: Slice the descripiton here
-  getMostPopular(regionCode: string, maxResults: number, pageToken: string):
-    Observable<ServiceModel<Video>> {
+  getMostPopular(regionCode: string, maxResults: number, pageToken: string): Observable<ServiceModel<Video>> {
     const queryParams = {
       part: 'snippet,contentDetails,status,statistics,player,liveStreamingDetails,localizations',
       fields: '*',
@@ -32,13 +31,13 @@ export class VideoService {
     }
     this.addPageToken(queryParams, pageToken);
 
-    const url = new Url(BASE_URL, ['videos'], queryParams);
+    const url = new Url(BASE_URL, [], queryParams);
     const data$ = this.http.get<ServiceModel<Video>>(url.toString());
 
     return data$;
   }
 
-  private addPageToken(queryParams: any, pageToken: string) {
+  private addPageToken(queryParams: any, pageToken: string): void {
     if (pageToken) {
       queryParams.pageToken = pageToken;
     }
@@ -51,7 +50,7 @@ export class VideoService {
       id: id
     };
 
-    const url = new Url(BASE_URL, ['videos'], queryParams);
+    const url = new Url(BASE_URL, [], queryParams);
     const data$ = this.http.get(url.toString())
       .pipe(
         pluck('items'),
@@ -65,8 +64,7 @@ export class VideoService {
     const queryParams = {
       id: id
     };
-    // TODO: Make queryParams optional (for post requests)
-    const url = new Url(BASE_URL, ['videos', 'getRating'], queryParams);
+    const url = new Url(BASE_URL, ['getRating'], queryParams);
     const data$ = this.http.get(url.toString())
       .pipe(
         pluck('items'),
@@ -86,7 +84,7 @@ export class VideoService {
       id: id,
       rating: RatingType[rating]
     };
-    const url = new Url(BASE_URL, ['videos', 'rate'], queryParams);
+    const url = new Url(BASE_URL, ['rate'], queryParams);
     const data$ = this.getConfigPostResponse(url.toString()).pipe(
       map(data => data.status)
     );
@@ -94,6 +92,7 @@ export class VideoService {
     return data$;
   }
 
+  // TODO: Reuse
   getConfigPostResponse(url: string): Observable<HttpResponse<Config>> {
     return this.http.post<Config>(url, {}, { observe: 'response' });
   }
