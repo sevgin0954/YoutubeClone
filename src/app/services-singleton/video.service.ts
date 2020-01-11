@@ -6,7 +6,7 @@ import { ServiceModel } from '../models/service-models/service-model';
 import { Video } from '../models/video/video';
 import { pluck, map, first } from 'rxjs/operators';
 import { RatingType } from '../shared/enums/rating-type';
-import { Config } from 'protractor';
+import { HttpConfigService } from './http-config.service';
 
 const BASE_URL = 'https://www.googleapis.com/youtube/v3/videos';
 
@@ -16,7 +16,8 @@ const BASE_URL = 'https://www.googleapis.com/youtube/v3/videos';
 export class VideoService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private httpConfigService: HttpConfigService
   ) { }
 
     // TODO: Slice the descripiton here
@@ -85,15 +86,10 @@ export class VideoService {
       rating: RatingType[rating]
     };
     const url = new Url(BASE_URL, ['rate'], queryParams);
-    const data$ = this.getConfigPostResponse(url.toString()).pipe(
+    const data$ = this.httpConfigService.getConfigPostResponse(url.toString(), {}).pipe(
       map(data => data.status)
     );
 
     return data$;
-  }
-
-  // TODO: Reuse
-  getConfigPostResponse(url: string): Observable<HttpResponse<Config>> {
-    return this.http.post<Config>(url, {}, { observe: 'response' });
   }
 }

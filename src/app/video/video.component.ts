@@ -52,7 +52,6 @@ export class VideoComponent implements OnInit, AfterViewInit {
         this.channel = data;
 
         this.subscriptionsService.getById(this.channel.id).subscribe(data => {
-          console.log(data)
           if (data) {
             this.isSubscribed = true;
             this.subscription = data;
