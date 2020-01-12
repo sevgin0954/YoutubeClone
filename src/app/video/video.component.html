@@ -53,4 +53,11 @@
       <button class="btn btn-white" *ngIf="isSubscribed === true" (click)="onUnsubscribe()">Subscribed</button>
     </div>
   </div>
+
+  <div class="angular-with-newlines">
+    <app-text-reveal
+      [text]="video.snippet.description"
+      [maxDisplayedCharacters]="maxDisplayedCharacters">
+    </app-text-reveal>
+  </div>
 </div>

@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { NavbarSideComponent } from './navbar-side/navbar-side.component';
 import { VideoComponent } from './video/video.component';
+import { TextRevealComponent } from './text-reveal/text-reveal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { VideoComponent } from './video/video.component';
     SubscriptionsComponent,
     NavbarSideComponent,
     NavbarTopComponent,
-    VideoComponent
+    VideoComponent,
+    TextRevealComponent
   ],
   imports: [
     BrowserModule,

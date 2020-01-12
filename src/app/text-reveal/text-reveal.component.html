@@ -1,0 +1,10 @@
+<div class="text">
+  <span>{{ displayedText }}</span><span hidden [attr.hidden]="show ? null : 'hidden'">{{ hiddenText }}</span>
+</div>
+
+<button class="info-small" [attr.hidden]="show ? 'hidden' : null" (click)="show = true">
+    Show more
+</button>
+<button class="info-small" [attr.hidden]="show ? null : 'hidden'" (click)="show = false">
+    Show less
+</button>

@@ -27,6 +27,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
   channel: Channel;
   isSubscribed: boolean;
   subscription: Subscription;
+  maxDisplayedCharacters: number = 120;
   @ViewChild('likeBtn', { static: false }) likeButton: ElementRef;
   @ViewChild('dislikeBtn', { static: false }) dislikeButton: ElementRef;
 
@@ -65,6 +66,10 @@ export class VideoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.initRating();
+  }
+
+  initRating(): void {
     this.videoService.getRating(this.videoId).subscribe(data => {
       this.currentRating = data;
       if (this.currentRating === RatingType.like) {
