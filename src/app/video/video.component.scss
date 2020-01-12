@@ -1,7 +1,7 @@
 @import './../../variables.scss';
 
-#player .ytp-swatch-background-color {
-  background-color: $dark-blue !important;
+.content-container {
+  max-width: 640px;
 }
 
 .thumb-button {
