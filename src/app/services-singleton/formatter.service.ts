@@ -8,7 +8,6 @@ import * as moment from 'moment';
 export class FormatterService {
 
   getFormattedNumberString(number: number): string {
-    const hundredsMinLength = 3;
     const thousandsMinLength = 4;
     const milionsMinLength = 7;
     const bilionMinLength = 10;
@@ -33,11 +32,11 @@ export class FormatterService {
       numberName = 'K';
       integerPartLength = numberLength - thousandsMinLength + 1;
     }
-    else if (numberLength >= hundredsMinLength) {
+    else if (numberLength >= 1) {
       numberResult = numberAsString;
     }
 
-    if (numberLength > hundredsMinLength) {
+    if (numberLength >= thousandsMinLength) {
       numberResult = this.getConcisedNumberString(numberAsString, integerPartLength);
     }
 
