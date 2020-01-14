@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-
-const tokenKey = 'token';
+import { Constants } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +7,11 @@ const tokenKey = 'token';
 export class AuthService {
 
   setToken(token: string): void {
-    localStorage.setItem(tokenKey, token);
+    localStorage.setItem(Constants.AuthTokenKey, token);
   }
 
   getToken(): string {
-    return localStorage.getItem(tokenKey);
+    return localStorage.getItem(Constants.AuthTokenKey);
   }
 
   logout(): void {

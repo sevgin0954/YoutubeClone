@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Url } from '../shared/url';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { pluck, map } from 'rxjs/operators';
 import { Subscription } from '../models/subscribption/subscription';
 import { HttpConfigService } from './http-config.service';
-
-const BASE_URL = 'https://www.googleapis.com/youtube/v3/subscriptions';
+import { Constants } from '../shared/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +23,7 @@ export class SubscriptionsService {
       forChannelId: channelId,
       mine: true
     };
-    const url = new Url(BASE_URL, [], queryParams);
+    const url = new Url(Constants.BASE_URL, [], queryParams);
     const data$ = this.http.get<Subscription>(url.toString())
       .pipe(
         pluck('items'),
@@ -38,7 +37,7 @@ export class SubscriptionsService {
     const queryParams: any = {
       part: 'snippet'
     };
-    const url = new Url(BASE_URL, [], queryParams);
+    const url = new Url(Constants.BASE_URL, [], queryParams);
 
     const channel = {
       snippet: {
@@ -59,7 +58,7 @@ export class SubscriptionsService {
     const queryParams: any = {
       id: channelId
     };
-    const url = new Url(BASE_URL, [], queryParams);
+    const url = new Url(Constants.BASE_URL, [], queryParams);
     const data$ = this.httpConfigService.getConfigDeleteResponse(url.toString())
       .pipe(
         map(data => data.status)
