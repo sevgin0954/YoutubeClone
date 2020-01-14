@@ -12,7 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { NavbarSideComponent } from './navbar-side/navbar-side.component';
 import { VideoComponent } from './video/video.component';
-import { TextRevealComponent } from './text-reveal/text-reveal.component';
+import { VideoCommentsComponent } from './video-comments/video-comments.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { TextRevealComponent } from './text-reveal/text-reveal.component';
     NavbarSideComponent,
     NavbarTopComponent,
     VideoComponent,
-    TextRevealComponent
+    VideoCommentsComponent
   ],
   imports: [
     BrowserModule,
