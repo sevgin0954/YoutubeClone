@@ -9,6 +9,8 @@ import { RatingType } from '../shared/enums/rating-type';
 import { HttpConfigService } from './http-config.service';
 import { Constants } from '../shared/constants';
 
+const BASE_URL = Constants.BASE_URL + '/videos'
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +22,7 @@ export class VideoService {
   ) { }
 
     // TODO: Slice the descripiton here
-  getMostPopular(regionCode: string, maxResults: number, pageToken: string): Observable<ServiceModel<Video>> {
+  getMostPopular(regionCode: string, maxResults: number, pageToken: string): Observable<ServiceModel<Video[]>> {
     const queryParams = {
       part: 'snippet,contentDetails,status,statistics,player,liveStreamingDetails,localizations',
       fields: '*',
@@ -28,11 +30,11 @@ export class VideoService {
       chart: 'mostPopular',
       regionCode: regionCode,
       maxResults: maxResults.toString()
-    }
+    };
     this.addPageToken(queryParams, pageToken);
 
-    const url = new Url(Constants.BASE_URL, [], queryParams);
-    const data$ = this.http.get<ServiceModel<Video>>(url.toString());
+    const url = new Url(BASE_URL, [], queryParams);
+    const data$ = this.http.get<ServiceModel<Video[]>>(url.toString());
 
     return data$;
   }
@@ -49,7 +51,7 @@ export class VideoService {
       id: id
     };
 
-    const url = new Url(Constants.BASE_URL, [], queryParams);
+    const url = new Url(BASE_URL, [], queryParams);
     const data$ = this.http.get(url.toString())
       .pipe(
         pluck('items'),
@@ -63,7 +65,7 @@ export class VideoService {
     const queryParams = {
       id: id
     };
-    const url = new Url(Constants.BASE_URL, ['getRating'], queryParams);
+    const url = new Url(BASE_URL, ['getRating'], queryParams);
     const data$ = this.http.get(url.toString())
       .pipe(
         pluck('items'),
@@ -83,7 +85,7 @@ export class VideoService {
       id: id,
       rating: RatingType[rating]
     };
-    const url = new Url(Constants.BASE_URL, ['rate'], queryParams);
+    const url = new Url(BASE_URL, ['rate'], queryParams);
     const data$ = this.httpConfigService.getConfigPostResponse(url.toString(), {}).pipe(
       map(data => data.status)
     );

@@ -7,6 +7,8 @@ import { Subscription } from '../models/subscribption/subscription';
 import { HttpConfigService } from './http-config.service';
 import { Constants } from '../shared/constants';
 
+const BASE_URL = Constants.BASE_URL + '/subscriptions';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,7 +25,7 @@ export class SubscriptionsService {
       forChannelId: channelId,
       mine: true
     };
-    const url = new Url(Constants.BASE_URL, [], queryParams);
+    const url = new Url(BASE_URL, [], queryParams);
     const data$ = this.http.get<Subscription>(url.toString())
       .pipe(
         pluck('items'),
@@ -37,7 +39,7 @@ export class SubscriptionsService {
     const queryParams: any = {
       part: 'snippet'
     };
-    const url = new Url(Constants.BASE_URL, [], queryParams);
+    const url = new Url(BASE_URL, [], queryParams);
 
     const channel = {
       snippet: {
@@ -58,7 +60,7 @@ export class SubscriptionsService {
     const queryParams: any = {
       id: channelId
     };
-    const url = new Url(Constants.BASE_URL, [], queryParams);
+    const url = new Url(BASE_URL, [], queryParams);
     const data$ = this.httpConfigService.getConfigDeleteResponse(url.toString())
       .pipe(
         map(data => data.status)

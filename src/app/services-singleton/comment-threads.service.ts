@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
-import { ServiceModel } from '../models/service-models/service-model';
-import { Observable } from 'rxjs';
-import { Constants } from '../shared/constants';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ServiceModel } from '../models/service-models/service-model';
 import { Url } from '../shared/url';
-import { Comment } from '../models/comment/comment';
+import { Constants } from '../shared/constants';
+import { CommentThread } from '../models/comment/comment-thread';
 
-const BASE_URL = Constants.BASE_URL + '/comments'
+const BASE_URL = Constants.BASE_URL + '/commentThreads'
 
 @Injectable({
   providedIn: 'root'
 })
-export class CommentsService {
+export class CommentThreadsService {
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getByParentId(parentId: string, nextPageToken: string): Observable<ServiceModel<Comment[]>> {
+  getByVideoId(videoId: string, nextPageToken: string): Observable<ServiceModel<CommentThread[]>> {
     const queryParams = {
       part: 'snippet',
-      parentId: parentId
+      videoId: videoId
     };
     this.addPageToken(queryParams, nextPageToken);
 
     const url = new Url(BASE_URL, [], queryParams);
-    var data$ = this.http.get<ServiceModel<Comment[]>>(url.toString());
+    var data$ = this.http.get<ServiceModel<CommentThread[]>>(url.toString());
 
     return data$;
   }

@@ -28,6 +28,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
   isSubscribed: boolean;
   subscription: Subscription;
   maxDisplayedCharacters: number = 120;
+
   @ViewChild('likeBtn', { static: false }) likeButton: ElementRef;
   @ViewChild('dislikeBtn', { static: false }) dislikeButton: ElementRef;
 

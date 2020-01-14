@@ -16,7 +16,7 @@ export class ChannelService {
     private http: HttpClient
   ) { }
 
-  getSubscriptions(maxResults: number, pageToken: string): Observable<ServiceModel<Channel>> {
+  getSubscriptions(maxResults: number, pageToken: string): Observable<ServiceModel<Channel[]>> {
     const queryParams: any = {
       part: 'snippet',
       mine: 'true',
@@ -25,7 +25,7 @@ export class ChannelService {
     this.addPageToken(queryParams, pageToken);
 
     const url = new Url(Constants.BASE_URL, ['subscriptions'], queryParams);
-    const data$ = this.http.get<ServiceModel<Channel>>(url.toString());
+    const data$ = this.http.get<ServiceModel<Channel[]>>(url.toString());
 
     return data$;
   }

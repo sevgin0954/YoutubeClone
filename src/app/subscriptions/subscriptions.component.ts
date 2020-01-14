@@ -37,14 +37,19 @@ export class SubscriptionsComponent implements OnInit {
     this.channelService.getSubscriptions(maxResults, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
-        data.items.forEach(currentItem => {
-          const description = currentItem.snippet.description;
-          if (description.length > maxDescriptionLength) {
-            const conciseDescription = description.slice(0, maxDescriptionLength) + '...';
-            currentItem.snippet.description = conciseDescription;
-          }
+        data.items.forEach(currentChannel => {
+          const conciseDescription = this.getConciseDescription(currentChannel, maxDescriptionLength);
+          currentChannel.snippet.description = conciseDescription;
         });
         this.channels.push(...data.items);
-    });
+      });
+  }
+
+  getConciseDescription(channel: Channel, maxDescriptionLength: number): string {
+    const description = channel.snippet.description;
+    if (description.length > maxDescriptionLength) {
+      const conciseDescription = description.slice(0, maxDescriptionLength) + '...';
+      return conciseDescription;
+    }
   }
 }

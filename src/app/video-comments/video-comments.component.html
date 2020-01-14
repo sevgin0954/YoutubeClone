@@ -1,1 +1,3 @@
-<p>video-comments works!</p>
+<div *ngFor="let thread of commentThreads">
+  {{ thread.snippet.topLevelComment.snippet.textDisplay }}
+</div>
