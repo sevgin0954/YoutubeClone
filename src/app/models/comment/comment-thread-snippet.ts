@@ -1,3 +1,5 @@
+import { Comment } from './comment';
+
 export interface CommentThreadSnippet {
   channelId: string,
   videoId: string,

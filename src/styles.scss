@@ -39,11 +39,15 @@ body {
 }
 
 .channel-title {
-  color: grey;
+  color: $dark-blue;
 }
 .channel-title:hover {
   text-decoration: none;
-  color: $dark-blue;
+}
+
+.channel-thumbnail {
+  width: 3rem;
+  border-radius: 50%;
 }
 
 button:disabled {

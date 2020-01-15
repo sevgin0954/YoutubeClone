@@ -3,6 +3,9 @@ import { WindowService } from '../services-singleton/window.service';
 import { CommentThreadsService } from '../services-singleton/comment-threads.service';
 import { CommentThread } from '../models/comment/comment-thread';
 import { Comment } from '../models/comment/comment';
+import { FormatterService } from '../services-singleton/formatter.service';
+import { Constants } from '../shared/constants';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-video-comments',
@@ -16,15 +19,16 @@ export class VideoCommentsComponent {
   commentThreads: CommentThread[];
 
   constructor(
+    public formatterService: FormatterService,
     private windowService: WindowService,
-    private commentThreadsService: CommentThreadsService
+    private commentThreadsService: CommentThreadsService,
+    public domSanitizer: DomSanitizer
   ) {
     this.commentThreads = [];
   }
 
   @HostListener("window:scroll")
   private onReachBottom(): void {
-    // TODO: Find why it doeesnt work withhout () =>
     this.windowService.onReachBottom(() => this.loadComments());
   }
 

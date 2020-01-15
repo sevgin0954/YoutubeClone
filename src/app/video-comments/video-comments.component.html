@@ -1,3 +1,27 @@
 <div *ngFor="let thread of commentThreads">
-  {{ thread.snippet.topLevelComment.snippet.textDisplay }}
+  <div class="d-flex">
+    <a class="channel-title"
+      href="https://www.youtube.com/user/{{ thread.snippet.topLevelComment.snippet.authorChannelId.value }}">
+      <img class="channel-thumbnail" src="{{ thread.snippet.topLevelComment.snippet.authorProfileImageUrl }}">
+    </a>
+
+    <div>
+      <div>
+        <a class="channel-title"
+          href="https://www.youtube.com/user/{{ thread.snippet.topLevelComment.snippet.authorChannelId.value }}">
+          {{ thread.snippet.topLevelComment.snippet.authorDisplayName }} -
+        </a>
+
+        <span class="info-small">
+          {{ formatterService.getDateFromNowString(thread.snippet.topLevelComment.snippet.publishedAt) }}
+        </span>
+      </div>
+
+      <p
+        [innerHTML]="domSanitizer.bypassSecurityTrustHtml(thread.snippet.topLevelComment.snippet.textDisplay)">
+      </p>
+    </div>
+  </div>
+
+  <hr>
 </div>
