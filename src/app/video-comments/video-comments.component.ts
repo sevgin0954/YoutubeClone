@@ -39,4 +39,13 @@ export class VideoCommentsComponent {
         this.commentThreads.push(...data.items);
       });
   }
+
+  getAuthorChannelId(thread: CommentThread): string {
+    const authorChannelIdObject = thread.snippet.topLevelComment.snippet.authorChannelId;
+    if (authorChannelIdObject) {
+      return authorChannelIdObject.value;
+    }
+
+    return null;
+  }
 }

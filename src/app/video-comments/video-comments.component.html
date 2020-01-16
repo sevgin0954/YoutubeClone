@@ -1,14 +1,16 @@
 <div *ngFor="let thread of commentThreads">
   <div class="d-flex">
     <a class="channel-title"
-      href="https://www.youtube.com/user/{{ thread.snippet.topLevelComment.snippet.authorChannelId.value }}">
+      href="https://www.youtube.com/user/{{ getAuthorChannelId(thread) }}"
+      [attr.disabled]="getAuthorChannelId(thread) ? null : 'disabled'">
       <img class="channel-thumbnail" src="{{ thread.snippet.topLevelComment.snippet.authorProfileImageUrl }}">
     </a>
 
     <div>
       <div>
         <a class="channel-title"
-          href="https://www.youtube.com/user/{{ thread.snippet.topLevelComment.snippet.authorChannelId.value }}">
+          href="https://www.youtube.com/user/{{ getAuthorChannelId(thread) }}"
+          [attr.disabled]="getAuthorChannelId(thread) ? null : 'disabled'">
           {{ thread.snippet.topLevelComment.snippet.authorDisplayName }} -
         </a>
 
