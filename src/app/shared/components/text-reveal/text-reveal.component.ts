@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-text-reveal',
@@ -9,6 +9,7 @@ export class TextRevealComponent implements OnInit {
 
   @Input() text: string;
   @Input() maxDisplayedCharacters: number;
+  shouldShowButtons: boolean;
 
   show: boolean = false;
   displayedText: string;
@@ -17,5 +18,6 @@ export class TextRevealComponent implements OnInit {
   ngOnInit(): void {
     this.displayedText = this.text.slice(0, this.maxDisplayedCharacters + 1);
     this.hiddenText = this.text.slice(this.maxDisplayedCharacters + 1);
+    this.shouldShowButtons = this.text.length > this.maxDisplayedCharacters;
   }
 }

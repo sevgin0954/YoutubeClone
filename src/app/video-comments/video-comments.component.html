@@ -19,9 +19,10 @@
         </span>
       </div>
 
-      <p
-        [innerHTML]="domSanitizer.bypassSecurityTrustHtml(thread.snippet.topLevelComment.snippet.textDisplay)">
-      </p>
+      <app-text-reveal
+        [text]="thread.snippet.topLevelComment.snippet.textDisplay"
+        [maxDisplayedCharacters]="maxDisplayedCharacters">
+      </app-text-reveal>
     </div>
   </div>
 

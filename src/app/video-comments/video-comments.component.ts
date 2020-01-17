@@ -17,6 +17,7 @@ export class VideoCommentsComponent {
   @Input() parentId: string;
   nextPageToken: string;
   commentThreads: CommentThread[];
+  maxDisplayedCharacters: number = 100;
 
   constructor(
     public formatterService: FormatterService,
