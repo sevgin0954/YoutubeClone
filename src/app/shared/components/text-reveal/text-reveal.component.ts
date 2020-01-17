@@ -16,8 +16,8 @@ export class TextRevealComponent implements OnInit {
   hiddenText: string;
 
   ngOnInit(): void {
-    this.displayedText = this.text.slice(0, this.maxDisplayedCharacters + 1);
-    this.hiddenText = this.text.slice(this.maxDisplayedCharacters + 1);
+    this.displayedText = this.text.slice(0, this.maxDisplayedCharacters);
+    this.hiddenText = this.text.slice(this.maxDisplayedCharacters);
     this.shouldShowButtons = this.text.length > this.maxDisplayedCharacters;
   }
 }
