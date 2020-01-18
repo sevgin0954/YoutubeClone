@@ -16,6 +16,7 @@ export class VideoCommentsComponent {
   nextPageToken: string;
   commentThreads: CommentThread[];
   maxDisplayedCharacters: number = 100;
+  isFirstPage: boolean = true;
 
   constructor(
     public formatterService: FormatterService,
@@ -28,7 +29,12 @@ export class VideoCommentsComponent {
 
   @HostListener("window:scroll")
   private onReachBottom(): void {
-    this.windowService.onReachBottom(() => this.loadComments());
+    this.windowService.onReachBottom(() => {
+      if (this.nextPageToken || this.isFirstPage) {
+        this.loadComments();
+        this.isFirstPage = false;
+      }
+    });
   }
 
   loadComments(): void {
