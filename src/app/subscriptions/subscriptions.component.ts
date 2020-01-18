@@ -13,6 +13,7 @@ export class SubscriptionsComponent implements OnInit {
 
   baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
   channels: Channel[];
+  isFirstPage: boolean = true;
   nextPageToken: string;
 
   constructor(
@@ -24,7 +25,12 @@ export class SubscriptionsComponent implements OnInit {
 
   @HostListener("window:scroll")
   private onReachBottom(): void {
-    this.windowService.onReachBottom(() => this.loadSubscriptions());
+    this.windowService.onReachBottom(() => {
+      if (this.nextPageToken || this.isFirstPage) {
+        this.loadSubscriptions();
+        this.isFirstPage = false;
+      }
+    });
   }
 
   ngOnInit() {
