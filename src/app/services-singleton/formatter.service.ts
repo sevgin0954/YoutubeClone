@@ -7,6 +7,13 @@ import * as moment from 'moment';
 })
 export class FormatterService {
 
+  getConcisedString(string: string, maxLength: number): string {
+    if (string.length > maxLength) {
+      const conciseDescription = string.slice(0, maxLength) + ' ...';
+      return conciseDescription;
+    }
+  }
+
   getFormattedNumberString(number: number): string {
     const thousandsMinLength = 4;
     const milionsMinLength = 7;

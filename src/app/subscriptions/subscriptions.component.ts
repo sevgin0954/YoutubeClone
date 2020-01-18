@@ -3,6 +3,7 @@ import { Channel } from '../models/channel/channel';
 import { ChannelService } from '../services-singleton/channel.service';
 import { WindowService } from '../services-singleton/window.service';
 import { Constants } from '../shared/constants';
+import { FormatterService } from '../services-singleton/formatter.service';
 
 @Component({
   selector: 'app-subscriptions',
@@ -17,6 +18,7 @@ export class SubscriptionsComponent implements OnInit {
   nextPageToken: string;
 
   constructor(
+    private formatterService: FormatterService,
     private channelService: ChannelService,
     private windowService: WindowService
   ) {
@@ -45,18 +47,11 @@ export class SubscriptionsComponent implements OnInit {
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         data.items.forEach(currentChannel => {
-          const conciseDescription = this.getConciseDescription(currentChannel, maxDescriptionLength);
+          const description = currentChannel.snippet.description;
+          const conciseDescription = this.formatterService.getConcisedString(description, maxDescriptionLength);
           currentChannel.snippet.description = conciseDescription;
         });
         this.channels.push(...data.items);
       });
-  }
-
-  getConciseDescription(channel: Channel, maxDescriptionLength: number): string {
-    const description = channel.snippet.description;
-    if (description.length > maxDescriptionLength) {
-      const conciseDescription = description.slice(0, maxDescriptionLength) + '...';
-      return conciseDescription;
-    }
   }
 }
