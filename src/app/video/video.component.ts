@@ -9,6 +9,8 @@ import { ChannelService } from '../services-singleton/channel.service';
 import { Channel } from '../models/channel/channel';
 import { SubscriptionsService } from '../services-singleton/subscriptions.service';
 import { Subscription } from '../models/subscribption/subscription';
+import { concatMap } from 'rxjs/operators';
+import { Constants } from '../shared/constants';
 
 @Component({
   selector: 'app-video',
@@ -17,9 +19,7 @@ import { Subscription } from '../models/subscribption/subscription';
 })
 export class VideoComponent implements OnInit, AfterViewInit {
 
-  // TODO: Move to glabal constant
-  baseChannelUrl: string = 'https://www.youtube.com/user/';
-
+  baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
   RatingType = RatingType;
   currentRating: RatingType;
   videoId: string;
@@ -47,22 +47,25 @@ export class VideoComponent implements OnInit, AfterViewInit {
 
     this.youtubeIframeService.init(this.videoId);
 
-    this.videoService.getById(this.videoId).subscribe(data => {
-      this.video = data;
+    this.videoService.getById(this.videoId).pipe(
+      concatMap(video => {
+        this.video = video;
 
-      this.channelService.getById(this.video.snippet.channelId).subscribe(data => {
-        this.channel = data;
+        return this.channelService.getById(this.video.snippet.channelId);
+      }),
+      concatMap(channel => {
+        this.channel = channel;
 
-        this.subscriptionsService.getById(this.channel.id).subscribe(data => {
-          if (data) {
-            this.isSubscribed = true;
-            this.subscription = data;
-          }
-          else {
-            this.isSubscribed = false;
-          }
-        })
-      });
+        return this.subscriptionsService.getById(this.channel.id);
+      })
+    ).subscribe(subscribtion => {
+      if (subscribtion) {
+        this.isSubscribed = true;
+        this.subscription = subscribtion;
+      }
+      else {
+        this.isSubscribed = false;
+      }
     });
   }
 

@@ -3,6 +3,7 @@ import { Video } from '../models/video/video';
 import { VideoService } from '../services-singleton/video.service';
 import { WindowService } from '../services-singleton/window.service';
 import { FormatterService } from '../services-singleton/formatter.service';
+import { Constants } from '../shared/constants';
 
 @Component({
   selector: 'app-most-popular',
@@ -13,7 +14,7 @@ export class MostPopularComponent implements OnInit {
 
   videos: Video[];
   nextPageToken: string;
-  baseChannelUrl: string = 'https://www.youtube.com/user/';
+  baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
 
   constructor(
     private videoService: VideoService,

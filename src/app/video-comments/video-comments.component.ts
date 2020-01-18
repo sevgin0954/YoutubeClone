@@ -2,9 +2,7 @@ import { Component, HostListener, Input } from '@angular/core';
 import { WindowService } from '../services-singleton/window.service';
 import { CommentThreadsService } from '../services-singleton/comment-threads.service';
 import { CommentThread } from '../models/comment/comment-thread';
-import { Comment } from '../models/comment/comment';
 import { FormatterService } from '../services-singleton/formatter.service';
-import { Constants } from '../shared/constants';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({

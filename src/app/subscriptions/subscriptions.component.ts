@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from '@angular/core';
 import { Channel } from '../models/channel/channel';
 import { ChannelService } from '../services-singleton/channel.service';
 import { WindowService } from '../services-singleton/window.service';
+import { Constants } from '../shared/constants';
 
 @Component({
   selector: 'app-subscriptions',
@@ -10,7 +11,7 @@ import { WindowService } from '../services-singleton/window.service';
 })
 export class SubscriptionsComponent implements OnInit {
 
-  baseChannelUrl: string = 'https://www.youtube.com/user/';
+  baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
   channels: Channel[];
   nextPageToken: string;
 
