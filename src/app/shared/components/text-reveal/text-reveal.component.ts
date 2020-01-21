@@ -11,7 +11,7 @@ export class TextRevealComponent implements OnInit {
   @Input() maxDisplayedCharacters: number;
   shouldShowButtons: boolean;
 
-  show: boolean = false;
+  isTextShown: boolean = false;
   displayedText: string;
   hiddenText: string;
 

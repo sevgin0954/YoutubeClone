@@ -77,3 +77,11 @@ button:disabled {
 a[disabled] {
   pointer-events: none;
 }
+
+.show-button {
+  border: none;
+  background-color: inherit;
+  padding: 0;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}

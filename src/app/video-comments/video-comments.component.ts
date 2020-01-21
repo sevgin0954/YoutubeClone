@@ -17,6 +17,7 @@ export class VideoCommentsComponent {
   commentThreads: CommentThread[];
   maxDisplayedCharacters: number = 100;
   isFirstPage: boolean = true;
+  areCommentsShown: boolean = false;
 
   constructor(
     public formatterService: FormatterService,

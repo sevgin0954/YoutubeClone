@@ -1,10 +1,10 @@
 <div class="text">
-  <span>{{ displayedText }}</span><span hidden [attr.hidden]="show ? null : 'hidden'">{{ hiddenText }}</span>
+  <span>{{ displayedText }}</span><span *ngIf="isTextShown">{{ hiddenText }}</span>
 </div>
 
-<button *ngIf="shouldShowButtons" class="info-small" [attr.hidden]="show ? 'hidden' : null" (click)="show = true">
+<button *ngIf="shouldShowButtons && isTextShown === false" class="info-small show-button" (click)="isTextShown = true">
     Show more
 </button>
-<button *ngIf="shouldShowButtons" class="info-small" [attr.hidden]="show ? null : 'hidden'" (click)="show = false">
+<button *ngIf="shouldShowButtons && isTextShown" class="info-small show-button" (click)="isTextShown = false">
     Show less
 </button>

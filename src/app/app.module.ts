@@ -13,6 +13,7 @@ import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { NavbarSideComponent } from './navbar-side/navbar-side.component';
 import { VideoComponent } from './video/video.component';
 import { VideoCommentsComponent } from './video-comments/video-comments.component';
+import { CommentRepliesComponent } from './comment-replies/comment-replies.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { VideoCommentsComponent } from './video-comments/video-comments.componen
     NavbarSideComponent,
     NavbarTopComponent,
     VideoComponent,
-    VideoCommentsComponent
+    VideoCommentsComponent,
+    CommentRepliesComponent
   ],
   imports: [
     BrowserModule,

@@ -3,8 +3,5 @@ import { Comment } from './comment';
 
 export interface CommentThread {
   id: string,
-  snippet: CommentThreadSnippet,
-  replies: {
-    comments: Comment[]
-  }
+  snippet: CommentThreadSnippet
 }

@@ -19,7 +19,7 @@ export class CommentsService {
 
   getByParentId(parentId: string, nextPageToken: string): Observable<ServiceModel<Comment[]>> {
     const queryParams = {
-      part: 'snippet',
+      part: 'id,snippet',
       parentId: parentId
     };
     this.addPageToken(queryParams, nextPageToken);
