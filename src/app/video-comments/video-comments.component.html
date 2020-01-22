@@ -2,7 +2,10 @@
   <app-comment [comment]="thread.snippet.topLevelComment"></app-comment>
 
   <div class="replies-container">
-    <app-comment-replies *ngIf="thread.snippet.totalReplyCount > 0" [parentId]="thread.id"></app-comment-replies>
+    <app-comment-replies *ngIf="thread.snippet.totalReplyCount > 0"
+      [parentId]="thread.id"
+      [totalRepliesCount]="thread.snippet.totalReplyCount">
+    </app-comment-replies>
   </div>
   <hr>
 </div>

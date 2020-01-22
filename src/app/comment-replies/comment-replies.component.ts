@@ -35,6 +35,9 @@ export class CommentRepliesComponent {
         if (this.comments.length < this.totalRepliesCount) {
           this.shouldShowMoreReplies = true;
         }
+        else {
+          this.shouldShowMoreReplies = false;
+        }
       });
     }
   }

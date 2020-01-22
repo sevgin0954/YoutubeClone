@@ -1,3 +1,5 @@
+@import './../../variables.scss';
+
 :host ::ng-deep {
   .channel-thumbnail {
     width: calc(48px * 0.9);
@@ -11,4 +13,14 @@
   .info-small {
     font-size: calc(0.9rem * 0.9);
   }
+}
+
+.show-more-button {
+  margin-left: 0.5rem;
+  color: $dark-blue;
+  border: none;
+  background-color: inherit;
+}
+.show-more-button:focus {
+  outline: none;
 }
