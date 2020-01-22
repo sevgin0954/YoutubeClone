@@ -4,6 +4,7 @@ import { CommentThreadsService } from '../services-singleton/comment-threads.ser
 import { CommentThread } from '../models/comment/comment-thread';
 import { FormatterService } from '../services-singleton/formatter.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
 
 @Component({
   selector: 'app-video-comments',
@@ -16,6 +17,7 @@ export class VideoCommentsComponent {
   nextPageToken: string;
   commentThreads: CommentThread[];
   isFirstPage: boolean = true;
+  order: CommentThreadOrder = CommentThreadOrder.relevance;
 
   constructor(
     public formatterService: FormatterService,
@@ -37,7 +39,7 @@ export class VideoCommentsComponent {
   }
 
   loadComments(): void {
-    this.commentThreadsService.getByVideoId(this.parentId, this.nextPageToken)
+    this.commentThreadsService.getByVideoId(this.parentId, this.order, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         this.commentThreads.push(...data.items);

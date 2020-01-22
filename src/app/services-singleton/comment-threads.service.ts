@@ -5,6 +5,7 @@ import { ServiceModel } from '../models/service-models/service-model';
 import { Url } from '../shared/url';
 import { Constants } from '../shared/constants';
 import { CommentThread } from '../models/comment/comment-thread';
+import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
 
 const BASE_URL = Constants.BASE_URL + '/commentThreads'
 
@@ -17,10 +18,12 @@ export class CommentThreadsService {
     private http: HttpClient
   ) { }
 
-  getByVideoId(videoId: string, nextPageToken: string): Observable<ServiceModel<CommentThread[]>> {
+  getByVideoId(videoId: string, order: CommentThreadOrder, nextPageToken: string):
+    Observable<ServiceModel<CommentThread[]>> {
     const queryParams = {
       part: 'snippet',
-      videoId: videoId
+      videoId: videoId,
+      order: CommentThreadOrder[order]
     };
     this.addPageToken(queryParams, nextPageToken);
 
