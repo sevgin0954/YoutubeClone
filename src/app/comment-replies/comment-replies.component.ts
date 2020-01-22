@@ -1,5 +1,4 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
-import { CommentThread } from '../models/comment/comment-thread';
 import { CommentsService } from '../services-singleton/comments.service';
 import { Comment } from '../models/comment/comment';
 

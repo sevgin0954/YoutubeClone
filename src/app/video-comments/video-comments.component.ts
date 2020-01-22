@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostListener, Input, OnChanges } from '@angular/core';
 import { WindowService } from '../services-singleton/window.service';
 import { CommentThreadsService } from '../services-singleton/comment-threads.service';
 import { CommentThread } from '../models/comment/comment-thread';
@@ -11,7 +11,7 @@ import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
   templateUrl: './video-comments.component.html',
   styleUrls: ['./video-comments.component.scss']
 })
-export class VideoCommentsComponent {
+export class VideoCommentsComponent implements OnChanges {
 
   @Input() parentId: string;
   @Input() order: CommentThreadOrder;
@@ -25,6 +25,16 @@ export class VideoCommentsComponent {
     private commentThreadsService: CommentThreadsService,
     public domSanitizer: DomSanitizer
   ) {
+    this.commentThreads = [];
+  }
+
+  ngOnChanges() {
+    this.resetComments();
+  }
+
+  resetComments(): void {
+    this.nextPageToken = undefined;
+    this.isFirstPage = true;
     this.commentThreads = [];
   }
 
