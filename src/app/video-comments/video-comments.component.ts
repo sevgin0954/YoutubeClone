@@ -36,6 +36,8 @@ export class VideoCommentsComponent implements OnChanges {
     this.nextPageToken = undefined;
     this.isFirstPage = true;
     this.commentThreads = [];
+
+    this.loadComments();
   }
 
   @HostListener("window:scroll")
