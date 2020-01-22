@@ -14,6 +14,7 @@ import { NavbarSideComponent } from './navbar-side/navbar-side.component';
 import { VideoComponent } from './video/video.component';
 import { VideoCommentsComponent } from './video-comments/video-comments.component';
 import { CommentRepliesComponent } from './comment-replies/comment-replies.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CommentRepliesComponent } from './comment-replies/comment-replies.compo
     NavbarTopComponent,
     VideoComponent,
     VideoCommentsComponent,
-    CommentRepliesComponent
+    CommentRepliesComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

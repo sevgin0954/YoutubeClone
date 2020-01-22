@@ -1,0 +1,23 @@
+<div class="d-flex">
+  <a class="channel-title" href="https://www.youtube.com/user/{{ getAuthorChannelId() }}"
+    [attr.disabled]="getAuthorChannelId() ? null : 'disabled'">
+    <img class="channel-thumbnail" src="{{ comment.snippet.authorProfileImageUrl }}">
+  </a>
+
+  <div>
+    <div>
+      <a class="channel-title" href="https://www.youtube.com/user/{{ getAuthorChannelId() }}"
+        [attr.disabled]="getAuthorChannelId() ? null : 'disabled'">
+        {{ comment.snippet.authorDisplayName }} -
+      </a>
+
+      <span class="info-small">
+        {{ formatterService.getDateFromNowString(comment.snippet.publishedAt) }}
+      </span>
+    </div>
+
+    <app-text-reveal [text]="comment.snippet.textDisplay"
+      [maxDisplayedCharacters]="maxDisplayedCharacters">
+    </app-text-reveal>
+  </div>
+</div>

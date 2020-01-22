@@ -1,0 +1,14 @@
+:host ::ng-deep {
+  .channel-thumbnail {
+    width: calc(48px * 0.9);
+    height: calc(48px * 0.9);
+  }
+
+  .channel-title {
+    font-size: 90%;
+  }
+
+  .info-small {
+    font-size: calc(0.9rem * 0.9);
+  }
+}

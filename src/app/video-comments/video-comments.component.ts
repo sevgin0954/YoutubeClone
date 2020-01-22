@@ -15,9 +15,7 @@ export class VideoCommentsComponent {
   @Input() parentId: string;
   nextPageToken: string;
   commentThreads: CommentThread[];
-  maxDisplayedCharacters: number = 100;
   isFirstPage: boolean = true;
-  areCommentsShown: boolean = false;
 
   constructor(
     public formatterService: FormatterService,
@@ -32,8 +30,8 @@ export class VideoCommentsComponent {
   private onReachBottom(): void {
     this.windowService.onReachBottom(() => {
       if (this.nextPageToken || this.isFirstPage) {
-        this.loadComments();
         this.isFirstPage = false;
+        this.loadComments();
       }
     });
   }
@@ -44,14 +42,5 @@ export class VideoCommentsComponent {
         this.nextPageToken = data.nextPageToken;
         this.commentThreads.push(...data.items);
       });
-  }
-
-  getAuthorChannelId(thread: CommentThread): string {
-    const authorChannelIdObject = thread.snippet.topLevelComment.snippet.authorChannelId;
-    if (authorChannelIdObject) {
-      return authorChannelIdObject.value;
-    }
-
-    return null;
   }
 }

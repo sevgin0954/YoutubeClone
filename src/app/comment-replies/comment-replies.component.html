@@ -1,1 +1,17 @@
-<p>comment-replies works!</p>
+<div [attr.hidden]="shouldShowReplies ? null : 'hidden'" *ngFor="let comment of comments">
+  <hr>
+  <app-comment class="comment" [comment]="comment"></app-comment>
+</div>
+
+<button class="comments-toggle-button show-button"
+  [attr.hidden]="shouldShowReplies ? 'hidden' : null"
+  (click)="onShowReplies()">
+  <i class="far fa-arrow-alt-circle-down"></i>
+  Show comments
+</button>
+<button class="comments-toggle-button show-button"
+[attr.hidden]="shouldShowReplies ? null : 'hidden'"
+  (click)="onHideReplies()">
+  <i class="far fa-arrow-alt-circle-up"></i>
+  Hide comments
+</button>
