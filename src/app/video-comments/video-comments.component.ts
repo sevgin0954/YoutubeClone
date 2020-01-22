@@ -14,10 +14,10 @@ import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
 export class VideoCommentsComponent {
 
   @Input() parentId: string;
+  @Input() order: CommentThreadOrder;
   nextPageToken: string;
   commentThreads: CommentThread[];
   isFirstPage: boolean = true;
-  order: CommentThreadOrder = CommentThreadOrder.relevance;
 
   constructor(
     public formatterService: FormatterService,

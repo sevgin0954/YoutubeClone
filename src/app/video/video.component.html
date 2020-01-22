@@ -55,15 +55,31 @@
   </div>
 
   <div class="angular-with-newlines">
-    <app-text-reveal
-      [text]="video.snippet.description"
-      [maxDisplayedCharacters]="maxDisplayedCharacters">
+    <app-text-reveal [text]="video.snippet.description" [maxDisplayedCharacters]="maxDisplayedCharacters">
     </app-text-reveal>
   </div>
 
   <hr>
 
+  <div class="d-flex mb-4" *ngIf="video.statistics.commentCount > 0">
+    {{ video.statistics.commentCount }} comments
+
+    <div class="dropdown ml-2">
+      <button class="btn dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-sort"></i>
+        {{ commentThreadOrder[order] }}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="dropdown-item" *ngFor="let key of orderKeys" [attr.hidden]="key == order ? 'hidden' : null"
+          (click)="onChangeOrder(key)">
+          {{ commentThreadOrder[key] }}
+        </button>
+      </div>
+    </div>
+  </div>
+
   <div>
-    <app-video-comments [parentId]="videoId"></app-video-comments>
+    <app-video-comments [parentId]="videoId" [order]="order"></app-video-comments>
   </div>
 </div>

@@ -57,8 +57,6 @@ export class YoutubeIframeService {
     } else {
       event.target.playVideo();
     }
-
-    console.log(this.player.getIframe().innerHTML)
   }
 
   private cleanTime() {
