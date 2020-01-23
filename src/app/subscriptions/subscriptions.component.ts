@@ -42,7 +42,7 @@ export class SubscriptionsComponent implements OnInit {
   loadSubscriptions(): void {
     const maxDescriptionLength = 100;
 
-    const maxResults = 50;
+    const maxResults = 30;
     this.channelService.getSubscriptions(maxResults, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
