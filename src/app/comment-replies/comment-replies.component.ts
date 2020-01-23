@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommentsService } from '../services-singleton/comments.service';
 import { Comment } from '../models/comment/comment';
 
@@ -51,5 +51,4 @@ export class CommentRepliesComponent {
   onHideReplies(): void {
     this.shouldShowReplies = false;
   }
-
 }

@@ -12,3 +12,25 @@ img {
 .replies-container {
   margin-left: 48px;
 }
+
+.dropdown {
+  opacity: 0.6;
+}
+
+.dropdown-button, .dropdown-button:focus, .dropdown-button:hover, .dropdown-menu, .dropdown-item {
+  border: none;
+  background-color: $dark-blue;
+  box-shadow: none;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+}
+
+.dropdown-button.disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.dropdown-menu {
+  margin-bottom: 0.125rem;
+}

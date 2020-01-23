@@ -11,13 +11,17 @@ import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
   templateUrl: './video-comments.component.html',
   styleUrls: ['./video-comments.component.scss']
 })
-export class VideoCommentsComponent implements OnChanges {
+export class VideoCommentsComponent {
 
   @Input() parentId: string;
-  @Input() order: CommentThreadOrder;
+  @Input() commentCount: number;
   nextPageToken: string;
   commentThreads: CommentThread[];
   isFirstPage: boolean = true;
+  order: CommentThreadOrder = CommentThreadOrder.relevance;
+  orderKeys: string[];
+  isOrderButtonDisabled: boolean = false;
+  commentThreadOrder: typeof CommentThreadOrder = CommentThreadOrder;
 
   constructor(
     public formatterService: FormatterService,
@@ -26,10 +30,8 @@ export class VideoCommentsComponent implements OnChanges {
     public domSanitizer: DomSanitizer
   ) {
     this.commentThreads = [];
-  }
-
-  ngOnChanges() {
-    this.resetComments();
+    this.orderKeys = Object.keys(this.commentThreadOrder)
+      .filter(x => (parseInt(x) >= 0));
   }
 
   resetComments(): void {
@@ -53,6 +55,15 @@ export class VideoCommentsComponent implements OnChanges {
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         this.commentThreads.push(...data.items);
+
+        this.isOrderButtonDisabled = false;
       });
+  }
+
+  onChangeOrder(newOrder: CommentThreadOrder): void {
+    this.isOrderButtonDisabled = true;
+
+    this.order = newOrder;
+    this.resetComments();
   }
 }

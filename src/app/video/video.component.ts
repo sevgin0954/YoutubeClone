@@ -28,9 +28,6 @@ export class VideoComponent implements OnInit, AfterViewInit {
   channel: Channel;
   isSubscribed: boolean;
   subscription: Subscription;
-  order: CommentThreadOrder = CommentThreadOrder.relevance;
-  orderKeys: string[];
-  commentThreadOrder: typeof CommentThreadOrder = CommentThreadOrder;
   maxDisplayedCharacters: number = 120;
 
   @ViewChild('likeBtn', { static: false }) likeButton: ElementRef;
@@ -43,10 +40,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
     private channelService: ChannelService,
     private subscriptionsService: SubscriptionsService,
     public formatterService: FormatterService
-  ) {
-    this.orderKeys = Object.keys(this.commentThreadOrder)
-      .filter(x => (parseInt(x) >= 0));
-  }
+  ) { }
 
   ngOnInit(): void {
     const currentUrl = this.route.snapshot.url;
@@ -160,9 +154,5 @@ export class VideoComponent implements OnInit, AfterViewInit {
         this.subscription = undefined;
       }
     });
-  }
-
-  onChangeOrder(newOrder: CommentThreadOrder): void {
-    this.order = newOrder;
   }
 }

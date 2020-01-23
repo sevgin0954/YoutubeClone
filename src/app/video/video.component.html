@@ -61,7 +61,7 @@
 
   <hr>
 
-  <div class="d-flex mb-4" *ngIf="video.statistics.commentCount > 0">
+  <!-- <div class="d-flex mb-4" *ngIf="video.statistics.commentCount > 0">
     {{ video.statistics.commentCount }} comments
 
     <div class="dropdown ml-2">
@@ -77,9 +77,9 @@
         </button>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div>
-    <app-video-comments [parentId]="videoId" [order]="order"></app-video-comments>
+    <app-video-comments [parentId]="videoId" [commentCount]="video.statistics.commentCount"></app-video-comments>
   </div>
 </div>
