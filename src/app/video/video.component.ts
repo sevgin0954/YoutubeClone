@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from '../services-singleton/video.service';
 import { Video } from '../models/video/video';
@@ -8,18 +8,19 @@ import { RatingType } from '../shared/enums/rating-type';
 import { ChannelService } from '../services-singleton/channel.service';
 import { Channel } from '../models/channel/channel';
 import { SubscriptionsService } from '../services-singleton/subscriptions.service';
-import { Subscription } from '../models/subscribption/subscription';
+import { Subscription as VideoSubscribtion } from '../models/subscribption/subscription';
 import { concatMap } from 'rxjs/operators';
 import { Constants } from '../shared/constants';
-import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
+import { Subscription as RxjsSubscribtion } from 'rxjs';
 
 @Component({
   selector: 'app-video',
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss']
 })
-export class VideoComponent implements OnInit, AfterViewInit {
+export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  videoSubscribtion: RxjsSubscribtion;
   baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
   RatingType = RatingType;
   currentRating: RatingType;
@@ -27,7 +28,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
   video: Video;
   channel: Channel;
   isSubscribed: boolean;
-  subscription: Subscription;
+  subscription: VideoSubscribtion;
   maxDisplayedCharacters: number = 120;
 
   @ViewChild('likeBtn', { static: false }) likeButton: ElementRef;
@@ -48,7 +49,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
 
     this.youtubeIframeService.init(this.videoId);
 
-    this.videoService.getById(this.videoId).pipe(
+    const videoSubscribtion = this.videoService.getById(this.videoId).pipe(
       concatMap(video => {
         this.video = video;
 
@@ -68,6 +69,10 @@ export class VideoComponent implements OnInit, AfterViewInit {
         this.isSubscribed = false;
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.videoSubscribtion.unsubscribe();
   }
 
   ngAfterViewInit(): void {

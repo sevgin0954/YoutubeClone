@@ -1,17 +1,19 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Channel } from '../models/channel/channel';
 import { ChannelService } from '../services-singleton/channel.service';
 import { WindowService } from '../services-singleton/window.service';
 import { Constants } from '../shared/constants';
 import { FormatterService } from '../services-singleton/formatter.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-subscriptions',
   templateUrl: './subscriptions.component.html',
   styleUrls: ['./subscriptions.component.scss']
 })
-export class SubscriptionsComponent implements OnInit {
+export class SubscriptionsComponent implements OnInit, OnDestroy {
 
+  channelsSubscribtion: Subscription;
   baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
   channels: Channel[];
   isFirstPage: boolean = true;
@@ -39,11 +41,15 @@ export class SubscriptionsComponent implements OnInit {
     this.loadSubscriptions();
   }
 
+  ngOnDestroy() {
+    this.channelsSubscribtion.unsubscribe()
+  }
+
   loadSubscriptions(): void {
     const maxDescriptionLength = 100;
 
     const maxResults = 30;
-    this.channelService.getSubscriptions(maxResults, this.nextPageToken)
+    this.channelsSubscribtion = this.channelService.getSubscriptions(maxResults, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         data.items.forEach(currentChannel => {

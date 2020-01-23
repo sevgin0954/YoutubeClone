@@ -1,20 +1,22 @@
-import { Component, HostListener, Input, OnChanges } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy } from '@angular/core';
 import { WindowService } from '../services-singleton/window.service';
 import { CommentThreadsService } from '../services-singleton/comment-threads.service';
 import { CommentThread } from '../models/comment/comment-thread';
 import { FormatterService } from '../services-singleton/formatter.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-video-comments',
   templateUrl: './video-comments.component.html',
   styleUrls: ['./video-comments.component.scss']
 })
-export class VideoCommentsComponent {
+export class VideoCommentsComponent implements OnDestroy {
 
   @Input() parentId: string;
   @Input() commentCount: number;
+  videoSubscribtion: Subscription;
   nextPageToken: string;
   commentThreads: CommentThread[];
   isFirstPage: boolean = true;
@@ -51,7 +53,7 @@ export class VideoCommentsComponent {
   }
 
   loadComments(): void {
-    this.commentThreadsService.getByVideoId(this.parentId, this.order, this.nextPageToken)
+    this.videoSubscribtion = this.commentThreadsService.getByVideoId(this.parentId, this.order, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         this.commentThreads.push(...data.items);
@@ -65,5 +67,9 @@ export class VideoCommentsComponent {
 
     this.order = newOrder;
     this.resetComments();
+  }
+
+  ngOnDestroy(): void {
+    this.videoSubscribtion.unsubscribe();
   }
 }
