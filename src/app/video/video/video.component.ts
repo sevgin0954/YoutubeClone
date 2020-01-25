@@ -1,17 +1,17 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { VideoService } from '../services-singleton/video.service';
-import { Video } from '../models/video/video';
-import { FormatterService } from '../services-singleton/formatter.service';
-import { YoutubeIframeService } from '../services-singleton/youtube-iframe.service';
-import { RatingType } from '../shared/enums/rating-type';
-import { ChannelService } from '../services-singleton/channel.service';
-import { Channel } from '../models/channel/channel';
-import { SubscriptionsService } from '../services-singleton/subscriptions.service';
-import { Subscription as VideoSubscribtion } from '../models/subscribption/subscription';
 import { concatMap } from 'rxjs/operators';
-import { Constants } from '../shared/constants';
 import { Subscription as RxjsSubscribtion } from 'rxjs';
+import { Constants } from 'src/app/shared/constants';
+import { RatingType } from 'src/app/shared/enums/rating-type';
+import { Video } from 'src/app/models/video/video';
+import { Channel } from 'src/app/models/channel/channel';
+import { VideoService } from 'src/app/services-singleton/video.service';
+import { YoutubeIframeService } from 'src/app/services-singleton/youtube-iframe.service';
+import { ChannelService } from 'src/app/services-singleton/channel.service';
+import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.service';
+import { FormatterService } from 'src/app/services-singleton/formatter.service';
+import { Subscription as VideoSubscribtion } from 'src/app/models/subscribption/subscription';
 
 @Component({
   selector: 'app-video',
@@ -45,7 +45,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     const currentUrl = this.route.snapshot.url;
-    this.videoId = currentUrl[1].toString();
+    this.videoId = currentUrl[0].toString();
 
     this.youtubeIframeService.init(this.videoId);
 
