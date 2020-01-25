@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Comment } from '../models/comment/comment';
+import { FormatterService } from '../services-singleton/formatter.service';
 
 @Component({
   selector: 'app-comment',
@@ -7,6 +8,10 @@ import { Comment } from '../models/comment/comment';
   styleUrls: ['./comment.component.scss']
 })
 export class CommentComponent {
+
+  constructor(
+    private formatterService: FormatterService
+  ) { }
 
   @Input() comment: Comment;
   maxDisplayedCharacters: number = 100;

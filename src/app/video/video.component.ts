@@ -49,7 +49,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.youtubeIframeService.init(this.videoId);
 
-    const videoSubscribtion = this.videoService.getById(this.videoId).pipe(
+    this.videoSubscribtion = this.videoService.getById(this.videoId).pipe(
       concatMap(video => {
         this.video = video;
 
