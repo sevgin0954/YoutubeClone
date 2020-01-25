@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { CommentsService } from '../services-singleton/comments.service';
-import { Comment } from '../models/comment/comment';
+import { CommentsService } from 'src/app/services-singleton/comments.service';
+import { Comment } from 'src/app/models/comment/comment';
 
 @Component({
   selector: 'app-comment-replies',

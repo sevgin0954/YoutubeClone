@@ -1,11 +1,11 @@
 import { Component, HostListener, Input, OnDestroy } from '@angular/core';
-import { WindowService } from '../services-singleton/window.service';
-import { CommentThreadsService } from '../services-singleton/comment-threads.service';
-import { CommentThread } from '../models/comment/comment-thread';
-import { FormatterService } from '../services-singleton/formatter.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
 import { Subscription } from 'rxjs';
+import { CommentThread } from 'src/app/models/comment/comment-thread';
+import { CommentThreadOrder } from 'src/app/shared/enums/comment-thread-order';
+import { FormatterService } from 'src/app/services-singleton/formatter.service';
+import { WindowService } from 'src/app/services-singleton/window.service';
+import { CommentThreadsService } from 'src/app/services-singleton/comment-threads.service';
 
 @Component({
   selector: 'app-video-comments',
@@ -70,6 +70,8 @@ export class VideoCommentsComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.videoSubscribtion.unsubscribe();
+    if (this.videoSubscribtion) {
+      this.videoSubscribtion.unsubscribe();
+    }
   }
 }

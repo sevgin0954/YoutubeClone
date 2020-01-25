@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Comment } from '../models/comment/comment';
-import { FormatterService } from '../services-singleton/formatter.service';
+import { FormatterService } from 'src/app/services-singleton/formatter.service';
+import { Comment } from 'src/app/models/comment/comment';
 
 @Component({
   selector: 'app-comment',
