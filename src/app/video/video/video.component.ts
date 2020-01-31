@@ -1,17 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { concatMap } from 'rxjs/operators';
+
 import { Subscription as RxjsSubscribtion } from 'rxjs';
 import { Constants } from 'src/app/shared/constants';
 import { RatingType } from 'src/app/shared/enums/rating-type';
 import { Video } from 'src/app/models/video/video';
-import { Channel } from 'src/app/models/channel/channel';
 import { VideoService } from 'src/app/services-singleton/video.service';
 import { YoutubeIframeService } from 'src/app/services-singleton/youtube-iframe.service';
-import { ChannelService } from 'src/app/services-singleton/channel.service';
-import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.service';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
-import { Subscription as VideoSubscribtion } from 'src/app/models/subscribption/subscription';
 
 @Component({
   selector: 'app-video',
@@ -24,11 +20,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
   RatingType = RatingType;
   currentRating: RatingType;
+  channelId: string;
   videoId: string;
   video: Video;
-  channel: Channel;
-  isSubscribed: boolean;
-  subscription: VideoSubscribtion;
   maxDisplayedCharacters: number = 120;
 
   @ViewChild('likeBtn', { static: false }) likeButton: ElementRef;
@@ -38,8 +32,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private videoService: VideoService,
     private youtubeIframeService: YoutubeIframeService,
-    private channelService: ChannelService,
-    private subscriptionsService: SubscriptionsService,
     public formatterService: FormatterService
   ) { }
 
@@ -49,25 +41,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.youtubeIframeService.init(this.videoId);
 
-    this.videoSubscribtion = this.videoService.getById(this.videoId).pipe(
-      concatMap(video => {
-        this.video = video;
-
-        return this.channelService.getById(this.video.snippet.channelId);
-      }),
-      concatMap(channel => {
-        this.channel = channel;
-
-        return this.subscriptionsService.getById(this.channel.id);
-      })
-    ).subscribe(subscribtion => {
-      if (subscribtion) {
-        this.isSubscribed = true;
-        this.subscription = subscribtion;
-      }
-      else {
-        this.isSubscribed = false;
-      }
+    this.videoSubscribtion = this.videoService.getById(this.videoId).subscribe(video => {
+      this.video = video;
+      this.channelId = video.snippet.channelId;
     });
   }
 
@@ -141,22 +117,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       else {
         // TODO: Throw exception
-      }
-    });
-  }
-
-  onSubscribe(): void {
-    this.subscriptionsService.subscribe(this.channel.id).subscribe(data => {
-      this.isSubscribed = true;
-      this.subscription = data;
-    });
-  }
-
-  onUnsubscribe(): void {
-    this.subscriptionsService.unsubscribe(this.subscription.id).subscribe(data => {
-      if (data >= 200 && data <= 299) {
-        this.isSubscribed = false;
-        this.subscription = undefined;
       }
     });
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { AuthService } from '../services-singleton/auth.service';
 
 @Component({
@@ -36,9 +37,11 @@ export class SigninComponent implements OnInit {
       window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=576498499876-u841pl14j9pdgemtlaqk1a6tjih8vb2c.apps.googleusercontent.com&' +
       'redirect_uri=http://localhost:4200/signin&' +
       'response_type=token&' +
-      'scope=https://www.googleapis.com/auth/youtube.readonly ' +
+      'scope=' +
+      'https://www.googleapis.com/auth/youtube.readonly ' +
       'https://www.googleapis.com/auth/youtube.upload ' +
-      'https://www.googleapis.com/auth/youtube.force-ssl';
+      'https://www.googleapis.com/auth/youtube.force-ssl ' +
+      'https://www.googleapis.com/auth/youtubepartner';
     }
   }
 

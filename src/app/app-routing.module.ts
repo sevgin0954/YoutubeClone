@@ -9,7 +9,8 @@ const routes: Routes = [
   { path: 'trending', component: MostPopularComponent },
   { path: 'signin', component: SigninComponent },
   { path: 'subscriptions', component: SubscriptionsComponent },
-  { path: 'video', loadChildren: './video/video.module#VideoModule' }
+  { path: 'video', loadChildren: './video/video.module#VideoModule' },
+  { path: 'channel', loadChildren: './channel/channel.module#ChannelModule' }
 ];
 
 @NgModule({

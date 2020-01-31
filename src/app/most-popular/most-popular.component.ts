@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+
 import { Video } from '../models/video/video';
 import { VideoService } from '../services-singleton/video.service';
 import { WindowService } from '../services-singleton/window.service';

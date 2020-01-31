@@ -38,7 +38,7 @@ export class ChannelService {
 
   getById(id: string): Observable<Channel> {
     const queryParams: any = {
-      part: 'snippet,statistics',
+      part: 'snippet,statistics,brandingSettings',
       id: id
     };
     const url = new Url(Constants.BASE_URL, ['channels'], queryParams);

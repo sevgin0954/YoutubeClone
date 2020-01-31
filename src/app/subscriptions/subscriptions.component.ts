@@ -1,8 +1,8 @@
 import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+
 import { Channel } from '../models/channel/channel';
 import { ChannelService } from '../services-singleton/channel.service';
 import { WindowService } from '../services-singleton/window.service';
-import { Constants } from '../shared/constants';
 import { FormatterService } from '../services-singleton/formatter.service';
 import { Subscription } from 'rxjs';
 
@@ -14,7 +14,6 @@ import { Subscription } from 'rxjs';
 export class SubscriptionsComponent implements OnInit, OnDestroy {
 
   channelsSubscribtion: Subscription;
-  baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
   channels: Channel[];
   isFirstPage: boolean = true;
   nextPageToken: string;

@@ -25,34 +25,7 @@
 
   <hr>
 
-  <div class="d-flex">
-    <div class="d-flex" *ngIf="channel">
-      <a href="{{ baseChannelUrl + video.snippet.channelId }}">
-        <img class="channel-thumbnail" src="{{ channel.snippet.thumbnails.default.url }}"
-          alt="Yotube channel {{ channel.snippet.title }} thumbnail">
-      </a>
-
-      <div class="ml-2">
-        <a class="channel-title" href="{{ baseChannelUrl + video.snippet.channelId }}">
-          {{ channel.snippet.title }}
-        </a>
-
-        <div class="info-small">
-          <span *ngIf="channel.statistics.hiddenSubscriberCount === false">
-            {{ formatterService.getFormattedNumberString(channel.statistics.subscriberCount) }}
-          </span>
-          <span *ngIf="channel.statistics.hiddenSubscriberCount === true">
-            hidden
-          </span> subscribers
-        </div>
-      </div>
-    </div>
-
-    <div class="ml-auto">
-      <button class="btn btn-blue" *ngIf="isSubscribed === false" (click)="onSubscribe()">Subscribe</button>
-      <button class="btn btn-white" *ngIf="isSubscribed === true" (click)="onUnsubscribe()">Subscribed</button>
-    </div>
-  </div>
+  <app-channel-mini [channelId]="channelId"></app-channel-mini>
 
   <div class="angular-with-newlines">
     <app-text-reveal [text]="video.snippet.description" [maxDisplayedCharacters]="maxDisplayedCharacters">
@@ -60,24 +33,6 @@
   </div>
 
   <hr>
-
-  <!-- <div class="d-flex mb-4" *ngIf="video.statistics.commentCount > 0">
-    {{ video.statistics.commentCount }} comments
-
-    <div class="dropdown ml-2">
-      <button class="btn dropdown-button" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-sort"></i>
-        {{ commentThreadOrder[order] }}
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <button class="dropdown-item" *ngFor="let key of orderKeys" [attr.hidden]="key == order ? 'hidden' : null"
-          (click)="onChangeOrder(key)">
-          {{ commentThreadOrder[key] }}
-        </button>
-      </div>
-    </div>
-  </div> -->
 
   <div>
     <app-video-comments [parentId]="videoId" [commentCount]="video.statistics.commentCount"></app-video-comments>

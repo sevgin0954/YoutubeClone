@@ -1,5 +1,5 @@
 <div class="channelsContainer">
-  <a class="channel" href="{{ baseChannelUrl + channel.snippet.channelId }}"
+  <a class="channel" routerLink="/channel/{{ channel.snippet.resourceId.channelId }}"
   *ngFor="let channel of channels">
     <img class="thumbnail" src="{{ channel.snippet.thumbnails.medium.url }}" alt="{{ channel.snippet.title }}">
 

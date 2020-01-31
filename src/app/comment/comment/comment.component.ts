@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Comment } from 'src/app/models/comment/comment';
 

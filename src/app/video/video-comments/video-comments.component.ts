@@ -1,5 +1,6 @@
 import { Component, HostListener, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+
 import { Subscription } from 'rxjs';
 import { CommentThread } from 'src/app/models/comment/comment-thread';
 import { CommentThreadOrder } from 'src/app/shared/enums/comment-thread-order';

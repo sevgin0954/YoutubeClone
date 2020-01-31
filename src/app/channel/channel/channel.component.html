@@ -1,0 +1,31 @@
+<div *ngIf="channel$ | async as channel">
+  <picture>
+    <source media="(max-width: calc(320px + 185px))" srcset="{{
+      channel.brandingSettings.image.bannerMobileLowImageUrl }}">
+
+    <source media="(max-width: calc(640px + 185px))" srcset="{{
+      channel.brandingSettings.image.bannerMobileImageUrl }}">
+
+    <source media="(max-width: calc(960px + 185px))" srcset="{{
+      channel.brandingSettings.image.bannerMobileMediumHdImageUrl }}">
+
+    <source media="(max-width: calc(1060px + 185px))" srcset="{{
+      channel.brandingSettings.image.bannerImageUrl }}">
+
+    <source media="(max-width: calc(1138px + 185px))" srcset="{{
+      channel.brandingSettings.image.bannerTabletLowImageUrl }}">
+
+    <source media="(max-width: calc(1707px + 185px))" srcset="{{
+      channel.brandingSettings.image.bannerTabletImageUrl }}">
+
+    <source media="(max-width: 2560px)" srcset="{{
+      channel.brandingSettings.image.bannerTabletExtraHdImageUrl }}">
+
+    <img src="{{
+      channel.brandingSettings.image.bannerTabletExtraHdImageUrl }}">
+  </picture>
+
+  <div class="ml-4 mr-4 mt-4 mb-4">
+    <app-channel-mini [channelId]="channel.id"></app-channel-mini>
+  </div>
+</div>
