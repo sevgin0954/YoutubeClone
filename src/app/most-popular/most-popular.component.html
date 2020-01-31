@@ -13,7 +13,7 @@
     </div>
 
     <div class="info-small mb-2">
-      <a class="channel-title" href="{{ baseChannelUrl + video.snippet.channelId }}">
+      <a class="channel-title" routerLink="/channel/{{ video.snippet.channelId }}">
         {{ video.snippet.channelTitle }}
       </a> -
       {{ formatterService.getFormattedNumberString(video.statistics.viewCount) }} -
