@@ -46,7 +46,8 @@ body {
 }
 
 .channel-thumbnail {
-  width: 3rem;
+  height: $channel-thumbnail-height;
+  width: $channel-thumbnail-width;
   border-radius: 50%;
 }
 

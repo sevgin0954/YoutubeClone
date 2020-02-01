@@ -1,5 +1,21 @@
+@import '../../../variables.scss';
+
 img {
   max-width: 100%;
   height: auto;
-  // height: 180px;
+}
+
+:host ::ng-deep {
+  .channel-thumbnail {
+    width: calc(#{$channel-thumbnail-height} * 1.1);
+    height: calc(#{$channel-thumbnail-width} * 1.1);
+  }
+
+  .channel-title {
+    font-size: 110%;
+  }
+
+  .info-small {
+    font-size: calc(0.9rem * 1.1);
+  }
 }

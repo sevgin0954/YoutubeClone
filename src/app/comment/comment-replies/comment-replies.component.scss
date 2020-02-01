@@ -2,8 +2,8 @@
 
 :host ::ng-deep {
   .channel-thumbnail {
-    width: calc(48px * 0.9);
-    height: calc(48px * 0.9);
+    width: calc(#{$channel-thumbnail-height} * 0.9);
+    height: calc(#{$channel-thumbnail-width} * 0.9);
   }
 
   .channel-title {
