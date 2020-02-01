@@ -17,7 +17,6 @@ import { FormatterService } from 'src/app/services-singleton/formatter.service';
 export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
   videoSubscribtion: RxjsSubscribtion;
-  baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
   RatingType = RatingType;
   currentRating: RatingType;
   channelId: string;

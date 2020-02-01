@@ -17,7 +17,6 @@ export class MostPopularComponent implements OnInit, OnDestroy {
   videosSubscription: Subscription;
   videos: Video[];
   nextPageToken: string;
-  baseChannelUrl: string = Constants.BASE_CHANNEL_URL;
 
   constructor(
     private videoService: VideoService,

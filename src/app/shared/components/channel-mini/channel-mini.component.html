@@ -1,5 +1,5 @@
-<div class="d-flex">
-  <div class="d-flex" *ngIf="channel">
+<div class="main-container">
+  <div class="d-flex mr-auto mb-2 channel-container" *ngIf="channel">
     <a routerLink="/channel/{{ channelId }}">
       <img class="channel-thumbnail" src="{{ channel.snippet.thumbnails.default.url }}"
         alt="Yotube channel {{ channel.snippet.title }} thumbnail">
@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <div class="ml-auto">
+  <div>
     <button class="btn btn-blue" *ngIf="isSubscribed === false" (click)="onSubscribe()">Subscribe</button>
     <button class="btn btn-white" *ngIf="isSubscribed === true" (click)="onUnsubscribe()">Subscribed</button>
   </div>

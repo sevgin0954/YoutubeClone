@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 import { ChannelComponent } from './channel/channel.component';
 import { SharedModule } from '../shared/shared.module';
+import { PlaylistModule } from '../playlist/playlist.module';
+import { ChannelSectionsComponent } from './channel-sections/channel-sections.component';
 
 const routes: Routes = [
   { path: ':id', component: ChannelComponent }
@@ -10,12 +13,14 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    ChannelComponent
+    ChannelComponent,
+    ChannelSectionsComponent
   ],
   imports: [
     RouterModule.forChild(routes),
-    CommonModule,
-    SharedModule
+    SharedModule,
+    PlaylistModule,
+    CommonModule
   ]
 })
 export class ChannelModule { }
