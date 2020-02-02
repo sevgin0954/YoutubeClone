@@ -10,6 +10,7 @@ import { Video } from 'src/app/models/video/video';
 export class VideoInfoComponent {
 
   @Input() video: Video;
+  @Input() titleMaxLength: number;
 
   constructor(
     public formatterService: FormatterService

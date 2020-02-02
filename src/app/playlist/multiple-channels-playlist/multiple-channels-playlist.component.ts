@@ -12,4 +12,5 @@ export class MultipleChannelsPlaylistComponent {
   @Input() channelIds: string[];
   @Input() title: string;
   @Input() style: SnippetStyle;
+  snippetStyle: typeof SnippetStyle = SnippetStyle;
 }

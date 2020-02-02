@@ -1,1 +1,13 @@
+:host ::ng-deep {
+  .thumbnail {
+    width: 246px;
+    margin-right: 1rem;
+  }
+}
 
+.video-container {
+  display: flex;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-left: 1rem;
+}

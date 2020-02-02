@@ -17,14 +17,14 @@ export class VideoCommentsComponent implements OnDestroy {
 
   @Input() parentId: string;
   @Input() commentCount: number;
-  videoSubscribtion: Subscription;
-  nextPageToken: string;
   commentThreads: CommentThread[];
-  isFirstPage: boolean = true;
   order: CommentThreadOrder = CommentThreadOrder.relevance;
   orderKeys: string[];
   isOrderButtonDisabled: boolean = false;
   commentThreadOrder: typeof CommentThreadOrder = CommentThreadOrder;
+  private nextPageToken: string;
+  private isFirstPage: boolean = true;
+  private videoSubscribtion: Subscription;
 
   constructor(
     public formatterService: FormatterService,

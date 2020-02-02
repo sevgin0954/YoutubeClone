@@ -13,10 +13,10 @@ import { Subscription } from 'rxjs';
 })
 export class SubscriptionsComponent implements OnInit, OnDestroy {
 
-  channelsSubscribtion: Subscription;
   channels: Channel[];
-  isFirstPage: boolean = true;
-  nextPageToken: string;
+  private isFirstPage: boolean = true;
+  private nextPageToken: string;
+  private channelsSubscribtion: Subscription;
 
   constructor(
     private formatterService: FormatterService,

@@ -10,13 +10,13 @@ import { Comment } from 'src/app/models/comment/comment';
 })
 export class CommentRepliesComponent {
 
-  @Input() parentId: string;
   @Input() totalRepliesCount: number;
+  @Input() private parentId: string;
   comments: Comment[] = [];
-  nextPageToken: string;
-  isFirstPage: boolean = true;
   shouldShowReplies: boolean = false;
   shouldShowMoreReplies: boolean = false;
+  private isFirstPage: boolean = true;
+  private nextPageToken: string;
 
   constructor(
     private commentsService: CommentsService

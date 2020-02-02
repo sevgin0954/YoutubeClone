@@ -15,11 +15,11 @@ import { Subscription as RxjsSubscription } from 'rxjs';
 })
 export class ChannelMiniComponent implements OnChanges, OnDestroy {
 
-  rxjsSubscription: RxjsSubscription;
   @Input() channelId: string;
-  isSubscribed: boolean;
-  videoSubscription: VideoSubscribtion;
   channel: Channel;
+  isSubscribed: boolean;
+  private videoSubscription: VideoSubscribtion;
+  private rxjsSubscription: RxjsSubscription;
 
   constructor(
     private channelService: ChannelService,

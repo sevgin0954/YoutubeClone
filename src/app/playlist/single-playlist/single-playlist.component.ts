@@ -6,6 +6,7 @@ import { VideoService } from 'src/app/services-singleton/video.service';
 import { concatMap } from 'rxjs/operators';
 import { Video } from 'src/app/models/video/video';
 import { Observable } from 'rxjs';
+import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 
 @Component({
   selector: 'app-single-playlist',
@@ -14,9 +15,11 @@ import { Observable } from 'rxjs';
 })
 export class SinglePlaylistComponent implements OnChanges {
 
-  @Input() playlistId: string;
+  @Input() private playlistId: string;
   @Input() style: SnippetStyle;
   videos$: Observable<Video[]>;
+  videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
+  videoTitleMaxLength: number = 35;
 
   constructor(
     private playlistService: PlaylistService,

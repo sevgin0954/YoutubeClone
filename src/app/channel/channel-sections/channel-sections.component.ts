@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ChannelSectionService } from 'src/app/services-singleton/channel-section.service';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { SnippetType } from 'src/app/shared/enums/snippet-type';
+import { SnippetStyle } from 'src/app/shared/enums/snippet-style';
 
 @Component({
   selector: 'app-channel-sections',
@@ -14,6 +15,7 @@ export class ChannelSectionsComponent implements OnInit {
   @Input() channelId: string;
   multipleChannelsSection: ChannelSection[];
   singlePlaylistSection: ChannelSection[];
+  snippetStyle: typeof SnippetStyle = SnippetStyle;
 
   constructor(
     private channelSectionService: ChannelSectionService

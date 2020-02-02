@@ -5,6 +5,8 @@ import { VideoService } from '../services-singleton/video.service';
 import { WindowService } from '../services-singleton/window.service';
 import { FormatterService } from '../services-singleton/formatter.service';
 import { Subscription } from 'rxjs';
+import { VideoThumbnailSize } from '../shared/enums/video-thumbnail-size';
+import { Constants } from '../shared/constants';
 
 @Component({
   selector: 'app-most-popular',
@@ -13,9 +15,11 @@ import { Subscription } from 'rxjs';
 })
 export class MostPopularComponent implements OnInit, OnDestroy {
 
-  videosSubscription: Subscription;
   videos: Video[];
-  nextPageToken: string;
+  videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
+  videoTitleMaxLength: number = Constants.TITLE_MAX_LENGTH;
+  private nextPageToken: string;
+  private videosSubscription: Subscription;
 
   constructor(
     private videoService: VideoService,

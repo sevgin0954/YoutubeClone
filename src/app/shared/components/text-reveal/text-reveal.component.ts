@@ -7,10 +7,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TextRevealComponent implements OnInit {
 
-  @Input() text: string;
-  @Input() maxDisplayedCharacters: number;
-  shouldShowButtons: boolean;
+  @Input() private text: string;
+  @Input() private  maxDisplayedCharacters: number;
 
+  shouldShowButtons: boolean;
   isTextShown: boolean = false;
   displayedText: string;
   hiddenText: string;

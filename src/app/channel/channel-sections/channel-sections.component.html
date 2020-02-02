@@ -3,7 +3,7 @@
 
   <app-single-playlist
     [playlistId]="signleSection.contentDetails.playlists[0]"
-    [style]="signleSection.snippet.style">
+    [style]="snippetStyle[signleSection.snippet.style]">
   </app-single-playlist>
 </div>
 
@@ -13,6 +13,6 @@
   <app-multiple-channels-playlist
     [channelIds]="channelsSection.contentDetails.channels"
     [title]="channelsSection.snippet.title"
-    [style]="channelsSection.snippet.style">
+    [style]="snippetStyle[channelsSection.snippet.style]">
   </app-multiple-channels-playlist>
 </div>

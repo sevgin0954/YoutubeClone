@@ -11,7 +11,7 @@ import { Comment } from 'src/app/models/comment/comment';
 export class CommentComponent {
 
   constructor(
-    private formatterService: FormatterService
+    public formatterService: FormatterService
   ) { }
 
   @Input() comment: Comment;
