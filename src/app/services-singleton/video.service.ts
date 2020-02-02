@@ -45,22 +45,21 @@ export class VideoService {
     }
   }
 
-  getById(id: string): Observable<Video> {
+  getByIds(...ids: string[]): Observable<Video[]> {
     const queryParams = {
       part: 'snippet,contentDetails,statistics',
-      id: id
+      id: ids.join(',')
     };
-
     const url = new Url(BASE_URL, [], queryParams);
     const data$ = this.http.get(url.toString())
       .pipe(
-        pluck('items'),
-        map(data => data[0])
+        pluck<any, Video[]>('items')
       );
 
     return data$;
   }
 
+  // TODO: Move to another class
   getRating(id: string): Observable<RatingType> {
     const queryParams = {
       id: id

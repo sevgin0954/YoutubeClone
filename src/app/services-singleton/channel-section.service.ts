@@ -7,6 +7,8 @@ import { Url } from '../shared/url';
 import { Constants } from '../shared/constants';
 import { pluck } from 'rxjs/operators';
 
+const PATH = 'channelSections';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -21,7 +23,7 @@ export class ChannelSectionService {
       part: 'snippet,contentDetails',
       channelId: channelId
     };
-    const url = new Url(Constants.BASE_CHANNEL_SECTION_URL, [], queryParams)
+    const url = new Url(Constants.BASE_URL, [PATH], queryParams)
     const data$ = this.http.get(url.toString()).pipe(
       pluck<any, ChannelSection[]>('items')
     );

@@ -4,15 +4,19 @@ import { CommonModule } from '@angular/common';
 import { MultipleChannelsPlaylistComponent } from './multiple-channels-playlist/multiple-channels-playlist.component';
 import { SharedModule } from '../shared/shared.module';
 import { SinglePlaylistComponent } from './single-playlist/single-playlist.component';
+import { MultiplePlaylistsComponent } from './multiple-playlists/multiple-playlists.component';
+import { VideoMiniModule } from '../video-mini/video-mini.module';
 
 @NgModule({
   declarations: [
     MultipleChannelsPlaylistComponent,
-    SinglePlaylistComponent
+    SinglePlaylistComponent,
+    MultiplePlaylistsComponent
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    VideoMiniModule
   ],
   exports: [
     MultipleChannelsPlaylistComponent,

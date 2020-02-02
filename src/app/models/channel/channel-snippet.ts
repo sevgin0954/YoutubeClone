@@ -1,5 +1,5 @@
-import { Thumbnail } from '../thumbnail';
 import { ChannelResource } from './channel-resource';
+import { Thumbnail } from '../thumbnail/thumbnail';
 
 export interface ChannelSnippet {
   title: string,

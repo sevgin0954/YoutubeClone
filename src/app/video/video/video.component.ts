@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, ViewChild, AfterViewInit, OnDestroy } fr
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription as RxjsSubscribtion } from 'rxjs';
-import { Constants } from 'src/app/shared/constants';
 import { RatingType } from 'src/app/shared/enums/rating-type';
 import { Video } from 'src/app/models/video/video';
 import { VideoService } from 'src/app/services-singleton/video.service';
@@ -40,9 +39,9 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.youtubeIframeService.init(this.videoId);
 
-    this.videoSubscribtion = this.videoService.getById(this.videoId).subscribe(video => {
-      this.video = video;
-      this.channelId = video.snippet.channelId;
+    this.videoSubscribtion = this.videoService.getByIds(this.videoId).subscribe(videos => {
+      this.video = videos[0];
+      this.channelId = this.video.snippet.channelId;
     });
   }
 

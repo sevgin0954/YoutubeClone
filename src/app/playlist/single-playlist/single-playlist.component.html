@@ -1,1 +1,6 @@
-<p>single-playlist works!</p>
+<div class="d-flex">
+  <div *ngFor="let video of videos$ | async">
+    <app-video-thumbnail [video]="video"></app-video-thumbnail>
+    <app-video-info [video]="video"></app-video-info>
+  </div>
+</div>

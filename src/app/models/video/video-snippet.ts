@@ -1,4 +1,4 @@
-import { Thumbnail } from '../thumbnail';
+import { VideoThumbnails } from '../thumbnail/video-thumbnails';
 
 
 export interface VideoSnippet {
@@ -6,12 +6,7 @@ export interface VideoSnippet {
   channelId: string,
   title: string,
   description: string,
-  thumbnails: {
-    default: Thumbnail,
-    high: Thumbnail,
-    medium: Thumbnail,
-    standard: Thumbnail
-  },
+  thumbnails: VideoThumbnails,
   channelTitle: string,
   tags: string[],
   categoryId :string,

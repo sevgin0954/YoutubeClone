@@ -4,7 +4,6 @@ import { Video } from '../models/video/video';
 import { VideoService } from '../services-singleton/video.service';
 import { WindowService } from '../services-singleton/window.service';
 import { FormatterService } from '../services-singleton/formatter.service';
-import { Constants } from '../shared/constants';
 import { Subscription } from 'rxjs';
 
 @Component({

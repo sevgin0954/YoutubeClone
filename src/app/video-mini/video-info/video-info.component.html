@@ -1,0 +1,13 @@
+<div>
+  <a class="video-title" routerLink="/video/{{ video.id }}">
+    {{ video.snippet.title }}
+  </a>
+</div>
+
+<div class="info-small mb-2">
+  <a class="channel-title" routerLink="/channel/{{ video.snippet.channelId }}">
+    {{ video.snippet.channelTitle }}
+  </a> -
+  {{ formatterService.getFormattedNumberString(video.statistics.viewCount) }} -
+  {{ formatterService.getDateFromNowString(video.snippet.publishedAt) }}
+</div>

@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { NavbarSideComponent } from './navbar-side/navbar-side.component';
 import { CommentModule } from './comment/comment.module';
+import { VideoMiniModule } from './video-mini/video-mini.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { CommentModule } from './comment/comment.module';
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
-    CommentModule
+    CommentModule,
+    VideoMiniModule
   ],
   providers: [
     {
