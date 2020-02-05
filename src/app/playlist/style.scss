@@ -1,0 +1,40 @@
+@import './../../variables.scss';
+@import './variables.scss';
+
+:host ::ng-deep {
+  .thumbnail {
+    width: $thumbnail-width;
+  }
+
+  .video-title {
+    font-size: 1rem;
+  }
+}
+
+.playlist {
+  height: 157px;
+  display: flex;
+}
+
+.playlist-element {
+  width: $thumbnail-width;
+  margin-right: $video-margin;
+  margin-bottom: 2rem;
+}
+.playlist-element:first-child {
+  padding-left: 0;
+  margin-left: 0;
+}
+.playlist-element:last-child {
+  padding-right: 0;
+}
+
+.btn-arrow {
+  font-size: 1.1rem;
+  background-color: $dark-blue;
+  color: $light-blue;
+  border: none;
+}
+.btn-arrow:first-child {
+  margin-right: $video-margin;
+}

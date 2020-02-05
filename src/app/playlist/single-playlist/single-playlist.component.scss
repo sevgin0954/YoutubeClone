@@ -1,14 +1,5 @@
-:host ::ng-deep {
-  .thumbnail {
-    width: 200px;
-  }
+@import './../style.scss';
 
-  .video-title {
-    font-size: 1rem;
-  }
-}
-
-.playlist-element {
-  width: 200px;
-  margin-right: 20px;
+.playlist {
+  height: 214px;
 }

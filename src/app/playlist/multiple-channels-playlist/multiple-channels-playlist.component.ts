@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-
-import { SnippetStyle } from 'src/app/shared/enums/snippet-style';
+import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
+import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 
 @Component({
   selector: 'app-multiple-channels-playlist',
@@ -9,8 +9,8 @@ import { SnippetStyle } from 'src/app/shared/enums/snippet-style';
 })
 export class MultipleChannelsPlaylistComponent {
 
-  @Input() channelIds: string[];
+  @Input() private channelSection: ChannelSection;
   @Input() title: string;
-  @Input() style: SnippetStyle;
-  snippetStyle: typeof SnippetStyle = SnippetStyle;
+  @Input() style: ChannelSectionStyle;
+  snippetStyle: typeof ChannelSectionStyle = ChannelSectionStyle;
 }
