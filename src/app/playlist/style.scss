@@ -38,3 +38,7 @@
 .btn-arrow:first-child {
   margin-right: $video-margin;
 }
+.btn-arrow:disabled {
+  background-color: gray;
+  opacity: 40%;
+}
