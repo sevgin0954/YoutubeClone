@@ -10,4 +10,23 @@ export class WindowService {
       callback();
     }
   }
+
+  isElementOverflowing(element: HTMLElement): boolean {
+    let isOverflowing = false;
+
+    let rect: DOMRect = element.getBoundingClientRect();
+    if (rect.right === 0) {
+      element.removeAttribute('hidden');
+
+      rect = element.getBoundingClientRect();
+      isOverflowing = this.isElementOverflowing(element);
+
+      element.setAttribute('hidden', 'hidden');
+    }
+    else if (rect.right + 90 > window.screen.width) {
+      isOverflowing = true;
+    }
+
+    return isOverflowing;
+  }
 }

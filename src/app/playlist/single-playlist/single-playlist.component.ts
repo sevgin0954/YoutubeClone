@@ -9,6 +9,7 @@ import { concatMap } from 'rxjs/operators';
 import { Video } from 'src/app/models/video/video';
 import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
+import { WindowService } from 'src/app/services-singleton/window.service';
 
 const MAX_PLAYLIST_ITEM_RESULTS = 5;
 
@@ -37,6 +38,7 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
   private totalResults: number;
 
   constructor(
+    public windowService: WindowService,
     private playlistService: PlaylistService,
     private videoService: VideoService,
     private changeDetectorRef: ChangeDetectorRef
@@ -90,25 +92,6 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
 
   onPlaylistResize(): void {
     this.changeDetectorRef.markForCheck();
-  }
-
-  isElementOverflowing(element): boolean {
-    let isOverflowing = false;
-
-    let rect: DOMRect = element.getBoundingClientRect();
-    if (rect.right === 0) {
-      element.removeAttribute('hidden');
-
-      rect = element.getBoundingClientRect();
-      isOverflowing = this.isElementOverflowing(element);
-
-      element.setAttribute('hidden', 'hidden');
-    }
-    else if (rect.right + 90 > window.screen.width) {
-      isOverflowing = true;
-    }
-
-    return isOverflowing;
   }
 
   onLeftBtnClick(playlist): void {
