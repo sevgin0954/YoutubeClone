@@ -14,7 +14,7 @@ export class WindowService {
   isElementOverflowing(element: HTMLElement): boolean {
     let isOverflowing = false;
 
-    let rect: DOMRect = element.getBoundingClientRect();
+    let rect: ClientRect = element.getBoundingClientRect();
     if (rect.right === 0) {
       element.removeAttribute('hidden');
 

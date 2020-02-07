@@ -45,13 +45,15 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
   ) { }
 
   ngOnInit(): void {
-    this.loadMoreVideos();
+    this.loadMoreVideos(() => { });
   }
 
-  private loadMoreVideos(): void {
+  private loadMoreVideos(callback): void {
     if (this.isFirstPage === false && this.nextPageToken === undefined) {
       return;
     }
+
+    this.isFirstPage = false;
 
     const playlistId = this.channelSection.contentDetails.playlists[0];
     this.playlistService.getById(playlistId, MAX_PLAYLIST_ITEM_RESULTS, this.nextPageToken).pipe(
@@ -63,30 +65,40 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
         return this.videoService.getByIds(...videoIds);
       })
     ).subscribe(videos => {
+      this.videos.push(...videos);
+
+      callback();
+
       this.loadingBtn.nativeElement.setAttribute('hidden', 'hidden');
       this.rightBtn.nativeElement.removeAttribute('hidden');
 
-      this.videos.push(...videos);
-
       this.changeDetectorRef.markForCheck();
     });
-
-    this.isFirstPage = false;
   }
 
   ngAfterViewChecked(): void {
-    this.updateRightArrowButtonDisabledAttribute();
+    if (this.playlistElements.first && this.playlistElements.last) {
+      this.updateRightArrowButtonDisabledAttribute();
+      this.updateLeftArrowButtonDisabledAttribute();
+    }
   }
 
-  updateRightArrowButtonDisabledAttribute(): void {
-    if (this.playlistElements.last) {
-      const areThereHiddenElements = this.playlistElements.last.nativeElement.hasAttribute('hidden');
-      if (areThereHiddenElements || this.videos.length < this.totalResults) {
-        this.rightBtn.nativeElement.removeAttribute('disabled');
-      }
-      else {
-        this.rightBtn.nativeElement.setAttribute('disabled', 'disabled');
-      }
+  private updateRightArrowButtonDisabledAttribute(): void {
+    const areThereHiddenElements = this.playlistElements.last.nativeElement.hasAttribute('hidden');
+    if (areThereHiddenElements || this.videos.length < this.totalResults) {
+      this.rightBtn.nativeElement.removeAttribute('disabled');
+    }
+    else {
+      this.rightBtn.nativeElement.setAttribute('disabled', 'disabled');
+    }
+  }
+
+  private updateLeftArrowButtonDisabledAttribute(): void {
+    if (this.playlistElements.first.nativeElement.hasAttribute('hidden')) {
+      this.leftBtn.nativeElement.removeAttribute('disabled');
+    }
+    else {
+      this.leftBtn.nativeElement.setAttribute('disabled', 'disabled');
     }
   }
 
@@ -94,25 +106,21 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
     this.changeDetectorRef.markForCheck();
   }
 
-  onLeftBtnClick(playlist): void {
+  onLeftBtnClick(playlist: HTMLElement): void {
     const playlistElements: HTMLCollection = playlist.children;
-    const lastHiddenElementFromLeftPredicate = (element: Element, index: number) => {
-      const isCurrentElementHidden = playlistElements[index].hasAttribute('hidden');
-      let isNextElementVisible = true;
-      if (index < playlistElements.length) {
-        isNextElementVisible = playlistElements[index + 1].hasAttribute('hidden') === false
-      }
-
-      return isCurrentElementHidden && isNextElementVisible;
-    };
     const lastHiddenElementFromLeft =
-      this.getFirstElement(playlistElements, lastHiddenElementFromLeftPredicate);
-
+      this.getFirstElement(playlistElements, this.getLastHiddenElementFromLeft);
     lastHiddenElementFromLeft.removeAttribute('hidden');
+  }
 
-    if (this.playlistElements.first.nativeElement.hasAttribute('hidden') === false) {
-      this.leftBtn.nativeElement.setAttribute('disabled', 'disabled');
+  private getLastHiddenElementFromLeft(element: Element, index: number, elements: Element[]): boolean {
+    const isCurrentElementHidden = elements[index].hasAttribute('hidden');
+    let isNextElementVisible = true;
+    if (index < elements.length) {
+      isNextElementVisible = elements[index + 1].hasAttribute('hidden') === false
     }
+
+    return isCurrentElementHidden && isNextElementVisible;
   }
 
   onRightBtnClick(playlist: HTMLElement): void {
@@ -121,31 +129,34 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
       this.rightBtn.nativeElement.setAttribute('hidden', 'hidden');
       this.loadingBtn.nativeElement.removeAttribute('hidden');
 
-      this.loadMoreVideos();
-
-      return;
+      this.loadMoreVideos(() => {
+        this.hideFirstShownElement(playlist);
+      });
     }
+    else {
+      this.hideFirstShownElement(playlist);
+    }
+  }
 
+  private hideFirstShownElement(playlist: HTMLElement): void {
     const playlistElements: HTMLCollection = playlist.children;
-    const firstShownElementPredicate = (element: Element, index: number) => {
-      let isPreviousElementHidden = true;
-      if (index > 0) {
-        isPreviousElementHidden = playlistElements[index - 1].hasAttribute('hidden');
-      }
-      const isCurrentElementVisible = playlistElements[index].hasAttribute('hidden') === false;
-
-      return isPreviousElementHidden && isCurrentElementVisible;
-    };
-    const firstShownElement = this.getFirstElement(playlistElements, firstShownElementPredicate);
-
+    const firstShownElement = this.getFirstElement(playlistElements, this.getFirstShownElement);
     firstShownElement.setAttribute('hidden', 'hidden');
+  }
 
-    this.leftBtn.nativeElement.removeAttribute('disabled');
+  private getFirstShownElement(element: Element, index: number, elements: Element[]): boolean {
+    let isPreviousElementHidden = true;
+    if (index > 0) {
+      isPreviousElementHidden = elements[index - 1].hasAttribute('hidden');
+    }
+    const isCurrentElementVisible = elements[index].hasAttribute('hidden') === false;
+
+    return isPreviousElementHidden && isCurrentElementVisible;
   }
 
   private getFirstElement(
     elements: HTMLCollection,
-    predicate: (element: Element, index: number) => boolean
+    predicate: (element: Element, index: number, elements: Element[]) => boolean
   ): Element {
     const elementsAsArray = Array.from(elements);
     const element = elementsAsArray.find(predicate);
