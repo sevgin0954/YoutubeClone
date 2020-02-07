@@ -42,3 +42,20 @@
   background-color: gray;
   opacity: 40%;
 }
+
+.loading {
+  margin-right: auto;
+  text-orientation: mixed;
+  writing-mode: vertical-lr;
+  font: 1rem 'Open Sans Condensed', sans-serif;
+}
+
+.loading-btn {
+  background-color: rgba(grey, 0.5);
+  border: none;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.loading-btn:disabled {
+  opacity: 1;
+}

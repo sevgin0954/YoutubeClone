@@ -79,3 +79,20 @@ a[disabled] {
   font-size: 1rem;
   margin-top: 0.3rem;
 }
+
+.loading {
+  @keyframes blink {
+    0% {
+      color: rgba($dark-blue, 0);
+    }
+    50% {
+      color: rgba($dark-blue, 0.5);
+    }
+    100% {
+      color: rgba($dark-blue, 1);
+    }
+  }
+
+  animation: blink alternate 0.8s infinite linear;
+  color: $dark-blue;
+}

@@ -24,6 +24,7 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
   @Input() style: ChannelSectionStyle;
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
   @ViewChild('leftBtn', { static: false }) leftBtn: ElementRef;
+  @ViewChild('loadingBtn', { static: false }) loadingBtn: ElementRef;
   @ViewChildren('playlistElement') set setPlaylistElements(items: QueryList<ElementRef>) {
     this.playlistElements = items;
   };
@@ -33,6 +34,7 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
   private playlistElements: QueryList<ElementRef>;
   private nextPageToken: string;
   private isFirstPage: boolean = true;
+  private totalResults: number;
 
   constructor(
     private playlistService: PlaylistService,
@@ -54,10 +56,14 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
       concatMap(data => {
         const videoIds = data.items.map(item => item.contentDetails.videoId);
         this.nextPageToken = data.nextPageToken;
+        this.totalResults = data.pageInfo.totalResults;
 
         return this.videoService.getByIds(...videoIds);
       })
     ).subscribe(videos => {
+      this.loadingBtn.nativeElement.setAttribute('hidden', 'hidden');
+      this.rightBtn.nativeElement.removeAttribute('hidden');
+
       this.videos.push(...videos);
 
       this.changeDetectorRef.markForCheck();
@@ -67,13 +73,17 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
+    this.updateRightArrowButtonDisabledAttribute();
+  }
+
+  updateRightArrowButtonDisabledAttribute(): void {
     if (this.playlistElements.last) {
       const areThereHiddenElements = this.playlistElements.last.nativeElement.hasAttribute('hidden');
-      if (areThereHiddenElements === false) {
-        this.rightBtn.nativeElement.setAttribute('disabled', 'disabled');
+      if (areThereHiddenElements || this.videos.length < this.totalResults) {
+        this.rightBtn.nativeElement.removeAttribute('disabled');
       }
       else {
-        this.rightBtn.nativeElement.removeAttribute('disabled');
+        this.rightBtn.nativeElement.setAttribute('disabled', 'disabled');
       }
     }
   }
@@ -123,6 +133,16 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
   }
 
   onRightBtnClick(playlist: HTMLElement): void {
+    const areThereHiddenElements = this.playlistElements.last.nativeElement.hasAttribute('hidden');
+    if (areThereHiddenElements === false && this.videos.length < this.totalResults) {
+      this.rightBtn.nativeElement.setAttribute('hidden', 'hidden');
+      this.loadingBtn.nativeElement.removeAttribute('hidden');
+
+      this.loadMoreVideos();
+
+      return;
+    }
+
     const playlistElements: HTMLCollection = playlist.children;
     const firstShownElementPredicate = (element: Element, index: number) => {
       let isPreviousElementHidden = true;
