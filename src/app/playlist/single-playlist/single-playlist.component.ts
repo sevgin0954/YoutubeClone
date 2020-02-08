@@ -89,18 +89,34 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
   }
 
   updateLeftElementHiddenAttribute() {
-    const lastHiddenElementFromLeft =
-      this.playlistElements.map(e => e.nativeElement).find(this.getLastHiddenElementFromLeft);
-    const lastShownElement =
-      this.playlistElements.map(e => e.nativeElement).find(this.getLastShownElement);
-    if (lastShownElement) {
-      // Check if there is space for the first element
-      lastHiddenElementFromLeft.removeAttribute('hidden');
-      const isLastElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
-      if (isLastElementOverflowing) {
-        lastHiddenElementFromLeft.setAttribute('hidden', 'hidden');
+    let isThereMoreSpace = true;
+    while (isThereMoreSpace) {
+      const lastHiddenElementFromLeft =
+        this.playlistElements.map(e => e.nativeElement).find(this.getLastHiddenElementFromLeft);
+      const lastShownElement =
+        this.playlistElements.map(e => e.nativeElement).find(this.getLastShownElement);
+      if (lastHiddenElementFromLeft && lastShownElement) {
+        const isElementShown =
+          this.tryShowLastShownElementFromLeft(lastHiddenElementFromLeft, lastShownElement);
+        isThereMoreSpace = isElementShown;
+      }
+      else {
+        isThereMoreSpace = false;
       }
     }
+  }
+
+  tryShowLastShownElementFromLeft(lastHiddenElementFromLeft, lastShownElement): boolean {
+    let isElementShown = true;
+
+    lastHiddenElementFromLeft.removeAttribute('hidden');
+    const isLastElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
+    if (isLastElementOverflowing) {
+      lastHiddenElementFromLeft.setAttribute('hidden', 'hidden');
+      isElementShown = false;
+    }
+
+    return isElementShown;
   }
 
   private updateRightArrowButtonDisabledAttribute(): void {
