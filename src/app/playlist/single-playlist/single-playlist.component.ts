@@ -97,7 +97,7 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
         this.playlistElements.map(e => e.nativeElement).find(this.getLastShownElement);
       if (lastHiddenElementFromLeft && lastShownElement) {
         const isElementShown =
-          this.tryShowLastShownElementFromLeft(lastHiddenElementFromLeft, lastShownElement);
+          this.tryShowPlaylistElement(lastHiddenElementFromLeft, lastShownElement);
         isThereMoreSpace = isElementShown;
       }
       else {
@@ -106,13 +106,13 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  tryShowLastShownElementFromLeft(lastHiddenElementFromLeft, lastShownElement): boolean {
+  tryShowPlaylistElement(elementToShow, lastShownElement): boolean {
     let isElementShown = true;
 
-    lastHiddenElementFromLeft.removeAttribute('hidden');
+    elementToShow.removeAttribute('hidden');
     const isLastElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
     if (isLastElementOverflowing) {
-      lastHiddenElementFromLeft.setAttribute('hidden', 'hidden');
+      elementToShow.setAttribute('hidden', 'hidden');
       isElementShown = false;
     }
 
