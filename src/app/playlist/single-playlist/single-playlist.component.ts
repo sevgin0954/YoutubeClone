@@ -78,8 +78,28 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     if (this.playlistElements.first && this.playlistElements.last) {
+      const isFirstElementHidden = this.playlistElements.first.nativeElement.hasAttribute('hidden');
+      if (isFirstElementHidden) {
+        this.updateLeftElementHiddenAttribute();
+      }
+
       this.updateRightArrowButtonDisabledAttribute();
       this.updateLeftArrowButtonDisabledAttribute();
+    }
+  }
+
+  updateLeftElementHiddenAttribute() {
+    const lastHiddenElementFromLeft =
+      this.playlistElements.map(e => e.nativeElement).find(this.getLastHiddenElementFromLeft);
+    const lastShownElement =
+      this.playlistElements.map(e => e.nativeElement).find(this.getLastShownElement);
+    if (lastShownElement) {
+      // Check if there is space for the first element
+      lastHiddenElementFromLeft.removeAttribute('hidden');
+      const isLastElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
+      if (isLastElementOverflowing) {
+        lastHiddenElementFromLeft.setAttribute('hidden', 'hidden');
+      }
     }
   }
 
@@ -116,8 +136,9 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
   private getLastHiddenElementFromLeft(element: Element, index: number, elements: Element[]): boolean {
     const isCurrentElementHidden = elements[index].hasAttribute('hidden');
     let isNextElementVisible = true;
-    if (index < elements.length) {
-      isNextElementVisible = elements[index + 1].hasAttribute('hidden') === false
+    const nextIndex = index + 1;
+    if (nextIndex < elements.length) {
+      isNextElementVisible = elements[nextIndex].hasAttribute('hidden') === false
     }
 
     return isCurrentElementHidden && isNextElementVisible;
@@ -152,6 +173,18 @@ export class SinglePlaylistComponent implements OnInit, AfterViewChecked {
     const isCurrentElementVisible = elements[index].hasAttribute('hidden') === false;
 
     return isPreviousElementHidden && isCurrentElementVisible;
+  }
+
+  private getLastShownElement(element: Element, index: number, elements: Element[]): boolean {
+    const isCurrentElementShown = element.hasAttribute('hidden') === false;
+    let isNextElementHidden = true;
+
+    const nextElementIndex = index + 1;
+    if (nextElementIndex < elements.length) {
+      isNextElementHidden = elements[nextElementIndex].hasAttribute('hidden');
+    }
+
+    return isCurrentElementShown && isNextElementHidden;
   }
 
   private getFirstElement(
