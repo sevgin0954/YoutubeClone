@@ -1,0 +1,14 @@
+<div class="d-flex">
+  <button disabled #leftBtn class="btn-arrow" (click)="onLeftBtnClick(playlist)">
+    <i class="fas fa-arrow-circle-right"></i>
+  </button>
+
+  <template></template>
+
+  <button #rightBtn class="btn-arrow mr-auto" (click)="onRightBtnClick(playlist)">
+    <i class="fas fa-arrow-circle-left"></i>
+  </button>
+  <button #loadingBtn class="loading-btn" disabled hidden>
+    <span #loadingBtn class="loading">Loading...</span>
+  </button>
+</div>
