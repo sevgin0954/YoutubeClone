@@ -10,7 +10,6 @@ import { Video } from 'src/app/models/video/video';
 import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { WindowService } from 'src/app/services-singleton/window.service';
-import { Subject } from 'rxjs';
 
 const MAX_PLAYLIST_ITEM_RESULTS = 5;
 
@@ -22,17 +21,16 @@ const MAX_PLAYLIST_ITEM_RESULTS = 5;
 })
 export class SinglePlaylistComponent implements OnInit {
 
-  @Input() loadMoreSubject: Subject<Function>;
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
-  @ViewChild('loadingBtn', { static: false }) loadingBtn: ElementRef;
   @Output('totalResultsCount') totalResultsCount = new EventEmitter<number>();
-  @Input() private channelSection: ChannelSection;
+  @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
   videos: Video[] = [];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
   videoTitleMaxLength: number = 35;
   private nextPageToken: string;
   private isFirstPage: boolean = true;
+  callBack: Function = (callback: Function) => this.loadMoreVideos(callback);
 
   constructor(
     private playlistService: PlaylistService,
@@ -43,13 +41,9 @@ export class SinglePlaylistComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadMoreVideos(() => { });
-
-    this.loadMoreSubject.subscribe(func => {
-      this.loadMoreVideos(func);
-    })
   }
 
-  loadMoreVideos(callback): void {
+  loadMoreVideos(callback: Function): void {
     if (this.isFirstPage === false && this.nextPageToken === undefined) {
       return;
     }
@@ -69,9 +63,6 @@ export class SinglePlaylistComponent implements OnInit {
       this.videos.push(...videos);
 
       callback();
-
-      // this.loadingBtn.nativeElement.setAttribute('hidden', 'hidden');
-      // this.rightBtn.nativeElement.removeAttribute('hidden');
 
       this.changeDetectorRef.markForCheck();
     });

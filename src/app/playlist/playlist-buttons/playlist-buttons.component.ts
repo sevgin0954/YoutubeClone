@@ -1,9 +1,9 @@
-import { Component, ElementRef, ViewChild, QueryList, HostListener, AfterContentChecked, ContentChildren, ContentChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, QueryList, AfterContentChecked, ContentChildren, ContentChild, TemplateRef, Input } from '@angular/core';
 
-import { ElementsPredicateService } from 'src/app/services-singleton/elements-predicate.service';
 import { PlaylistElementService } from '../services/playlist-element.service';
 import { ArrowButtonService } from '../services/arrow-button.service';
-import { Subject } from 'rxjs';
+import { ChannelSection } from 'src/app/models/channel-section/channel-section';
+import { ElementsPredicateService } from 'src/app/services-singleton/elements-predicate.service';
 
 @Component({
   selector: 'app-playlist-buttons',
@@ -12,13 +12,15 @@ import { Subject } from 'rxjs';
 })
 export class PlaylistButtonsComponent implements AfterContentChecked {
 
-  loadMorePlaylists: Subject<Function>;
+  @Input() channelSection: ChannelSection[];
+  @Input() itemTemplate: TemplateRef<HTMLElement>;
   @ContentChild('playlist', { static: false }) playlist: ElementRef;
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
   @ViewChild('leftBtn', { static: false }) leftBtn: ElementRef;
   @ViewChild('loadingBtn', { static: false }) loadingBtn: ElementRef;
   @ContentChildren('playlistElement') playlistElements: QueryList<ElementRef>;
-  totalResultsCount: number = 6;
+  @Input() totalResultsCount: number;
+  @Input() callBack: Function;
 
   constructor(
     private elementsPredicateService: ElementsPredicateService,
@@ -30,7 +32,8 @@ export class PlaylistButtonsComponent implements AfterContentChecked {
     if (this.playlistElements.first && this.playlistElements.last) {
       const isFirstElementHidden = this.playlistElements.first.nativeElement.hasAttribute('hidden');
       if (isFirstElementHidden) {
-        this.updateLeftElementHiddenAttribute();
+        const playlistNativeElements = this.playlistElements.map(e => e.nativeElement);
+        this.playlistElementService.updateLeftElementsHiddenAttribute(playlistNativeElements);
       }
 
       const areThereHiddenElements = this.playlistElements.last.nativeElement.hasAttribute('hidden');
@@ -45,65 +48,41 @@ export class PlaylistButtonsComponent implements AfterContentChecked {
     }
   }
 
-  onLeftBtnClick(playlist: HTMLElement): void {
+  onLeftBtnClick(): void {
     const playlistElements: HTMLCollection = this.playlist.nativeElement.children;
-    const lastHiddenElementFromLeft =
-      this.getFirstElement(playlistElements, this.elementsPredicateService.getLastHiddenElementFromLeft);
+    const lastHiddenElementFromLeft: HTMLElement =
+      this.getFirstHtmlElement(
+        playlistElements, this.elementsPredicateService.getLastHiddenElementFromLeft
+      );
     lastHiddenElementFromLeft.removeAttribute('hidden');
   }
 
-  onRightBtnClick(playlist: HTMLElement): void {
+  private getFirstHtmlElement(
+    elements: HTMLCollection,
+    predicate: (element: Element, index: number, elements: Element[]) => boolean
+  ): HTMLElement {
+    const elementsAsArray = Array.from(elements);
+    const element = elementsAsArray.find(predicate);
+
+    return element as HTMLElement;
+  }
+
+  onRightBtnClick(): void {
+    const playlistElements: HTMLCollection = this.playlist.nativeElement.children;
     const areThereHiddenElements = this.playlistElements.last.nativeElement.hasAttribute('hidden');
     if (areThereHiddenElements === false && this.playlistElements.length < this.totalResultsCount) {
       this.rightBtn.nativeElement.setAttribute('hidden', 'hidden');
       this.loadingBtn.nativeElement.removeAttribute('hidden');
 
-      this.loadMorePlaylists.next(value => {
-        return this.playlistElementService.hideFirstShownElement(this.playlist.nativeElement);
+      this.callBack(() => {
+        this.playlistElementService.hideFirstShownElement(playlistElements);
+
+        this.loadingBtn.nativeElement.setAttribute('hidden', 'hidden');
+        this.rightBtn.nativeElement.removeAttribute('hidden');
       });
-      // this.playlistChild.nativeElement.loadMoreVideos(() => {
-      //   this.playlistElementService.hideFirstShownElement(this.playlist.nativeElement);
-      // });
     }
     else {
-      this.playlistElementService.hideFirstShownElement(this.playlist.nativeElement);
+      this.playlistElementService.hideFirstShownElement(playlistElements);
     }
-  }
-
-  private getFirstElement(
-    elements: HTMLCollection,
-    predicate: (element: Element, index: number, elements: Element[]) => boolean
-  ): Element {
-    const elementsAsArray = Array.from(elements);
-    const element = elementsAsArray.find(predicate);
-
-    return element;
-  }
-
-  updateLeftElementHiddenAttribute() {
-    let isThereMoreSpace = true;
-    while (isThereMoreSpace) {
-      const lastHiddenElementFromLeft =
-        this.playlistElements
-          .map(e => e.nativeElement)
-          .find(this.elementsPredicateService.getLastHiddenElementFromLeft);
-      const lastShownElement =
-        this.playlistElements
-          .map(e => e.nativeElement)
-          .find(this.elementsPredicateService.getLastShownElement);
-      if (lastHiddenElementFromLeft && lastShownElement) {
-        const isElementShown =
-          this.playlistElementService.tryShowElement(lastHiddenElementFromLeft, lastShownElement);
-        isThereMoreSpace = isElementShown;
-      }
-      else {
-        isThereMoreSpace = false;
-      }
-    }
-  }
-
-  @HostListener('totalResultsCount', ['$event'])
-  setTotalResultsCount(count: number): void {
-    this.totalResultsCount = count;
   }
 }

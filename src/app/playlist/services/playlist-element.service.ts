@@ -11,8 +11,7 @@ export class PlaylistElementService {
     private windowService: WindowService
   ) {}
 
-  hideFirstShownElement(playlist: HTMLElement): void {
-    const playlistElements: HTMLCollection = playlist.children;
+  hideFirstShownElement(playlistElements: HTMLCollection): void {
     const firstShownElement =
       this.getFirstElement(playlistElements, this.elementsPredicateService.getFirstShownElement);
     firstShownElement.setAttribute('hidden', 'hidden');
@@ -28,7 +27,7 @@ export class PlaylistElementService {
     return element;
   }
 
-  tryShowElement(elementToShow: HTMLElement, lastShownElement: HTMLElement): boolean {
+  tryShowElementIfNotOverflowing(elementToShow: HTMLElement, lastShownElement: HTMLElement): boolean {
     let isElementShown = true;
 
     elementToShow.removeAttribute('hidden');
@@ -39,5 +38,24 @@ export class PlaylistElementService {
     }
 
     return isElementShown;
+  }
+
+  updateLeftElementsHiddenAttribute(playlistElements: HTMLElement[]): void {
+    let isThereMoreSpace = true;
+    while (isThereMoreSpace) {
+      const lastHiddenElementFromLeft =
+        playlistElements
+          .find(this.elementsPredicateService.getLastHiddenElementFromLeft);
+      const lastShownElement =
+        playlistElements
+          .find(this.elementsPredicateService.getLastShownElement);
+      if (lastHiddenElementFromLeft && lastShownElement) {
+        const isElementShown = this.tryShowElementIfNotOverflowing(lastHiddenElementFromLeft, lastShownElement);
+        isThereMoreSpace = isElementShown;
+      }
+      else {
+        isThereMoreSpace = false;
+      }
+    }
   }
 }
