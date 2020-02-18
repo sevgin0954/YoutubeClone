@@ -1,4 +1,4 @@
-<app-playlist-buttons [callBack]="callBack" [totalResultsCount]="totalResultsCount">
+<app-playlist-buttons [loadMoreCallBack]="callBack" [totalResultsCount]="totalResultsCount">
   <div #playlist class="playlist" (window:resize)="onPlaylistResize()">
     <div class="playlist-element" #playlistElement
       [attr.hidden]="windowService.isElementOverflowing(playlistElement) === true ? 'hidden' : null"

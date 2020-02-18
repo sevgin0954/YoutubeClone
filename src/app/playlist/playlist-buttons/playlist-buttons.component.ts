@@ -14,7 +14,7 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
 
   @ContentChild('playlist', { static: false }) playlist: ElementRef;
   @ContentChildren('playlistElement') playlistElements: QueryList<ElementRef>;
-  @Input() callBack: Function;
+  @Input() loadMoreCallBack: Function;
   @Input() channelSection: ChannelSection[];
   @Input() itemTemplate: TemplateRef<HTMLElement>;
   @Input() totalResultsCount: number;
@@ -70,7 +70,7 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
       this.rightBtn.nativeElement.setAttribute('hidden', 'hidden');
       this.loadingBtn.nativeElement.removeAttribute('hidden');
 
-      this.callBack(() => {
+      this.loadMoreCallBack(() => {
         this.playlistElementService.hideFirstShownElement(playlistElements);
 
         this.loadingBtn.nativeElement.setAttribute('hidden', 'hidden');
