@@ -12,15 +12,15 @@ import { ElementsPredicateService } from 'src/app/services-singleton/elements-pr
 })
 export class PlaylistButtonsComponent implements AfterContentChecked {
 
+  @ContentChild('playlist', { static: false }) playlist: ElementRef;
+  @ContentChildren('playlistElement') playlistElements: QueryList<ElementRef>;
+  @Input() callBack: Function;
   @Input() channelSection: ChannelSection[];
   @Input() itemTemplate: TemplateRef<HTMLElement>;
-  @ContentChild('playlist', { static: false }) playlist: ElementRef;
-  @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
+  @Input() totalResultsCount: number;
   @ViewChild('leftBtn', { static: false }) leftBtn: ElementRef;
   @ViewChild('loadingBtn', { static: false }) loadingBtn: ElementRef;
-  @ContentChildren('playlistElement') playlistElements: QueryList<ElementRef>;
-  @Input() totalResultsCount: number;
-  @Input() callBack: Function;
+  @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
 
   constructor(
     private elementsPredicateService: ElementsPredicateService,
