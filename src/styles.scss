@@ -2,51 +2,12 @@
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 @import "./variables.scss";
 
+a[disabled] {
+  pointer-events: none;
+}
+
 body {
   background-color: $light-blue;
-}
-
-.navbar {
-  background-color: $white;
-  opacity: 0.96;
-}
-
-.video-title {
-  font-size: 1.2rem;
-  font-weight: 450;
-  color: black;
-}
-.video-title:hover {
-  text-decoration: none;
-  color: black;
-}
-
-.info-small {
-  font-size: 0.9rem;
-  color: gray;
-}
-
-.info-medium {
-  font-size: 1.1rem;
-  color: gray;
-}
-
-.channel-title {
-  color: $dark-blue;
-}
-.channel-title:hover {
-  text-decoration: none;
-}
-
-.channel-thumbnail {
-  height: $channel-thumbnail-height;
-  width: $channel-thumbnail-width;
-  border-radius: 50%;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
 }
 
 .btn-blue {
@@ -68,16 +29,32 @@ button:disabled {
   color: $dark-blue;
 }
 
-a[disabled] {
-  pointer-events: none;
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
-.show-button {
-  border: none;
-  background-color: inherit;
-  padding: 0;
-  font-size: 1rem;
-  margin-top: 0.3rem;
+.channel-thumbnail {
+  height: $channel-thumbnail-height;
+  width: $channel-thumbnail-width;
+  border-radius: 50%;
+}
+
+.channel-title {
+  color: $dark-blue;
+}
+.channel-title:hover {
+  text-decoration: none;
+}
+
+.info-medium {
+  font-size: 1.1rem;
+  color: gray;
+}
+
+.info-small {
+  font-size: 0.9rem;
+  color: gray;
 }
 
 .loading {
@@ -95,4 +72,27 @@ a[disabled] {
 
   animation: blink alternate 0.8s infinite linear;
   color: $dark-blue;
+}
+
+.navbar {
+  background-color: $white;
+  opacity: 0.96;
+}
+
+.show-button {
+  border: none;
+  background-color: inherit;
+  padding: 0;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
+
+.video-title {
+  font-size: 1.2rem;
+  font-weight: 450;
+  color: black;
+}
+.video-title:hover {
+  text-decoration: none;
+  color: black;
 }
