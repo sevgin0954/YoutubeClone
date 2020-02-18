@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+
 import { Channel } from 'src/app/models/channel/channel';
 import { ServiceModel } from 'src/app/models/service-models/service-model';
 import { Url } from 'src/app/shared/url';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { pluck, map } from 'rxjs/operators';
+import { pluck } from 'rxjs/operators';
 import { Constants } from '../shared/constants';
 
 @Injectable({
@@ -36,16 +37,15 @@ export class ChannelService {
     }
   }
 
-  getById(id: string): Observable<Channel> {
+  getByIds(...ids: string[]): Observable<Channel[]> {
     const queryParams: any = {
       part: 'snippet,statistics,brandingSettings',
-      id: id
+      id: ids.join(',')
     };
     const url = new Url(Constants.BASE_URL, ['channels'], queryParams);
     const data$ = this.http.get(url.toString())
       .pipe(
-        pluck('items'),
-        map<any, Channel>(data => data[0])
+        pluck<any, Channel[]>('items')
       );
 
     return data$;

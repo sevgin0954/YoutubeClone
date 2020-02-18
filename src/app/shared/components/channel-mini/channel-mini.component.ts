@@ -28,11 +28,11 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
   ) { }
 
   ngOnChanges(): void {
-    this.rxjsSubscription = this.channelService.getById(this.channelId).pipe(
-      concatMap(channel => {
-        this.channel = channel;
+    this.rxjsSubscription = this.channelService.getByIds(this.channelId).pipe(
+      concatMap(channels => {
+        this.channel = channels[0];
 
-        return this.subscriptionsService.getById(channel.id);
+        return this.subscriptionsService.getById(this.channel.id);
       })
     ).subscribe(videoSubscribtion => {
       if (videoSubscribtion) {

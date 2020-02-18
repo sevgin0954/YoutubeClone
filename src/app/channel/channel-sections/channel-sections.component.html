@@ -1,18 +1,20 @@
-<div *ngFor="let signleSection of singlePlaylistSections">
-  <hr>
+<div class="playlists-container">
+  <div *ngFor="let signleSection of singlePlaylistSections">
+    <hr>
 
-  <app-single-playlist
-    [channelSection]="signleSection"
-    [style]="snippetStyle[signleSection.snippet.style]">
-  </app-single-playlist>
-</div>
+    <app-single-playlist
+      [channelSection]="signleSection"
+      [style]="snippetStyle[signleSection.snippet.style]">
+    </app-single-playlist>
+  </div>
 
-<div *ngFor="let channelsSection of multipleChannelsSections">
-  <hr>
+  <div *ngFor="let channelsSection of multipleChannelsSections">
+    <hr>
 
-  <app-multiple-channels-playlist
-    [channelSection]="channelsSection"
-    [title]="channelsSection.snippet.title"
-    [style]="snippetStyle[channelsSection.snippet.style]">
-  </app-multiple-channels-playlist>
+    <app-multiple-channels-playlist
+      [channelSection]="channelsSection"
+      [title]="channelsSection.snippet.title"
+      [style]="snippetStyle[channelsSection.snippet.style]">
+    </app-multiple-channels-playlist>
+  </div>
 </div>

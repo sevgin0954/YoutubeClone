@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, QueryList, AfterContentChecked, ContentChildren, ContentChild, TemplateRef, Input } from '@angular/core';
+import { Component, ElementRef, ViewChild, QueryList, ContentChildren, ContentChild, TemplateRef, Input, AfterViewChecked } from '@angular/core';
 
 import { PlaylistElementService } from '../services/playlist-element.service';
 import { ArrowButtonService } from '../services/arrow-button.service';
@@ -10,7 +10,7 @@ import { ElementsPredicateService } from 'src/app/services-singleton/elements-pr
   templateUrl: './playlist-buttons.component.html',
   styleUrls: ['./playlist-buttons.component.scss']
 })
-export class PlaylistButtonsComponent implements AfterContentChecked {
+export class PlaylistButtonsComponent implements AfterViewChecked {
 
   @ContentChild('playlist', { static: false }) playlist: ElementRef;
   @ContentChildren('playlistElement') playlistElements: QueryList<ElementRef>;
@@ -28,7 +28,7 @@ export class PlaylistButtonsComponent implements AfterContentChecked {
     private arrowButtonService: ArrowButtonService
   ) { }
 
-  ngAfterContentChecked(): void {
+  ngAfterViewChecked(): void {
     if (this.playlistElements.first && this.playlistElements.last) {
       const isFirstElementHidden = this.playlistElements.first.nativeElement.hasAttribute('hidden');
       if (isFirstElementHidden) {

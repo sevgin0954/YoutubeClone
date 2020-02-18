@@ -1,5 +1,5 @@
 import {
-  Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, Output, EventEmitter, ElementRef, ViewChild,
+  Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ElementRef, ViewChild,
 } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
@@ -10,8 +10,7 @@ import { Video } from 'src/app/models/video/video';
 import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { WindowService } from 'src/app/services-singleton/window.service';
-
-const MAX_PLAYLIST_ITEM_RESULTS = 5;
+import { Constants } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-single-playlist',
@@ -21,16 +20,16 @@ const MAX_PLAYLIST_ITEM_RESULTS = 5;
 })
 export class SinglePlaylistComponent implements OnInit {
 
-  @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
-  @Output('totalResultsCount') totalResultsCount = new EventEmitter<number>();
   @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
+  @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
+  callBack: Function = (callback: Function) => this.loadMoreVideos(callback);
+  totalResultsCount: number;
   videos: Video[] = [];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
   videoTitleMaxLength: number = 35;
-  private nextPageToken: string;
   private isFirstPage: boolean = true;
-  callBack: Function = (callback: Function) => this.loadMoreVideos(callback);
+  private nextPageToken: string;
 
   constructor(
     private playlistService: PlaylistService,
@@ -51,11 +50,12 @@ export class SinglePlaylistComponent implements OnInit {
     this.isFirstPage = false;
 
     const playlistId = this.channelSection.contentDetails.playlists[0];
-    this.playlistService.getById(playlistId, MAX_PLAYLIST_ITEM_RESULTS, this.nextPageToken).pipe(
+    const maxResults = Constants.MAX_PLAYLIST_ITEM_RESULTS;
+    this.playlistService.getById(playlistId, maxResults, this.nextPageToken).pipe(
       concatMap(data => {
         const videoIds = data.items.map(item => item.contentDetails.videoId);
         this.nextPageToken = data.nextPageToken;
-        this.totalResultsCount.emit(data.pageInfo.totalResults);
+        this.totalResultsCount = data.pageInfo.totalResults;
 
         return this.videoService.getByIds(...videoIds);
       })
