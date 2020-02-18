@@ -40,7 +40,13 @@ export class PlaylistElementService {
     return isElementShown;
   }
 
-  updateLeftElementsHiddenAttribute(playlistElements: HTMLElement[]): void {
+  tryShowLeftHiddenElements(playlistElements: HTMLElement[]): void {
+    const firstElement = playlistElements[0];
+    const isFirstElementHidden = firstElement.hasAttribute('hidden');
+    if (isFirstElementHidden === false) {
+      return;
+    }
+
     let isThereMoreSpace = true;
     while (isThereMoreSpace) {
       const lastHiddenElementFromLeft =

@@ -1,5 +1,5 @@
 import {
-  Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ElementRef, ViewChild,
+  Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ElementRef, ViewChild, ViewChildren, QueryList,
 } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
@@ -11,6 +11,7 @@ import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { WindowService } from 'src/app/services-singleton/window.service';
 import { Constants } from 'src/app/shared/constants';
+import { PlaylistElementService } from '../services/playlist-element.service';
 
 @Component({
   selector: 'app-single-playlist',
@@ -22,6 +23,7 @@ export class SinglePlaylistComponent implements OnInit {
 
   @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
+  @ViewChildren('playlistElement') playlistElements: QueryList<ElementRef>;
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
   callBack: Function = (callback: Function) => this.loadMoreVideos(callback);
   totalResultsCount: number;
@@ -33,6 +35,7 @@ export class SinglePlaylistComponent implements OnInit {
 
   constructor(
     private playlistService: PlaylistService,
+    private playlistElementService: PlaylistElementService,
     private videoService: VideoService,
     private changeDetectorRef: ChangeDetectorRef,
     public windowService: WindowService
@@ -69,6 +72,9 @@ export class SinglePlaylistComponent implements OnInit {
   }
 
   onPlaylistResize(): void {
+    const playlistNativeElements = this.playlistElements.map(e => e.nativeElement);
+    this.playlistElementService.tryShowLeftHiddenElements(playlistNativeElements);
+
     this.changeDetectorRef.markForCheck();
   }
 }

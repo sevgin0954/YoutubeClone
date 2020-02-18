@@ -31,10 +31,6 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
   ngAfterViewChecked(): void {
     if (this.playlistElements.first && this.playlistElements.last) {
       const isFirstElementHidden = this.playlistElements.first.nativeElement.hasAttribute('hidden');
-      if (isFirstElementHidden) {
-        const playlistNativeElements = this.playlistElements.map(e => e.nativeElement);
-        this.playlistElementService.updateLeftElementsHiddenAttribute(playlistNativeElements);
-      }
 
       const areThereHiddenElements = this.playlistElements.last.nativeElement.hasAttribute('hidden');
       this.arrowButtonService.updateRightButtonDisabledAttribute(

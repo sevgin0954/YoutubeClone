@@ -1,8 +1,9 @@
-import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, AfterViewChecked, ElementRef, ViewChildren, QueryList } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { WindowService } from 'src/app/services-singleton/window.service';
+import { PlaylistElementService } from '../services/playlist-element.service';
 
 @Component({
   selector: 'app-multiple-channels-playlist',
@@ -14,11 +15,13 @@ export class MultipleChannelsPlaylistComponent implements OnInit, AfterViewCheck
 
   constructor(
     private changeDetectorRef: ChangeDetectorRef,
+    private playlistElementService: PlaylistElementService,
     public windowService: WindowService
   ) {}
 
   @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
+  @ViewChildren('playlistElement') playlistElements: QueryList<ElementRef>;
   callBack: Function = (callback: Function) => this.loadMoreVideos(callback);
   channelIds: string[];
   totalResultsCount: number;
@@ -38,6 +41,9 @@ export class MultipleChannelsPlaylistComponent implements OnInit, AfterViewCheck
   }
 
   onPlaylistResize(): void {
+    const playlistNativeElements = this.playlistElements.map(e => e.nativeElement);
+    this.playlistElementService.tryShowLeftHiddenElements(playlistNativeElements);
+
     this.changeDetectorRef.detectChanges();
   }
 }
