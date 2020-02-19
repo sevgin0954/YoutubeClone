@@ -1,5 +1,5 @@
-<app-playlist-buttons [loadMoreCallBack]="callBack" [totalResultsCount]="totalResultsCount">
-  <div #playlist class="playlist" (window:resize)="onPlaylistResize()">
+<app-playlist-buttons [loadMoreCallBack]="loadMoreCallBack" [totalResultsCount]="totalResultsCount">
+  <div #playlist class="playlist" (window:resize)="onPlaylistResize(playlistElements)">
     <div class="playlist-element" #playlistElement
       [attr.hidden]="windowService.isElementOverflowing(playlistElement) === true ? 'hidden' : null"
       *ngFor="let id of channelIds; let currentIndex = index;">

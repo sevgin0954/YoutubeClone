@@ -12,6 +12,7 @@ import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { WindowService } from 'src/app/services-singleton/window.service';
 import { Constants } from 'src/app/shared/constants';
 import { PlaylistElementService } from '../services/playlist-element.service';
+import { BasePlaylistComponent } from '../base-playlist-component';
 
 @Component({
   selector: 'app-single-playlist',
@@ -19,13 +20,14 @@ import { PlaylistElementService } from '../services/playlist-element.service';
   styleUrls: ['./single-playlist.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SinglePlaylistComponent implements OnInit {
+export class SinglePlaylistComponent extends BasePlaylistComponent implements OnInit {
 
   @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
   @ViewChildren('playlistElement') playlistElements: QueryList<ElementRef>;
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
-  callBack: Function = (callback: Function) => this.loadMoreVideos(callback);
+  loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
+    this.loadMoreVideos(onLoadedMoreCallback);
   totalResultsCount: number;
   videos: Video[] = [];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
@@ -34,18 +36,20 @@ export class SinglePlaylistComponent implements OnInit {
   private nextPageToken: string;
 
   constructor(
+    changeDetectorRef: ChangeDetectorRef,
+    playlistElementService: PlaylistElementService,
+    public windowService: WindowService,
     private playlistService: PlaylistItemsService,
-    private playlistElementService: PlaylistElementService,
-    private videoService: VideoService,
-    private changeDetectorRef: ChangeDetectorRef,
-    public windowService: WindowService
-  ) { }
+    private videoService: VideoService
+  ) {
+    super(playlistElementService, changeDetectorRef);
+  }
 
   ngOnInit(): void {
     this.loadMoreVideos(() => { });
   }
 
-  loadMoreVideos(callback: Function): void {
+  loadMoreVideos(onLoadedMoreCallback: Function): void {
     if (this.isFirstPage === false && this.nextPageToken === undefined) {
       return;
     }
@@ -65,16 +69,9 @@ export class SinglePlaylistComponent implements OnInit {
     ).subscribe(videos => {
       this.videos.push(...videos);
 
-      callback();
+      onLoadedMoreCallback();
 
       this.changeDetectorRef.markForCheck();
     });
-  }
-
-  onPlaylistResize(): void {
-    const playlistNativeElements = this.playlistElements.map(e => e.nativeElement);
-    this.playlistElementService.tryShowLeftHiddenElements(playlistNativeElements);
-
-    this.changeDetectorRef.markForCheck();
   }
 }
