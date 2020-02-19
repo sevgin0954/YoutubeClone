@@ -11,6 +11,8 @@
     </ng-container>
 
     <ng-container *ngIf="getSectionType(section) === snippetType[snippetType.multiplePlaylists]">
+      <hr>
+
       <app-multiple-playlists
         [channelSection]="section"
         [style]="snippetStyle[section.snippet.style]">
