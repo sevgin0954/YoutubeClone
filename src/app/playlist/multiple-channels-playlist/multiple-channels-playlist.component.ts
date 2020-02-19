@@ -5,6 +5,9 @@ import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { WindowService } from 'src/app/services-singleton/window.service';
 import { PlaylistElementService } from '../services/playlist-element.service';
 import { BasePlaylistComponent } from '../base-playlist-component';
+import { Channel } from 'src/app/models/channel/channel';
+import { ChannelService } from 'src/app/services-singleton/channel.service';
+import { Constants } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-multiple-channels-playlist',
@@ -17,7 +20,8 @@ export class MultipleChannelsPlaylistComponent extends BasePlaylistComponent imp
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     playlistElementService: PlaylistElementService,
-    public windowService: WindowService
+    public windowService: WindowService,
+    private channelService: ChannelService
   ) {
     super(playlistElementService, changeDetectorRef);
   }
@@ -27,8 +31,9 @@ export class MultipleChannelsPlaylistComponent extends BasePlaylistComponent imp
   @ViewChildren('playlistElement') playlistElements: QueryList<ElementRef>;
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
     this.loadMoreVideos(onLoadedMoreCallback);
-  channelIds: string[];
+  channels: Channel[] = [];
   totalResultsCount: number;
+  private nextPageToken: string;
 
   ngOnInit(): void {
     this.loadMoreVideos(() => { });
@@ -38,10 +43,18 @@ export class MultipleChannelsPlaylistComponent extends BasePlaylistComponent imp
     this.changeDetectorRef.detectChanges();
   }
 
-  // TODO: callback doesnt get called
   loadMoreVideos(onLoadedMoreCallback: Function): void {
-    this.channelIds = this.channelSection.contentDetails.channels;
-    this.totalResultsCount = this.channelIds.length;
-    this.changeDetectorRef.detectChanges();
+    const channelIds = this.channelSection.contentDetails.channels;
+
+    const maxResults = Constants.MAX_PLAYLIST_ITEM_RESULTS;
+    this.channelService.getByIds(channelIds, this.nextPageToken, maxResults).subscribe(data => {
+      this.channels.push(...data.items);
+      this.nextPageToken = data.nextPageToken;
+      this.totalResultsCount = channelIds.length;
+
+      onLoadedMoreCallback();
+
+      this.changeDetectorRef.detectChanges();
+    });
   }
 }

@@ -22,8 +22,8 @@ export class ChannelComponent implements OnInit {
 
   ngOnInit(): void {
     const channelId = this.route.snapshot.params['id'];
-    this.channel$ = this.channelService.getByIds(channelId).pipe(
-      map<any, Channel>(data => data[0])
+    this.channel$ = this.channelService.getByIds([channelId], null ,1).pipe(
+      map<any, Channel>(data => data.items[0])
     );
   }
 }

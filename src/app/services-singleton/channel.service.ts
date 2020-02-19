@@ -31,23 +31,23 @@ export class ChannelService {
     return data$;
   }
 
+  getByIds(ids: string[], pageToken: string, maxResults: number): Observable<ServiceModel<Channel[]>> {
+    const queryParams: any = {
+      part: 'snippet,statistics,brandingSettings',
+      id: ids.join(','),
+      maxResults: maxResults.toString()
+    };
+    this.addPageToken(queryParams, pageToken);
+
+    const url = new Url(Constants.BASE_URL, ['channels'], queryParams);
+    const data$ = this.http.get<ServiceModel<Channel[]>>(url.toString());
+
+    return data$;
+  }
+
   private addPageToken(queryParams: any, pageToken: string) {
     if (pageToken) {
       queryParams.pageToken = pageToken;
     }
-  }
-
-  getByIds(...ids: string[]): Observable<Channel[]> {
-    const queryParams: any = {
-      part: 'snippet,statistics,brandingSettings',
-      id: ids.join(',')
-    };
-    const url = new Url(Constants.BASE_URL, ['channels'], queryParams);
-    const data$ = this.http.get(url.toString())
-      .pipe(
-        pluck<any, Channel[]>('items')
-      );
-
-    return data$;
   }
 }

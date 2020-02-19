@@ -33,10 +33,10 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
     if (this.playlistElements.first && this.playlistElements.last) {
       const isFirstElementHidden = this.playlistElements.first.nativeElement.hasAttribute('hidden');
 
-      const areThereHiddenElements = this.playlistElements.last.nativeElement.hasAttribute('hidden');
+      const isLastElementHidden = this.playlistElements.last.nativeElement.hasAttribute('hidden');
       this.arrowButtonService.updateRightButtonDisabledAttribute(
         this.rightBtn,
-        areThereHiddenElements,
+        isLastElementHidden,
         this.playlistElements.length,
         this.totalResultsCount
       );
@@ -66,8 +66,8 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
 
   onRightBtnClick(): void {
     const playlistElements: HTMLCollection = this.playlist.nativeElement.children;
-    const areThereHiddenElements = this.playlistElements.last.nativeElement.hasAttribute('hidden');
-    if (areThereHiddenElements === false && this.playlistElements.length < this.totalResultsCount) {
+    const isLastElementHidden = this.playlistElements.last.nativeElement.hasAttribute('hidden');
+    if (isLastElementHidden === false && this.playlistElements.length < this.totalResultsCount) {
       this.rightBtn.nativeElement.setAttribute('hidden', 'hidden');
       this.loadingBtn.nativeElement.removeAttribute('hidden');
 

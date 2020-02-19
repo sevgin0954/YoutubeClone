@@ -1,12 +1,12 @@
 <div class="main-container">
   <div class="d-flex mr-auto mb-2 channel-container" *ngIf="channel">
-    <a routerLink="/channel/{{ channelId }}">
+    <a routerLink="/channel/{{ channel.id }}">
       <img class="channel-thumbnail" src="{{ channel.snippet.thumbnails.default.url }}"
         alt="Yotube channel {{ channel.snippet.title }} thumbnail">
     </a>
 
     <div class="ml-2">
-      <a class="channel-title" routerLink="/channel/{{ channelId }}">
+      <a class="channel-title" routerLink="/channel/{{ channel.id }}">
         {{ channel.snippet.title }}
       </a>
 

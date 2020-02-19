@@ -18,7 +18,8 @@ export class PlaylistsService {
     private http: HttpClient
   ) { }
 
-  getByIds(ids: string[], pageToken: string, maxResults: number): Observable<ServiceModel<Playlist[]>> {
+  getByIds(ids: string[], pageToken: string, maxResults: number)
+    : Observable<ServiceModel<Playlist[]>> {
     const queryParams = {
       part: 'snippet,contentDetails',
       id: ids.join(','),

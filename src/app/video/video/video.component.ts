@@ -7,6 +7,9 @@ import { Video } from 'src/app/models/video/video';
 import { VideoService } from 'src/app/services-singleton/video.service';
 import { YoutubeIframeService } from 'src/app/services-singleton/youtube-iframe.service';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
+import { Channel } from 'src/app/models/channel/channel';
+import { ChannelService } from 'src/app/services-singleton/channel.service';
+import { concatMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-video',
@@ -15,22 +18,23 @@ import { FormatterService } from 'src/app/services-singleton/formatter.service';
 })
 export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  videoSubscribtion: RxjsSubscribtion;
   RatingType = RatingType;
   currentRating: RatingType;
-  channelId: string;
+  channel: Channel;
   videoId: string;
   video: Video;
   maxDisplayedCharacters: number = 120;
+  private subscribtion: RxjsSubscribtion;
 
   @ViewChild('likeBtn', { static: false }) likeButton: ElementRef;
   @ViewChild('dislikeBtn', { static: false }) dislikeButton: ElementRef;
 
   constructor(
+    public formatterService: FormatterService,
     private route: ActivatedRoute,
+    private channelService: ChannelService,
     private videoService: VideoService,
     private youtubeIframeService: YoutubeIframeService,
-    public formatterService: FormatterService
   ) { }
 
   ngOnInit(): void {
@@ -39,14 +43,20 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.youtubeIframeService.init(this.videoId);
 
-    this.videoSubscribtion = this.videoService.getByIds(this.videoId).subscribe(videos => {
-      this.video = videos[0];
-      this.channelId = this.video.snippet.channelId;
+    this.subscribtion = this.videoService.getByIds(this.videoId).pipe(
+      concatMap(videos => {
+        this.video = videos[0];
+
+        const channelId = this.video.snippet.channelId;
+        return this.channelService.getByIds([channelId], null, 1);
+      })
+    ).subscribe(channel => {
+      this.channel = channel.items[0];
     });
   }
 
   ngOnDestroy(): void {
-    this.videoSubscribtion.unsubscribe();
+    this.subscribtion.unsubscribe();
   }
 
   ngAfterViewInit(): void {

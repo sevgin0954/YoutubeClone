@@ -2,8 +2,8 @@
   <div #playlist class="playlist" (window:resize)="onPlaylistResize(playlistElements)">
     <div class="playlist-element" #playlistElement
       [attr.hidden]="windowService.isElementOverflowing(playlistElement) === true ? 'hidden' : null"
-      *ngFor="let id of channelIds; let currentIndex = index;">
-      <app-channel-mini [channelId]="id"></app-channel-mini>
+      *ngFor="let channel of channels; let currentIndex = index;">
+      <app-channel-mini [channel]="channel"></app-channel-mini>
     </div>
   </div>
 </app-playlist-buttons>

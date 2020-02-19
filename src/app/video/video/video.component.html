@@ -25,7 +25,7 @@
 
   <hr>
 
-  <app-channel-mini [channelId]="channelId"></app-channel-mini>
+  <app-channel-mini *ngIf="channel" [channel]="channel"></app-channel-mini>
 
   <div class="angular-with-newlines">
     <app-text-reveal [text]="video.snippet.description" [maxDisplayedCharacters]="maxDisplayedCharacters">

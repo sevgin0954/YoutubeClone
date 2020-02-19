@@ -1,6 +1,7 @@
 <app-playlist-buttons [loadMoreCallBack]="loadMoreCallBack" [totalResultsCount]="totalResultsCount">
   <div #playlist class="playlist" (window:resize)="onPlaylistResize(playlistElements)">
-    <div #playlistElement class="playlist-element" *ngFor="let playlist of playlists">
+    <div #playlistElement class="playlist-element" *ngFor="let playlist of playlists"
+    [attr.hidden]="windowService.isElementOverflowing(playlistElement) === true ? 'hidden' : null">
       <div>
         <a [routerLink]="['/channel', playlist.snippet.channelId]">
           <img class="thumbnail" src="{{ playlist.snippet.thumbnails[thumbnailSize].url }}"
