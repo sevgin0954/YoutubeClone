@@ -6,9 +6,10 @@ import { ChannelComponent } from './channel/channel.component';
 import { SharedModule } from '../shared/shared.module';
 import { PlaylistModule } from '../playlist/playlist.module';
 import { ChannelSectionsComponent } from './channel-sections/channel-sections.component';
+import { ChannelResolverService } from '../services-singleton/resolvers/channel-resolver.service';
 
 const routes: Routes = [
-  { path: ':id', component: ChannelComponent }
+  { path: ':id', component: ChannelComponent, resolve: { channel: ChannelResolverService } }
 ];
 
 @NgModule({

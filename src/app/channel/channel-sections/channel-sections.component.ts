@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
 import { ChannelSectionService } from 'src/app/services-singleton/channel-section.service';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
@@ -10,7 +10,7 @@ import { SnippetType } from 'src/app/shared/enums/snippet-type';
   templateUrl: './channel-sections.component.html',
   styleUrls: ['./channel-sections.component.scss']
 })
-export class ChannelSectionsComponent implements OnInit {
+export class ChannelSectionsComponent implements OnChanges {
 
   @Input() channelId: string;
   channelSections: ChannelSection[];
@@ -25,7 +25,7 @@ export class ChannelSectionsComponent implements OnInit {
     return channelSection.snippet.type;
   }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.channelSectionService.getByChannelId(this.channelId).subscribe(channels => {
       const sortedChannels = channels.sort((a, b) => a.snippet.position - b.snippet.position);
       this.channelSections = sortedChannels;

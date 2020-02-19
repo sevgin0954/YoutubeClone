@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ChannelService } from 'src/app/services-singleton/channel.service';
 import { Channel } from 'src/app/models/channel/channel';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-channel',
@@ -13,17 +12,17 @@ import { map } from 'rxjs/operators';
 })
 export class ChannelComponent implements OnInit {
 
-  channel$: Observable<Channel>
+  channel: Channel;
+  private subscription: Subscription;
 
   constructor(
-    private channelService: ChannelService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    const channelId = this.route.snapshot.params['id'];
-    this.channel$ = this.channelService.getByIds([channelId], null ,1).pipe(
-      map<any, Channel>(data => data.items[0])
-    );
+    this.subscription = this.route.data.subscribe(data => {
+      this.channel = data['channel'];
+      console.log('ssss')
+    });
   }
 }
