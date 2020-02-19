@@ -1,1 +1,16 @@
-<p>multiple-playlists works!</p>
+<app-playlist-buttons [loadMoreCallBack]="loadMoreCallBack" [totalResultsCount]="totalResultsCount">
+  <div #playlist class="playlist">
+    <div #playlistElement class="playlist-element" *ngFor="let playlist of playlists">
+      <div>
+        <a [routerLink]="['/channel', playlist.snippet.channelId]">
+          <img class="thumbnail" src="{{ playlist.snippet.thumbnails[thumbnailSize].url }}"
+            alt="{{ playlist.snippet.title }}">
+        </a>
+      </div>
+
+      <a class="channel-title" [routerLink]="['/channel', playlist.snippet.channelId]">
+        {{ playlist.snippet.channelTitle }}
+      </a>
+    </div>
+  </div>
+</app-playlist-buttons>

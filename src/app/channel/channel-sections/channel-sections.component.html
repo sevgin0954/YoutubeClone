@@ -11,7 +11,10 @@
     </ng-container>
 
     <ng-container *ngIf="getSectionType(section) === snippetType[snippetType.multiplePlaylists]">
-
+      <app-multiple-playlists
+        [channelSection]="section"
+        [style]="snippetStyle[section.snippet.style]">
+      </app-multiple-playlists>
     </ng-container>
 
     <ng-container *ngIf="getSectionType(section) === snippetType[snippetType.singlePlaylist]">

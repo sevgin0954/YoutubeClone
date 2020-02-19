@@ -12,6 +12,7 @@ import { ElementsPredicateService } from 'src/app/services-singleton/elements-pr
 })
 export class PlaylistButtonsComponent implements AfterViewChecked {
 
+  // TODO: Get as input
   @ContentChild('playlist', { static: false }) playlist: ElementRef;
   @ContentChildren('playlistElement') playlistElements: QueryList<ElementRef>;
   @Input() loadMoreCallBack: Function;

@@ -1,33 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
-import { PlaylistItem } from '../models/playlist/playlist-item';
+import { ServiceModel } from '../models/service-models/service-model';
+import { Playlist } from '../models/playlist/playlist';
+import { HttpClient } from '@angular/common/http';
 import { Constants } from '../shared/constants';
 import { Url } from '../shared/url';
-import { ServiceModel } from '../models/service-models/service-model';
+import { Observable } from 'rxjs';
 
-const PATH = 'playlistItems';
+const PATH: string = 'playlists';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PlaylistService {
+export class PlaylistsService {
 
   constructor(
     private http: HttpClient
   ) { }
 
-  getById(playlistId: string, maxResults: number, pageToken: string):
-    Observable<ServiceModel<PlaylistItem[]>> {
+  getByIds(ids: string[], pageToken: string, maxResults: number): Observable<ServiceModel<Playlist[]>> {
     const queryParams = {
       part: 'snippet,contentDetails',
-      playlistId: playlistId,
+      id: ids.join(','),
       maxResults: maxResults
     };
     this.addPageToken(queryParams, pageToken);
     const url = new Url(Constants.BASE_URL, [PATH], queryParams);
-    const data$ = this.http.get<ServiceModel<PlaylistItem[]>>(url.toString());
+    const data$ = this.http.get<ServiceModel<Playlist[]>>(url.toString());
 
     return data$;
   }

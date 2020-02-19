@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
-import { PlaylistService } from 'src/app/services-singleton/playlist.service';
+import { PlaylistItemsService } from 'src/app/services-singleton/playlist-items.service';
 import { VideoService } from 'src/app/services-singleton/video.service';
 import { concatMap } from 'rxjs/operators';
 import { Video } from 'src/app/models/video/video';
@@ -34,7 +34,7 @@ export class SinglePlaylistComponent implements OnInit {
   private nextPageToken: string;
 
   constructor(
-    private playlistService: PlaylistService,
+    private playlistService: PlaylistItemsService,
     private playlistElementService: PlaylistElementService,
     private videoService: VideoService,
     private changeDetectorRef: ChangeDetectorRef,

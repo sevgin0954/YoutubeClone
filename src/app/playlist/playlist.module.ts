@@ -9,6 +9,7 @@ import { VideoMiniModule } from '../video-mini/video-mini.module';
 import { ArrowButtonService } from './services/arrow-button.service';
 import { PlaylistElementService } from './services/playlist-element.service';
 import { PlaylistButtonsComponent } from './playlist-buttons/playlist-buttons.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { PlaylistButtonsComponent } from './playlist-buttons/playlist-buttons.co
   ],
   imports: [
     CommonModule,
+    RouterModule,
     SharedModule,
     VideoMiniModule
   ],
@@ -29,7 +31,8 @@ import { PlaylistButtonsComponent } from './playlist-buttons/playlist-buttons.co
   exports: [
     MultipleChannelsPlaylistComponent,
     SinglePlaylistComponent,
-    PlaylistButtonsComponent
+    PlaylistButtonsComponent,
+    MultiplePlaylistsComponent
   ]
 })
 export class PlaylistModule { }
