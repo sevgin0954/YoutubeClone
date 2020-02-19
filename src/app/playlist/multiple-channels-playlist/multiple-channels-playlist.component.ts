@@ -33,7 +33,7 @@ export class MultipleChannelsPlaylistComponent extends BasePlaylistComponent imp
     this.loadMoreVideos(onLoadedMoreCallback);
   channels: Channel[] = [];
   totalResultsCount: number;
-  private nextPageToken: string;
+  private channelsStartIndex: number = 0;
 
   ngOnInit(): void {
     this.loadMoreVideos(() => { });
@@ -45,12 +45,14 @@ export class MultipleChannelsPlaylistComponent extends BasePlaylistComponent imp
 
   loadMoreVideos(onLoadedMoreCallback: Function): void {
     const channelIds = this.channelSection.contentDetails.channels;
+    this.totalResultsCount = channelIds.length;
 
-    const maxResults = Constants.MAX_PLAYLIST_ITEM_RESULTS;
-    this.channelService.getByIds(channelIds, this.nextPageToken, maxResults).subscribe(data => {
+    const channelsEndIndex = this.channelsStartIndex + Constants.MAX_PLAYLIST_ITEM_RESULTS;
+
+    const currentPagePlaylistIds = channelIds.slice(this.channelsStartIndex, channelsEndIndex);
+    this.channelService.getByIds(currentPagePlaylistIds, null, 0).subscribe(data => {
       this.channels.push(...data.items);
-      this.nextPageToken = data.nextPageToken;
-      this.totalResultsCount = channelIds.length;
+      this.channelsStartIndex = channelsEndIndex;
 
       onLoadedMoreCallback();
 
