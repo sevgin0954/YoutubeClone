@@ -1,20 +1,26 @@
 <div class="playlists-container">
-  <div *ngFor="let signleSection of singlePlaylistSections">
-    <hr>
+  <ng-container *ngFor="let section of channelSections">
+    <ng-container *ngIf="getSectionType(section) === snippetType[snippetType.multipleChannels]">
+      <hr>
 
-    <app-single-playlist
-      [channelSection]="signleSection"
-      [style]="snippetStyle[signleSection.snippet.style]">
-    </app-single-playlist>
-  </div>
+      <app-multiple-channels-playlist
+        [channelSection]="section"
+        [title]="section.snippet.title"
+        [style]="snippetStyle[section.snippet.style]">
+      </app-multiple-channels-playlist>
+    </ng-container>
 
-  <div *ngFor="let channelsSection of multipleChannelsSections">
-    <hr>
+    <ng-container *ngIf="getSectionType(section) === snippetType[snippetType.multiplePlaylists]">
 
-    <app-multiple-channels-playlist
-      [channelSection]="channelsSection"
-      [title]="channelsSection.snippet.title"
-      [style]="snippetStyle[channelsSection.snippet.style]">
-    </app-multiple-channels-playlist>
-  </div>
+    </ng-container>
+
+    <ng-container *ngIf="getSectionType(section) === snippetType[snippetType.singlePlaylist]">
+      <hr>
+
+      <app-single-playlist
+        [channelSection]="section"
+        [style]="snippetStyle[section.snippet.style]">
+      </app-single-playlist>
+    </ng-container>
+  </ng-container>
 </div>
