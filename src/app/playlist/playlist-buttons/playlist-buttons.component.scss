@@ -1,1 +1,8 @@
 @import './../style.scss';
+
+.loading {
+  margin-right: auto;
+  text-orientation: mixed;
+  writing-mode: vertical-lr;
+  font: 1rem 'Open Sans Condensed', sans-serif;
+}

@@ -38,7 +38,7 @@ export class MostPopularComponent implements OnInit, OnDestroy {
     this.windowService.onReachBottom(() => this.loadMoreVideos());
   }
 
-  private loadMoreVideos(): void {
+  loadMoreVideos(): void {
     const maxDescriptionLength = 200;
 
     const regionCode = 'BG';

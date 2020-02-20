@@ -4,11 +4,13 @@ import { RouterModule } from '@angular/router';
 
 import { TextRevealComponent } from './components/text-reveal/text-reveal.component';
 import { ChannelMiniComponent } from './components/channel-mini/channel-mini.component';
+import { LoadingComponent } from './compoentns/loading/loading.component';
 
 @NgModule({
   declarations: [
     TextRevealComponent,
-    ChannelMiniComponent
+    ChannelMiniComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
@@ -16,7 +18,8 @@ import { ChannelMiniComponent } from './components/channel-mini/channel-mini.com
   ],
   exports: [
     TextRevealComponent,
-    ChannelMiniComponent
+    ChannelMiniComponent,
+    LoadingComponent
   ]
 })
 export class SharedModule { }

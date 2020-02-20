@@ -17,6 +17,10 @@ export class FormatterService {
   }
 
   getFormattedNumberString(number: number): string {
+    if (number === undefined) {
+      return 'hidden';
+    }
+
     const thousandsMinLength = 4;
     const milionsMinLength = 7;
     const bilionMinLength = 10;
