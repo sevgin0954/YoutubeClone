@@ -1,8 +1,7 @@
 @import './../../../variables.scss';
 
-img {
-  width: 48px;
-  height: 48px;
+:host(app-most-popular) {
+  width: 100%;
 }
 
 .comments-toggle-button {
@@ -33,4 +32,16 @@ img {
 
 .dropdown-menu {
   margin-bottom: 0.125rem;
+}
+
+img {
+  width: 48px;
+  height: 48px;
+}
+
+.loading-container {
+  font-size: 2rem;
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
 }

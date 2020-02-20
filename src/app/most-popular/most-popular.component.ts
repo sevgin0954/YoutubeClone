@@ -42,8 +42,10 @@ export class MostPopularComponent implements OnInit, OnDestroy {
     }
 
     if (this.isMoreVideos) {
-      this.windowService.onReachBottom(() => this.loadMoreVideos());
-      this.isFirstPage = this.isFirstPage;
+      this.windowService.onReachBottom(() => {
+        this.loadMoreVideos();
+        this.isFirstPage = this.isFirstPage;
+      });
     }
   }
 

@@ -34,8 +34,10 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
     }
 
     if (this.isMoreSubscriptions) {
-      this.windowService.onReachBottom(() => this.loadMoreSubscriptions());
-      this.isFirstPage = false;
+      this.windowService.onReachBottom(() => {
+        this.loadMoreSubscriptions();
+        this.isFirstPage = false;
+      });
     }
   }
 

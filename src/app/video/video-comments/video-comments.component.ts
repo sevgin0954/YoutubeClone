@@ -15,15 +15,16 @@ import { CommentThreadsService } from 'src/app/services-singleton/comment-thread
 })
 export class VideoCommentsComponent implements OnDestroy {
 
-  @Input() parentId: string;
   @Input() commentCount: number;
+  @Input() parentId: string;
   commentThreads: CommentThread[];
+  commentThreadOrder: typeof CommentThreadOrder = CommentThreadOrder;
+  isOrderButtonDisabled: boolean = false;
+  isMoreComments: boolean = true;
   order: CommentThreadOrder = CommentThreadOrder.relevance;
   orderKeys: string[];
-  isOrderButtonDisabled: boolean = false;
-  commentThreadOrder: typeof CommentThreadOrder = CommentThreadOrder;
-  private nextPageToken: string;
   private isFirstPage: boolean = true;
+  private nextPageToken: string;
   private videoSubscribtion: Subscription;
 
   constructor(
@@ -45,16 +46,21 @@ export class VideoCommentsComponent implements OnDestroy {
 
   @HostListener("window:scroll")
   private onReachBottom(): void {
-    this.windowService.onReachBottom(() => {
-      if (this.nextPageToken || this.isFirstPage) {
-        this.isFirstPage = false;
+    if (this.nextPageToken === undefined && this.isFirstPage === false) {
+      this.isMoreComments = false;
+    }
+
+    if (this.isMoreComments) {
+      this.windowService.onReachBottom(() => {
         this.loadComments();
-      }
-    });
+        this.isFirstPage = false;
+      });
+    }
   }
 
-  loadComments(): void {
-    this.videoSubscribtion = this.commentThreadsService.getByVideoId(this.parentId, this.order, this.nextPageToken)
+  private loadComments(): void {
+    this.videoSubscribtion = this.commentThreadsService
+      .getByVideoId(this.parentId, this.order, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         this.commentThreads.push(...data.items);

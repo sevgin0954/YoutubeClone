@@ -34,7 +34,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private channelService: ChannelService,
     private videoService: VideoService,
-    private youtubeIframeService: YoutubeIframeService,
+    private youtubeIframeService: YoutubeIframeService
   ) { }
 
   ngOnInit(): void {
