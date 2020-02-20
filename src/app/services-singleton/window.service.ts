@@ -5,12 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class WindowService {
 
-  onReachBottom(callback: () => void): void {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      callback();
-    }
-  }
-
   isElementOverflowing(element: HTMLElement): boolean {
     let isOverflowing = false;
 
@@ -28,5 +22,11 @@ export class WindowService {
     }
 
     return isOverflowing;
+  }
+
+  onReachBottom(callback: () => void): void {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      callback();
+    }
   }
 }

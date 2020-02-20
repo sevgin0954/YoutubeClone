@@ -55,5 +55,8 @@ export class CommentRepliesComponent {
 
   onHideReplies(): void {
     this.shouldShowReplies = false;
+
+    const parentElement: Element = document.getElementById(this.parentId);
+    parentElement.scrollIntoView({behavior: "smooth", block: "center"});
   }
 }

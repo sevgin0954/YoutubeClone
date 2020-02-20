@@ -1,4 +1,5 @@
-<div [attr.hidden]="shouldShowReplies ? null : 'hidden'" *ngFor="let comment of comments">
+<div [attr.hidden]="shouldShowReplies ? null : 'hidden'"
+  *ngFor="let comment of comments; let currentIndex = index;">
   <hr>
   <app-comment class="comment" [comment]="comment"></app-comment>
 </div>

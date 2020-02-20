@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div [id]="comment.id" class="d-flex">
   <a class="channel-title" href="https://www.youtube.com/user/{{ getAuthorChannelId() }}"
     [attr.disabled]="getAuthorChannelId() ? null : 'disabled'">
     <img class="channel-thumbnail" src="{{ comment.snippet.authorProfileImageUrl }}">
