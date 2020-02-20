@@ -30,21 +30,21 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
   private onReachBottom(): void {
     this.windowService.onReachBottom(() => {
       if (this.nextPageToken || this.isFirstPage) {
-        this.loadSubscriptions();
+        this.loadMoreSubscriptions();
         this.isFirstPage = false;
       }
     });
   }
 
   ngOnInit() {
-    this.loadSubscriptions();
+    this.loadMoreSubscriptions();
   }
 
   ngOnDestroy() {
     this.channelsSubscribtion.unsubscribe()
   }
 
-  loadSubscriptions(): void {
+  private loadMoreSubscriptions(): void {
     const maxDescriptionLength = 100;
 
     const maxResults = 30;

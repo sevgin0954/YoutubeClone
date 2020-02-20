@@ -1,8 +1,10 @@
 @import './../style.scss';
 
-.loading {
-  margin-right: auto;
-  text-orientation: mixed;
-  writing-mode: vertical-lr;
-  font: 1rem 'Open Sans Condensed', sans-serif;
+:host ::ng-deep {
+  .loading {
+    margin: 0;
+    text-orientation: mixed;
+    writing-mode: vertical-lr;
+    font: 1rem 'Open Sans Condensed', sans-serif;
+  }
 }
