@@ -3,6 +3,10 @@
   <app-comment class="comment" [comment]="comment"></app-comment>
 </div>
 
+<div>
+  <app-loading class="loading-container" *ngIf="shouldShowLoading"></app-loading>
+</div>
+
 <div *ngIf="shouldShowMoreReplies && shouldShowReplies">
   <button class="mt-2" class="show-more-button" (click)="onShowMoreReplies()">
     <i class="far fa-arrow-alt-circle-down"></i>

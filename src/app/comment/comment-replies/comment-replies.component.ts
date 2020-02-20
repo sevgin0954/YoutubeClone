@@ -13,6 +13,7 @@ export class CommentRepliesComponent {
   @Input() totalRepliesCount: number;
   @Input() private parentId: string;
   comments: Comment[] = [];
+  shouldShowLoading: boolean = false;
   shouldShowReplies: boolean = false;
   shouldShowMoreReplies: boolean = false;
   private isFirstPage: boolean = true;
@@ -23,6 +24,7 @@ export class CommentRepliesComponent {
   ) { }
 
   onShowMoreReplies(): void {
+    this.shouldShowLoading = true;
     this.shouldShowReplies = true;
 
     if (this.nextPageToken || this.isFirstPage) {
@@ -31,6 +33,8 @@ export class CommentRepliesComponent {
       this.commentsService.getByParentId(this.parentId, this.nextPageToken).subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         this.comments.push(...data.items);
+
+        this.shouldShowLoading = false;
 
         if (this.comments.length < this.totalRepliesCount) {
           this.shouldShowMoreReplies = true;
