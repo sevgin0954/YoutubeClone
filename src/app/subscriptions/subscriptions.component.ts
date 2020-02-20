@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 export class SubscriptionsComponent implements OnInit, OnDestroy {
 
   channels: Channel[];
+  isMoreSubscriptions: boolean = true;
   private isFirstPage: boolean = true;
   private nextPageToken: string;
   private channelsSubscribtion: Subscription;
@@ -28,12 +29,14 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
 
   @HostListener("window:scroll")
   private onReachBottom(): void {
-    this.windowService.onReachBottom(() => {
-      if (this.nextPageToken || this.isFirstPage) {
-        this.loadMoreSubscriptions();
-        this.isFirstPage = false;
-      }
-    });
+    if (this.nextPageToken === undefined && this.isFirstPage === false) {
+      this.isMoreSubscriptions = false;
+    }
+
+    if (this.isMoreSubscriptions) {
+      this.windowService.onReachBottom(() => this.loadMoreSubscriptions());
+      this.isFirstPage = false;
+    }
   }
 
   ngOnInit() {

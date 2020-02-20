@@ -15,6 +15,8 @@ import { Constants } from '../shared/constants';
 })
 export class MostPopularComponent implements OnInit, OnDestroy {
 
+  isFirstPage: boolean = true;
+  isMoreVideos: boolean = true;
   videos: Video[];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
   videoTitleMaxLength: number = Constants.TITLE_MAX_LENGTH;
@@ -35,7 +37,14 @@ export class MostPopularComponent implements OnInit, OnDestroy {
 
   @HostListener("window:scroll")
   private onReachBottom(): void {
-    this.windowService.onReachBottom(() => this.loadMoreVideos());
+    if (this.nextPageToken === undefined && this.isFirstPage === false) {
+      this.isMoreVideos = false;
+    }
+
+    if (this.isMoreVideos) {
+      this.windowService.onReachBottom(() => this.loadMoreVideos());
+      this.isFirstPage = this.isFirstPage;
+    }
   }
 
   loadMoreVideos(): void {
