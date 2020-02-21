@@ -1,5 +1,5 @@
 <div>
   <a routerLink="/video/{{ video.id }}">
-    <img class="thumbnail" src="{{ video.snippet.thumbnails[sizeString].url }}" alt="{{ video.snippet.title }}">
+    <img class="thumbnail" src="{{ getThumbnailUrl(video.snippet.thumbnails) }}" alt="{{ video.snippet.title }}">
   </a>
 </div>
