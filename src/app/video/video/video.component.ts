@@ -5,11 +5,12 @@ import { Subscription as RxjsSubscribtion } from 'rxjs';
 import { RatingType } from 'src/app/shared/enums/rating-type';
 import { Video } from 'src/app/models/video/video';
 import { VideoService } from 'src/app/services-singleton/video.service';
-import { YoutubeIframeService } from 'src/app/services-singleton/youtube-iframe.service';
+import { YoutubeIframeService } from 'src/app/video/services/youtube-iframe.service';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Channel } from 'src/app/models/channel/channel';
 import { ChannelService } from 'src/app/services-singleton/channel.service';
 import { concatMap } from 'rxjs/operators';
+import { VideoRatingService } from '../services/video-rating.service';
 
 @Component({
   selector: 'app-video',
@@ -33,6 +34,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     public formatterService: FormatterService,
     private route: ActivatedRoute,
     private channelService: ChannelService,
+    private videoRatingService: VideoRatingService,
     private videoService: VideoService,
     private youtubeIframeService: YoutubeIframeService
   ) { }
@@ -64,7 +66,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initRating(): void {
-    this.videoService.getRating(this.videoId).subscribe(data => {
+    this.videoRatingService.getRating(this.videoId).subscribe(data => {
       this.currentRating = data;
       if (this.currentRating === RatingType.like) {
         this.likeButton.nativeElement.classList.add('thumb-active-button');
@@ -88,7 +90,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       newRating = clickedRating;
     }
 
-    this.videoService.rate(this.videoId, newRating).subscribe(data => {
+    this.videoRatingService.rate(this.videoId, newRating).subscribe(data => {
       const responseCode = data;
       if (responseCode === 204) {
         this.likeButton.nativeElement.classList.remove('thumb-active-button');

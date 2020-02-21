@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { Observable, of, EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { AuthService } from './auth.service';
+import { AuthService } from 'src/app/services-singleton/auth.service';
 
 @Injectable({
   providedIn: 'root'
