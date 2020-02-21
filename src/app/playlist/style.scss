@@ -4,29 +4,12 @@
 :host ::ng-deep {
   .thumbnail {
     width: $thumbnail-width;
+    max-height: $thumbnail-height;
   }
 
   .video-title {
     font-size: 1rem;
   }
-}
-
-.playlist {
-  display: flex;
-}
-
-.playlist-element {
-  width: 230px;
-  width: $thumbnail-width;
-  margin-right: $video-margin;
-  margin-bottom: 2rem;
-}
-.playlist-element:first-child {
-  padding-left: 0;
-  margin-left: 0;
-}
-.playlist-element:last-child {
-  padding-right: 0;
 }
 
 .btn-arrow {
@@ -58,4 +41,21 @@
 }
 .loading-btn:disabled {
   opacity: 1;
+}
+
+.playlist {
+  display: flex;
+}
+
+.playlist-element {
+  width: 230px;
+  width: $thumbnail-width;
+  margin-right: $video-margin;
+}
+.playlist-element:first-child {
+  padding-left: 0;
+  margin-left: 0;
+}
+.playlist-element:last-child {
+  padding-right: 0;
 }

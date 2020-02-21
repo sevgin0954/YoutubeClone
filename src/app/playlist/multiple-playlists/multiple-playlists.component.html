@@ -4,7 +4,7 @@
     [attr.hidden]="windowService.isElementOverflowing(playlistElement) === true ? 'hidden' : null">
       <div>
         <a [routerLink]="['/channel', playlist.snippet.channelId]">
-          <img class="thumbnail" src="{{ playlist.snippet.thumbnails[thumbnailSize].url }}"
+          <img class="thumbnail" src="{{ getThumnailUrl(playlist.snippet.thumbnails) }}"
             alt="{{ playlist.snippet.title }}">
         </a>
       </div>

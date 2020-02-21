@@ -10,6 +10,9 @@ import { PlaylistElementService } from '../services/playlist-element.service';
 import { BasePlaylistComponent } from '../base-playlist-component';
 import { Constants } from 'src/app/shared/constants';
 import { WindowService } from 'src/app/services-singleton/window.service';
+import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';
+import { Thumbnail } from 'src/app/models/thumbnail/thumbnail';
+import { VideoThumbnails } from 'src/app/models/thumbnail/video-thumbnails';
 
 @Component({
   selector: 'app-multiple-playlists',
@@ -25,7 +28,7 @@ export class MultiplePlaylistsComponent extends BasePlaylistComponent implements
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
     this.loadMorePlaylists(onLoadedMoreCallback);
   playlists: Playlist[] = [];
-  thumbnailSize: string;
+  thumbnailSize: string = VideoThumbnailSize[VideoThumbnailSize.default];
   totalResultsCount: number;
   private playlistsStartIndex: number = 0;
   private subscription: Subscription;
@@ -34,11 +37,16 @@ export class MultiplePlaylistsComponent extends BasePlaylistComponent implements
     changeDetectorRef: ChangeDetectorRef,
     playlistElementService: PlaylistElementService,
     public windowService: WindowService,
-    private playlistsService: PlaylistsService
+    private playlistsService: PlaylistsService,
+    private thumbnailService: ThumbnailsService
   ) {
     super(playlistElementService, changeDetectorRef);
+  }
 
-    this.thumbnailSize = VideoThumbnailSize[VideoThumbnailSize.default];
+  getThumnailUrl(thumbnails: VideoThumbnails): string {
+    const url = this.thumbnailService.getThumbnailUrl(VideoThumbnailSize.default, thumbnails);
+
+    return url;
   }
 
   ngOnInit() {
@@ -47,7 +55,7 @@ export class MultiplePlaylistsComponent extends BasePlaylistComponent implements
 
   loadMorePlaylists(onLoadedMoreCallback: Function): void {
     const playlistIds = this.channelSection.contentDetails.playlists;
-    
+
     this.totalResultsCount = playlistIds.length;
 
     const playlistsEndIndex = this.playlistsStartIndex + Constants.MAX_PLAYLIST_ITEM_RESULTS;
