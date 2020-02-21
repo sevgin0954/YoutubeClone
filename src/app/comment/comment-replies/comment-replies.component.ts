@@ -25,6 +25,7 @@ export class CommentRepliesComponent {
 
   onShowMoreReplies(): void {
     this.shouldShowLoading = true;
+    this.shouldShowMoreReplies = false;
     this.shouldShowReplies = true;
 
     if (this.nextPageToken || this.isFirstPage) {

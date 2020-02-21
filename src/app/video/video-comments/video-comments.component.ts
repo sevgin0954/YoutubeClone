@@ -19,8 +19,9 @@ export class VideoCommentsComponent implements OnDestroy {
   @Input() parentId: string;
   commentThreads: CommentThread[];
   commentThreadOrder: typeof CommentThreadOrder = CommentThreadOrder;
-  isOrderButtonDisabled: boolean = false;
+  isCurrentlyLoadingComments: boolean = false;
   isMoreComments: boolean = true;
+  isOrderButtonDisabled: boolean = false;
   order: CommentThreadOrder = CommentThreadOrder.relevance;
   orderKeys: string[];
   private isFirstPage: boolean = true;
@@ -46,6 +47,9 @@ export class VideoCommentsComponent implements OnDestroy {
 
   @HostListener("window:scroll")
   private onReachBottom(): void {
+    if (this.isCurrentlyLoadingComments) {
+      return;
+    }
     if (this.nextPageToken === undefined && this.isFirstPage === false) {
       this.isMoreComments = false;
     }
@@ -59,12 +63,15 @@ export class VideoCommentsComponent implements OnDestroy {
   }
 
   private loadComments(): void {
+    this.isCurrentlyLoadingComments = true;
+
     this.videoSubscribtion = this.commentThreadsService
       .getByVideoId(this.parentId, this.order, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         this.commentThreads.push(...data.items);
 
+        this.isCurrentlyLoadingComments = false;
         this.isOrderButtonDisabled = false;
       });
   }
