@@ -8,6 +8,10 @@ import { Subscription } from 'rxjs';
 import { VideoThumbnailSize } from '../shared/enums/video-thumbnail-size';
 import { Constants } from '../shared/constants';
 
+const MAX_DESCRIPTION_LENGTH: number = 200;
+const REGION_CODE: string = 'BG';
+const MAX_RESULTS_PER_PAGE = 25;
+
 @Component({
   selector: 'app-most-popular',
   templateUrl: './most-popular.component.html',
@@ -16,6 +20,7 @@ import { Constants } from '../shared/constants';
 export class MostPopularComponent implements OnInit, OnDestroy {
 
   isFirstPage: boolean = true;
+  isCurrentlyLoadingVideos: boolean = false;
   isMoreVideos: boolean = true;
   videos: Video[];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
@@ -37,6 +42,9 @@ export class MostPopularComponent implements OnInit, OnDestroy {
 
   @HostListener("window:scroll")
   private onReachBottom(): void {
+    if (this.isCurrentlyLoadingVideos) {
+      return;
+    }
     if (this.nextPageToken === undefined && this.isFirstPage === false) {
       this.isMoreVideos = false;
     }
@@ -50,21 +58,22 @@ export class MostPopularComponent implements OnInit, OnDestroy {
   }
 
   loadMoreVideos(): void {
-    const maxDescriptionLength = 200;
+    this.isCurrentlyLoadingVideos = true;
 
-    const regionCode = 'BG';
-    const maxResults = 25;
-    this.videosSubscription = this.videoService.getMostPopular(regionCode, maxResults, this.nextPageToken)
+    this.videosSubscription = this.videoService
+      .getMostPopular(REGION_CODE, MAX_RESULTS_PER_PAGE, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         data.items.forEach(video => {
           const description = video.snippet.description;
-          if (description.length > maxDescriptionLength) {
-            const conciseDescription = description.slice(0, maxDescriptionLength) + '...';
+          if (description.length > MAX_DESCRIPTION_LENGTH) {
+            const conciseDescription = description.slice(0, MAX_DESCRIPTION_LENGTH) + '...';
             video.snippet.description = conciseDescription;
           }
         });
         this.videos.push(...data.items);
+
+        this.isCurrentlyLoadingVideos = false;
       });
   }
 

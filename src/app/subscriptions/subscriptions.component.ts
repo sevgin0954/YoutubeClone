@@ -6,6 +6,9 @@ import { WindowService } from '../services-singleton/window.service';
 import { FormatterService } from '../services-singleton/formatter.service';
 import { Subscription } from 'rxjs';
 
+const MAX_DESCRIPTION_LENGTH: number = 100;
+const MAX_RESULTS_PER_PAGE = 30;
+
 @Component({
   selector: 'app-subscriptions',
   templateUrl: './subscriptions.component.html',
@@ -14,6 +17,7 @@ import { Subscription } from 'rxjs';
 export class SubscriptionsComponent implements OnInit, OnDestroy {
 
   channels: Channel[];
+  isCurrentlyLoading: boolean = false;
   isMoreSubscriptions: boolean = true;
   private isFirstPage: boolean = true;
   private nextPageToken: string;
@@ -29,6 +33,9 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
 
   @HostListener("window:scroll")
   private onReachBottom(): void {
+    if (this.isCurrentlyLoading) {
+      return;
+    }
     if (this.nextPageToken === undefined && this.isFirstPage === false) {
       this.isMoreSubscriptions = false;
     }
@@ -50,18 +57,21 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
   }
 
   private loadMoreSubscriptions(): void {
-    const maxDescriptionLength = 100;
+    this.isCurrentlyLoading = true;
 
-    const maxResults = 30;
-    this.channelsSubscribtion = this.channelService.getSubscriptions(maxResults, this.nextPageToken)
+    this.channelsSubscribtion = this.channelService
+      .getSubscriptions(MAX_RESULTS_PER_PAGE, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         data.items.forEach(currentChannel => {
           const description = currentChannel.snippet.description;
-          const conciseDescription = this.formatterService.getConcisedString(description, maxDescriptionLength);
+          const conciseDescription = this.formatterService
+            .getConcisedString(description, MAX_DESCRIPTION_LENGTH);
           currentChannel.snippet.description = conciseDescription;
         });
         this.channels.push(...data.items);
+
+        this.isCurrentlyLoading = false;
       });
   }
 }
