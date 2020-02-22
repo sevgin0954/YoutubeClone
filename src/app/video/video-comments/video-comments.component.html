@@ -1,37 +1,35 @@
-<div class="d-flex mb-4" *ngIf="commentCount > 0">
-  {{ commentCount }} comments
+<div class="video-comments-container">
+  <div class="d-flex mb-4" *ngIf="commentCount > 0">
+    {{ commentCount }} comments
 
-  <div class="dropdown ml-2">
-    <button class="btn dropdown-button"
-      [class.disabled]="isOrderButtonDisabled ? true : null"
-      type="button"
-      id="dropdownMenuButton"
-      data-toggle="dropdown"
-      aria-haspopup="true" aria-expanded="false">
-      <i class="fas fa-sort"></i>
-      {{ commentThreadOrder[order] }}
-    </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <button class="dropdown-item" *ngFor="let key of orderKeys"
-        [attr.hidden]="commentThreadOrder[key] === commentThreadOrder[order] ? 'hidden' : null"
-        (click)="onChangeOrder(key)">
-        {{ commentThreadOrder[key] }}
+    <div class="dropdown ml-2">
+      <button class="btn dropdown-button" [class.disabled]="isOrderButtonDisabled ? true : null" type="button"
+        id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-sort"></i>
+        {{ commentThreadOrder[order] }}
       </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button class="dropdown-item" *ngFor="let key of orderKeys"
+          [attr.hidden]="commentThreadOrder[key] === commentThreadOrder[order] ? 'hidden' : null"
+          (click)="onChangeOrder(key)">
+          {{ commentThreadOrder[key] }}
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
-<div *ngFor="let thread of commentThreads">
-  <app-comment [comment]="thread.snippet.topLevelComment"></app-comment>
+  <div *ngFor="let thread of commentThreads">
+    <app-comment [comment]="thread.snippet.topLevelComment"></app-comment>
 
-  <div class="replies-container">
-    <app-comment-replies *ngIf="thread.snippet.totalReplyCount > 0" [parentId]="thread.id"
-      [totalRepliesCount]="thread.snippet.totalReplyCount">
-    </app-comment-replies>
+    <div class="replies-container">
+      <app-comment-replies *ngIf="thread.snippet.totalReplyCount > 0" [parentId]="thread.id"
+        [totalRepliesCount]="thread.snippet.totalReplyCount">
+      </app-comment-replies>
+    </div>
+    <hr>
   </div>
-  <hr>
-</div>
 
-<div *ngIf="isMoreComments">
-  <app-loading class="loading-container"></app-loading>
+  <div *ngIf="isMoreComments">
+    <app-loading class="loading-container"></app-loading>
+  </div>
 </div>

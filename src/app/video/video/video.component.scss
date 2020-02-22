@@ -1,6 +1,11 @@
 @import './../../../variables.scss';
 
-.content-container {
+.video-content-container {
+  max-width: 640px;
+  margin-left: 1rem;
+}
+
+.video-header {
   max-width: 640px;
 }
 

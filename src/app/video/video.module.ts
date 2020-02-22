@@ -8,6 +8,7 @@ import { CommentModule } from '../comment/comment.module';
 import { Routes, RouterModule } from '@angular/router';
 import { VideoRatingService } from './services/video-rating.service';
 import { YoutubeIframeService } from './services/youtube-iframe.service';
+import { VideoDescriptionComponent } from './video-description/video-description.component';
 
 const routes: Routes = [
   { path: ':id', component: VideoComponent }
@@ -16,7 +17,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     VideoComponent,
-    VideoCommentsComponent
+    VideoCommentsComponent,
+    VideoDescriptionComponent
   ],
   imports: [
     RouterModule.forChild(routes),

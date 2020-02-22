@@ -1,6 +1,6 @@
 <div id="player"></div>
 
-<div class="content-container" *ngIf="video">
+<div class="video-header">
   <div class="video-title">
     {{ video.snippet.title }}
   </div>
@@ -22,19 +22,20 @@
       </button>
     </div>
   </div>
+</div>
 
-  <hr>
+<hr>
 
-  <app-channel-mini *ngIf="channel" [channel]="channel"></app-channel-mini>
+<div class="video-content-container" *ngIf="video">
+  <app-video-description
+    [channel]="channel"
+    [text]="video.snippet.description"
+    [maxDisplayedCharacters]="maxDisplayedCharacters">
+  </app-video-description>
+</div>
 
-  <div class="angular-with-newlines">
-    <app-text-reveal [text]="video.snippet.description" [maxDisplayedCharacters]="maxDisplayedCharacters">
-    </app-text-reveal>
-  </div>
+<hr>
 
-  <hr>
-
-  <div>
-    <app-video-comments [parentId]="videoId" [commentCount]="video.statistics.commentCount"></app-video-comments>
-  </div>
+<div class="video-content-container">
+  <app-video-comments [parentId]="videoId" [commentCount]="video.statistics.commentCount"></app-video-comments>
 </div>
