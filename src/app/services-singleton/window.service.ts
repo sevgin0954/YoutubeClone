@@ -17,7 +17,7 @@ export class WindowService {
 
       element.setAttribute('hidden', 'hidden');
     }
-    else if (rect.right + 90 > window.screen.width) {
+    else if (rect.right > window.screen.width) {
       isOverflowing = true;
     }
 

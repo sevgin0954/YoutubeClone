@@ -5,14 +5,15 @@ import { Injectable } from '@angular/core';
 })
 export class ElementsPredicateService {
 
-  getFirstShownElement(element: Element, index: number, elements: Element[]): boolean {
-    let isPreviousElementHidden = true;
+  getFirstHiddenElementFromRight(element: Element, index: number, elements: Element[]): boolean {
+    let isPreviousElementVisible = false;
     if (index > 0) {
-      isPreviousElementHidden = elements[index - 1].hasAttribute('hidden');
+      const previousElement = elements[index - 1];
+      isPreviousElementVisible = previousElement.hasAttribute('hidden') === false;
     }
-    const isCurrentElementVisible = element.hasAttribute('hidden') === false;
+    const isCurrentElementHidden = element.hasAttribute('hidden');
 
-    return isPreviousElementHidden && isCurrentElementVisible;
+    return isPreviousElementVisible && isCurrentElementHidden;
   }
 
   getLastHiddenElementFromLeft(element: Element, index: number, elements: Element[]): boolean {

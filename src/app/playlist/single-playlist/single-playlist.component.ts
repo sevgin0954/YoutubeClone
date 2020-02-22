@@ -1,6 +1,4 @@
-import {
-  Component, Input, ChangeDetectionStrategy, ChangeDetectorRef, OnInit, ElementRef, ViewChild, ViewChildren, QueryList,
-} from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { PlaylistItemsService } from 'src/app/services-singleton/playlist-items.service';
@@ -9,22 +7,17 @@ import { concatMap } from 'rxjs/operators';
 import { Video } from 'src/app/models/video/video';
 import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
-import { WindowService } from 'src/app/services-singleton/window.service';
 import { Constants } from 'src/app/shared/constants';
-import { PlaylistElementService } from '../services/playlist-element.service';
-import { BasePlaylistComponent } from '../base-playlist-component';
 
 @Component({
   selector: 'app-single-playlist',
   templateUrl: './single-playlist.component.html',
-  styleUrls: ['./single-playlist.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./single-playlist.component.scss']
 })
-export class SinglePlaylistComponent extends BasePlaylistComponent implements OnInit {
+export class SinglePlaylistComponent implements OnInit {
 
   @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
-  @ViewChildren('playlistElement') playlistElements: QueryList<ElementRef>;
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
     this.loadMoreVideos(onLoadedMoreCallback);
@@ -36,14 +29,9 @@ export class SinglePlaylistComponent extends BasePlaylistComponent implements On
   private nextPageToken: string;
 
   constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    playlistElementService: PlaylistElementService,
-    public windowService: WindowService,
     private playlistService: PlaylistItemsService,
     private videoService: VideoService
-  ) {
-    super(playlistElementService, changeDetectorRef);
-  }
+  ) { }
 
   ngOnInit(): void {
     this.loadMoreVideos(() => { });
@@ -70,8 +58,6 @@ export class SinglePlaylistComponent extends BasePlaylistComponent implements On
       this.videos.push(...videos);
 
       onLoadedMoreCallback();
-
-      this.changeDetectorRef.markForCheck();
     });
   }
 }

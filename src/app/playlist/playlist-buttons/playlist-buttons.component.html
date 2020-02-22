@@ -1,11 +1,11 @@
-<div class="d-flex">
-  <button disabled #leftBtn class="btn-arrow" (click)="onLeftBtnClick(playlist)">
+<div class="d-flex" (window:resize)="onPlaylistResize()">
+  <button disabled #leftBtn class="btn-arrow" (click)="onLeftBtnClick()">
     <i class="fas fa-arrow-circle-right"></i>
   </button>
 
 <ng-content></ng-content>
 
-  <button #rightBtn class="btn-arrow mr-auto" (click)="onRightBtnClick(playlist)">
+  <button #rightBtn class="btn-arrow mr-auto" (click)="onRightBtnClick()">
     <i class="fas fa-arrow-circle-left"></i>
   </button>
   <button #loadingBtn class="loading-btn" disabled hidden>

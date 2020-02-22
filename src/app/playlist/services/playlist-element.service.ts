@@ -9,22 +9,28 @@ export class PlaylistElementService {
   constructor(
     private elementsPredicateService: ElementsPredicateService,
     private windowService: WindowService
-  ) {}
+  ) { }
 
-  hideFirstShownElement(playlistElements: HTMLCollection): void {
-    const firstShownElement =
-      this.getFirstElement(playlistElements, this.elementsPredicateService.getFirstShownElement);
+  hideFirstHiddenElementFromRight(playlistElements: Element[]): void {
+    const firstHiddenElementFromRight = playlistElements
+      .find(this.elementsPredicateService.getFirstHiddenElementFromRight);
+    firstHiddenElementFromRight.removeAttribute('hidden');
+  }
+
+  hideFirstShownElement(playlistElements: Element[]): void {
+    const firstShownElement = playlistElements.find(e => e.hasAttribute('hidden') === false);
     firstShownElement.setAttribute('hidden', 'hidden');
   }
 
-  private getFirstElement(
-    elements: HTMLCollection,
-    predicate: (element: Element, index: number, elements: Element[]) => boolean
-  ): Element {
-    const elementsAsArray = Array.from(elements);
-    const element = elementsAsArray.find(predicate);
+  hideLastShowElement(playlistElements: Element[]): void {
+    const lastShownElement = playlistElements.find(this.elementsPredicateService.getLastShownElement);
+    lastShownElement.setAttribute('hidden', 'hidden');
+  }
 
-    return element;
+  showLastHiddenElementFromLeft(playlistElements: Element[]): void {
+    const lastHiddenElementFromLeft = playlistElements
+      .find(this.elementsPredicateService.getLastHiddenElementFromLeft);
+    lastHiddenElementFromLeft.removeAttribute('hidden');
   }
 
   tryShowElementIfNotOverflowing(elementToShow: HTMLElement, lastShownElement: HTMLElement): boolean {
@@ -40,11 +46,37 @@ export class PlaylistElementService {
     return isElementShown;
   }
 
-  tryShowLeftHiddenElements(playlistElements: HTMLElement[]): void {
+  tryHideRightOverflowingElements(playlistElements: Element[], lastShownElement: HTMLElement): boolean {
+    let isSuccessful = false;
+
+    let isThereShownElelement = this.isThereVisibleElement(playlistElements);
+    let isLastShowElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
+    while (isLastShowElementOverflowing && isThereShownElelement) {
+      this.hideLastShowElement(playlistElements);
+
+      isLastShowElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
+      isThereShownElelement = this.isThereVisibleElement(playlistElements);
+
+      isSuccessful = true;
+    }
+
+    return isSuccessful;
+  }
+
+  private isThereVisibleElement(playlistElements: Element[]): boolean {
+    const isThereShownElelement = playlistElements
+      .find(e => e.hasAttribute('hidden') === false);
+
+    return isThereShownElelement !== undefined;
+  }
+
+  tryShowLeftHiddenElements(playlistElements: HTMLElement[], endElement: HTMLElement): boolean {
+    let isSuccessful = false;
+
     const firstElement = playlistElements[0];
     const isFirstElementHidden = firstElement.hasAttribute('hidden');
     if (isFirstElementHidden === false) {
-      return;
+      return isSuccessful;
     }
 
     let isThereMoreSpace = true;
@@ -52,16 +84,50 @@ export class PlaylistElementService {
       const lastHiddenElementFromLeft =
         playlistElements
           .find(this.elementsPredicateService.getLastHiddenElementFromLeft);
-      const lastShownElement =
-        playlistElements
-          .find(this.elementsPredicateService.getLastShownElement);
-      if (lastHiddenElementFromLeft && lastShownElement) {
-        const isElementShown = this.tryShowElementIfNotOverflowing(lastHiddenElementFromLeft, lastShownElement);
+      if (lastHiddenElementFromLeft) {
+        const isElementShown =
+          this.tryShowElementIfNotOverflowing(lastHiddenElementFromLeft, endElement);
+        if (isElementShown) {
+          isSuccessful = true;
+        }
+
         isThereMoreSpace = isElementShown;
       }
       else {
         isThereMoreSpace = false;
       }
     }
+
+    return isSuccessful;
+  }
+
+  tryShowRightHiddenElements(playlistElements: HTMLElement[], endElement: HTMLElement): boolean {
+    let isSuccessful = false;
+
+    const lastElement = playlistElements[playlistElements.length - 1];
+    const isLastElementHidden = lastElement.hasAttribute('hidden');
+    if (isLastElementHidden === false) {
+      return isSuccessful;
+    }
+
+    let isThereMoreSpace = true;
+    while (isThereMoreSpace) {
+      const firstHiddenElementFromRight = playlistElements
+        .find(this.elementsPredicateService.getFirstHiddenElementFromRight);
+      if (firstHiddenElementFromRight) {
+        const isElementShown =
+          this.tryShowElementIfNotOverflowing(firstHiddenElementFromRight, endElement);
+        if (isElementShown) {
+          isSuccessful = true;
+        }
+
+        isThereMoreSpace = isElementShown;
+      }
+      else {
+        isThereMoreSpace = false;
+      }
+    }
+
+    return isSuccessful;
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable, ElementRef } from '@angular/core';
 
 @Injectable()
-export class ArrowButtonService {
+export class ArrowDisplayButtonService {
 
   updateLeftButtonDisabledAttribute(leftBtn: ElementRef, isFirstElementHidden: boolean): void {
     if (isFirstElementHidden) {

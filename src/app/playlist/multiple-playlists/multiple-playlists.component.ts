@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef, ChangeDetectionStrategy, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
@@ -6,25 +6,19 @@ import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { PlaylistsService } from 'src/app/services-singleton/playlists.service';
 import { Subscription } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
-import { PlaylistElementService } from '../services/playlist-element.service';
-import { BasePlaylistComponent } from '../base-playlist-component';
 import { Constants } from 'src/app/shared/constants';
-import { WindowService } from 'src/app/services-singleton/window.service';
 import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';
-import { Thumbnail } from 'src/app/models/thumbnail/thumbnail';
 import { VideoThumbnails } from 'src/app/models/thumbnail/video-thumbnails';
 
 @Component({
   selector: 'app-multiple-playlists',
   templateUrl: './multiple-playlists.component.html',
-  styleUrls: ['./multiple-playlists.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./multiple-playlists.component.scss']
 })
-export class MultiplePlaylistsComponent extends BasePlaylistComponent implements OnInit, OnDestroy {
+export class MultiplePlaylistsComponent implements OnInit, OnDestroy {
 
   @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
-  @ViewChildren('playlistElement') playlistElements: QueryList<ElementRef>;
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
     this.loadMorePlaylists(onLoadedMoreCallback);
   playlists: Playlist[] = [];
@@ -34,14 +28,9 @@ export class MultiplePlaylistsComponent extends BasePlaylistComponent implements
   private subscription: Subscription;
 
   constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    playlistElementService: PlaylistElementService,
-    public windowService: WindowService,
     private playlistsService: PlaylistsService,
     private thumbnailService: ThumbnailsService
-  ) {
-    super(playlistElementService, changeDetectorRef);
-  }
+  ) { }
 
   getThumnailUrl(thumbnails: VideoThumbnails): string {
     const url = this.thumbnailService.getThumbnailUrl(VideoThumbnailSize.default, thumbnails);
@@ -68,8 +57,6 @@ export class MultiplePlaylistsComponent extends BasePlaylistComponent implements
       this.playlistsStartIndex = playlistsEndIndex;
 
       onLoadedMoreCallback();
-
-      this.changeDetectorRef.markForCheck();
     });
   }
 
