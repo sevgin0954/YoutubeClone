@@ -22,7 +22,6 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   RatingType = RatingType;
   currentRating: RatingType;
   channel: Channel;
-  videoId: string;
   video: Video;
   maxDisplayedCharacters: number = 120;
   private subscribtion: RxjsSubscribtion;
@@ -35,24 +34,16 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private channelService: ChannelService,
     private videoRatingService: VideoRatingService,
-    private videoService: VideoService,
     private youtubeIframeService: YoutubeIframeService
   ) { }
 
   ngOnInit(): void {
-    const currentUrl = this.route.snapshot.url;
-    this.videoId = currentUrl[0].toString();
+    this.video = this.route.snapshot.data['video'];
 
-    this.youtubeIframeService.init(this.videoId);
+    this.youtubeIframeService.init(this.video.id);
 
-    this.subscribtion = this.videoService.getByIds(this.videoId).pipe(
-      concatMap(videos => {
-        this.video = videos[0];
-
-        const channelId = this.video.snippet.channelId;
-        return this.channelService.getByIds([channelId], null, 1);
-      })
-    ).subscribe(channel => {
+    const channelId = this.video.snippet.channelId;
+    this.subscribtion = this.channelService.getByIds([channelId], null, 1).subscribe(channel => {
       this.channel = channel.items[0];
     });
   }
@@ -66,7 +57,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initRating(): void {
-    this.videoRatingService.getRating(this.videoId).subscribe(data => {
+    this.videoRatingService.getRating(this.video.id).subscribe(data => {
       this.currentRating = data;
       if (this.currentRating === RatingType.like) {
         this.likeButton.nativeElement.classList.add('thumb-active-button');
@@ -90,7 +81,7 @@ export class VideoComponent implements OnInit, AfterViewInit, OnDestroy {
       newRating = clickedRating;
     }
 
-    this.videoRatingService.rate(this.videoId, newRating).subscribe(data => {
+    this.videoRatingService.rate(this.video.id, newRating).subscribe(data => {
       const responseCode = data;
       if (responseCode === 204) {
         this.likeButton.nativeElement.classList.remove('thumb-active-button');

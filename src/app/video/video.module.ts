@@ -9,9 +9,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { VideoRatingService } from './services/video-rating.service';
 import { YoutubeIframeService } from './services/youtube-iframe.service';
 import { VideoDescriptionComponent } from './video-description/video-description.component';
+import { VideoResolverService } from '../services-singleton/resolvers/video-resolver.service';
 
 const routes: Routes = [
-  { path: ':id', component: VideoComponent }
+  { path: ':id', component: VideoComponent, resolve: { video: VideoResolverService } }
 ];
 
 @NgModule({

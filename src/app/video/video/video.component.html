@@ -26,7 +26,7 @@
 
 <hr>
 
-<div class="video-content-container" *ngIf="video">
+<div class="video-content-container">
   <app-video-description
     [channel]="channel"
     [text]="video.snippet.description"
@@ -37,5 +37,5 @@
 <hr>
 
 <div class="video-content-container">
-  <app-video-comments [parentId]="videoId" [commentCount]="video.statistics.commentCount"></app-video-comments>
+  <app-video-comments [parentId]="video.id" [commentCount]="video.statistics.commentCount"></app-video-comments>
 </div>

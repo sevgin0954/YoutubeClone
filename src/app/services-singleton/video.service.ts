@@ -19,7 +19,6 @@ export class VideoService {
     private http: HttpClient
   ) { }
 
-    // TODO: Slice the descripiton here
   getMostPopular(regionCode: string, maxResults: number, pageToken: string):
     Observable<ServiceModel<Video[]>> {
     const queryParams = {
