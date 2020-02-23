@@ -86,6 +86,8 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
   onLeftBtnClick(): void {
     const playlistElements: Element[] = this.playlistElements.map(e => e.nativeElement);
     this.arrowClickButtonService.onLeftBtnClick(playlistElements);
+
+    this.changeDetectorRef.markForCheck();
   }
 
   onRightBtnClick(): void {

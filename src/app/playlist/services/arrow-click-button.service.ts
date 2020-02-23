@@ -6,14 +6,11 @@ import { PlaylistElementService } from './playlist-element.service';
 export class ArrowClickButtonService {
 
   constructor(
-    private playlistElementService: PlaylistElementService,
-    private changeDetectorRef: ChangeDetectorRef
+    private playlistElementService: PlaylistElementService
   ) { }
 
   onLeftBtnClick(playlistElements: Element[]): void {
     this.playlistElementService.showLastHiddenElementFromLeft(playlistElements);
-
-    this.changeDetectorRef.markForCheck();
   }
 
   onRightBtnClick(
