@@ -17,11 +17,13 @@ export class ArrowClickButtonService {
     playlistElements: Element[],
     totalResultsCount: number,
     rightBtn: Element,
+    loadingBtn: Element,
     loadMoreCallBack: Function
   ): void {
     const lastElement = playlistElements[playlistElements.length - 1];
     if (this.canLoadMore(lastElement, playlistElements, totalResultsCount)) {
       rightBtn.setAttribute('hidden', 'hidden');
+      loadingBtn.removeAttribute('hidden');
 
       loadMoreCallBack();
     }

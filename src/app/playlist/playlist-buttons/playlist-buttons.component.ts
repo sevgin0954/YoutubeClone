@@ -105,6 +105,7 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
       playlistElements,
       this.totalResultsCount,
       this.rightBtn.nativeElement,
+      this.loadingBtn.nativeElement,
       loadMoreCallBack
     );
   }
