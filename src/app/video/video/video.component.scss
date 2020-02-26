@@ -7,7 +7,6 @@
 }
 
 .video-content-container {
-  margin-left: 1rem;
   margin-right: 2rem;
 }
 
@@ -15,6 +14,8 @@
   margin-right: 2rem;
 }
 
-.video-text {
-  margin-right: 8rem;
+@media (min-width: 800px) {
+  .video-text {
+    margin-right: 8rem;
+  }
 }

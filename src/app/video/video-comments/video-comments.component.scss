@@ -1,5 +1,7 @@
 @import './../../../variables.scss';
 
+$container-margin-left: 1rem;
+
 :host(app-most-popular) {
   width: 100%;
 }
@@ -10,6 +12,7 @@
 
 .video-comments-container {
   margin-bottom: 1.5rem;
+  margin-left: $container-margin-left;
 }
 
 .replies-container {
@@ -38,15 +41,19 @@
   margin-bottom: 0.125rem;
 }
 
-img {
-  width: 48px;
-  height: 48px;
-}
-
 .loading-container {
   font-size: 1.7rem;
   display: flex;
   margin-bottom: 1rem;
   margin-right: auto;
   margin-left: auto;
+}
+
+hr {
+  margin-left: -$container-margin-left;
+}
+
+img {
+  width: 48px;
+  height: 48px;
 }
