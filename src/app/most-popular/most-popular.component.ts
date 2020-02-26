@@ -64,13 +64,13 @@ export class MostPopularComponent implements OnInit, OnDestroy {
       .getMostPopular(REGION_CODE, MAX_RESULTS_PER_PAGE, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
-        data.items.forEach(video => {
-          const description = video.snippet.description;
-          if (description.length > MAX_DESCRIPTION_LENGTH) {
-            const conciseDescription = description.slice(0, MAX_DESCRIPTION_LENGTH) + '...';
-            video.snippet.description = conciseDescription;
-          }
-        });
+        // data.items.forEach(video => {
+        //   const description = video.snippet.description;
+        //   if (description.length > MAX_DESCRIPTION_LENGTH) {
+        //     const conciseDescription = description.slice(0, MAX_DESCRIPTION_LENGTH) + '...';
+        //     video.snippet.description = conciseDescription;
+        //   }
+        // });
         this.videos.push(...data.items);
 
         this.isCurrentlyLoadingVideos = false;

@@ -1,5 +1,9 @@
 @import "./../../variables.scss";
 
+.input-search {
+  flex-basis: 1000px;
+}
+
 .navbar-brand {
   flex-basis: 5rem;
   color: $dark-blue;
@@ -15,6 +19,10 @@
   box-shadow: none;
 }
 
-.input-search {
-  flex-basis: 1000px;
+.search-container {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  flex-wrap: nowrap;
 }
