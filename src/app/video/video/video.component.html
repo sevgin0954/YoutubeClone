@@ -9,7 +9,9 @@
 <hr>
 
 <div class="video-content-container">
-  <div>
+  <app-channel-mini *ngIf="channel" [channel]="channel"></app-channel-mini>
+
+  <div class="video-text">
     <app-video-description [channel]="channel" [text]="video.snippet.description"
       [maxDisplayedCharacters]="maxDisplayedCharacters">
     </app-video-description>
@@ -18,8 +20,6 @@
 
 <hr>
 
-<div class="video-content-container">
-  <div>
-    <app-video-comments [parentId]="video.id" [commentCount]="video.statistics.commentCount"></app-video-comments>
-  </div>
+<div class="video-content-container video-text">
+  <app-video-comments [parentId]="video.id" [commentCount]="video.statistics.commentCount"></app-video-comments>
 </div>
