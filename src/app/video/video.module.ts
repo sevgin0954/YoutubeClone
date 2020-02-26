@@ -10,6 +10,7 @@ import { VideoRatingService } from './services/video-rating.service';
 import { YoutubeIframeService } from './services/youtube-iframe.service';
 import { VideoDescriptionComponent } from './video-description/video-description.component';
 import { VideoResolverService } from '../services-singleton/resolvers/video-resolver.service';
+import { VideoHeaderComponent } from './video-header/video-header.component';
 
 const routes: Routes = [
   { path: ':id', component: VideoComponent, resolve: { video: VideoResolverService } }
@@ -19,7 +20,8 @@ const routes: Routes = [
   declarations: [
     VideoComponent,
     VideoCommentsComponent,
-    VideoDescriptionComponent
+    VideoDescriptionComponent,
+    VideoHeaderComponent
   ],
   imports: [
     RouterModule.forChild(routes),

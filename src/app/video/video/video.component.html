@@ -1,41 +1,25 @@
-<div id="player"></div>
+<div class="player-container">
+  <div id="player"></div>
+</div>
 
-<div class="video-header">
-  <div class="video-title">
-    {{ video.snippet.title }}
-  </div>
+<div class="video-header-container">
+  <app-video-header [video]="video"></app-video-header>
+</div>
 
-  <div class="d-flex">
-    <div class="info-medium">
-      {{ formatterService.getFormattedNumberString(video.statistics.viewCount) }} Views -
-      {{ formatterService.getDateFromNowString(video.snippet.publishedAt) }}
-    </div>
+<hr>
 
-    <div class="ml-auto">
-      <button class="thumb-button" #likeBtn (click)="onThumbClick(RatingType.like)">
-        <i class="fas fa-thumbs-up"></i>
-        {{ formatterService.getFormattedNumberString(video.statistics.likeCount) }}
-      </button>
-      <button class="thumb-button" #dislikeBtn (click)="onThumbClick(RatingType.dislike)">
-        <i class="fas fa-thumbs-down"></i>
-        {{ formatterService.getFormattedNumberString(video.statistics.dislikeCount) }}
-      </button>
-    </div>
+<div class="video-content-container">
+  <div>
+    <app-video-description [channel]="channel" [text]="video.snippet.description"
+      [maxDisplayedCharacters]="maxDisplayedCharacters">
+    </app-video-description>
   </div>
 </div>
 
 <hr>
 
 <div class="video-content-container">
-  <app-video-description
-    [channel]="channel"
-    [text]="video.snippet.description"
-    [maxDisplayedCharacters]="maxDisplayedCharacters">
-  </app-video-description>
-</div>
-
-<hr>
-
-<div class="video-content-container">
-  <app-video-comments [parentId]="video.id" [commentCount]="video.statistics.commentCount"></app-video-comments>
+  <div>
+    <app-video-comments [parentId]="video.id" [commentCount]="video.statistics.commentCount"></app-video-comments>
+  </div>
 </div>

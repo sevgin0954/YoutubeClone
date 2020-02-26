@@ -1,24 +1,16 @@
-@import './../../../variables.scss';
+.player-container {
+  max-height: 60vh;
+}
+
+:host(app-video) {
+  width: 100%;
+}
 
 .video-content-container {
-  max-width: 640px;
   margin-left: 1rem;
+  margin-right: 2rem;
 }
 
-.video-header {
-  max-width: 640px;
-}
-
-.thumb-button {
-  font-size: 1.2rem;
-  color: grey;
-  border: none;
-  background-color: inherit;
-}
-.thumb-button:focus {
-  outline: none;
-}
-
-.thumb-active-button {
-  color: $dark-blue;
+.video-header-container {
+  margin-right: 2rem;
 }

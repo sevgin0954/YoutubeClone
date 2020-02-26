@@ -1,0 +1,27 @@
+@import './../../../variables.scss';
+
+.thumb-button {
+  font-size: 1.2rem;
+  color: grey;
+  border: none;
+  background-color: inherit;
+  white-space: nowrap;
+}
+.thumb-button:focus {
+  outline: none;
+}
+
+.thumb-active-button {
+  color: $dark-blue;
+}
+
+.video-buttons-container {
+  margin-left: auto;
+  margin-top: auto;
+  white-space: nowrap;
+}
+
+video {
+  width: 100% !important;
+  height: auto !important;
+}

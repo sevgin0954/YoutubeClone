@@ -1,0 +1,23 @@
+<div class="d-flex">
+  <div>
+    <div class="video-title">
+      {{ video.snippet.title }}
+    </div>
+
+    <div class="info-medium">
+      {{ formatterService.getFormattedNumberString(video.statistics.viewCount) }} Views -
+      {{ formatterService.getDateFromNowString(video.snippet.publishedAt) }}
+    </div>
+  </div>
+
+  <div class="video-buttons-container">
+    <button class="thumb-button" #likeBtn (click)="onThumbClick(RatingType.like)">
+      <i class="fas fa-thumbs-up"></i>
+      {{ formatterService.getFormattedNumberString(video.statistics.likeCount) }}
+    </button>
+    <button class="thumb-button" #dislikeBtn (click)="onThumbClick(RatingType.dislike)">
+      <i class="fas fa-thumbs-down"></i>
+      {{ formatterService.getFormattedNumberString(video.statistics.dislikeCount) }}
+    </button>
+  </div>
+</div>
