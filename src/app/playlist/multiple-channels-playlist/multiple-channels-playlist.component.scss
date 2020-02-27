@@ -1,5 +1,15 @@
 @import './../style.scss';
 
+:host ::ng-deep {
+  .main-container {
+    height: 100%;
+  }
+
+  .subscribe-btn {
+    margin-top: auto;
+  }
+}
+
 .playlist {
   height: 130px;
 }
