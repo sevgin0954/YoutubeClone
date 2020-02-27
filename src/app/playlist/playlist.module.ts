@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 import { MultipleChannelsPlaylistComponent } from './multiple-channels-playlist/multiple-channels-playlist.component';
 import { SharedModule } from '../shared/shared.module';
@@ -9,8 +10,8 @@ import { VideoMiniModule } from '../video-mini/video-mini.module';
 import { ArrowDisplayButtonService } from './services/arrow-display-button.service';
 import { PlaylistElementService } from './services/playlist-element.service';
 import { PlaylistButtonsComponent } from './playlist-buttons/playlist-buttons.component';
-import { RouterModule } from '@angular/router';
 import { ArrowClickButtonService } from './services/arrow-click-button.service';
+import { PlaylistsService } from './services/playlists.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ArrowClickButtonService } from './services/arrow-click-button.service';
   providers: [
     ArrowDisplayButtonService,
     PlaylistElementService,
-    ArrowClickButtonService
+    ArrowClickButtonService,
+    PlaylistsService
   ],
   exports: [
     MultipleChannelsPlaylistComponent,

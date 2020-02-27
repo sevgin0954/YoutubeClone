@@ -24,7 +24,7 @@ export class WindowService {
     return isOverflowing;
   }
 
-  onReachBottom(callback: () => void): void {
+  onReachBottom(callback: Function): void {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
       callback();
     }

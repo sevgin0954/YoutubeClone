@@ -4,8 +4,12 @@
   <div>
     <app-video-info [video]="video" [titleMaxLength]="videoTitleMaxLength"></app-video-info>
 
-    <div class="info-small video-description">
-      {{ video.snippet.description }}
+    <div class="info-small">
+      <app-text-reveal
+        [text]="video.snippet.description"
+        [maxDisplayedRows]="3"
+        [shouldShowButtons]="false">
+      </app-text-reveal>
     </div>
   </div>
 </div>

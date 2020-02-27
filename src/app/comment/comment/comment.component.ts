@@ -15,7 +15,7 @@ export class CommentComponent {
   ) { }
 
   @Input() comment: Comment;
-  maxDisplayedCharacters: number = 100;
+  maxDisplayedRows: number = 3;
 
   getAuthorChannelId(): string {
     const authorChannelIdObject = this.comment.snippet.authorChannelId;

@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { TextRevealComponent } from './components/text-reveal/text-reveal.component';
 import { ChannelMiniComponent } from './components/channel-mini/channel-mini.component';
-import { LoadingComponent } from './compoentns/loading/loading.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [

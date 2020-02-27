@@ -22,12 +22,3 @@
   margin-top: 0.5rem;
   margin-left: 0.5rem;
 }
-
-.video-description {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  word-break: break-word;
-  -webkit-line-clamp: 3; /* number of lines to show */
-  -webkit-box-orient: vertical;
-}

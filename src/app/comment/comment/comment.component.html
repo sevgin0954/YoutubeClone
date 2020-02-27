@@ -16,8 +16,10 @@
       </span>
     </div>
 
-    <app-text-reveal [text]="comment.snippet.textDisplay"
-      [maxDisplayedCharacters]="maxDisplayedCharacters">
+    <app-text-reveal
+      [text]="comment.snippet.textDisplay"
+      [maxDisplayedRows]="maxDisplayedRows"
+      [shouldShowButtons]="true">
     </app-text-reveal>
   </div>
 </div>

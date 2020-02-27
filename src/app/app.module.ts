@@ -12,7 +12,6 @@ import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { SharedModule } from './shared/shared.module';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { VideoMiniModule } from './video-mini/video-mini.module';
-import { AuthenticationModule } from './authentication/authentication.module';
 
 @NgModule({
   declarations: [

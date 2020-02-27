@@ -1,17 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { ServiceModel } from '../models/service-models/service-model';
-import { Playlist } from '../models/playlist/playlist';
-import { HttpClient } from '@angular/common/http';
-import { Constants } from '../shared/constants';
-import { Url } from '../shared/url';
+import { ServiceModel } from '../../models/service-models/service-model';
+import { Playlist } from '../../models/playlist/playlist';
+import { Constants } from '../../shared/constants';
+import { Url } from '../../shared/url';
 import { Observable } from 'rxjs';
 
 const PATH: string = 'playlists';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PlaylistsService {
 
   constructor(

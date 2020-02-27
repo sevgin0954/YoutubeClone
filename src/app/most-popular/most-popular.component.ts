@@ -8,7 +8,6 @@ import { Subscription } from 'rxjs';
 import { VideoThumbnailSize } from '../shared/enums/video-thumbnail-size';
 import { Constants } from '../shared/constants';
 
-const MAX_DESCRIPTION_LENGTH: number = 200;
 const REGION_CODE: string = 'BG';
 const MAX_RESULTS_PER_PAGE = 25;
 
@@ -64,13 +63,6 @@ export class MostPopularComponent implements OnInit, OnDestroy {
       .getMostPopular(REGION_CODE, MAX_RESULTS_PER_PAGE, this.nextPageToken)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
-        // data.items.forEach(video => {
-        //   const description = video.snippet.description;
-        //   if (description.length > MAX_DESCRIPTION_LENGTH) {
-        //     const conciseDescription = description.slice(0, MAX_DESCRIPTION_LENGTH) + '...';
-        //     video.snippet.description = conciseDescription;
-        //   }
-        // });
         this.videos.push(...data.items);
 
         this.isCurrentlyLoadingVideos = false;

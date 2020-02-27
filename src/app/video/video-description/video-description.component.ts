@@ -9,6 +9,6 @@ import { Channel } from 'src/app/models/channel/channel';
 export class VideoDescriptionComponent {
 
   @Input() channel: Channel;
-  @Input() maxDisplayedCharacters: number;
   @Input() text: string;
+  maxDisplayedRows: number = 3;
 }

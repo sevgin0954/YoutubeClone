@@ -1,10 +1,10 @@
-<div class="text">
-  <span>{{ displayedText }}</span><span *ngIf="isTextShown">{{ hiddenText }}</span>
-</div>
+<div class="text" #textElement>{{ text }}</div>
 
-<button *ngIf="shouldShowButtons && isTextShown === false" class="info-small show-button" (click)="isTextShown = true">
+<ng-container *ngIf="shouldShowButtons && canTextOverflow">
+  <button *ngIf="isTextOverflowing && isShowingMore === false" class="info-small show-button" (click)="showMore()">
     Show more
-</button>
-<button *ngIf="shouldShowButtons && isTextShown" class="info-small show-button" (click)="isTextShown = false">
+  </button>
+  <button *ngIf="isTextOverflowing === false && isShowingMore" class="info-small show-button" (click)="showLess()">
     Show less
-</button>
+  </button>
+</ng-container>
