@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { CommentsService } from 'src/app/services-singleton/comments.service';
+import { CommentsService } from 'src/app/comment/services/comments.service';
 import { Comment } from 'src/app/models/comment/comment';
 
 @Component({

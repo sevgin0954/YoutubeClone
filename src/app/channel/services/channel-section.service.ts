@@ -2,16 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { ChannelSection } from '../models/channel-section/channel-section';
-import { Url } from '../shared/url';
-import { Constants } from '../shared/constants';
+import { ChannelSection } from '../../models/channel-section/channel-section';
+import { Url } from '../../shared/url';
+import { Constants } from '../../shared/constants';
 import { pluck } from 'rxjs/operators';
 
 const PATH = 'channelSections';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ChannelSectionService {
 
   constructor(

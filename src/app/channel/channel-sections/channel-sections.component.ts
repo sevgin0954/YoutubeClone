@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 
-import { ChannelSectionService } from 'src/app/services-singleton/channel-section.service';
+import { ChannelSectionService } from 'src/app/channel/services/channel-section.service';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { SnippetType } from 'src/app/shared/enums/snippet-type';

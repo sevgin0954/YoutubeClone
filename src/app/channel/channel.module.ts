@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { PlaylistModule } from '../playlist/playlist.module';
 import { ChannelSectionsComponent } from './channel-sections/channel-sections.component';
 import { ChannelResolverService } from '../services-singleton/resolvers/channel-resolver.service';
+import { ChannelSectionService } from './services/channel-section.service';
 
 const routes: Routes = [
   { path: ':id', component: ChannelComponent, resolve: { channel: ChannelResolverService } }
@@ -22,6 +23,9 @@ const routes: Routes = [
     SharedModule,
     PlaylistModule,
     CommonModule
+  ],
+  providers: [
+    ChannelSectionService
   ]
 })
 export class ChannelModule { }

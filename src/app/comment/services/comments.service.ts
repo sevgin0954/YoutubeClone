@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ServiceModel } from '../models/service-models/service-model';
+
+import { ServiceModel } from '../../models/service-models/service-model';
 import { Observable } from 'rxjs';
-import { Constants } from '../shared/constants';
+import { Constants } from '../../shared/constants';
 import { HttpClient } from '@angular/common/http';
-import { Url } from '../shared/url';
-import { Comment } from '../models/comment/comment';
+import { Url } from '../../shared/url';
+import { Comment } from '../../models/comment/comment';
 
 const BASE_URL = Constants.BASE_URL + '/comments'
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CommentsService {
 
   constructor(
