@@ -16,6 +16,6 @@ export class AuthService {
   }
 
   logout(): void {
-    localStorage.clear();
+    localStorage.removeItem(Constants.AuthTokenKey);
   }
 }
