@@ -1,12 +1,12 @@
 import { Injectable, ChangeDetectorRef } from '@angular/core';
 
-import { PlaylistElementService } from './playlist-element.service';
+import { ElementDisplayService } from '../../services-singleton/elements-display.service';
 
 @Injectable()
 export class ArrowClickButtonService {
 
   constructor(
-    private playlistElementService: PlaylistElementService
+    private playlistElementService: ElementDisplayService
   ) { }
 
   onLeftBtnClick(playlistElements: Element[]): void {

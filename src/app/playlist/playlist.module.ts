@@ -8,7 +8,6 @@ import { SinglePlaylistComponent } from './single-playlist/single-playlist.compo
 import { MultiplePlaylistsComponent } from './multiple-playlists/multiple-playlists.component';
 import { VideoMiniModule } from '../video-mini/video-mini.module';
 import { ArrowDisplayButtonService } from './services/arrow-display-button.service';
-import { PlaylistElementService } from './services/playlist-element.service';
 import { PlaylistButtonsComponent } from './playlist-buttons/playlist-buttons.component';
 import { ArrowClickButtonService } from './services/arrow-click-button.service';
 import { PlaylistsService } from './services/playlists.service';
@@ -28,7 +27,6 @@ import { PlaylistsService } from './services/playlists.service';
   ],
   providers: [
     ArrowDisplayButtonService,
-    PlaylistElementService,
     ArrowClickButtonService,
     PlaylistsService
   ],

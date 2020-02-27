@@ -3,8 +3,10 @@ import { Injectable } from '@angular/core';
 import { WindowService } from 'src/app/services-singleton/window.service';
 import { ElementsPredicateService } from 'src/app/services-singleton/elements-predicate.service';
 
-@Injectable()
-export class PlaylistElementService {
+@Injectable({
+  providedIn: 'root'
+})
+export class ElementDisplayService {
 
   constructor(
     private elementsPredicateService: ElementsPredicateService,

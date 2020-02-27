@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, QueryList, ContentChildren, TemplateRef, Input, AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
-import { PlaylistElementService } from '../services/playlist-element.service';
+import { ElementDisplayService } from '../../services-singleton/elements-display.service';
 import { ArrowDisplayButtonService } from '../services/arrow-display-button.service';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { WindowService } from 'src/app/services-singleton/window.service';
@@ -24,7 +24,7 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
 
   constructor(
-    private playlistElementService: PlaylistElementService,
+    private playlistElementService: ElementDisplayService,
     private arrowButtonService: ArrowDisplayButtonService,
     private windowService: WindowService,
     private changeDetectorRef: ChangeDetectorRef,
