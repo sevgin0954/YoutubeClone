@@ -2,6 +2,7 @@ import { ChannelService } from './channel.service';
 import { of } from 'rxjs';
 import { Constants } from '../shared/constants';
 import { TestConstants } from 'src/tests-common/test-constants';
+import { HttpClientHelpers } from 'src/tests-common/htpp-client-helpers';
 
 describe('ChannelService', () => {
   let httpClient;
@@ -49,7 +50,7 @@ describe('ChannelService', () => {
     service.getSubscriptions(1, null);
 
     // Arrange
-    const actualPath = getHttpClientUrlArgument();
+    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath.startsWith(expectedPath)).toBeTruthy();
   });
 
@@ -61,7 +62,7 @@ describe('ChannelService', () => {
     service.getSubscriptions(1, null);
 
     // Arrange
-    const actualPath = getHttpClientUrlArgument();
+    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath).toContain(partParam);
   });
 
@@ -73,7 +74,7 @@ describe('ChannelService', () => {
     service.getSubscriptions(1, null);
 
     // Arrange
-    const actualPath = getHttpClientUrlArgument();
+    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath).toContain(mineParam);
   });
 
@@ -87,7 +88,7 @@ describe('ChannelService', () => {
     service.getSubscriptions(maxResults, null);
 
     // Arrange
-    const actualPath = getHttpClientUrlArgument();
+    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath).toContain(maxResultParam);
   });
 
@@ -101,7 +102,7 @@ describe('ChannelService', () => {
     service.getSubscriptions(1, pageToken);
 
     // Arrange
-    const actualPath = getHttpClientUrlArgument();
+    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath).toContain(pageTokenParam);
   });
 
@@ -114,7 +115,7 @@ describe('ChannelService', () => {
     service.getSubscriptions(1, pageToken);
 
     // Arrange
-    const actualPath = getHttpClientUrlArgument();
+    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath.indexOf(pageTokenKey)).toEqual(-1);
   });
 
@@ -127,14 +128,7 @@ describe('ChannelService', () => {
     service.getSubscriptions(1, pageToken);
 
     // Arrange
-    const actualPath = getHttpClientUrlArgument();
+    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath.indexOf(pageTokenKey)).toEqual(-1);
   });
-
-  function getHttpClientUrlArgument(): string {
-    const mostRecentArguments = httpClient.get.calls.mostRecent();
-    const path: string = mostRecentArguments.args[0];
-
-    return path;
-  }
 });
