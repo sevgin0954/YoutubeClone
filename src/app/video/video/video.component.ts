@@ -36,7 +36,10 @@ export class VideoComponent implements OnInit, OnDestroy {
 
     const channelId = this.video.snippet.channelId;
     const pageArgs = new PageArguments(1, null);
-    const resourceProperties = [ChannelResourceProperties.snippet];
+    const resourceProperties = [
+      ChannelResourceProperties.snippet,
+      ChannelResourceProperties.statistics,
+    ];
     this.subscribtion = this.channelService.getByIds([channelId], pageArgs, resourceProperties)
       .subscribe(channel => {
         this.channel = channel.items[0];

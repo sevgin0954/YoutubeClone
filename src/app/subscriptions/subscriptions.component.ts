@@ -62,9 +62,11 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
     this.isCurrentlyLoading = true;
 
     const pageArgs = new PageArguments(MAX_RESULTS_PER_PAGE, this.nextPageToken);
-    const resource = ChannelResourceProperties.snippet;
+    const resources = [
+      ChannelResourceProperties.snippet
+    ];
     this.channelsSubscribtion = this.channelService
-      .getSubscriptions(pageArgs, [resource])
+      .getSubscriptions(pageArgs, resources)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         data.items.forEach(currentChannel => {

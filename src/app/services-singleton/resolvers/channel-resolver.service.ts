@@ -20,7 +20,11 @@ export class ChannelResolverService implements Resolve<Channel> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Channel> {
     const channelId = route.params['id'];
     const pageArgs = new PageArguments(1, null);
-    const resourceProprties = [ChannelResourceProperties.snippet];
+    const resourceProprties = [
+      ChannelResourceProperties.brandingSettings,
+      ChannelResourceProperties.snippet,
+      ChannelResourceProperties.statistics,
+    ];
     const channel$ = this.channelService.getByIds([channelId], pageArgs, resourceProprties)
       .pipe(
         map<any, Channel>(data => data.items[0])

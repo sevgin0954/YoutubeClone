@@ -40,7 +40,11 @@ export class MultipleChannelsPlaylistComponent implements OnInit {
 
     const currentPagePlaylistIds = channelIds.slice(this.channelsStartIndex, channelsEndIndex);
     const pageArgs = new PageArguments(0, null);
-    const resourceProprties = [ChannelResourceProperties.snippet];
+    const resourceProprties = [
+      ChannelResourceProperties.snippet,
+      ChannelResourceProperties.statistics,
+      ChannelResourceProperties.id
+    ];
     this.channelService.getByIds(currentPagePlaylistIds, pageArgs, resourceProprties)
       .subscribe(data => {
         this.channels.push(...data.items);
