@@ -1,9 +1,7 @@
 import { ChannelService } from './channel.service';
 import { of } from 'rxjs';
 import { Constants } from '../shared/constants';
-
-const MAX_RESULTS_QUERY_PARAM_KEY = 'maxResults';
-const PAGE_TOKEN_QURY_PARAM_KEY = 'pageToken';
+import { TestConstants } from 'src/tests-common/test-constants';
 
 describe('ChannelService', () => {
   let httpClient;
@@ -81,8 +79,9 @@ describe('ChannelService', () => {
 
   it('getSubscriptions with maxResults should call httpClient get with query params with max result', () => {
     // Arrange
+    const maxResultsKey = TestConstants.MAX_RESULTS_QUERY_PARAM_KEY;
     const maxResults = 1;
-    const maxResultParam = `${MAX_RESULTS_QUERY_PARAM_KEY}=${maxResults}`;
+    const maxResultParam = `${maxResultsKey}=${maxResults}`;
 
     // Act
     service.getSubscriptions(maxResults, null);
@@ -94,8 +93,9 @@ describe('ChannelService', () => {
 
   it('getSubscriptions with pageToken should call httpClient get with query params with pageToken', () => {
     // Arrange
+    const pageTokenKey = TestConstants.PAGE_TOKEN_QURY_PARAM_KEY;
     const pageToken = 'abc';
-    const pageTokenParam = `${PAGE_TOKEN_QURY_PARAM_KEY}=${pageToken}`;
+    const pageTokenParam = `${pageTokenKey}=${pageToken}`;
 
     // Act
     service.getSubscriptions(1, pageToken);
@@ -107,6 +107,7 @@ describe('ChannelService', () => {
 
   it('getSubscriptions with pageToken undefined should call httpClient get without pageToken query param', () => {
     // Arrange
+    const pageTokenKey = TestConstants.PAGE_TOKEN_QURY_PARAM_KEY;
     const pageToken = undefined;
 
     // Act
@@ -114,11 +115,12 @@ describe('ChannelService', () => {
 
     // Arrange
     const actualPath = getHttpClientUrlArgument();
-    expect(actualPath.indexOf(PAGE_TOKEN_QURY_PARAM_KEY)).toEqual(-1);
+    expect(actualPath.indexOf(pageTokenKey)).toEqual(-1);
   });
 
   it('getSubscriptions with pageToken null should call httpClient get without pageToken query param', () => {
     // Arrange
+    const pageTokenKey = TestConstants.PAGE_TOKEN_QURY_PARAM_KEY;
     const pageToken = null;
 
     // Act
@@ -126,7 +128,7 @@ describe('ChannelService', () => {
 
     // Arrange
     const actualPath = getHttpClientUrlArgument();
-    expect(actualPath.indexOf(PAGE_TOKEN_QURY_PARAM_KEY)).toEqual(-1);
+    expect(actualPath.indexOf(pageTokenKey)).toEqual(-1);
   });
 
   function getHttpClientUrlArgument(): string {
