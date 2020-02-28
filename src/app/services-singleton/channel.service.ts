@@ -1,11 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Channel } from 'src/app/models/channel/channel';
 import { ServiceModel } from 'src/app/models/service-models/service-model';
 import { Url } from 'src/app/shared/url';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { pluck } from 'rxjs/operators';
 import { Constants } from '../shared/constants';
 
 @Injectable({
