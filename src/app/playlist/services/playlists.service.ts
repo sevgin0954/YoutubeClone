@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { ServiceModel } from '../../models/service-models/service-model';
 import { Playlist } from '../../models/playlist/playlist';
-import { Constants } from '../../shared/constants';
+import { MainConstants } from '../../shared/Constants/main-constants';
 import { Url } from '../../shared/url';
 import { Observable } from 'rxjs';
 
@@ -24,7 +24,7 @@ export class PlaylistsService {
       maxResults: maxResults
     };
     this.addPageToken(queryParams, pageToken);
-    const url = new Url(Constants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<Playlist[]>>(url.toString());
 
     return data$;

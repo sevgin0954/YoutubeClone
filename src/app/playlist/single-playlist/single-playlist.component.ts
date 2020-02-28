@@ -7,7 +7,7 @@ import { concatMap } from 'rxjs/operators';
 import { Video } from 'src/app/models/video/video';
 import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
-import { Constants } from 'src/app/shared/constants';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
 
 @Component({
   selector: 'app-single-playlist',
@@ -45,7 +45,7 @@ export class SinglePlaylistComponent implements OnInit {
     this.isFirstPage = false;
 
     const playlistId = this.channelSection.contentDetails.playlists[0];
-    const maxResults = Constants.MAX_PLAYLIST_ITEM_RESULTS;
+    const maxResults = MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
     this.playlistService.getById(playlistId, maxResults, this.nextPageToken).pipe(
       concatMap(data => {
         const videoIds = data.items.map(item => item.contentDetails.videoId);

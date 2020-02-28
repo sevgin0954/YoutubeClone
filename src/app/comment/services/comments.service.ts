@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { ServiceModel } from '../../models/service-models/service-model';
 import { Observable } from 'rxjs';
-import { Constants } from '../../shared/constants';
+import { MainConstants } from '../../shared/Constants/main-constants';
 import { HttpClient } from '@angular/common/http';
 import { Url } from '../../shared/url';
 import { Comment } from '../../models/comment/comment';
 
-const BASE_URL = Constants.BASE_URL + '/comments'
+const BASE_URL = MainConstants.BASE_URL + '/comments'
 
 @Injectable()
 export class CommentsService {

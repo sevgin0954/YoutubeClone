@@ -5,6 +5,8 @@ import { ChannelService } from '../services-singleton/channel.service';
 import { WindowService } from '../services-singleton/window.service';
 import { FormatterService } from '../services-singleton/formatter.service';
 import { Subscription } from 'rxjs';
+import { PageArguments } from '../shared/arguments/page-arguments';
+import { ChannelResourceProperties } from '../shared/enums/resource-properties/channel-resource-properties';
 
 const MAX_DESCRIPTION_LENGTH: number = 100;
 const MAX_RESULTS_PER_PAGE = 30;
@@ -59,8 +61,10 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
   private loadMoreSubscriptions(): void {
     this.isCurrentlyLoading = true;
 
+    const pageArgs = new PageArguments(MAX_RESULTS_PER_PAGE, this.nextPageToken);
+    const resource = ChannelResourceProperties.snippet;
     this.channelsSubscribtion = this.channelService
-      .getSubscriptions(MAX_RESULTS_PER_PAGE, this.nextPageToken)
+      .getSubscriptions(pageArgs, [resource])
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         data.items.forEach(currentChannel => {

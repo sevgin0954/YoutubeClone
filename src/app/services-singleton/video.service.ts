@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
 import { ServiceModel } from '../models/service-models/service-model';
 import { Video } from '../models/video/video';
 import { pluck } from 'rxjs/operators';
-import { Constants } from '../shared/constants';
+import { MainConstants } from '../shared/Constants/main-constants';
 
-const BASE_URL = Constants.BASE_URL + '/videos'
+const BASE_URL = MainConstants.BASE_URL + '/videos'
 
 @Injectable({
   providedIn: 'root'

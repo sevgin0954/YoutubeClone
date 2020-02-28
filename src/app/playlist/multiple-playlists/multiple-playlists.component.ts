@@ -6,7 +6,7 @@ import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { PlaylistsService } from 'src/app/playlist/services/playlists.service';
 import { Subscription } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
-import { Constants } from 'src/app/shared/constants';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';
 import { VideoThumbnails } from 'src/app/models/thumbnail/video-thumbnails';
 
@@ -47,7 +47,7 @@ export class MultiplePlaylistsComponent implements OnInit, OnDestroy {
 
     this.totalResultsCount = playlistIds.length;
 
-    const playlistsEndIndex = this.playlistsStartIndex + Constants.MAX_PLAYLIST_ITEM_RESULTS;
+    const playlistsEndIndex = this.playlistsStartIndex + MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
 
     const currentPagePlaylistIds = playlistIds.slice(this.playlistsStartIndex, playlistsEndIndex);
     this.subscription = this.playlistsService.getByIds(currentPagePlaylistIds, null, 0)

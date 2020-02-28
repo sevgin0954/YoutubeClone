@@ -5,7 +5,12 @@ import { Channel } from 'src/app/models/channel/channel';
 import { ServiceModel } from 'src/app/models/service-models/service-model';
 import { Url } from 'src/app/shared/url';
 import { Observable } from 'rxjs';
-import { Constants } from '../shared/constants';
+import { MainConstants } from '../shared/Constants/main-constants';
+import { PageArguments } from '../shared/arguments/page-arguments';
+import { ChannelResourceProperties } from '../shared/enums/resource-properties/channel-resource-properties';
+import { EnumUtility } from '../shared/utilities/enum-utility';
+import { DataValidator } from '../shared/Validation/data-validator';
+import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
 
 @Injectable({
   providedIn: 'root'
@@ -16,37 +21,73 @@ export class ChannelService {
     private http: HttpClient
   ) { }
 
-  getSubscriptions(maxResults: number, pageToken: string): Observable<ServiceModel<Channel[]>> {
+  getSubscriptions(
+    pageArgs: PageArguments,
+    resourceProprties: ChannelResourceProperties[]
+  ): Observable<ServiceModel<Channel[]>> {
+    this.validateSubscriptionArguments(pageArgs, resourceProprties);
+
+    const part = EnumUtility.join(resourceProprties, ',', ChannelResourceProperties);
     const queryParams: any = {
-      part: 'snippet',
+      part: part,
       mine: 'true',
-      maxResults: maxResults.toString()
+      maxResults: pageArgs.maxResults.toString()
     }
-    this.addPageToken(queryParams, pageToken);
+    QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
-    const url = new Url(Constants.BASE_URL, ['subscriptions'], queryParams);
+    const url = new Url(MainConstants.BASE_URL, ['subscriptions'], queryParams);
     const data$ = this.http.get<ServiceModel<Channel[]>>(url.toString());
 
     return data$;
   }
 
-  getByIds(ids: string[], pageToken: string, maxResults: number): Observable<ServiceModel<Channel[]>> {
+  private validateSubscriptionArguments(
+    pageArgs: PageArguments,
+    resourceProprties: ChannelResourceProperties[]
+  ): void {
+    DataValidator.ValidatePageArguments(pageArgs, 'pageArgs');
+    this.validateResourceProperties(resourceProprties);
+  }
+
+  getByIds(
+    ids: string[],
+    pageArgs: PageArguments,
+    resourceProprties: ChannelResourceProperties[]
+  ): Observable<ServiceModel<Channel[]>> {
+    this.validateGetByIdArguments(ids, pageArgs, resourceProprties);
+
+    const part = EnumUtility.join(resourceProprties, ',', ChannelResourceProperties);
     const queryParams: any = {
-      part: 'snippet,statistics,brandingSettings',
+      part: part,
       id: ids.join(','),
-      maxResults: maxResults.toString()
+      maxResults: pageArgs.maxResults.toString()
     };
-    this.addPageToken(queryParams, pageToken);
+    QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
-    const url = new Url(Constants.BASE_URL, ['channels'], queryParams);
+    const url = new Url(MainConstants.BASE_URL, ['channels'], queryParams);
     const data$ = this.http.get<ServiceModel<Channel[]>>(url.toString());
 
     return data$;
   }
 
-  private addPageToken(queryParams: any, pageToken: string) {
-    if (pageToken) {
-      queryParams.pageToken = pageToken;
-    }
+  private validateGetByIdArguments(
+    ids: string[],
+    pageArgs: PageArguments,
+    resourceProprties: ChannelResourceProperties[]
+  ): void {
+    this.validateIdsArgument(ids);
+    DataValidator.ValidatePageArguments(pageArgs, 'pageArgs');
+    this.validateResourceProperties(resourceProprties);
+  }
+
+  private validateIdsArgument(ids: string[]): void {
+    const idsArgumentName = 'ids';
+    DataValidator.NullOrUndefinied(ids, idsArgumentName);
+    DataValidator.EmptyCollection(ids, idsArgumentName);
+  }
+
+  private validateResourceProperties(resourceProprties: ChannelResourceProperties[]): void {
+    DataValidator.NullOrUndefinied(resourceProprties, 'resourceProprties');
+    DataValidator.EmptyCollection(resourceProprties, 'resourceProprties');
   }
 }

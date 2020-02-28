@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
-import { Constants } from '../shared/constants';
+import { MainConstants } from '../shared/Constants/main-constants';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -24,7 +24,7 @@ describe('AuthService', () => {
     service.setToken(token);
 
     // Assert
-    expect(window.localStorage.setItem).toHaveBeenCalledWith(Constants.AuthTokenKey, token);
+    expect(window.localStorage.setItem).toHaveBeenCalledWith(MainConstants.AuthTokenKey, token);
   });
 
   it('getToken should get token from localStorage', () => {
@@ -47,6 +47,6 @@ describe('AuthService', () => {
     service.logout();
 
     // Assert
-    expect(window.localStorage.removeItem).toHaveBeenCalledWith(Constants.AuthTokenKey);
+    expect(window.localStorage.removeItem).toHaveBeenCalledWith(MainConstants.AuthTokenKey);
   });
 });

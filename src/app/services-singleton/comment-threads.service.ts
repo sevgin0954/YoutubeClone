@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ServiceModel } from '../models/service-models/service-model';
 import { Url } from '../shared/url';
-import { Constants } from '../shared/constants';
+import { MainConstants } from '../shared/Constants/main-constants';
 import { CommentThread } from '../models/comment/comment-thread';
 import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
 
-const BASE_URL = Constants.BASE_URL + '/commentThreads'
+const BASE_URL = MainConstants.BASE_URL + '/commentThreads'
 
 @Injectable({
   providedIn: 'root'

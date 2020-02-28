@@ -6,9 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { pluck, map } from 'rxjs/operators';
 import { Subscription } from '../models/subscribption/subscription';
 import { HttpConfigService } from './http-config.service';
-import { Constants } from '../shared/constants';
+import { MainConstants } from '../shared/Constants/main-constants';
 
-const BASE_URL = Constants.BASE_URL + '/subscriptions';
+const BASE_URL = MainConstants.BASE_URL + '/subscriptions';
 
 @Injectable({
   providedIn: 'root'

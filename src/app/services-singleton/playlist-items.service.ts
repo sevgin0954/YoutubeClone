@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { PlaylistItem } from '../models/playlist/playlist-item';
-import { Constants } from '../shared/constants';
+import { MainConstants } from '../shared/Constants/main-constants';
 import { Url } from '../shared/url';
 import { ServiceModel } from '../models/service-models/service-model';
 
@@ -26,7 +26,7 @@ export class PlaylistItemsService {
       maxResults: maxResults
     };
     this.addPageToken(queryParams, pageToken);
-    const url = new Url(Constants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<PlaylistItem[]>>(url.toString());
 
     return data$;

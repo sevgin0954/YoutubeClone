@@ -6,6 +6,8 @@ import { Video } from 'src/app/models/video/video';
 import { YoutubeIframeService } from 'src/app/video/services/youtube-iframe.service';
 import { Channel } from 'src/app/models/channel/channel';
 import { ChannelService } from 'src/app/services-singleton/channel.service';
+import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { ChannelResourceProperties } from 'src/app/shared/enums/resource-properties/channel-resource-properties';
 
 @Component({
   selector: 'app-video',
@@ -33,9 +35,12 @@ export class VideoComponent implements OnInit, OnDestroy {
     this.youtubeIframeService.init(this.video.id, isResponsive, shouldOverflow);
 
     const channelId = this.video.snippet.channelId;
-    this.subscribtion = this.channelService.getByIds([channelId], null, 1).subscribe(channel => {
-      this.channel = channel.items[0];
-    });
+    const pageArgs = new PageArguments(1, null);
+    const resourceProperties = [ChannelResourceProperties.snippet];
+    this.subscribtion = this.channelService.getByIds([channelId], pageArgs, resourceProperties)
+      .subscribe(channel => {
+        this.channel = channel.items[0];
+      });
   }
 
   ngOnDestroy(): void {

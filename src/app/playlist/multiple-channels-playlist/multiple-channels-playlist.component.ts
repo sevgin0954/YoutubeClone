@@ -4,7 +4,9 @@ import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style'
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { Channel } from 'src/app/models/channel/channel';
 import { ChannelService } from 'src/app/services-singleton/channel.service';
-import { Constants } from 'src/app/shared/constants';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { ChannelResourceProperties } from 'src/app/shared/enums/resource-properties/channel-resource-properties';
 
 @Component({
   selector: 'app-multiple-channels-playlist',
@@ -34,14 +36,17 @@ export class MultipleChannelsPlaylistComponent implements OnInit {
     const channelIds = this.channelSection.contentDetails.channels;
     this.totalResultsCount = channelIds.length;
 
-    const channelsEndIndex = this.channelsStartIndex + Constants.MAX_PLAYLIST_ITEM_RESULTS;
+    const channelsEndIndex = this.channelsStartIndex + MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
 
     const currentPagePlaylistIds = channelIds.slice(this.channelsStartIndex, channelsEndIndex);
-    this.channelService.getByIds(currentPagePlaylistIds, null, 0).subscribe(data => {
-      this.channels.push(...data.items);
-      this.channelsStartIndex = channelsEndIndex;
+    const pageArgs = new PageArguments(0, null);
+    const resourceProprties = [ChannelResourceProperties.snippet];
+    this.channelService.getByIds(currentPagePlaylistIds, pageArgs, resourceProprties)
+      .subscribe(data => {
+        this.channels.push(...data.items);
+        this.channelsStartIndex = channelsEndIndex;
 
-      onLoadedMoreCallback();
-    });
+        onLoadedMoreCallback();
+      });
   }
 }

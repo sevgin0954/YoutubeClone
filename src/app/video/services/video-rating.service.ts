@@ -4,11 +4,11 @@ import { HttpConfigService } from 'src/app/services-singleton/http-config.servic
 import { Observable } from 'rxjs';
 import { RatingType } from 'src/app/shared/enums/rating-type';
 import { Url } from 'src/app/shared/url';
-import { Constants } from 'src/app/shared/constants';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { HttpClient } from '@angular/common/http';
 import { pluck, map } from 'rxjs/operators';
 
-const BASE_URL = Constants.BASE_URL + '/videos'
+const BASE_URL = MainConstants.BASE_URL + '/videos'
 
 @Injectable()
 export class VideoRatingService {
