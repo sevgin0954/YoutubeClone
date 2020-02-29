@@ -11,6 +11,7 @@ import { YoutubeIframeService } from './services/youtube-iframe.service';
 import { VideoDescriptionComponent } from './video-description/video-description.component';
 import { VideoResolverService } from '../services-singleton/resolvers/video-resolver.service';
 import { VideoHeaderComponent } from './video-header/video-header.component';
+import { CommentThreadsService } from './services/comment-threads.service';
 
 const routes: Routes = [
   { path: ':id', component: VideoComponent, resolve: { video: VideoResolverService } }
@@ -30,6 +31,7 @@ const routes: Routes = [
     CommentModule
   ],
   providers: [
+    CommentThreadsService,
     VideoRatingService,
     YoutubeIframeService
   ]

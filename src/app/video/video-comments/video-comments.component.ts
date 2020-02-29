@@ -6,7 +6,7 @@ import { CommentThread } from 'src/app/models/comment/comment-thread';
 import { CommentThreadOrder } from 'src/app/shared/enums/comment-thread-order';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { WindowService } from 'src/app/services-singleton/window.service';
-import { CommentThreadsService } from 'src/app/services-singleton/comment-threads.service';
+import { CommentThreadsService } from 'src/app/video/services/comment-threads.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 
 const MAX_RESULTS = 20;

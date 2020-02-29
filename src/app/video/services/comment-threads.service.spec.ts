@@ -1,12 +1,12 @@
 import { CommentThreadsService } from './comment-threads.service';
-import { CommentThreadOrder } from '../shared/enums/comment-thread-order';
-import { PageArguments } from '../shared/arguments/page-arguments';
-import { CommentThread } from '../models/comment/comment-thread';
-import { ServiceModel } from '../models/service-models/service-model';
+import { CommentThreadOrder } from '../../shared/enums/comment-thread-order';
+import { PageArguments } from '../../shared/arguments/page-arguments';
+import { CommentThread } from '../../models/comment/comment-thread';
+import { ServiceModel } from '../../models/service-models/service-model';
 import { Observable, of } from 'rxjs';
 import { HttpClientHelpers } from 'src/tests-common/htpp-client-helpers';
-import { MainConstants } from '../shared/Constants/main-constants';
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { MainConstants } from '../../shared/Constants/main-constants';
+import { ExceptionConstants } from '../../shared/Constants/exception-constants';
 
 let httpClient: any;
 let service: CommentThreadsService;
