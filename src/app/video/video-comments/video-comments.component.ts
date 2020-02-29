@@ -7,6 +7,9 @@ import { CommentThreadOrder } from 'src/app/shared/enums/comment-thread-order';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { WindowService } from 'src/app/services-singleton/window.service';
 import { CommentThreadsService } from 'src/app/services-singleton/comment-threads.service';
+import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+
+const MAX_RESULTS = 20;
 
 @Component({
   selector: 'app-video-comments',
@@ -65,8 +68,9 @@ export class VideoCommentsComponent implements OnDestroy {
   private loadComments(): void {
     this.isCurrentlyLoadingComments = true;
 
+    const pageArgs = new PageArguments(MAX_RESULTS, this.nextPageToken);
     this.videoSubscribtion = this.commentThreadsService
-      .getByVideoId(this.parentId, this.order, this.nextPageToken)
+      .getByVideoId(this.parentId, this.order, pageArgs)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         this.commentThreads.push(...data.items);

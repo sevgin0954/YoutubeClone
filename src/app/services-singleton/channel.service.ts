@@ -25,13 +25,14 @@ export class ChannelService {
     pageArgs: PageArguments,
     resourceProprties: ChannelResourceProperties[]
   ): Observable<ServiceModel<Channel[]>> {
+
     this.validateSubscriptionArguments(pageArgs, resourceProprties);
 
     const part = EnumUtility.join(resourceProprties, ',', ChannelResourceProperties);
     const queryParams: any = {
       part: part,
       mine: 'true',
-      maxResults: pageArgs.maxResults.toString()
+      maxResults: pageArgs.maxResults
     }
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
