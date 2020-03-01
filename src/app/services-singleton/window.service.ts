@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class WindowService {
 
-  isElementOverflowing(element: HTMLElement): boolean {
+  isElementOverflowing(element: Element): boolean {
     let isOverflowing = false;
 
     let rect: ClientRect = element.getBoundingClientRect();

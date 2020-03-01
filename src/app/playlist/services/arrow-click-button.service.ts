@@ -28,7 +28,7 @@ export class ArrowClickButtonService {
       loadMoreCallBack();
     }
     else {
-      this.playlistElementService.hideFirstHiddenElementFromRight(playlistElements);
+      this.playlistElementService.showFirstHiddenElementFromRight(playlistElements);
       this.playlistElementService.hideFirstShownElement(playlistElements);
     }
   }

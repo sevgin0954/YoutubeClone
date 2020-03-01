@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { WindowService } from 'src/app/services-singleton/window.service';
 import { ElementsPredicateService } from 'src/app/services-singleton/elements-predicate.service';
+import { DataValidator } from '../shared/Validation/data-validator';
+import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { ElementValidator } from '../shared/validation/element-validator';
 
 @Injectable({
   providedIn: 'root'
@@ -13,29 +16,48 @@ export class ElementDisplayService {
     private windowService: WindowService
   ) { }
 
-  hideFirstHiddenElementFromRight(playlistElements: Element[]): void {
-    const firstHiddenElementFromRight = playlistElements
+  showFirstHiddenElementFromRight(elements: Element[]): void {
+    this.validateElements(elements);
+
+    const firstHiddenElementFromRight = elements
       .find(this.elementsPredicateService.getFirstHiddenElementFromRight);
+
+    this.validateFoundElement(firstHiddenElementFromRight);
+
     firstHiddenElementFromRight.removeAttribute('hidden');
   }
 
-  hideFirstShownElement(playlistElements: Element[]): void {
-    const firstShownElement = playlistElements.find(e => e.hasAttribute('hidden') === false);
+  hideFirstShownElement(elements: Element[]): void {
+    this.validateElements(elements);
+
+    const firstShownElement = elements.find(e => e.hasAttribute('hidden') === false);
+    this.validateFoundElement(firstShownElement);
     firstShownElement.setAttribute('hidden', 'hidden');
   }
 
-  hideLastShowElement(playlistElements: Element[]): void {
-    const lastShownElement = playlistElements.find(this.elementsPredicateService.getLastShownElement);
+  hideLastShowElement(elements: Element[]): void {
+    this.validateElements(elements);
+
+    const lastShownElement = elements.find(this.elementsPredicateService.getLastShownElement);
+    this.validateFoundElement(lastShownElement);
     lastShownElement.setAttribute('hidden', 'hidden');
   }
 
-  showLastHiddenElementFromLeft(playlistElements: Element[]): void {
-    const lastHiddenElementFromLeft = playlistElements
+  showLastHiddenElementFromLeft(elements: Element[]): void {
+    this.validateElements(elements);
+
+    const lastHiddenElementFromLeft = elements
       .find(this.elementsPredicateService.getLastHiddenElementFromLeft);
+
+    this.validateFoundElement(lastHiddenElementFromLeft);
+
     lastHiddenElementFromLeft.removeAttribute('hidden');
   }
 
-  tryShowElementIfNotOverflowing(elementToShow: HTMLElement, lastShownElement: HTMLElement): boolean {
+  tryShowElementIfNotOverflowing(elementToShow: Element, lastShownElement: Element): boolean {
+    this.validateElementToShow(elementToShow);
+    this.validateLastShownElement(lastShownElement);
+
     let isElementShown = true;
 
     elementToShow.removeAttribute('hidden');
@@ -48,16 +70,26 @@ export class ElementDisplayService {
     return isElementShown;
   }
 
-  tryHideRightOverflowingElements(playlistElements: Element[], lastShownElement: HTMLElement): boolean {
+  private validateElementToShow(elementToShow: Element): void {
+    DataValidator.nullOrUndefinied(elementToShow, 'elementToShow');
+    ElementValidator.hasAttribute(elementToShow, 'hidden');
+  }
+
+  private validateLastShownElement(lastShownElement: Element): void {
+    DataValidator.nullOrUndefinied(lastShownElement, 'lastShownElement');
+    ElementValidator.doesNotHaveAttribute(lastShownElement, 'hidden');
+  }
+
+  tryHideRightOverflowingElements(elements: Element[], lastShownElement: HTMLElement): boolean {
     let isSuccessful = false;
 
-    let isThereShownElelement = this.isThereVisibleElement(playlistElements);
+    let isThereShownElelement = this.isThereVisibleElement(elements);
     let isLastShowElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
     while (isLastShowElementOverflowing && isThereShownElelement) {
-      this.hideLastShowElement(playlistElements);
+      this.hideLastShowElement(elements);
 
       isLastShowElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
-      isThereShownElelement = this.isThereVisibleElement(playlistElements);
+      isThereShownElelement = this.isThereVisibleElement(elements);
 
       isSuccessful = true;
     }
@@ -65,17 +97,17 @@ export class ElementDisplayService {
     return isSuccessful;
   }
 
-  private isThereVisibleElement(playlistElements: Element[]): boolean {
-    const isThereShownElelement = playlistElements
+  private isThereVisibleElement(elements: Element[]): boolean {
+    const isThereShownElelement = elements
       .find(e => e.hasAttribute('hidden') === false);
 
     return isThereShownElelement !== undefined;
   }
 
-  tryShowLeftHiddenElements(playlistElements: HTMLElement[], endElement: HTMLElement): boolean {
+  tryShowLeftHiddenElements(elements: HTMLElement[], endElement: HTMLElement): boolean {
     let isSuccessful = false;
 
-    const firstElement = playlistElements[0];
+    const firstElement = elements[0];
     const isFirstElementHidden = firstElement.hasAttribute('hidden');
     if (isFirstElementHidden === false) {
       return isSuccessful;
@@ -84,7 +116,7 @@ export class ElementDisplayService {
     let isThereMoreSpace = true;
     while (isThereMoreSpace) {
       const lastHiddenElementFromLeft =
-        playlistElements
+        elements
           .find(this.elementsPredicateService.getLastHiddenElementFromLeft);
       if (lastHiddenElementFromLeft) {
         const isElementShown =
@@ -103,10 +135,10 @@ export class ElementDisplayService {
     return isSuccessful;
   }
 
-  tryShowRightHiddenElements(playlistElements: HTMLElement[], endElement: HTMLElement): boolean {
+  tryShowRightHiddenElements(elements: HTMLElement[], endElement: HTMLElement): boolean {
     let isSuccessful = false;
 
-    const lastElement = playlistElements[playlistElements.length - 1];
+    const lastElement = elements[elements.length - 1];
     const isLastElementHidden = lastElement.hasAttribute('hidden');
     if (isLastElementHidden === false) {
       return isSuccessful;
@@ -114,7 +146,7 @@ export class ElementDisplayService {
 
     let isThereMoreSpace = true;
     while (isThereMoreSpace) {
-      const firstHiddenElementFromRight = playlistElements
+      const firstHiddenElementFromRight = elements
         .find(this.elementsPredicateService.getFirstHiddenElementFromRight);
       if (firstHiddenElementFromRight) {
         const isElementShown =
@@ -131,5 +163,18 @@ export class ElementDisplayService {
     }
 
     return isSuccessful;
+  }
+
+  private validateElements(elements: Element[]): void {
+    const argumentName = 'elements';
+
+    DataValidator.nullOrUndefinied(elements, argumentName);
+    DataValidator.emptyCollection(elements, argumentName);
+  }
+
+  private validateFoundElement(element: Element): void {
+    if (!element) {
+      throw Error(ExceptionConstants.NOT_FOUND);
+    }
   }
 }

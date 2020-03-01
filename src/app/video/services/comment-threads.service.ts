@@ -41,13 +41,13 @@ export class CommentThreadsService {
 
   private validateArguments(videoId: string, order: CommentThreadOrder, pageArgs: PageArguments): void {
     this.validateVideoId(videoId);
-    DataValidator.NullOrUndefinied(order, 'order');
-    DataValidator.ValidatePageArguments(pageArgs, 'pageArgs');
+    DataValidator.nullOrUndefinied(order, 'order');
+    DataValidator.pageArguments(pageArgs, 'pageArgs');
   }
 
   private validateVideoId(videoId: string): void {
     const argumentName = 'videoId';
-    DataValidator.NullOrUndefinied(videoId, argumentName);
-    DataValidator.EmptyString(videoId, argumentName);
+    DataValidator.nullOrUndefinied(videoId, argumentName);
+    DataValidator.emptyString(videoId, argumentName);
   }
 }

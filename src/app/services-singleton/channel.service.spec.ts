@@ -31,7 +31,7 @@ describe('ChannelService', () => {
   });
 });
 
-describe('ChannelService getSubscriptions method', () => {
+describe('ChannelService\'s getSubscriptions method', () => {
 
   it('should call httpClient get', () => {
     // Arrange
@@ -201,7 +201,7 @@ describe('ChannelService getSubscriptions method', () => {
   }
 });
 
-describe('ChannelService getByIds method', () => {
+describe('ChannelService\'s getByIds method', () => {
   it('should call httpClient get method', () => {
     // Arrange
 

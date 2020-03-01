@@ -46,7 +46,7 @@ export class ChannelService {
     pageArgs: PageArguments,
     resourceProprties: ChannelResourceProperties[]
   ): void {
-    DataValidator.ValidatePageArguments(pageArgs, 'pageArgs');
+    DataValidator.pageArguments(pageArgs, 'pageArgs');
     this.validateResourceProperties(resourceProprties);
   }
 
@@ -77,18 +77,18 @@ export class ChannelService {
     resourceProprties: ChannelResourceProperties[]
   ): void {
     this.validateIdsArgument(ids);
-    DataValidator.ValidatePageArguments(pageArgs, 'pageArgs');
+    DataValidator.pageArguments(pageArgs, 'pageArgs');
     this.validateResourceProperties(resourceProprties);
   }
 
   private validateIdsArgument(ids: string[]): void {
     const idsArgumentName = 'ids';
-    DataValidator.NullOrUndefinied(ids, idsArgumentName);
-    DataValidator.EmptyCollection(ids, idsArgumentName);
+    DataValidator.nullOrUndefinied(ids, idsArgumentName);
+    DataValidator.emptyCollection(ids, idsArgumentName);
   }
 
   private validateResourceProperties(resourceProprties: ChannelResourceProperties[]): void {
-    DataValidator.NullOrUndefinied(resourceProprties, 'resourceProprties');
-    DataValidator.EmptyCollection(resourceProprties, 'resourceProprties');
+    DataValidator.nullOrUndefinied(resourceProprties, 'resourceProprties');
+    DataValidator.emptyCollection(resourceProprties, 'resourceProprties');
   }
 }
