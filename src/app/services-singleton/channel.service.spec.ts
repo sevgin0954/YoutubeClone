@@ -2,7 +2,7 @@ import { ChannelService } from './channel.service';
 import { of, Observable } from 'rxjs';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { TestConstants } from 'src/tests-common/test-constants';
-import { HttpClientHelpers } from 'src/tests-common/htpp-client-helpers';
+import { HttpClientUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { ChannelResourceProperties } from '../shared/enums/resource-properties/channel-resource-properties';
 import { Channel } from '../models/channel/channel';
@@ -63,7 +63,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const actualPath = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath.startsWith(expectedPath)).toBeTruthy();
   });
 
@@ -77,7 +77,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     service.getSubscriptions(pageArgs, [snippetResourceProperty, idResourceProperty]);
 
     // Arrange
-    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const actualPath = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath).toContain(partParam);
   });
 
@@ -89,7 +89,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const actualPath = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath).toContain(mineParam);
   });
 
@@ -105,7 +105,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const actualPath = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath).toContain(maxResultParam);
   });
 
@@ -143,7 +143,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const actualPath = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath).toContain(pageTokenParam);
   });
 
@@ -156,7 +156,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const actualPath = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath.indexOf(pageTokenKey)).toEqual(-1);
   });
 
@@ -169,7 +169,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const actualPath = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(actualPath.indexOf(pageTokenKey)).toEqual(-1);
   });
 
@@ -234,7 +234,7 @@ describe('ChannelService\'s getByIds method', () => {
     service.getByIds(['123'], pageArgs, [idResourceProperty, snippetResourceProperty]);
 
     // Assert
-    const urlArgument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(urlArgument).toContain(resourceQueryParam);
   });
 
@@ -248,7 +248,7 @@ describe('ChannelService\'s getByIds method', () => {
     service.getByIds([id1, id2], pageArgs, [ChannelResourceProperties.id]);
 
     // Assert
-    const argument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const argument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(argument).toContain(idsQueryParam);
   });
 
@@ -261,7 +261,7 @@ describe('ChannelService\'s getByIds method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const argument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const argument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(argument).toContain(maxResultQueryString);
   });
 
@@ -285,7 +285,7 @@ describe('ChannelService\'s getByIds method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const argument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const argument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(argument).toContain(maxpageTokenQueryString);
   });
 
@@ -298,7 +298,7 @@ describe('ChannelService\'s getByIds method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const argument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const argument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(argument.indexOf(pageTokenKey) === -1).toBeTruthy();
   });
 
@@ -311,7 +311,7 @@ describe('ChannelService\'s getByIds method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const argument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const argument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(argument.indexOf(pageTokenKey) === -1).toBeTruthy();
   });
 
@@ -325,7 +325,7 @@ describe('ChannelService\'s getByIds method', () => {
     service.getByIds(['123'], pageArgs, [idResourceProperty, snippetResourceProperty]);
 
     // Assert
-    const argument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const argument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(argument).toContain(partQueryString);
   });
 

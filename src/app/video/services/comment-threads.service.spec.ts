@@ -4,7 +4,7 @@ import { PageArguments } from '../../shared/arguments/page-arguments';
 import { CommentThread } from '../../models/comment/comment-thread';
 import { ServiceModel } from '../../models/service-models/service-model';
 import { Observable, of } from 'rxjs';
-import { HttpClientHelpers } from 'src/tests-common/htpp-client-helpers';
+import { HttpClientUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
 import { MainConstants } from '../../shared/Constants/main-constants';
 import { ExceptionConstants } from '../../shared/Constants/exception-constants';
 
@@ -33,7 +33,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const urlArgument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(urlArgument).toContain(expectedUrl);
   });
 
@@ -46,7 +46,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithId(videoId);
 
     // Assert
-    const urlArgument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(urlArgument).toContain(queryParam);
   });
 
@@ -81,7 +81,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithOrder(order);
 
     // Assert
-    const urlArgument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(urlArgument).toContain(orderQueryParam);
   });
 
@@ -105,7 +105,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const urlArgument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(urlArgument).toContain(maxResultsQuery);
   });
 
@@ -129,7 +129,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const urlArgument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(urlArgument).toContain(pageTokenQuery);
   });
 
@@ -142,7 +142,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const urlArgument = HttpClientHelpers.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
     expect(urlArgument.indexOf(pageTokenKey) === -1).toBeTruthy();
   });
 

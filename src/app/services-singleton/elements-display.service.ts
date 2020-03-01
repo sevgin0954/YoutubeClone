@@ -75,26 +75,29 @@ export class ElementDisplayService {
     ElementValidator.hasAttribute(elementToShow, 'hidden');
   }
 
-  private validateLastShownElement(lastShownElement: Element): void {
-    DataValidator.nullOrUndefinied(lastShownElement, 'lastShownElement');
-    ElementValidator.doesNotHaveAttribute(lastShownElement, 'hidden');
-  }
+  tryHideRightOverflowingElements(elements: Element[], lastShownElement: Element): boolean {
+    this.validateElements(elements);
+    this.validateLastShownElement(lastShownElement);
 
-  tryHideRightOverflowingElements(elements: Element[], lastShownElement: HTMLElement): boolean {
     let isSuccessful = false;
 
-    let isThereShownElelement = this.isThereVisibleElement(elements);
+    let isThereShownElement = this.isThereVisibleElement(elements);
     let isLastShowElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
-    while (isLastShowElementOverflowing && isThereShownElelement) {
+    while (isLastShowElementOverflowing && isThereShownElement) {
       this.hideLastShowElement(elements);
 
       isLastShowElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
-      isThereShownElelement = this.isThereVisibleElement(elements);
+      isThereShownElement = this.isThereVisibleElement(elements);
 
       isSuccessful = true;
     }
 
     return isSuccessful;
+  }
+
+  private validateLastShownElement(lastShownElement: Element): void {
+    DataValidator.nullOrUndefinied(lastShownElement, 'lastShownElement');
+    ElementValidator.doesNotHaveAttribute(lastShownElement, 'hidden');
   }
 
   private isThereVisibleElement(elements: Element[]): boolean {
@@ -104,7 +107,7 @@ export class ElementDisplayService {
     return isThereShownElelement !== undefined;
   }
 
-  tryShowLeftHiddenElements(elements: HTMLElement[], endElement: HTMLElement): boolean {
+  tryShowLeftHiddenElements(elements: Element[], endElement: Element): boolean {
     let isSuccessful = false;
 
     const firstElement = elements[0];
@@ -135,7 +138,7 @@ export class ElementDisplayService {
     return isSuccessful;
   }
 
-  tryShowRightHiddenElements(elements: HTMLElement[], endElement: HTMLElement): boolean {
+  tryShowRightHiddenElements(elements: Element[], endElement: Element): boolean {
     let isSuccessful = false;
 
     const lastElement = elements[elements.length - 1];
