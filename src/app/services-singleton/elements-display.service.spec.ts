@@ -239,7 +239,7 @@ describe('ElementsDisplayService\'s tryShowElementIfNotOverflowing method', () =
     SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isLastElementOverflowing);
 
     // Act
-    callMethodWithElementToShow(elementToShow);
+    service.tryShowElementIfNotOverflowing(elementToShow, lastShownElement);
 
     // Assert
     expect(elementToShow.hasAttribute('hidden')).toBeTruthy();
@@ -310,7 +310,7 @@ describe('ElementsDisplayService\'s tryShowElementIfNotOverflowing method', () =
 
     SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isLastElementOverflowing);
 
-    const result = callMethodWithElementToShow(elementToShow);
+    const result = service.tryShowElementIfNotOverflowing(elementToShow, lastShownElement);
 
     return result;
   }
@@ -502,6 +502,198 @@ describe('ElementsDisplayService\'s tryHideRightOverflowingElements', () => {
   function callMethodWithElements(elements: Element[]): boolean {
     const lastShownElement = document.createElement('div');
     const result = service.tryHideRightOverflowingElements(elements, lastShownElement);
+
+    return result;
+  }
+});
+
+describe('ElementsDisplayService\'s tryShowLeftHiddenElements', () => {
+
+  it(`with null elements should throw an exception`, () => {
+    // Arrange
+    const elements = null;
+    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithElements(elements)).toThrowError(exceptionRegex);
+  });
+
+  it(`with empty elements should throw an exception`, () => {
+    // Arrange
+    const elements = [];
+    const exceptionRegex = new RegExp(ExceptionConstants.EMPTY_COLLECTION);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithElements(elements)).toThrowError(exceptionRegex);
+  });
+
+  it(`with null lastShownElement should throw an exception`, () => {
+    // Arrange
+    const lastShowElement = null;
+    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithLastShownElement(lastShowElement)).toThrowError(exceptionRegex);
+  });
+
+  it(`with hidden lastShownElement should throw an exception`, () => {
+    // Arrange
+    const lastShowElement = ElementUtilities.createHiddenElement();
+    const exceptionRegex = new RegExp(ExceptionConstants.HAVING_ATTRIBUTE);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithLastShownElement(lastShowElement)).toThrowError(exceptionRegex);
+  });
+
+  it(`with hidden elements from left and with overflowing lastShownElement should not show elements`, () => {
+    // Arrange
+    const firstElement = ElementUtilities.createHiddenElement();
+    const secondElement = document.createElement('div');
+    const elements = [firstElement, secondElement];
+
+    const lastShownElement = document.createElement('div');
+
+    SetupStubs.setupPredicateStub(elementsPredicateService.getLastHiddenElementFromLeft, firstElement);
+
+    const isElementOverflowing = true;
+    SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isElementOverflowing);
+
+    // Act
+    callMethodWithAllArguments(elements, lastShownElement);
+
+    // Assert
+    expect(firstElement.hasAttribute('hidden')).toBeTruthy();
+  });
+
+  it(`with hidden elements from left and with overflowing lastShownElement should return false`, () => {
+    // Arrange
+    const firstElement = ElementUtilities.createHiddenElement();
+    const secondElement = document.createElement('div');
+    const elements = [firstElement, secondElement];
+
+    const lastShownElement = document.createElement('div');
+
+    SetupStubs.setupPredicateStub(elementsPredicateService.getLastHiddenElementFromLeft, firstElement);
+
+    const isElementOverflowing = true;
+    SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isElementOverflowing);
+
+    // Act
+    const result = callMethodWithAllArguments(elements, lastShownElement);
+
+    // Assert
+    expect(result).toBeFalsy();
+  });
+
+  it(`without hidden elements from left and not overflowing lastShownElement should not show elements`, () => {
+    // Arrange
+    const firstElement = document.createElement('div');
+    const secondElement = ElementUtilities.createHiddenElement();
+    const elements = [firstElement, secondElement];
+
+    const lastShownElement = document.createElement('div');
+
+    const isElementOverflowing = false;
+    SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isElementOverflowing);
+
+    // Act
+    callMethodWithAllArguments(elements, lastShownElement);
+
+    // Assert
+    expect(secondElement.hasAttribute('hidden')).toBeTruthy();
+  });
+
+  it(`without hidden elements from left and not overflowing lastShownElement should return false`, () => {
+    // Arrange
+    const firstElement = document.createElement('div');
+    const secondElement = ElementUtilities.createHiddenElement();
+    const elements = [firstElement, secondElement];
+
+    const lastShownElement = document.createElement('div');
+
+    const isElementOverflowing = false;
+    SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isElementOverflowing);
+
+    // Act
+    const result = callMethodWithAllArguments(elements, lastShownElement);
+
+    // Assert
+    expect(result).toBeFalsy();
+  });
+
+  it(`with hidden elements from left and not overflowing lastShownElement should show elements until lastShownElement is overflowing`, () => {
+    // Arrange
+    const firstElement = ElementUtilities.createHiddenElement();
+    const secondElement = ElementUtilities.createHiddenElement();
+    const thridElement = document.createElement('div');
+    const elements = [firstElement, secondElement, thridElement];
+
+    const lastShownElement = document.createElement('div');
+
+    windowService.isElementOverflowing.and.returnValues(false, false, true);
+    SetupStubs.setupPredicateStub(
+      elementsPredicateService.getLastHiddenElementFromLeft,
+      firstElement,
+      secondElement
+    );
+
+    // Act
+    callMethodWithAllArguments(elements, lastShownElement);
+
+    // Assert
+    expect(firstElement.hasAttribute('hidden')).toBeFalsy();
+    expect(secondElement.hasAttribute('hidden')).toBeFalsy();
+  });
+
+  it(`with hidden elements from left and not overflowing lastShownElement should return true`, () => {
+    // Arrange
+    const firstElement = ElementUtilities.createHiddenElement();
+    const secondElement = ElementUtilities.createHiddenElement();
+    const thridElement = document.createElement('div');
+    const elements = [firstElement, secondElement, thridElement];
+
+    const lastShownElement = document.createElement('div');
+
+    windowService.isElementOverflowing.and.returnValues(false, false, true);
+    SetupStubs.setupPredicateStub(
+      elementsPredicateService.getLastHiddenElementFromLeft,
+      firstElement,
+      secondElement
+    );
+
+    // Act
+    const result = callMethodWithAllArguments(elements, lastShownElement);
+
+    // Assert
+    expect(result).toBeTruthy();
+  });
+
+  function callMethodWithAllArguments(elements: Element[], lastShownElement: Element): boolean {
+    const result = service.tryShowLeftHiddenElements(elements, lastShownElement);
+
+    return result;
+  }
+
+  function callMethodWithElements(elements: Element[]): boolean {
+    const lastShowElement = document.createElement('div');
+    const result = service.tryShowLeftHiddenElements(elements, lastShowElement);
+
+    return result;
+  }
+
+  function callMethodWithLastShownElement(lastShowElement: Element): boolean {
+    const elements = [
+      document.createElement('div')
+    ];
+    const result = service.tryShowLeftHiddenElements(elements, lastShowElement);
 
     return result;
   }

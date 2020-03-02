@@ -95,11 +95,6 @@ export class ElementDisplayService {
     return isSuccessful;
   }
 
-  private validateLastShownElement(lastShownElement: Element): void {
-    DataValidator.nullOrUndefinied(lastShownElement, 'lastShownElement');
-    ElementValidator.doesNotHaveAttribute(lastShownElement, 'hidden');
-  }
-
   private isThereVisibleElement(elements: Element[]): boolean {
     const isThereShownElelement = elements
       .find(e => e.hasAttribute('hidden') === false);
@@ -107,7 +102,10 @@ export class ElementDisplayService {
     return isThereShownElelement !== undefined;
   }
 
-  tryShowLeftHiddenElements(elements: Element[], endElement: Element): boolean {
+  tryShowLeftHiddenElements(elements: Element[], lastShownElement: Element): boolean {
+    this.validateElements(elements);
+    this.validateLastShownElement(lastShownElement);
+
     let isSuccessful = false;
 
     const firstElement = elements[0];
@@ -123,7 +121,7 @@ export class ElementDisplayService {
           .find(this.elementsPredicateService.getLastHiddenElementFromLeft);
       if (lastHiddenElementFromLeft) {
         const isElementShown =
-          this.tryShowElementIfNotOverflowing(lastHiddenElementFromLeft, endElement);
+          this.tryShowElementIfNotOverflowing(lastHiddenElementFromLeft, lastShownElement);
         if (isElementShown) {
           isSuccessful = true;
         }
@@ -166,6 +164,11 @@ export class ElementDisplayService {
     }
 
     return isSuccessful;
+  }
+
+  private validateLastShownElement(lastShownElement: Element): void {
+    DataValidator.nullOrUndefinied(lastShownElement, 'lastShownElement');
+    ElementValidator.doesNotHaveAttribute(lastShownElement, 'hidden');
   }
 
   private validateElements(elements: Element[]): void {

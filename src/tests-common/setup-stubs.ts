@@ -1,9 +1,11 @@
 export class SetupStubs {
-  public static setupPredicateStub(predicateFunc: any, elementToMatch: any): void {
-    predicateFunc.and.callFake((element) => {
+  public static setupPredicateStub(predicateFunc: any, ...elementsToMatchOnce: Element[]): void {
+    predicateFunc.and.callFake((elementInput: Element) => {
       let result = false;
 
-      if (element === elementToMatch) {
+      if (elementsToMatchOnce.find((e) => e === elementInput)) {
+        const elementInputIndex = elementsToMatchOnce.findIndex(e => e === elementInput);
+        elementsToMatchOnce.splice(elementInputIndex, 1);
         result = true;
       }
 
@@ -12,8 +14,8 @@ export class SetupStubs {
   }
 
   public static setupWindowIsOverflowingFunc(windowService, element: Element, returnResult: boolean): void {
-    windowService.isElementOverflowing.and.callFake(() => {
-      if (element === element) {
+    windowService.isElementOverflowing.and.callFake((elementInput) => {
+      if (elementInput === element) {
         return returnResult;
       }
     });
