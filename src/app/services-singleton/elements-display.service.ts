@@ -136,7 +136,10 @@ export class ElementDisplayService {
     return isSuccessful;
   }
 
-  tryShowRightHiddenElements(elements: Element[], endElement: Element): boolean {
+  tryShowRightHiddenElements(elements: Element[], lastShownElement: Element): boolean {
+    this.validateElements(elements);
+    this.validateLastShownElement(lastShownElement);
+
     let isSuccessful = false;
 
     const lastElement = elements[elements.length - 1];
@@ -151,7 +154,7 @@ export class ElementDisplayService {
         .find(this.elementsPredicateService.getFirstHiddenElementFromRight);
       if (firstHiddenElementFromRight) {
         const isElementShown =
-          this.tryShowElementIfNotOverflowing(firstHiddenElementFromRight, endElement);
+          this.tryShowElementIfNotOverflowing(firstHiddenElementFromRight, lastShownElement);
         if (isElementShown) {
           isSuccessful = true;
         }
