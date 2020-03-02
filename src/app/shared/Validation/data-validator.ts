@@ -40,6 +40,19 @@ export class DataValidator {
     DataValidator.minNumber(args.maxResults, 0, maxResultsArgumentName);
   }
 
+  public static validateCollection(collection: any[], argumentName: string): void {
+    this.nullOrUndefinied(collection, argumentName);
+    this.emptyCollection(collection, argumentName);
+  }
+
+  public static validateIndex(index: number, collection: any[], indexArgumentName: string): void {
+    if (index < 0 || index >= collection.length) {
+      const exceptionMessage =
+        this.appendArgumentName(ExceptionConstants.INDEX_OUT_OF_RANGE, indexArgumentName);
+      throw new Error(exceptionMessage);
+    }
+  }
+
   private static appendArgumentName(errorMessage: string, argumentName: string): string {
     return errorMessage + ` Argument name: ${argumentName}`;
   }

@@ -1,23 +1,26 @@
 import { Injectable } from '@angular/core';
+import { DataValidator } from '../shared/Validation/data-validator';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ElementsPredicateService {
 
-  getFirstHiddenElementFromRight(element: Element, index: number, elements: Element[]): boolean {
+  getFirstHiddenElementFromRight(currentElement: Element, index: number, elements: Element[]): boolean {
+    this.validateArguments(currentElement, index, elements);
+
     let isPreviousElementVisible = false;
     if (index > 0) {
       const previousElement = elements[index - 1];
       isPreviousElementVisible = previousElement.hasAttribute('hidden') === false;
     }
-    const isCurrentElementHidden = element.hasAttribute('hidden');
+    const isCurrentElementHidden = currentElement.hasAttribute('hidden');
 
     return isPreviousElementVisible && isCurrentElementHidden;
   }
 
-  getLastHiddenElementFromLeft(element: Element, index: number, elements: Element[]): boolean {
-    const isCurrentElementHidden = element.hasAttribute('hidden');
+  getLastHiddenElementFromLeft(currentElement: Element, index: number, elements: Element[]): boolean {
+    const isCurrentElementHidden = currentElement.hasAttribute('hidden');
     let isNextElementVisible = true;
     const nextIndex = index + 1;
     if (nextIndex < elements.length) {
@@ -27,8 +30,8 @@ export class ElementsPredicateService {
     return isCurrentElementHidden && isNextElementVisible;
   }
 
-  getLastShownElement(element: Element, index: number, elements: Element[]): boolean {
-    const isCurrentElementShown = element.hasAttribute('hidden') === false;
+  getLastShownElement(currentElement: Element, index: number, elements: Element[]): boolean {
+    const isCurrentElementShown = currentElement.hasAttribute('hidden') === false;
     let isNextElementHidden = true;
 
     const nextElementIndex = index + 1;
@@ -37,5 +40,11 @@ export class ElementsPredicateService {
     }
 
     return isCurrentElementShown && isNextElementHidden;
+  }
+
+  private validateArguments(currentElement: Element, index: number, elements: Element[]): void {
+    DataValidator.nullOrUndefinied(currentElement, 'currentElement');
+    DataValidator.validateCollection(elements, 'elements');
+    DataValidator.validateIndex(index, elements, 'index');
   }
 }

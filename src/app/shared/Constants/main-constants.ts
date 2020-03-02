@@ -1,6 +1,6 @@
 export class MainConstants {
-  public static AuthTokenKey = 'token';
-  public static BASE_URL = 'https://www.googleapis.com/youtube/v3';
-  public static MAX_PLAYLIST_ITEM_RESULTS = 5;
-  public static TITLE_MAX_LENGTH = 500;
+  public static readonly AuthTokenKey = 'token';
+  public static readonly BASE_URL = 'https://www.googleapis.com/youtube/v3';
+  public static readonly MAX_PLAYLIST_ITEM_RESULTS = 5;
+  public static readonly TITLE_MAX_LENGTH = 500;
 }
