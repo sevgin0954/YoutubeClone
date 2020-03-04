@@ -24,7 +24,7 @@ export class SinglePlaylistComponent implements OnInit {
   totalResultsCount: number;
   videos: Video[] = [];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
-  videoTitleMaxLength: number = 35;
+  titleMaxDisplayedRows: number = 2;
   private isFirstPage: boolean = true;
   private nextPageToken: string;
 
