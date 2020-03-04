@@ -6,7 +6,7 @@ import { DataValidator } from '../shared/Validation/data-validator';
 })
 export class ElementsPredicateService {
 
-  getFirstHiddenElementFromRight(currentElement: Element, index: number, elements: Element[]): boolean {
+  getFirstHiddenElementFromRight = (currentElement: Element, index: number, elements: Element[]): boolean => {
     this.validateArguments(currentElement, index, elements);
 
     let isPreviousElementVisible = false;
@@ -19,9 +19,11 @@ export class ElementsPredicateService {
     return isPreviousElementVisible && isCurrentElementHidden;
   }
 
-  getLastHiddenElementFromLeft(currentElement: Element, index: number, elements: Element[]): boolean {
+  getLastHiddenElementFromLeft = (currentElement: Element, index: number, elements: Element[]): boolean => {
+    this.validateArguments(currentElement, index, elements);
+
     const isCurrentElementHidden = currentElement.hasAttribute('hidden');
-    let isNextElementVisible = true;
+    let isNextElementVisible = false;
     const nextIndex = index + 1;
     if (nextIndex < elements.length) {
       isNextElementVisible = elements[nextIndex].hasAttribute('hidden') === false
@@ -30,7 +32,9 @@ export class ElementsPredicateService {
     return isCurrentElementHidden && isNextElementVisible;
   }
 
-  getLastShownElement(currentElement: Element, index: number, elements: Element[]): boolean {
+  getLastShownElement = (currentElement: Element, index: number, elements: Element[]): boolean => {
+    this.validateArguments(currentElement, index, elements);
+
     const isCurrentElementShown = currentElement.hasAttribute('hidden') === false;
     let isNextElementHidden = true;
 

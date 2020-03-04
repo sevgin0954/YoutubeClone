@@ -131,6 +131,16 @@ describe('ElementsPredicateService\'s getFirstHiddenElementFromRight method', ()
     expect(result).toBeFalsy();
   });
 
+  it('called in a different function should keep this binded to the current class and not throw an exception', () => {
+    // Arrange
+    const firstElement = document.createElement('div');
+
+    // Act
+
+    // Assert
+    expect(() => [firstElement].find(service.getFirstHiddenElementFromRight)).not.toThrowError();
+  });
+
   function callMethodWithCurrentElement(currentElement: Element): boolean {
     const index = 0;
     const elements = [
@@ -164,4 +174,180 @@ describe('ElementsPredicateService\'s getFirstHiddenElementFromRight method', ()
 
     return result;
   }
+});
+
+describe('ElementsPredicateService\'s getLastHiddenElementFromLeft method', () => {
+
+    it('with null currentElement should throw an exception', () => {
+      // Arrange
+      const currentElement = null;
+      const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+      // Act
+
+      // Assert
+      expect(() => service.getLastHiddenElementFromLeft(currentElement)).toThrowError(exceptionRegex);
+    });
+
+    it('with negative index should throw an exception', () => {
+      // Arrange
+      const elements = [
+        ElementUtilities.createHiddenElement()
+      ];
+      const index = -1;
+      const exceptionRegex = new RegExp(ExceptionConstants.INDEX_OUT_OF_RANGE);
+
+      // Act
+
+      // Assert
+      expect(() => callMethodWithIndexAndElements(index, elements)).toThrowError(exceptionRegex);
+    });
+
+    it('with out of range index should throw an exception', () => {
+      // Arrange
+      const elements = [
+        ElementUtilities.createHiddenElement()
+      ];
+      const index = 2;
+      const exceptionRegex = new RegExp(ExceptionConstants.INDEX_OUT_OF_RANGE);
+
+      // Act
+
+      // Assert
+      expect(() => callMethodWithIndexAndElements(index, elements)).toThrowError(exceptionRegex);
+    });
+
+    it('with null elements should throw an exception', () => {
+      // Arrange
+      const elements = null;
+      const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+      // Act
+
+      // Assert
+      expect(() => callMethodWithElements(elements)).toThrowError(exceptionRegex);
+    });
+
+    it('with empty elements collection should throw an exception', () => {
+      // Arrange
+      const elements = [];
+      const exceptionRegex = new RegExp(ExceptionConstants.EMPTY_COLLECTION);
+
+      // Act
+
+      // Assert
+      expect(() => callMethodWithElements(elements)).toThrowError(exceptionRegex);
+    });
+
+    it('with hidden currentElement which is the last element in the collection should return false', () => {
+      // Arrange
+      const currentElement = ElementUtilities.createHiddenElement();
+      const elements = [
+        document.createElement('div'),
+        currentElement
+      ];
+
+      // Act
+      const result = service.getLastHiddenElementFromLeft(currentElement, 0, elements);
+
+      // Assert
+      expect(result).toBeFalsy();
+    });
+
+    it('with current element hidden and next element hidden should return false', () => {
+      // Arrange
+      const currentElement = ElementUtilities.createHiddenElement();
+      const elements = [
+        currentElement,
+        ElementUtilities.createHiddenElement()
+      ];
+
+      // Act
+      const result = service.getLastHiddenElementFromLeft(currentElement, 0, elements);
+
+      // Assert
+      expect(result).toBeFalsy();
+    });
+
+    it('with current and next elements shown should return false', () => {
+      // Arrange
+      const currentElement = document.createElement('div');
+      const elements = [
+        currentElement,
+        document.createElement('div')
+      ];
+
+      // Act
+      const result = service.getLastHiddenElementFromLeft(currentElement, 0, elements);
+
+      // Assert
+      expect(result).toBeFalsy();
+    });
+
+    it('with current element hidden and next element shown should return true', () => {
+      // Arrange
+      const currentElement = ElementUtilities.createHiddenElement();
+      const elements = [
+        currentElement,
+        document.createElement('div')
+      ];
+
+      // Act
+      const result = service.getLastHiddenElementFromLeft(currentElement, 0, elements);
+
+      // Assert
+      expect(result).toBeTruthy();
+    });
+
+    it('with single shown element in the collection should return false', () => {
+      // Arrange
+      const currentElement = document.createElement('div');
+      const elements = [
+        currentElement
+      ];
+
+      // Act
+      const result = service.getLastHiddenElementFromLeft(currentElement, 0, elements);
+
+      // Assert
+      expect(result).toBeFalsy();
+    });
+
+    it('with only hidden elements in the collection should return false', () => {
+      // Arrange
+      const currentElement = ElementUtilities.createHiddenElement();
+      const elements = [
+        currentElement
+      ];
+
+      // Act
+      const result = service.getLastHiddenElementFromLeft(currentElement, 0, elements);
+
+      // Assert
+      expect(result).toBeFalsy();
+    });
+
+    it('called in a different function should keep this binded to the current class and not throw an exception', () => {
+      // Arrange
+      const firstElement = document.createElement('div');
+
+      // Act
+
+      // Assert
+      expect(() => [firstElement].find(service.getLastHiddenElementFromLeft)).not.toThrowError();
+    });
+
+    function callMethodWithElements(elements: Element[]): boolean {
+      const index = 0;
+      const result = callMethodWithIndexAndElements(index, elements);
+
+      return result;
+    }
+
+    function callMethodWithIndexAndElements(index: number, elements: Element[]): boolean {
+      const currentElement = ElementUtilities.createHiddenElement();
+      const result = service.getLastHiddenElementFromLeft(currentElement, index, elements);
+
+      return result;
+    }
 });
