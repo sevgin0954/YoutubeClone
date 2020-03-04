@@ -7,4 +7,5 @@ export class ExceptionConstants {
   public static readonly NEGATIVE_NUMBER = 'Number cannot be negative.';
   public static readonly NOT_FOUND = 'Element cannot be found.';
   public static readonly NULL_OR_UNDEFINED = 'Null or Undefinied exception.';
+  public static readonly NOT_SUPPORTED = 'The operation is not supported.';
 }

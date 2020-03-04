@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import * as moment from 'moment';
+import { MainConstants } from '../shared/Constants/main-constants';
+import { DataValidator } from '../shared/Validation/data-validator';
+import { ExceptionConstants } from '../shared/Constants/exception-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +11,15 @@ import * as moment from 'moment';
 export class FormatterService {
 
   getFormattedNumberString(number: number): string {
-    if (number === undefined) {
-      return 'hidden';
+    if (number === undefined || number === null) {
+      return MainConstants.HIDDEN;
     }
+    DataValidator.minNumber(number, 0, 'number');
 
     const thousandsMinLength = 4;
     const milionsMinLength = 7;
     const bilionMinLength = 10;
+    const notSupportedMinLength = 13;
 
     const numberAsString = number.toString();
     const numberLength = numberAsString.length;
@@ -24,6 +29,9 @@ export class FormatterService {
 
     let integerPartLength = -1;
 
+    if (numberLength >= notSupportedMinLength) {
+      throw Error(ExceptionConstants.NOT_SUPPORTED);
+    }
     if (numberLength >= bilionMinLength) {
       numberName = 'B';
       integerPartLength = numberLength - bilionMinLength + 1;
