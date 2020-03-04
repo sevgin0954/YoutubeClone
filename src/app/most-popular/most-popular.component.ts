@@ -6,10 +6,10 @@ import { WindowService } from '../services-singleton/window.service';
 import { FormatterService } from '../services-singleton/formatter.service';
 import { Subscription } from 'rxjs';
 import { VideoThumbnailSize } from '../shared/enums/video-thumbnail-size';
-import { MainConstants } from '../shared/Constants/main-constants';
 
-const REGION_CODE: string = 'BG';
 const MAX_RESULTS_PER_PAGE = 25;
+const REGION_CODE: string = 'BG';
+const VIDEO_TITLE_DISPLAYED_ROWS = 2;
 
 @Component({
   selector: 'app-most-popular',
@@ -23,7 +23,7 @@ export class MostPopularComponent implements OnInit, OnDestroy {
   isMoreVideos: boolean = true;
   videos: Video[];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
-  videoTitleMaxLength: number = MainConstants.TITLE_MAX_LENGTH;
+  videoTitleMaxDisplayedRows: number = VIDEO_TITLE_DISPLAYED_ROWS;
   private nextPageToken: string;
   private videosSubscription: Subscription;
 

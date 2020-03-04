@@ -7,15 +7,6 @@ import * as moment from 'moment';
 })
 export class FormatterService {
 
-  getConcisedString(str: string, maxLength: number): string {
-    if (str.length <= maxLength) {
-      return str;
-    }
-
-    const conciseDescription = str.slice(0, maxLength) + ' ...';
-      return conciseDescription;
-  }
-
   getFormattedNumberString(number: number): string {
     if (number === undefined) {
       return 'hidden';

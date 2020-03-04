@@ -8,7 +8,7 @@ import { Component, Input, ViewChild, ElementRef, AfterViewChecked, ChangeDetect
 })
 export class TextRevealComponent implements AfterViewChecked {
 
-  @Input() shouldShowButtons: boolean;
+  @Input() shouldShowButtons: boolean = false;
   @Input() text: string;
   @Input() maxDisplayedRows: number;
   @ViewChild('textElement', { static: false }) textElement: ElementRef;

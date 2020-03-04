@@ -2,7 +2,10 @@
   <app-video-thumbnail [video]="video" [size]="videoSize"></app-video-thumbnail>
 
   <div>
-    <app-video-info [video]="video" [titleMaxLength]="videoTitleMaxLength"></app-video-info>
+    <app-video-info
+      [video]="video"
+      [titleMaxDisplayedRows]="videoTitleMaxDisplayedRows">
+    </app-video-info>
 
     <div class="info-small">
       <app-text-reveal

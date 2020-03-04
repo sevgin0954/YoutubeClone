@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Video } from 'src/app/models/video/video';
+import { FormatterService } from 'src/app/services-singleton/formatter.service';
 
 @Component({
   selector: 'app-video-info',
@@ -10,7 +10,7 @@ import { Video } from 'src/app/models/video/video';
 export class VideoInfoComponent {
 
   @Input() video: Video;
-  @Input() titleMaxLength: number;
+  @Input() titleMaxDisplayedRows: number;
 
   constructor(
     public formatterService: FormatterService

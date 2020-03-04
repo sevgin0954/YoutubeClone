@@ -3,12 +3,10 @@ import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Channel } from '../models/channel/channel';
 import { ChannelService } from '../services-singleton/channel.service';
 import { WindowService } from '../services-singleton/window.service';
-import { FormatterService } from '../services-singleton/formatter.service';
 import { Subscription } from 'rxjs';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { ChannelResourceProperties } from '../shared/enums/resource-properties/channel-resource-properties';
 
-const MAX_DESCRIPTION_LENGTH: number = 100;
 const MAX_RESULTS_PER_PAGE = 30;
 
 @Component({
@@ -26,7 +24,6 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
   private channelsSubscribtion: Subscription;
 
   constructor(
-    private formatterService: FormatterService,
     private channelService: ChannelService,
     private windowService: WindowService
   ) {
@@ -69,12 +66,6 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
       .getSubscriptions(pageArgs, resources)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
-        data.items.forEach(currentChannel => {
-          const description = currentChannel.snippet.description;
-          const conciseDescription = this.formatterService
-            .getConcisedString(description, MAX_DESCRIPTION_LENGTH);
-          currentChannel.snippet.description = conciseDescription;
-        });
         this.channels.push(...data.items);
 
         this.isCurrentlyLoading = false;

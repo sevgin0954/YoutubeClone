@@ -1,6 +1,9 @@
 <div>
   <a class="video-title" routerLink="/video/{{ video.id }}">
-    {{ formatterService.getConcisedString(video.snippet.title, titleMaxLength) }}
+    <app-text-reveal
+      [text]="video.snippet.title"
+      [maxDisplayedRows]="titleMaxDisplayedRows">
+    </app-text-reveal>
   </a>
 </div>
 

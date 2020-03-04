@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { VideoInfoComponent } from './video-info/video-info.component';
 import { VideoThumbnailComponent } from './video-thumbnail/video-thumbnail.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -14,7 +15,8 @@ import { VideoThumbnailComponent } from './video-thumbnail/video-thumbnail.compo
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   exports: [
     VideoInfoComponent,
