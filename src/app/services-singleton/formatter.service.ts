@@ -56,15 +56,18 @@ export class FormatterService {
   }
 
   getConcisedNumberString(number: string, integerPartLength: number): string {
+    this.validateGetConcisedNumberStringArguments(number, integerPartLength);
+
     let numberResult: string;
 
     const integerEndIndex = integerPartLength;
     const integerPart = number.substring(0, integerEndIndex);
 
-    const fractionStartIndex = integerPartLength;
-    const fractionPart = number.substring(fractionStartIndex, fractionStartIndex + 1);
+    const fractionStartIndex = integerEndIndex;
+    const fractionEndIndex = fractionStartIndex + 1;
+    const fractionPart = number.substring(fractionStartIndex, fractionEndIndex);
 
-    if (fractionPart === '0') {
+    if (fractionPart === '0' || fractionPart === '') {
       numberResult = integerPart;
     }
     else {
@@ -74,8 +77,20 @@ export class FormatterService {
     return numberResult;
   }
 
+  private validateGetConcisedNumberStringArguments(number: string, integerPartLength: number): void {
+    const numberArgumentName = 'number';
+    DataValidator.nullOrUndefinied(number, numberArgumentName);
+    DataValidator.notANumber(number, numberArgumentName);
+
+    const integerPartLengthArgument = 'integerPartLength';
+    DataValidator.nullOrUndefinied(integerPartLength, integerPartLengthArgument);
+    const maxNumber = number.length;
+    DataValidator.minNumber(integerPartLength, 0, integerPartLengthArgument);
+    DataValidator.maxNumber(integerPartLength, maxNumber, integerPartLengthArgument);
+  }
+
   getDateFromNowString(date: string): string {
-    let result = moment(date).fromNow();
+    const result = moment(date).fromNow();
 
     return result;
   }

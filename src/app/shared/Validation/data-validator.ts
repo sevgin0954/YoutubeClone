@@ -18,10 +18,25 @@ export class DataValidator {
     }
   }
 
-  public static minNumber(number: number, minValue: number, argumentName: string): void {
-    if (number < minValue) {
+  public static maxNumber(number: number, maxNumber: number, argumentName: string): void {
+    if (number > maxNumber) {
+      const exceptionMessage =
+        this.appendArgumentName(ExceptionConstants.EXCEEDED_MAX_VALUE, argumentName);
+      throw Error(exceptionMessage);
+    }
+  }
+
+  public static minNumber(number: number, minNumber: number, argumentName: string): void {
+    if (number < minNumber) {
       const errorMessage = this.appendArgumentName(ExceptionConstants.NEGATIVE_NUMBER, argumentName);
       throw Error(errorMessage);
+    }
+  }
+
+  public static notANumber(numberStr: string, argumentName: string): void {
+    if (Number.isNaN(+numberStr)) {
+      const exceptionMessage = this.appendArgumentName(ExceptionConstants.NOT_A_NUMBER, argumentName);
+      throw Error(exceptionMessage);
     }
   }
 

@@ -151,3 +151,109 @@ describe('FormatterService\'s getFormattedNumberString method', () => {
   });
 
 });
+
+describe('FormatterService\'s getConcisedNumberString method', () => {
+
+  it('with null number should throw an exception', () => {
+    // Arrange
+    const number = null;
+    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithNumber(number)).toThrowError(exceptionRegex);
+  });
+
+  it('with undefined integerPartLength should throw an exception', () => {
+    // Arrange
+    const number = undefined;
+    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithNumber(number)).toThrowError(exceptionRegex);
+  });
+
+  it('with negative integerPartLength should throw an exception', () => {
+    // Arrange
+    const number = '1';
+    const integralPart = -1;
+    const exceptionRegex = new RegExp(ExceptionConstants.NEGATIVE_NUMBER);
+
+    // Act
+
+    // Assert
+    expect(() => service.getConcisedNumberString(number, integralPart)).toThrowError(exceptionRegex);
+  });
+
+  it('with integerPartLength bigger than the number should throw an exception', () => {
+    // Arrange
+    const number = '1';
+    const integralPart = 2;
+    const exceptionRegex = new RegExp(ExceptionConstants.EXCEEDED_MAX_VALUE);
+
+    // Act
+
+    // Assert
+    expect(() => service.getConcisedNumberString(number, integralPart)).toThrowError(exceptionRegex);
+  });
+
+  [
+    ['1111', 1, '1,1'],
+    ['1111', 2, '11,1'],
+    ['1111', 3, '111,1'],
+  ].forEach(data => {
+    it('with number and integral part should take the integral part, append comma and append only the next number after', () => {
+      // Arrange
+      const number = data[0];
+      const integerPartLength = data[1];
+      const expectedResult = data[2];
+
+      // Act
+      const actualResult = service.getConcisedNumberString(number, integerPartLength);
+
+      // Assert
+      expect(actualResult).toEqual(expectedResult);
+    });
+  });
+
+  [
+    ['1', 1, '1'],
+    ['10', 2, '10'],
+  ].forEach(data => {
+    it('with equal number and integral part should return the same number', () => {
+      // Arrange
+      const number = data[0];
+      const integerPartLength = data[1];
+      const expectedResult = data[2];
+
+      // Act
+      const actualResult = service.getConcisedNumberString(number, integerPartLength);
+
+      // Assert
+      expect(actualResult).toEqual(expectedResult);
+    });
+  });
+
+  it('with equal number and integral part should return the same number', () => {
+    // Arrange
+    const number = '101';
+    const integerPartLength = 1;
+    const expectedResult = '1';
+
+    // Act
+    const actualResult = service.getConcisedNumberString(number, integerPartLength);
+
+    // Assert
+    expect(actualResult).toEqual(expectedResult);
+  });
+
+  function callMethodWithNumber(number: string): string {
+    const integerPartLength = 1;
+    const result = service.getConcisedNumberString(number, integerPartLength);
+
+    return result;
+  }
+});
