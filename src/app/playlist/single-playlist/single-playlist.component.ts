@@ -62,6 +62,21 @@ export class SinglePlaylistComponent implements OnInit {
         return this.videoService.getByIds(...videoIds);
       })
     ).subscribe(videos => {
+      const currentPageVideosCount = videos.length;
+
+      // TODO: Move to a service
+      let currentPageExpectedVideosCount;
+      const notLoadedVideosCount = pageArgs.maxResults - videos.length;
+      if (pageArgs.maxResults > notLoadedVideosCount) {
+        currentPageExpectedVideosCount = notLoadedVideosCount;
+      }
+      else {
+        currentPageExpectedVideosCount = currentPageVideosCount - pageArgs.maxResults;
+      }
+
+      const missingVideosCount = currentPageExpectedVideosCount - currentPageVideosCount;
+      this.totalResultsCount -= missingVideosCount;
+
       this.videos.push(...videos);
 
       onLoadedMoreCallback();

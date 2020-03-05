@@ -5,8 +5,8 @@ import { Url } from '../shared/url';
 import { HttpClient } from '@angular/common/http';
 import { pluck, map } from 'rxjs/operators';
 import { Subscription } from '../models/subscribption/subscription';
-import { HttpConfigService } from './http-config.service';
 import { MainConstants } from '../shared/Constants/main-constants';
+import { Config } from 'protractor';
 
 const BASE_URL = MainConstants.BASE_URL + '/subscriptions';
 
@@ -16,8 +16,7 @@ const BASE_URL = MainConstants.BASE_URL + '/subscriptions';
 export class SubscriptionsService {
 
   constructor(
-    private http: HttpClient,
-    private httpConfigService: HttpConfigService
+    private http: HttpClient
   ) { }
 
   getById(channelId: string): Observable<Subscription> {
@@ -62,7 +61,7 @@ export class SubscriptionsService {
       id: channelId
     };
     const url = new Url(BASE_URL, [], queryParams);
-    const data$ = this.httpConfigService.getConfigDeleteResponse(url.toString())
+    const data$ = this.http.delete<Config>(url.toString(), { observe: 'response' })
       .pipe(
         map(data => data.status)
       );

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { HttpConfigService } from 'src/app/services-singleton/http-config.service';
 import { Observable } from 'rxjs';
 import { RatingType } from 'src/app/shared/enums/rating-type';
 import { Url } from 'src/app/shared/url';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { HttpClient } from '@angular/common/http';
 import { pluck, map } from 'rxjs/operators';
+import { Config } from 'protractor';
 
 const BASE_URL = MainConstants.BASE_URL + '/videos'
 
@@ -14,8 +14,7 @@ const BASE_URL = MainConstants.BASE_URL + '/videos'
 export class VideoRatingService {
 
 constructor(
-  private http: HttpClient,
-  private httpConfigService: HttpConfigService
+  private http: HttpClient
 ) { }
 
   getRating(id: string): Observable<RatingType> {
@@ -43,7 +42,7 @@ constructor(
       rating: RatingType[rating]
     };
     const url = new Url(BASE_URL, ['rate'], queryParams);
-    const data$ = this.httpConfigService.getConfigPostResponse(url.toString(), {}).pipe(
+    const data$ = this.http.post<Config>(url.toString(), {}, { observe: 'response' }).pipe(
       map(data => data.status)
     );
 

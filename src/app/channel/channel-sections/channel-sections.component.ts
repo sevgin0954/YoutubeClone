@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 
 import { ChannelSectionService } from 'src/app/channel/services/channel-section.service';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
