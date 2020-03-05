@@ -6,6 +6,11 @@ import { PlaylistItem } from '../models/playlist/playlist-item';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { Url } from '../shared/url';
 import { ServiceModel } from '../models/service-models/service-model';
+import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
+import { PageArguments } from '../shared/arguments/page-arguments';
+import { PlaylistItemResourceProperties } from '../shared/enums/resource-properties/playlist-item-resource-properties';
+import { EnumUtility } from '../shared/utilities/enum-utility';
+import { DataValidator } from '../shared/Validation/data-validator';
 
 const PATH = 'playlistItems';
 
@@ -18,23 +23,33 @@ export class PlaylistItemsService {
     private http: HttpClient
   ) { }
 
-  getById(playlistId: string, maxResults: number, pageToken: string):
+  getById(playlistId: string, pageArgs: PageArguments, resources: PlaylistItemResourceProperties[]):
     Observable<ServiceModel<PlaylistItem[]>> {
+
+    this.validateArguments(playlistId, pageArgs, resources);
+
+    const part = EnumUtility.join(resources, ',', PlaylistItemResourceProperties);
     const queryParams = {
-      part: 'snippet,contentDetails',
+      part: part,
       playlistId: playlistId,
-      maxResults: maxResults
+      maxResults: pageArgs.maxResults
     };
-    this.addPageToken(queryParams, pageToken);
+    QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
     const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<PlaylistItem[]>>(url.toString());
 
     return data$;
   }
 
-  private addPageToken(queryParams: any, pageToken: string): void {
-    if (pageToken) {
-      queryParams.pageToken = pageToken;
-    }
+  private validateArguments(
+    playlistId: string,
+    pageArgs: PageArguments,
+    resources: PlaylistItemResourceProperties[]
+  ): void {
+    DataValidator.emptyString(playlistId, 'playlistId');
+    DataValidator.nullOrUndefinied(playlistId, 'playlistId');
+
+    DataValidator.nullOrUndefinied(pageArgs, 'pageArgs');
+    DataValidator.validateCollection(resources, 'resources');
   }
 }

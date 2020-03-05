@@ -23,7 +23,7 @@ export class CommentThreadsService {
   getByVideoId(videoId: string, order: CommentThreadOrder, pageArgs: PageArguments):
     Observable<ServiceModel<CommentThread[]>> {
 
-    this.validateArguments(videoId, order, pageArgs);
+    this.validateArguments(videoId, order);
 
     const queryParams = {
       part: 'snippet',
@@ -39,10 +39,9 @@ export class CommentThreadsService {
     return data$;
   }
 
-  private validateArguments(videoId: string, order: CommentThreadOrder, pageArgs: PageArguments): void {
+  private validateArguments(videoId: string, order: CommentThreadOrder): void {
     this.validateVideoId(videoId);
     DataValidator.nullOrUndefinied(order, 'order');
-    DataValidator.pageArguments(pageArgs, 'pageArgs');
   }
 
   private validateVideoId(videoId: string): void {

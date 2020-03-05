@@ -8,6 +8,8 @@ import { Video } from 'src/app/models/video/video';
 import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { PlaylistItemResourceProperties } from 'src/app/shared/enums/resource-properties/playlist-item-resource-properties';
 
 @Component({
   selector: 'app-single-playlist',
@@ -46,7 +48,12 @@ export class SinglePlaylistComponent implements OnInit {
 
     const playlistId = this.channelSection.contentDetails.playlists[0];
     const maxResults = MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
-    this.playlistService.getById(playlistId, maxResults, this.nextPageToken).pipe(
+    const pageArgs = new PageArguments(maxResults, this.nextPageToken);
+    const resources = [
+      PlaylistItemResourceProperties.snippet,
+      PlaylistItemResourceProperties.contentDetails
+    ];
+    this.playlistService.getById(playlistId, pageArgs, resources).pipe(
       concatMap(data => {
         const videoIds = data.items.map(item => item.contentDetails.videoId);
         this.nextPageToken = data.nextPageToken;

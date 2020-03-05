@@ -26,7 +26,7 @@ export class ChannelService {
     resourceProprties: ChannelResourceProperties[]
   ): Observable<ServiceModel<Channel[]>> {
 
-    this.validateSubscriptionArguments(pageArgs, resourceProprties);
+    this.validateResourceProperties(resourceProprties);
 
     const part = EnumUtility.join(resourceProprties, ',', ChannelResourceProperties);
     const queryParams: any = {
@@ -42,20 +42,12 @@ export class ChannelService {
     return data$;
   }
 
-  private validateSubscriptionArguments(
-    pageArgs: PageArguments,
-    resourceProprties: ChannelResourceProperties[]
-  ): void {
-    DataValidator.pageArguments(pageArgs, 'pageArgs');
-    this.validateResourceProperties(resourceProprties);
-  }
-
   getByIds(
     ids: string[],
     pageArgs: PageArguments,
     resourceProprties: ChannelResourceProperties[]
   ): Observable<ServiceModel<Channel[]>> {
-    this.validateGetByIdArguments(ids, pageArgs, resourceProprties);
+    this.validateGetByIdArguments(ids, resourceProprties);
 
     const part = EnumUtility.join(resourceProprties, ',', ChannelResourceProperties);
     const queryParams: any = {
@@ -73,11 +65,9 @@ export class ChannelService {
 
   private validateGetByIdArguments(
     ids: string[],
-    pageArgs: PageArguments,
     resourceProprties: ChannelResourceProperties[]
   ): void {
     this.validateIdsArgument(ids);
-    DataValidator.pageArguments(pageArgs, 'pageArgs');
     this.validateResourceProperties(resourceProprties);
   }
 

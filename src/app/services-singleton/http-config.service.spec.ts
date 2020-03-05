@@ -1,12 +1,18 @@
-import { TestBed } from '@angular/core/testing';
-
 import { HttpConfigService } from './http-config.service';
 
+let httpClient: any;
+let service: any;
+
+beforeEach(() => {
+  httpClient = jasmine.createSpyObj('HttpClient', ['post', 'delete']);
+});
+beforeEach(() => {
+  service = new HttpConfigService(httpClient);
+});
+
 describe('HttpConfigService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: HttpConfigService = TestBed.get(HttpConfigService);
     expect(service).toBeTruthy();
   });
 });

@@ -1,6 +1,4 @@
 import { ExceptionConstants } from '../Constants/exception-constants';
-import { PageArguments } from '../arguments/page-arguments';
-import { StringUtilities } from '../utilities/string-utilities';
 
 export class DataValidator {
 
@@ -45,14 +43,6 @@ export class DataValidator {
       const errorMessage = this.appendArgumentName(ExceptionConstants.NULL_OR_UNDEFINED, argumentName);
       throw Error(errorMessage);
     }
-  }
-
-  public static pageArguments(args: PageArguments, argumentName: string): void {
-    DataValidator.nullOrUndefinied(args, argumentName);
-    DataValidator.emptyString(args.pageToken, argumentName);
-
-    const maxResultsArgumentName = StringUtilities.nameof<PageArguments>('maxResults');
-    DataValidator.minNumber(args.maxResults, 0, maxResultsArgumentName);
   }
 
   public static validateCollection(collection: any[], argumentName: string): void {
