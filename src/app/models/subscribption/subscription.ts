@@ -1,3 +1,6 @@
+import { SubscriptionSnippet } from './subscription-snippet';
+
 export interface Subscription {
-  id: string
+  id: string,
+  snippet: SubscriptionSnippet
 }

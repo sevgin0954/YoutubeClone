@@ -9,7 +9,6 @@ import { ServiceModel } from '../models/service-models/service-model';
 import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { PlaylistItemResourceProperties } from '../shared/enums/resource-properties/playlist-item-resource-properties';
-import { EnumUtility } from '../shared/utilities/enum-utility';
 import { DataValidator } from '../shared/Validation/data-validator';
 
 const PATH = 'playlistItems';
@@ -28,12 +27,11 @@ export class PlaylistItemsService {
 
     this.validateArguments(playlistId, pageArgs, resources);
 
-    const part = EnumUtility.join(resources, ',', PlaylistItemResourceProperties);
     const queryParams = {
-      part: part,
       playlistId: playlistId,
       maxResults: pageArgs.maxResults
     };
+    QueryParamsUtility.addResources(queryParams, resources, PlaylistItemResourceProperties);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
     const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<PlaylistItem[]>>(url.toString());

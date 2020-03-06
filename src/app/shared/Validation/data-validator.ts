@@ -58,6 +58,11 @@ export class DataValidator {
     }
   }
 
+  public static validateString(str: string, argumentName: string): void {
+    this.nullOrUndefinied(str, argumentName);
+    this.emptyString(str, argumentName);
+  }
+
   private static appendArgumentName(errorMessage: string, argumentName: string): string {
     return errorMessage + ` Argument name: ${argumentName}`;
   }

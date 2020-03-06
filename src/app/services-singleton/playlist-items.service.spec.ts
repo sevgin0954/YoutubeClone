@@ -5,7 +5,7 @@ import { PlaylistItem } from '../models/playlist/playlist-item';
 import { Observable, of } from 'rxjs';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { PlaylistItemResourceProperties } from '../shared/enums/resource-properties/playlist-item-resource-properties';
-import { HttpClientUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
+import { HttpClientStubUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
 import { MainConstants } from '../shared/Constants/main-constants';
 
 let httpClient: any;
@@ -91,7 +91,7 @@ describe('PlaylistItemsService\s getById method', () => {
     callMethodWithPlaylistId(playlistId);
 
     // Assert
-    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
     expect(urlArgument).toContain(playlistIdQuery);
   });
 
@@ -105,7 +105,7 @@ describe('PlaylistItemsService\s getById method', () => {
     callMethodWithPageArgs(pageArgs);
 
     // Assert
-    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
     expect(urlArgument).toContain(maxResultsQuery);
   });
 
@@ -118,7 +118,7 @@ describe('PlaylistItemsService\s getById method', () => {
     callMethodWithPageArgs(pageArgs);
 
     // Assert
-    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
     expect(urlArgument).toContain(maxResultsQueryKey);
   });
 
@@ -132,7 +132,7 @@ describe('PlaylistItemsService\s getById method', () => {
     callMethodWithPageArgs(pageArgs);
 
     // Assert
-    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
     expect(urlArgument).toContain(pageTokenQuery);
   });
 
@@ -150,7 +150,7 @@ describe('PlaylistItemsService\s getById method', () => {
     callMethodWithResources(resources);
 
     // Assert
-    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
     expect(urlArgument).toContain(partQuery);
   });
 
@@ -162,7 +162,7 @@ describe('PlaylistItemsService\s getById method', () => {
     callMethodWithDefaultArgument();
 
     // Assert
-    const urlArgument = HttpClientUtilities.getHttpClientUrlArgument(httpClient.get);
+    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
     expect(urlArgument).toContain(basePath);
   });
 

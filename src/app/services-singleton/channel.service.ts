@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { ChannelResourceProperties } from '../shared/enums/resource-properties/channel-resource-properties';
-import { EnumUtility } from '../shared/utilities/enum-utility';
 import { DataValidator } from '../shared/Validation/data-validator';
 import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
 
@@ -23,17 +22,16 @@ export class ChannelService {
 
   getSubscriptions(
     pageArgs: PageArguments,
-    resourceProprties: ChannelResourceProperties[]
+    resources: ChannelResourceProperties[]
   ): Observable<ServiceModel<Channel[]>> {
 
-    this.validateResourceProperties(resourceProprties);
+    this.validateResourceProperties(resources);
 
-    const part = EnumUtility.join(resourceProprties, ',', ChannelResourceProperties);
     const queryParams: any = {
-      part: part,
       mine: 'true',
       maxResults: pageArgs.maxResults
     }
+    QueryParamsUtility.addResources(queryParams, resources, ChannelResourceProperties);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
     const url = new Url(MainConstants.BASE_URL, ['subscriptions'], queryParams);
@@ -45,16 +43,15 @@ export class ChannelService {
   getByIds(
     ids: string[],
     pageArgs: PageArguments,
-    resourceProprties: ChannelResourceProperties[]
+    resources: ChannelResourceProperties[]
   ): Observable<ServiceModel<Channel[]>> {
-    this.validateGetByIdArguments(ids, resourceProprties);
+    this.validateGetByIdArguments(ids, resources);
 
-    const part = EnumUtility.join(resourceProprties, ',', ChannelResourceProperties);
     const queryParams: any = {
-      part: part,
       id: ids.join(','),
       maxResults: pageArgs.maxResults.toString()
     };
+    QueryParamsUtility.addResources(queryParams, resources, ChannelResourceProperties);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
     const url = new Url(MainConstants.BASE_URL, ['channels'], queryParams);

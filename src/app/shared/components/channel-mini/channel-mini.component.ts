@@ -5,6 +5,7 @@ import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Subscription as VideoSubscribtion } from 'src/app/models/subscribption/subscription';
 import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.service';
 import { Subscription as RxjsSubscription } from 'rxjs';
+import { SubscriptionResourceProperties } from '../../enums/resource-properties/subscription-resource-properties';
 
 @Component({
   selector: 'app-channel-mini',
@@ -24,7 +25,11 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
   ) { }
 
   ngOnChanges(): void {
-    this.rxjsSubscription = this.subscriptionsService.getById(this.channel.id)
+    const resources = [
+      SubscriptionResourceProperties.snippet
+    ];
+    this.rxjsSubscription = this.subscriptionsService
+      .getById(this.channel.id, resources)
       .subscribe(videoSubscribtion => {
         if (videoSubscribtion) {
           this.isSubscribed = true;
@@ -37,7 +42,10 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
   }
 
   onSubscribe(): void {
-    this.subscriptionsService.subscribe(this.channel.id).subscribe(data => {
+    const resources = [
+      SubscriptionResourceProperties.snippet
+    ];
+    this.subscriptionsService.subscribe(this.channel.id, resources).subscribe(data => {
       this.isSubscribed = true;
       this.videoSubscription = data;
     });
