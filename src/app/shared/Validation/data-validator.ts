@@ -2,6 +2,16 @@ import { ExceptionConstants } from '../Constants/exception-constants';
 
 export class DataValidator {
 
+  public static anyNotNullOrUndefined(obj: object, argumentName: string): void {
+    const values = Object.values(obj);
+    const firstNotNullOrUndefinedValue = values.find(v => v !== null && v !== undefined);
+    if (firstNotNullOrUndefinedValue === null || firstNotNullOrUndefinedValue === undefined) {
+      const exceptionMessage =
+        this.appendArgumentName(ExceptionConstants.INVALID_ARGUMENT, argumentName);
+      throw Error(exceptionMessage);
+    }
+  }
+
   public static emptyCollection<T>(collection: T[], argumentName: string): void {
     if (collection.length === 0) {
       const errorMessage = this.appendArgumentName(ExceptionConstants.EMPTY_COLLECTION, argumentName);
