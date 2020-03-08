@@ -10,6 +10,7 @@ import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistItemResourceProperties } from 'src/app/shared/enums/resource-properties/playlist-item-resource-properties';
+import { VideoResourceProperties } from 'src/app/shared/enums/resource-properties/video-resource-properties';
 
 @Component({
   selector: 'app-single-playlist',
@@ -59,7 +60,12 @@ export class SinglePlaylistComponent implements OnInit {
         this.nextPageToken = data.nextPageToken;
         this.totalResultsCount = data.pageInfo.totalResults;
 
-        return this.videoService.getByIds(...videoIds);
+        const resources = [
+          VideoResourceProperties.contentDetails,
+          VideoResourceProperties.snippet,
+          VideoResourceProperties.statistics
+        ];
+        return this.videoService.getByIds(videoIds, resources);
       })
     ).subscribe(videos => {
       const currentPageVideosCount = videos.length;

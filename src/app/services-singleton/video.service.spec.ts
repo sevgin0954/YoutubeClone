@@ -1,12 +1,227 @@
-import { TestBed } from '@angular/core/testing';
+import { VideoService } from "./video.service";
+import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { Observable } from 'rxjs';
+import { ServiceModel } from '../models/service-models/service-model';
+import { Video } from '../models/video/video';
+import { PageArguments } from '../shared/arguments/page-arguments';
+import { VideoResourceProperties } from '../shared/enums/resource-properties/video-resource-properties';
+import { RegionCode } from '../shared/enums/region-code';
+import { HttpClientStubUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
+import { StringUtilities } from '../shared/utilities/string-utilities';
+import { UrlUtilities } from 'src/tests-common/utilities/url-utilities';
+import { MainConstants } from '../shared/Constants/main-constants';
 
-import { VideoService } from './video.service';
+let httpClient: any;
+let service: VideoService;
+
+beforeEach(() => {
+  httpClient = jasmine.createSpyObj('HttpClient', ['get']);
+});
+beforeEach(() => {
+  service = new VideoService(httpClient);
+});
 
 describe('VideoService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: VideoService = TestBed.get(VideoService);
     expect(service).toBeTruthy();
   });
+});
+
+describe('VideoService\s getMostPopular method', () => {
+
+  it('with null region code should throw an exception', () => {
+    // Arrange
+    const regionCode = null;
+    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithRegionCode(regionCode)).toThrowError(exceptionRegex);
+  });
+
+  it('with null pageArgs should throw an exception', () => {
+    // Arrange
+    const pageArgs = null;
+    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithPageArgs(pageArgs)).toThrowError(exceptionRegex);
+  });
+
+  it('with null resources should throw an exception', () => {
+    // Arrange
+    const resources = null;
+    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithResouces(resources)).toThrowError(exceptionRegex);
+  });
+
+  it('with empty resources should throw an exception', () => {
+    // Arrange
+    const resources = [];
+    const exceptionRegex = new RegExp(ExceptionConstants.EMPTY_COLLECTION);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithResouces(resources)).toThrowError(exceptionRegex);
+  });
+
+  it('with resources with null resource in the collection should throw an exception', () => {
+    // Arrange
+    const resources = [
+      VideoResourceProperties.id,
+      null
+    ];
+    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+    // Act
+
+    // Assert
+    expect(() => callMethodWithResouces(resources)).toThrowError(exceptionRegex);
+  });
+
+  it('with regionCode should call httpClient with query params with regionCode', () => {
+    // Arrange
+    const regionCode = RegionCode.BG;
+    const regionCodeQuery = `regionCode=${RegionCode[regionCode]}`;
+
+    // Act
+    callMethodWithRegionCode(regionCode);
+
+    // Assert
+    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    expect(actualUrl).toContain(regionCodeQuery);
+  });
+
+  it('with pageArgs with undefined pageToken should call httpClient without pageToken', () => {
+    // Arrange
+    const pageArgs = new PageArguments(1, undefined);
+    const pageTokenQueryKey = 'pageToken';
+
+    // Act
+    callMethodWithPageArgs(pageArgs);
+
+    // Assert
+    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    expect(actualUrl).not.toContain(pageTokenQueryKey);
+  });
+
+  it('should call httpClient with query params with chart=mostPopular', () => {
+    // Arrange
+    const chartQuery = 'chart=mostPopular';
+
+    // Act
+    callMethodWithDefaultArguments();
+
+    // Assert
+    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    expect(actualUrl).toContain(chartQuery);
+  });
+
+  it('with pageArgs with maxResult should call httpClient with query params with maxResults', () => {
+    // Arrange
+    const pageArgs = new PageArguments(1, undefined);
+    const maxResultsQuery = `maxResults=${pageArgs.maxResults}`;
+
+    // Act
+    callMethodWithPageArgs(pageArgs);
+
+    // Assert
+    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    expect(actualUrl).toContain(maxResultsQuery);
+  });
+
+  it('with resources should call httpClient with query params with resources joined by a comma', () => {
+    // Arrange
+    const resources = [
+      VideoResourceProperties.id,
+      VideoResourceProperties.fileDetails
+    ];
+    const resource1Name = VideoResourceProperties[resources[0]];
+    const resource2Name = VideoResourceProperties[resources[1]];
+    const resourcesQuery = `part=${resource1Name},${resource2Name}`;
+
+    // Act
+    callMethodWithResouces(resources);
+
+    // Assert
+    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    expect(actualUrl).toContain(resourcesQuery);
+  });
+
+  it('with repeating resources should call httpClient with query params with only distinct resources joined by a comma', () => {
+    // Arrange
+    const resource = VideoResourceProperties.id;
+    const resources = [
+      resource,
+      resource
+    ];
+    const resourceName = VideoResourceProperties[resource];
+    const expectedResourcesQuery = `part=${resourceName}`;
+
+    // Act
+    callMethodWithResouces(resources);
+
+    // Assert
+    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualResourceQuery = UrlUtilities.getQueryParam(actualUrl);
+    expect(actualResourceQuery).toEqual(expectedResourcesQuery);
+  });
+
+  it('should call httpClient with correct path', () => {
+    // Arrange
+    const expectedPath = MainConstants.BASE_URL + '/' + 'videos';
+
+    // Act
+    callMethodWithDefaultArguments();
+
+    // Assert
+    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    expect(actualUrl).toContain(expectedPath);
+  });
+
+  function callMethodWithDefaultArguments(): Observable<ServiceModel<Video[]>> {
+    const regionCode = RegionCode.BG;
+    const data$ = callMethodWithRegionCode(regionCode);
+
+    return data$;
+  }
+
+  function callMethodWithPageArgs(pageArgs: PageArguments): Observable<ServiceModel<Video[]>> {
+    const regionCode = RegionCode.BG;
+    const resources = [
+      VideoResourceProperties.id
+    ];
+    const data$ = service.getMostPopular(regionCode, pageArgs, resources);
+
+    return data$;
+  }
+
+  function callMethodWithRegionCode(regionCode: RegionCode): Observable<ServiceModel<Video[]>> {
+    const pageArgs = new PageArguments(1, undefined);
+    const resources = [
+      VideoResourceProperties.id
+    ];
+    const data$ = service.getMostPopular(regionCode, pageArgs, resources);
+
+    return data$;
+  }
+
+  function callMethodWithResouces(
+    resources: VideoResourceProperties[]
+  ): Observable<ServiceModel<Video[]>> {
+    const pageArgs = new PageArguments(1, undefined);
+    const regionCode = RegionCode.BG;
+    const data$ = service.getMostPopular(regionCode, pageArgs, resources);
+
+    return data$;
+  }
 });

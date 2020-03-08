@@ -7,8 +7,13 @@ import { ServiceModel } from '../models/service-models/service-model';
 import { Video } from '../models/video/video';
 import { pluck } from 'rxjs/operators';
 import { MainConstants } from '../shared/Constants/main-constants';
+import { PageArguments } from '../shared/arguments/page-arguments';
+import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
+import { VideoResourceProperties } from '../shared/enums/resource-properties/video-resource-properties';
+import { DataValidator } from '../shared/Validation/data-validator';
+import { RegionCode } from '../shared/enums/region-code';
 
-const BASE_URL = MainConstants.BASE_URL + '/videos'
+const PATH = 'videos';
 
 @Injectable({
   providedIn: 'root'
@@ -19,36 +24,40 @@ export class VideoService {
     private http: HttpClient
   ) { }
 
-  getMostPopular(regionCode: string, maxResults: number, pageToken: string):
+  getMostPopular(regionCode: RegionCode, pageArgs: PageArguments, resources: VideoResourceProperties[]):
     Observable<ServiceModel<Video[]>> {
-    const queryParams = {
-      part: 'snippet,contentDetails,status,statistics,player,liveStreamingDetails,localizations',
-      fields: '*',
-      mine: 'true',
-      chart: 'mostPopular',
-      regionCode: regionCode,
-      maxResults: maxResults.toString()
-    };
-    this.addPageToken(queryParams, pageToken);
+    this.validateGetMostPopularArguments(regionCode, pageArgs, resources);
 
-    const url = new Url(BASE_URL, [], queryParams);
+    const queryParams = {
+      chart: 'mostPopular',
+      regionCode: RegionCode[regionCode],
+      maxResults: pageArgs.maxResults
+    };
+    QueryParamsUtility.addResources(queryParams, resources, VideoResourceProperties);
+    QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
+
+    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<Video[]>>(url.toString());
 
     return data$;
   }
 
-  private addPageToken(queryParams: any, pageToken: string): void {
-    if (pageToken) {
-      queryParams.pageToken = pageToken;
-    }
+  private validateGetMostPopularArguments(
+    regionCode: RegionCode,
+    pageArgs: PageArguments,
+    resources: VideoResourceProperties[]
+  ): void {
+    DataValidator.nullOrUndefinied(regionCode, 'regionCode');
+    DataValidator.nullOrUndefinied(pageArgs, 'pageArgs');
+    DataValidator.validateCollection(resources, 'resources');
   }
 
-  getByIds(...ids: string[]): Observable<Video[]> {
+  getByIds(ids: string[], resources: VideoResourceProperties[]): Observable<Video[]> {
     const queryParams = {
-      part: 'snippet,contentDetails,statistics',
       id: ids.join(',')
     };
-    const url = new Url(BASE_URL, [], queryParams);
+    QueryParamsUtility.addResources(queryParams, resources, VideoResourceProperties);
+    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     const data$ = this.http.get(url.toString())
       .pipe(
         pluck<any, Video[]>('items')

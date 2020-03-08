@@ -6,9 +6,12 @@ import { WindowService } from '../services-singleton/window.service';
 import { FormatterService } from '../services-singleton/formatter.service';
 import { Subscription } from 'rxjs';
 import { VideoThumbnailSize } from '../shared/enums/video-thumbnail-size';
+import { PageArguments } from '../shared/arguments/page-arguments';
+import { VideoResourceProperties } from '../shared/enums/resource-properties/video-resource-properties';
+import { RegionCode } from '../shared/enums/region-code';
 
 const MAX_RESULTS_PER_PAGE = 25;
-const REGION_CODE: string = 'BG';
+const REGION_CODE: RegionCode = RegionCode.BG;
 const VIDEO_TITLE_DISPLAYED_ROWS = 2;
 
 @Component({
@@ -59,8 +62,16 @@ export class MostPopularComponent implements OnInit, OnDestroy {
   loadMoreVideos(): void {
     this.isCurrentlyLoadingVideos = true;
 
+    const pageArgument = new PageArguments(MAX_RESULTS_PER_PAGE, this.nextPageToken);
+    const resources = [
+      VideoResourceProperties.snippet,
+      VideoResourceProperties.contentDetails,
+      VideoResourceProperties.status,
+      VideoResourceProperties.statistics,
+      VideoResourceProperties.player
+    ];
     this.videosSubscription = this.videoService
-      .getMostPopular(REGION_CODE, MAX_RESULTS_PER_PAGE, this.nextPageToken)
+      .getMostPopular(REGION_CODE, pageArgument, resources)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         this.videos.push(...data.items);
