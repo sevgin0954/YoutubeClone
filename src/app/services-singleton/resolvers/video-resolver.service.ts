@@ -23,7 +23,7 @@ export class VideoResolverService implements Resolve<Video> {
       VideoResourceProperties.snippet,
       VideoResourceProperties.statistics
     ];
-    const video$ = this.videoService.getByIds(id, resources).pipe(
+    const video$ = this.videoService.getByIds([id], resources).pipe(
       map(data => data[0])
     );
 
