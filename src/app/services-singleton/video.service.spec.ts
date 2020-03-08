@@ -7,7 +7,6 @@ import { PageArguments } from '../shared/arguments/page-arguments';
 import { VideoResourceProperties } from '../shared/enums/resource-properties/video-resource-properties';
 import { RegionCode } from '../shared/enums/region-code';
 import { HttpClientStubUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
-import { StringUtilities } from '../shared/utilities/string-utilities';
 import { UrlUtilities } from 'src/tests-common/utilities/url-utilities';
 import { MainConstants } from '../shared/Constants/main-constants';
 
@@ -80,7 +79,7 @@ describe('VideoService\s getMostPopular method', () => {
       VideoResourceProperties.id,
       null
     ];
-    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+    const exceptionRegex = new RegExp(ExceptionConstants.INVALID_ARGUMENT);
 
     // Act
 

@@ -53,6 +53,8 @@ export class VideoService {
   }
 
   getByIds(ids: string[], resources: VideoResourceProperties[]): Observable<Video[]> {
+    this.validateGetByIds(ids, resources);
+
     const queryParams = {
       id: ids.join(',')
     };
@@ -64,5 +66,10 @@ export class VideoService {
       );
 
     return data$;
+  }
+
+  private validateGetByIds(ids: string[], resources: VideoResourceProperties[]): void {
+    DataValidator.validateCollection(ids, 'ids');
+    DataValidator.validateCollection(resources, 'resources');
   }
 }
