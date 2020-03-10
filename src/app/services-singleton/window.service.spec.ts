@@ -1,6 +1,5 @@
 import { WindowService } from './window.service';
 import { ExceptionConstants } from '../shared/Constants/exception-constants';
-import { SetupStubs } from 'src/tests-common/setup-stubs';
 
 let service: WindowService;
 
@@ -45,7 +44,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const element = document.createElement('div');
       const elementX = screenWidth - elementSize;
       const elementY = screenHeight - elementSize;
-      SetupStubs.setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
+      setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
 
       // Act
       const result = service.isElementOverflowing(element);
@@ -64,7 +63,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const element = document.createElement('div');
       const elementX = 0;
       const elementY = screenHeight - elementSize;
-      SetupStubs.setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
+      setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
 
       // Act
       const result = service.isElementOverflowing(element);
@@ -83,7 +82,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const element = document.createElement('div');
       const elementX = 0;
       const elementY = 0;
-      SetupStubs.setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
+      setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
 
       // Act
       const result = service.isElementOverflowing(element);
@@ -102,7 +101,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const element = document.createElement('div');
       const elementX = screenWidth - elementSize;
       const elementY = 0;
-      SetupStubs.setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
+      setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
 
       // Act
       const result = service.isElementOverflowing(element);
@@ -121,7 +120,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const element = document.createElement('div');
       const elementStartPointX = screenWidth - elementSize;
       const elementStartPointY = 0;
-      SetupStubs.setupElementGetBoundingClientRect(
+      setupElementGetBoundingClientRect(
         element,
         elementStartPointX + 1,
         elementStartPointY,
@@ -145,7 +144,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const element = document.createElement('div');
       const elementStartPointX = 0;
       const elementStartPointY = screenHeight - elementSize;
-      SetupStubs.setupElementGetBoundingClientRect(
+      setupElementGetBoundingClientRect(
         element,
         elementStartPointX,
         elementStartPointY + 1,
@@ -169,7 +168,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const element = document.createElement('div');
       const elementStartPointX = 0;
       const elementStartPointY = 0;
-      SetupStubs.setupElementGetBoundingClientRect(
+      setupElementGetBoundingClientRect(
         element,
         elementStartPointX - 1,
         elementStartPointY,
@@ -193,7 +192,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const element = document.createElement('div');
       const elementStartPointX = 0;
       const elementStartPointY = 0;
-      SetupStubs.setupElementGetBoundingClientRect(
+      setupElementGetBoundingClientRect(
         element,
         elementStartPointX ,
         elementStartPointY - 1,
@@ -207,4 +206,15 @@ describe('WindowService\s isElementOverflowing method', () => {
       expect(result).toBeTruthy();
     });
   });
+
+  function setupElementGetBoundingClientRect(
+    element: Element,
+    elementXStartPosition: number,
+    elementYStartPosition: number,
+    elementSize: number
+  ): void {
+
+    const newRect = new DOMRect(elementXStartPosition, elementYStartPosition, elementSize, elementSize);
+    spyOn(element, 'getBoundingClientRect').and.returnValue(newRect);
+  }
 });

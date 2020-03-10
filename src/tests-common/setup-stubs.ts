@@ -1,15 +1,4 @@
 export class SetupStubs {
-  public static setupElementGetBoundingClientRect(
-    element: Element,
-    elementXStartPosition: number,
-    elementYStartPosition: number,
-    elementSize: number
-  ): void {
-
-    const newRect = new DOMRect(elementXStartPosition, elementYStartPosition, elementSize, elementSize);
-    spyOn(element, 'getBoundingClientRect').and.returnValue(newRect);
-  }
-
   public static setupPredicateStub(predicateFunc: any, ...elementsToMatchOnce: Element[]): void {
     predicateFunc.and.callFake((elementInput: Element) => {
       let result = false;
