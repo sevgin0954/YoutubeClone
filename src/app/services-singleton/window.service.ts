@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { DataValidator } from '../shared/Validation/data-validator';
+import { ExceptionConstants } from '../shared/Constants/exception-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -16,35 +18,20 @@ export class WindowService {
   }
 
   private isElementOverflowingRecursive(element: Element): boolean {
+    if (element.hasAttribute('hidden')) {
+      throw Error(ExceptionConstants.HAVING_ATTRIBUTE);
+    }
+
     let isOverflowing = false;
 
     let rect: ClientRect = element.getBoundingClientRect();
-
-    const isElemntHidden = element.hasAttribute('hidden');
-    if (isElemntHidden) {
-      element.removeAttribute('hidden');
-
-      rect = element.getBoundingClientRect();
-      isOverflowing = this.isElementOverflowing(element);
-
-      element.setAttribute('hidden', 'hidden');
-    }
-    else if (this.isElementInsideTheScreen(rect) === false) {
+    const isRightSideOverflowing = rect.right > window.screen.width;
+    const isLeftSideOverflowing = rect.left < 0;
+    if (isRightSideOverflowing || isLeftSideOverflowing) {
       isOverflowing = true;
     }
 
     return isOverflowing;
-  }
-
-  private isElementInsideTheScreen(elementRect: ClientRect): boolean {
-    const windowScreen = window.screen;
-
-    const isTopSideInside = elementRect.top >= 0;
-    const isRightSideInside = elementRect.right <= windowScreen.width;
-    const isBottomSideInside = elementRect.bottom <= windowScreen.height;
-    const isLeftSideInside = elementRect.left >= 0;
-
-    return isTopSideInside && isRightSideInside && isBottomSideInside && isLeftSideInside;
   }
 
   onReachBottom(callback: Function): void {
