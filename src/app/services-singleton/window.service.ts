@@ -18,9 +18,7 @@ export class WindowService {
   }
 
   private isElementOverflowingRecursive(element: Element): boolean {
-    if (element.hasAttribute('hidden')) {
-      throw Error(ExceptionConstants.HAVING_ATTRIBUTE);
-    }
+    this.validateElement(element);
 
     let isOverflowing = false;
 
@@ -32,6 +30,15 @@ export class WindowService {
     }
 
     return isOverflowing;
+  }
+
+  private validateElement(element: Element): void {
+    DataValidator
+    if (element.hasAttribute('hidden')) {
+      const message =
+        ExceptionConstants.HAVING_ATTRIBUTE + ' Argument name: element; Attribute name: hidden';
+      throw Error(message);
+    }
   }
 
   onReachBottom(callback: Function): void {

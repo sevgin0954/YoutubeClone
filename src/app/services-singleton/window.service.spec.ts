@@ -1,5 +1,6 @@
 import { WindowService } from './window.service';
 import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { ElementUtilities } from 'src/tests-common/utilities/element-utilities';
 
 let service: WindowService;
 
@@ -28,6 +29,17 @@ describe('WindowService\s isElementOverflowing method', () => {
     // Arrange
     const element = null;
     const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
+
+    // Act
+
+    // Assert
+    expect(() => service.isElementOverflowing(element)).toThrowError(exceptionRegex);
+  });
+
+  it('with hidden element should throw an exception', () => {
+    // Arrange
+    const element = ElementUtilities.createHiddenElement();
+    const exceptionRegex = new RegExp(ExceptionConstants.HAVING_ATTRIBUTE);
 
     // Act
 
@@ -139,7 +151,7 @@ describe('WindowService\s isElementOverflowing method', () => {
     0,
     10
   ].forEach(elementSize => {
-    it('with element overflowing from botton should return true', () => {
+    it('with element overflowing from botton should return false', () => {
       // Arrange
       const element = document.createElement('div');
       const elementStartPointX = 0;
@@ -155,7 +167,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const result = service.isElementOverflowing(element);
 
       // Assert
-      expect(result).toBeTruthy();
+      expect(result).toBeFalsy();
     });
   });
 
@@ -187,7 +199,7 @@ describe('WindowService\s isElementOverflowing method', () => {
     0,
     10
   ].forEach(elementSize => {
-    it('with element overflowing from top should return true', () => {
+    it('with element overflowing from top should return false', () => {
       // Arrange
       const element = document.createElement('div');
       const elementStartPointX = 0;
@@ -203,7 +215,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       const result = service.isElementOverflowing(element);
 
       // Assert
-      expect(result).toBeTruthy();
+      expect(result).toBeFalsy();
     });
   });
 
