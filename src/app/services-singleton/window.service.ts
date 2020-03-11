@@ -8,16 +8,7 @@ import { ExceptionConstants } from '../shared/Constants/exception-constants';
 })
 export class WindowService {
 
-  // TODO: Should't work for hidden elements
-  isElementOverflowing(element: Element): boolean {
-    DataValidator.nullOrUndefinied(element, 'element');
-
-    let isOverflowing = this.isElementOverflowingRecursive(element);
-
-    return isOverflowing;
-  }
-
-  private isElementOverflowingRecursive(element: Element): boolean {
+  isElementOverflowingVerticaly(element: Element): boolean {
     this.validateElement(element);
 
     let isOverflowing = false;
@@ -33,7 +24,8 @@ export class WindowService {
   }
 
   private validateElement(element: Element): void {
-    DataValidator
+    DataValidator.nullOrUndefinied(element, 'element');
+
     if (element.hasAttribute('hidden')) {
       const message =
         ExceptionConstants.HAVING_ATTRIBUTE + ' Argument name: element; Attribute name: hidden';

@@ -1,12 +1,18 @@
-import { TestBed } from '@angular/core/testing';
-
 import { VideoResolverService } from './video-resolver.service';
 
+let service: VideoResolverService;
+let videoService: any;
+
+beforeEach(() => {
+  videoService = jasmine.createSpyObj('VideoService', ['getByIds']);
+});
+beforeEach(() => {
+  service = new VideoResolverService(videoService);
+});
+
 describe('VideoResolverService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: VideoResolverService = TestBed.get(VideoResolverService);
     expect(service).toBeTruthy();
   });
 });

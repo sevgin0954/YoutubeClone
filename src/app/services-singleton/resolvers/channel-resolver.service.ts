@@ -7,6 +7,7 @@ import { ChannelService } from '../channel.service';
 import { map } from 'rxjs/operators';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { ChannelResourceProperties } from 'src/app/shared/enums/resource-properties/channel-resource-properties';
+import { DataValidator } from 'src/app/shared/Validation/data-validator';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,11 @@ export class ChannelResolverService implements Resolve<Channel> {
   ) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Channel> {
-    const channelId = route.params['id'];
-    const pageArgs = new PageArguments(1, null);
+    const channelId: string = route.params['id'];
+
+    DataValidator.emptyString(channelId, 'channelId');
+
+    const pageArgs = new PageArguments(1, undefined);
     const resourceProprties = [
       ChannelResourceProperties.brandingSettings,
       ChannelResourceProperties.snippet,

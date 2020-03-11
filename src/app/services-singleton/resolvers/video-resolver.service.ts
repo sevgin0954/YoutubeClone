@@ -6,6 +6,7 @@ import { Video } from 'src/app/models/video/video';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { VideoResourceProperties } from 'src/app/shared/enums/resource-properties/video-resource-properties';
+import { DataValidator } from 'src/app/shared/Validation/data-validator';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,9 @@ export class VideoResolverService implements Resolve<Video> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Video> {
     const id = route.params['id'];
+
+    DataValidator.emptyString(id, 'id');
+
     const resources = [
       VideoResourceProperties.contentDetails,
       VideoResourceProperties.snippet,

@@ -33,7 +33,7 @@ describe('WindowService\s isElementOverflowing method', () => {
     // Act
 
     // Assert
-    expect(() => service.isElementOverflowing(element)).toThrowError(exceptionRegex);
+    expect(() => service.isElementOverflowingVerticaly(element)).toThrowError(exceptionRegex);
   });
 
   it('with hidden element should throw an exception', () => {
@@ -44,7 +44,7 @@ describe('WindowService\s isElementOverflowing method', () => {
     // Act
 
     // Assert
-    expect(() => service.isElementOverflowing(element)).toThrowError(exceptionRegex);
+    expect(() => service.isElementOverflowingVerticaly(element)).toThrowError(exceptionRegex);
   });
 
   [
@@ -59,7 +59,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
 
       // Act
-      const result = service.isElementOverflowing(element);
+      const result = service.isElementOverflowingVerticaly(element);
 
       // Assert
       expect(result).toBeFalsy();
@@ -78,7 +78,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
 
       // Act
-      const result = service.isElementOverflowing(element);
+      const result = service.isElementOverflowingVerticaly(element);
 
       // Assert
       expect(result).toBeFalsy();
@@ -97,7 +97,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
 
       // Act
-      const result = service.isElementOverflowing(element);
+      const result = service.isElementOverflowingVerticaly(element);
 
       // Assert
       expect(result).toBeFalsy();
@@ -116,7 +116,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       setupElementGetBoundingClientRect(element, elementX, elementY, elementSize);
 
       // Act
-      const result = service.isElementOverflowing(element);
+      const result = service.isElementOverflowingVerticaly(element);
 
       // Assert
       expect(result).toBeFalsy();
@@ -140,7 +140,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       );
 
       // Act
-      const result = service.isElementOverflowing(element);
+      const result = service.isElementOverflowingVerticaly(element);
 
       // Assert
       expect(result).toBeTruthy();
@@ -164,7 +164,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       );
 
       // Act
-      const result = service.isElementOverflowing(element);
+      const result = service.isElementOverflowingVerticaly(element);
 
       // Assert
       expect(result).toBeFalsy();
@@ -188,7 +188,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       );
 
       // Act
-      const result = service.isElementOverflowing(element);
+      const result = service.isElementOverflowingVerticaly(element);
 
       // Assert
       expect(result).toBeTruthy();
@@ -212,7 +212,7 @@ describe('WindowService\s isElementOverflowing method', () => {
       );
 
       // Act
-      const result = service.isElementOverflowing(element);
+      const result = service.isElementOverflowingVerticaly(element);
 
       // Assert
       expect(result).toBeFalsy();

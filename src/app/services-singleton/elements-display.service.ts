@@ -61,7 +61,7 @@ export class ElementDisplayService {
     let isElementShown = true;
 
     elementToShow.removeAttribute('hidden');
-    const isLastElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
+    const isLastElementOverflowing = this.windowService.isElementOverflowingVerticaly(lastShownElement);
     if (isLastElementOverflowing) {
       elementToShow.setAttribute('hidden', 'hidden');
       isElementShown = false;
@@ -82,11 +82,11 @@ export class ElementDisplayService {
     let isSuccessful = false;
 
     let isThereShownElement = this.isThereVisibleElement(elements);
-    let isLastShowElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
+    let isLastShowElementOverflowing = this.windowService.isElementOverflowingVerticaly(lastShownElement);
     while (isLastShowElementOverflowing && isThereShownElement) {
       this.hideLastShowElement(elements);
 
-      isLastShowElementOverflowing = this.windowService.isElementOverflowing(lastShownElement);
+      isLastShowElementOverflowing = this.windowService.isElementOverflowingVerticaly(lastShownElement);
       isThereShownElement = this.isThereVisibleElement(elements);
 
       isSuccessful = true;
