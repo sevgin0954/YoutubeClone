@@ -1,4 +1,4 @@
-export interface BrandingSettings {
+export interface ChannelBrandingSettings {
   image: {
     bannerImageUrl: string
     bannerMobileImageUrl: string
@@ -24,7 +24,6 @@ export interface BrandingSettings {
     showBrowseView: boolean,
     featuredChannelsTitle: string,
     featuredChannelsUrls: string[],
-    unsubscribedTrailer: string,
-
+    unsubscribedTrailer: string
   }
 }
