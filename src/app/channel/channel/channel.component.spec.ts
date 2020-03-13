@@ -4,16 +4,10 @@ import { ChannelComponent } from './channel.component';
 import { Channel } from 'src/app/models/channel/channel';
 import { Observable, of } from 'rxjs';
 import { Data, ActivatedRoute } from '@angular/router';
-import { Component, Input } from '@angular/core';
 import { ChannelCreateUtilities } from 'src/tests-common/create-utilities/channel-create-utilities';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ChannelComponent', () => {
-
-  @Component({ selector: 'app-channel-mini', template: '' })
-  class ChannelMiniComponent { @Input() channel: Channel; @Input() channelId: string }
-
-  @Component({ selector: 'app-channel-sections', template: '' })
-  class ChannelSectionsComponent { @Input() channelId: string }
 
   const channelBrandingSettings = ChannelCreateUtilities.createBrandingSettings();
   const channel: Channel = ChannelCreateUtilities.createChannel(channelBrandingSettings);
@@ -27,8 +21,9 @@ describe('ChannelComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ChannelComponent, ChannelMiniComponent, ChannelSectionsComponent],
-      providers: [{ provide: ActivatedRoute, useValue: routeService }]
+      declarations: [ChannelComponent],
+      providers: [{ provide: ActivatedRoute, useValue: routeService }],
+      schemas: [NO_ERRORS_SCHEMA]
     });
   });
   beforeEach(() => {
