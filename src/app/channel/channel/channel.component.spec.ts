@@ -1,11 +1,11 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Data, ActivatedRoute } from '@angular/router';
 
 import { ChannelComponent } from './channel.component';
 import { Channel } from 'src/app/models/channel/channel';
 import { Observable, of } from 'rxjs';
-import { Data, ActivatedRoute } from '@angular/router';
 import { ChannelCreateUtilities } from 'src/tests-common/create-utilities/channel-create-utilities';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('ChannelComponent', () => {
 
