@@ -8,6 +8,7 @@ import isRequired from 'src/decorators/isRequired';
 import isNotEmptyString from 'src/decorators/isNotEmptyString';
 import { Subscription } from 'rxjs';
 import isType from 'src/decorators/isType';
+import { ChannelSectionResourceProperties } from 'src/app/shared/enums/resource-properties/channel-section-resource-properties';
 
 @Component({
   selector: 'app-channel-sections',
@@ -34,7 +35,11 @@ export class ChannelSectionsComponent implements OnChanges, OnDestroy {
   }
 
   ngOnChanges(): void {
-    this.subscription = this.channelSectionService.getByChannelId(this.channelId).subscribe(sections => {
+    const resources = [
+      ChannelSectionResourceProperties.snippet,
+      ChannelSectionResourceProperties.contentDetails
+    ]
+    this.subscription = this.channelSectionService.getByChannelId(this.channelId, resources).subscribe(sections => {
       const sortedChannels = sections.sort((a, b) => a.snippet.position - b.snippet.position);
       this.channelSections = sortedChannels;
     });
