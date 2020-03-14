@@ -14,7 +14,7 @@ export class SetupStubs {
   }
 
   public static setupWindowIsOverflowingFunc(windowService, element: Element, returnResult: boolean): void {
-    windowService.isElementOverflowing.and.callFake((elementInput) => {
+    windowService.isElementOverflowingVerticaly.and.callFake((elementInput) => {
       if (elementInput === element) {
         return returnResult;
       }

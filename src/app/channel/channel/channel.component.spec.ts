@@ -10,7 +10,7 @@ import { ChannelCreateUtilities } from 'src/tests-common/create-utilities/channe
 describe('ChannelComponent', () => {
 
   const channelBrandingSettings = ChannelCreateUtilities.createBrandingSettings();
-  const channel: Channel = ChannelCreateUtilities.createChannel(channelBrandingSettings);
+  const channel: Channel = ChannelCreateUtilities.create(channelBrandingSettings);
   const routerData: Observable<Data> = of({
     channel: channel
   });

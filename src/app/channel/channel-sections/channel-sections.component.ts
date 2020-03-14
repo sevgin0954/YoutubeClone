@@ -4,6 +4,8 @@ import { ChannelSectionService } from 'src/app/channel/services/channel-section.
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { SnippetType } from 'src/app/shared/enums/snippet-type';
+import isRequired from 'src/decorators/isRequired';
+import isNotEmptyString from 'src/decorators/isNotEmptyString';
 
 @Component({
   selector: 'app-channel-sections',
@@ -12,7 +14,10 @@ import { SnippetType } from 'src/app/shared/enums/snippet-type';
 })
 export class ChannelSectionsComponent implements OnChanges {
 
+  @isRequired
+  @isNotEmptyString
   @Input() channelId: string;
+
   channelSections: ChannelSection[];
   snippetStyle: typeof ChannelSectionStyle = ChannelSectionStyle;
   snippetType: typeof SnippetType = SnippetType;
@@ -25,9 +30,9 @@ export class ChannelSectionsComponent implements OnChanges {
     return channelSection.snippet.type;
   }
 
-  ngOnChanges() {
-    this.channelSectionService.getByChannelId(this.channelId).subscribe(channels => {
-      const sortedChannels = channels.sort((a, b) => a.snippet.position - b.snippet.position);
+  ngOnChanges(): void {
+    this.channelSectionService.getByChannelId(this.channelId).subscribe(sections => {
+      const sortedChannels = sections.sort((a, b) => a.snippet.position - b.snippet.position);
       this.channelSections = sortedChannels;
     });
   }

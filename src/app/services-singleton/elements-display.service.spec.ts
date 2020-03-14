@@ -16,7 +16,7 @@ beforeEach(() => {
 beforeEach(() => {
   windowService = jasmine.createSpyObj(
     'WindowService',
-    ['isElementOverflowing']
+    ['isElementOverflowingVerticaly']
   );
 });
 beforeEach(() => {
@@ -404,7 +404,7 @@ describe('ElementsDisplayService\'s tryHideRightOverflowingElements', () => {
     const secondElement = document.createElement('div');
     const elements = [firstElement, secondElement];
 
-    windowService.isElementOverflowing.and.returnValues(true, false);
+    windowService.isElementOverflowingVerticaly.and.returnValues(true, false);
 
     // Act
     service.tryHideRightOverflowingElements(elements, lastShowElement);
@@ -424,7 +424,7 @@ describe('ElementsDisplayService\'s tryHideRightOverflowingElements', () => {
     const secondElement = document.createElement('div');
     const elements = [firstElement, secondElement];
 
-    windowService.isElementOverflowing.and.returnValue(true);
+    windowService.isElementOverflowingVerticaly.and.returnValue(true);
     service.isThereVisibleElement.and.returnValues(true, false);
 
     // Act
@@ -465,7 +465,7 @@ describe('ElementsDisplayService\'s tryHideRightOverflowingElements', () => {
 
   it('with overflowing lastShownElement and shown element should return true', () => {
     // Arrange
-    windowService.isElementOverflowing.and.returnValues(true, false);
+    windowService.isElementOverflowingVerticaly.and.returnValues(true, false);
 
     // Act
     const result = callMethodWithDefaultArguments();
@@ -638,7 +638,7 @@ describe('ElementsDisplayService\'s tryShowLeftHiddenElements', () => {
 
     const lastShownElement = document.createElement('div');
 
-    windowService.isElementOverflowing.and.returnValues(false, false, true);
+    windowService.isElementOverflowingVerticaly.and.returnValues(false, false, true);
     SetupStubs.setupPredicateStub(
       elementsPredicateService.getLastHiddenElementFromLeft,
       firstElement,
@@ -662,7 +662,7 @@ describe('ElementsDisplayService\'s tryShowLeftHiddenElements', () => {
 
     const lastShownElement = document.createElement('div');
 
-    windowService.isElementOverflowing.and.returnValues(false, false, true);
+    windowService.isElementOverflowingVerticaly.and.returnValues(false, false, true);
     SetupStubs.setupPredicateStub(
       elementsPredicateService.getLastHiddenElementFromLeft,
       firstElement,

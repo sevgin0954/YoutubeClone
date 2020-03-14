@@ -4,9 +4,9 @@ import { Observable, of } from 'rxjs';
 import { Subscription } from '../models/subscribption/subscription';
 import { SubscriptionResourceProperties } from '../shared/enums/resource-properties/subscription-resource-properties';
 import { MainConstants } from '../shared/Constants/main-constants';
-import { HttpClientStubUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
 import { ServiceModel } from '../models/service-models/service-model';
 import { SubscriptionSnippetResourceId } from '../models/subscribption/subscription-snippet-resourceId';
+import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 
 let httpClient: any;
 let service: any;
@@ -90,7 +90,7 @@ describe('SubscriptionsService\s getById method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const actualPath = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualPath).toContain(expectedPath);
   });
 
@@ -103,7 +103,7 @@ describe('SubscriptionsService\s getById method', () => {
     callMethodWithChannelId(channelId);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualUrl).toContain(channelIdQuery);
   });
 
@@ -120,7 +120,7 @@ describe('SubscriptionsService\s getById method', () => {
     callMethodWithResources(resources);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualUrl).toContain(resourcesQuery);
   });
 
@@ -221,7 +221,7 @@ describe('SubscriptionsService\s subscribe method', () => {
     callMethodWithChannelId(channelId);
 
     // Assert
-    const actualBody = HttpClientStubUtilities.getBodyArgument(httpClient.post);
+    const actualBody = ArgumentsUtilities.getMostRecentArgument(httpClient.post, 1);
     const actualResourceId = actualBody.snippet.resourceId;
     expect(actualResourceId.channelId).toEqual(expectedResourceId.channelId);
   });
@@ -237,7 +237,7 @@ describe('SubscriptionsService\s subscribe method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const actualBody = HttpClientStubUtilities.getBodyArgument(httpClient.post);
+    const actualBody = ArgumentsUtilities.getMostRecentArgument(httpClient.post, 1);
     const actualResourceId = actualBody.snippet.resourceId;
     expect(actualResourceId.kind).toEqual(expectedResourceId.kind);
   });
@@ -252,7 +252,7 @@ describe('SubscriptionsService\s subscribe method', () => {
     callMethodWithResources(resources);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.post);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.post, 0);
     const actualQuery = actualUrl.split('?')[1];
     expect(actualQuery).toEqual(resourcesQuery);
   });
@@ -269,7 +269,7 @@ describe('SubscriptionsService\s subscribe method', () => {
     callMethodWithResources(resources);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.post);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.post, 0);
     expect(actualUrl).toContain(resourcesQuery);
   });
 
@@ -281,7 +281,7 @@ describe('SubscriptionsService\s subscribe method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.post);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.post, 0);
     expect(actualUrl.startsWith(expectedPath)).toBeTruthy();
   });
 
@@ -380,7 +380,7 @@ describe('SubscriptionsService\s unsubscribe method', () => {
     service.unsubscribe(channelId);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.delete);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.delete, 0);
     const actualQuery = actualUrl.split('?')[1];
     expect(actualQuery).toEqual(expectedQuery);
   });
@@ -394,7 +394,7 @@ describe('SubscriptionsService\s unsubscribe method', () => {
     service.unsubscribe(channelId);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.delete);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.delete, 0);
     expect(actualUrl).toContain(idQuery);
   });
 
@@ -406,7 +406,7 @@ describe('SubscriptionsService\s unsubscribe method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const actualPath = HttpClientStubUtilities.getUrlArgument(httpClient.delete);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.delete, 0);
     expect(actualPath.startsWith(expectedPath)).toBeTruthy();
   });
 

@@ -25,6 +25,7 @@ export class ChannelService {
     resources: ChannelResourceProperties[]
   ): Observable<ServiceModel<Channel[]>> {
 
+    DataValidator.nullOrUndefinied(pageArgs, 'pageArgs');
     this.validateResourceProperties(resources);
 
     const queryParams: any = {

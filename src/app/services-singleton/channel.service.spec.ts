@@ -2,12 +2,12 @@ import { ChannelService } from './channel.service';
 import { of, Observable } from 'rxjs';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { TestConstants } from 'src/tests-common/test-constants';
-import { HttpClientStubUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { ChannelResourceProperties } from '../shared/enums/resource-properties/channel-resource-properties';
 import { Channel } from '../models/channel/channel';
 import { ServiceModel } from '../models/service-models/service-model';
 import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 
 let httpClient: any;
 let pageArgs: PageArguments;
@@ -63,7 +63,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualPath.startsWith(expectedPath)).toBeTruthy();
   });
 
@@ -77,7 +77,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     service.getSubscriptions(pageArgs, [snippetResourceProperty, idResourceProperty]);
 
     // Arrange
-    const actualPath = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualPath).toContain(partParam);
   });
 
@@ -89,7 +89,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualPath).toContain(mineParam);
   });
 
@@ -99,25 +99,14 @@ describe('ChannelService\'s getSubscriptions method', () => {
     const maxResults = 1;
     const maxResultParam = `${maxResultsKey}=${maxResults}`;
 
-    pageArgs.maxResults = maxResults;
+    pageArgs = new PageArguments(maxResults, undefined);
 
     // Act
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualPath).toContain(maxResultParam);
-  });
-
-  it('with negative maxResults should trow an exception', () => {
-    // Arrange
-    const errorRegex = new RegExp(ExceptionConstants.NEGATIVE_NUMBER);
-    pageArgs.maxResults = -1;
-
-    // Act
-
-    // Assert
-    expect(() => callMethodWithDefaultResources()).toThrowError(errorRegex);
   });
 
   it('with null pageArgs should throw an exception', () => {
@@ -137,39 +126,39 @@ describe('ChannelService\'s getSubscriptions method', () => {
     const pageToken = 'abc';
     const pageTokenParam = `${pageTokenKey}=${pageToken}`;
 
-    pageArgs.pageToken = pageToken;
+    pageArgs = new PageArguments(1, pageToken);
 
     // Act
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualPath).toContain(pageTokenParam);
   });
 
   it('with undefined pageToken should call httpClient get with query param without pageToken', () => {
     // Arrange
     const pageTokenKey = TestConstants.PAGE_TOKEN_QURY_PARAM_KEY;
-    pageArgs.pageToken = undefined;
+    pageArgs = new PageArguments(1, undefined);
 
     // Act
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualPath.indexOf(pageTokenKey)).toEqual(-1);
   });
 
   it('with null pageToken should call httpClient get with query param without pageToken', () => {
     // Arrange
     const pageTokenKey = TestConstants.PAGE_TOKEN_QURY_PARAM_KEY;
-    pageArgs.pageToken = null;
+    pageArgs = new PageArguments(1, null);
 
     // Act
     callMethodWithDefaultResources();
 
     // Arrange
-    const actualPath = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualPath.indexOf(pageTokenKey)).toEqual(-1);
   });
 
@@ -234,8 +223,8 @@ describe('ChannelService\'s getByIds method', () => {
     service.getByIds(['123'], pageArgs, [idResourceProperty, snippetResourceProperty]);
 
     // Assert
-    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
-    expect(urlArgument).toContain(resourceQueryParam);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
+    expect(actualPath).toContain(resourceQueryParam);
   });
 
   it('with ids should call httpClient with query params with ids', () => {
@@ -248,71 +237,60 @@ describe('ChannelService\'s getByIds method', () => {
     service.getByIds([id1, id2], pageArgs, [ChannelResourceProperties.id]);
 
     // Assert
-    const argument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
-    expect(argument).toContain(idsQueryParam);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
+    expect(actualPath).toContain(idsQueryParam);
   });
 
   it('with maxResults should call httpClient with query params with maxResults', () => {
     // Arrange
-    pageArgs.maxResults = 1;
+    pageArgs = new PageArguments(1, undefined);
     const maxResultQueryString = `maxResults=${pageArgs.maxResults}`;
 
     // Act
     callMethodWithDefaultArguments();
 
     // Assert
-    const argument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
-    expect(argument).toContain(maxResultQueryString);
-  });
-
-  it('with negative maxResults should trow an exception', () => {
-    // Arrange
-    const errorRegex = new RegExp(ExceptionConstants.NEGATIVE_NUMBER);
-    pageArgs.maxResults = -1;
-
-    // Act
-
-    // Assert
-    expect(() => callMethodWithDefaultArguments()).toThrowError(errorRegex);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
+    expect(actualPath).toContain(maxResultQueryString);
   });
 
   it('with pageToken should call httpClient with query params with pageToken', () => {
     // Arrange
-    pageArgs.pageToken = '123';
+    pageArgs = new PageArguments(1, '123');
     const maxpageTokenQueryString = `pageToken=${pageArgs.maxResults}`;
 
     // Act
     callMethodWithDefaultArguments();
 
     // Assert
-    const argument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
-    expect(argument).toContain(maxpageTokenQueryString);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
+    expect(actualPath).toContain(maxpageTokenQueryString);
   });
 
   it('with undefinded pageToken should call httpClient with query params without pageToken', () => {
     // Arrange
     const pageTokenKey = 'pageToken';
-    pageArgs.pageToken = undefined;
+    pageArgs = new PageArguments(1, undefined);
 
     // Act
     callMethodWithDefaultArguments();
 
     // Assert
-    const argument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
-    expect(argument.indexOf(pageTokenKey) === -1).toBeTruthy();
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
+    expect(actualPath.indexOf(pageTokenKey) === -1).toBeTruthy();
   });
 
   it('with null pageToken should call httpClient with query params without pageToken', () => {
     // Arrange
     const pageTokenKey = 'pageToken';
-    pageArgs.pageToken = null;
+    pageArgs = new PageArguments(1, null);
 
     // Act
     callMethodWithDefaultArguments();
 
     // Assert
-    const argument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
-    expect(argument.indexOf(pageTokenKey) === -1).toBeTruthy();
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
+    expect(actualPath.indexOf(pageTokenKey) === -1).toBeTruthy();
   });
 
   it('with resourceProperties should call httpClient with query params with resource properties', () => {
@@ -325,8 +303,8 @@ describe('ChannelService\'s getByIds method', () => {
     service.getByIds(['123'], pageArgs, [idResourceProperty, snippetResourceProperty]);
 
     // Assert
-    const argument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
-    expect(argument).toContain(partQueryString);
+    const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
+    expect(actualPath).toContain(partQueryString);
   });
 
   it('with emtpy resourceProperties should throw an exception', () => {

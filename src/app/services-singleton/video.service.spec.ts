@@ -6,9 +6,9 @@ import { Video } from '../models/video/video';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { VideoResourceProperties } from '../shared/enums/resource-properties/video-resource-properties';
 import { RegionCode } from '../shared/enums/region-code';
-import { HttpClientStubUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
 import { UrlUtilities } from 'src/tests-common/utilities/url-utilities';
 import { MainConstants } from '../shared/Constants/main-constants';
+import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 
 let httpClient: any;
 let service: VideoService;
@@ -96,7 +96,7 @@ describe('VideoService\s getMostPopular method', () => {
     callMethodWithRegionCode(regionCode);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualUrl).toContain(regionCodeQuery);
   });
 
@@ -109,7 +109,7 @@ describe('VideoService\s getMostPopular method', () => {
     callMethodWithPageArgs(pageArgs);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualUrl).not.toContain(pageTokenQueryKey);
   });
 
@@ -121,7 +121,7 @@ describe('VideoService\s getMostPopular method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualUrl).toContain(chartQuery);
   });
 
@@ -134,7 +134,7 @@ describe('VideoService\s getMostPopular method', () => {
     callMethodWithPageArgs(pageArgs);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualUrl).toContain(maxResultsQuery);
   });
 
@@ -152,7 +152,7 @@ describe('VideoService\s getMostPopular method', () => {
     callMethodWithResouces(resources);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualUrl).toContain(resourcesQuery);
   });
 
@@ -170,7 +170,7 @@ describe('VideoService\s getMostPopular method', () => {
     callMethodWithResouces(resources);
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     const actualResourceQuery = UrlUtilities.getQueryParam(actualUrl);
     expect(actualResourceQuery).toEqual(expectedResourcesQuery);
   });
@@ -183,7 +183,7 @@ describe('VideoService\s getMostPopular method', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const actualUrl = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const actualUrl = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(actualUrl).toContain(expectedPath);
   });
 

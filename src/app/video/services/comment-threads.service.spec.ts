@@ -4,9 +4,9 @@ import { PageArguments } from '../../shared/arguments/page-arguments';
 import { CommentThread } from '../../models/comment/comment-thread';
 import { ServiceModel } from '../../models/service-models/service-model';
 import { Observable, of } from 'rxjs';
-import { HttpClientStubUtilities } from 'src/tests-common/utilities/htpp-client-utilities';
 import { MainConstants } from '../../shared/Constants/main-constants';
 import { ExceptionConstants } from '../../shared/Constants/exception-constants';
+import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 
 let httpClient: any;
 let service: CommentThreadsService;
@@ -33,7 +33,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const urlArgument = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(urlArgument).toContain(expectedUrl);
   });
 
@@ -46,7 +46,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithId(videoId);
 
     // Assert
-    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const urlArgument = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(urlArgument).toContain(queryParam);
   });
 
@@ -81,7 +81,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithOrder(order);
 
     // Assert
-    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const urlArgument = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(urlArgument).toContain(orderQueryParam);
   });
 
@@ -98,26 +98,15 @@ describe('CommentThreadsService getByVideoId', () => {
 
   it('with pageArgs with maxResults should call httpClient service with maxResults', () => {
     // Arrange
-    pageArgs.maxResults = 1;
+    pageArgs = new PageArguments(1, undefined);
     const maxResultsQuery = `maxResults=${pageArgs.maxResults}`;
 
     // Act
     callMethodWithDefaultArguments();
 
     // Assert
-    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const urlArgument = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(urlArgument).toContain(maxResultsQuery);
-  });
-
-  it('with pageArgs with negative maxResults should throw an exception', () => {
-    // Arrange
-    pageArgs.maxResults = -1;
-    const exceptionRegex = new RegExp(ExceptionConstants.NEGATIVE_NUMBER);
-
-    // Act
-
-    // Assert
-    expect(() => callMethodWithDefaultArguments()).toThrowError(exceptionRegex);
   });
 
   it('with pageArgs with pageToken should call httpClient with pageToken', () => {
@@ -129,7 +118,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const urlArgument = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(urlArgument).toContain(pageTokenQuery);
   });
 
@@ -142,7 +131,7 @@ describe('CommentThreadsService getByVideoId', () => {
     callMethodWithDefaultArguments();
 
     // Assert
-    const urlArgument = HttpClientStubUtilities.getUrlArgument(httpClient.get);
+    const urlArgument = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
     expect(urlArgument.indexOf(pageTokenKey) === -1).toBeTruthy();
   });
 

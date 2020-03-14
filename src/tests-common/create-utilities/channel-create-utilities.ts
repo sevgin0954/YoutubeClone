@@ -4,6 +4,21 @@ import { ChannelSnippet } from 'src/app/models/channel/channel-snippet';
 import { ChannelStatistics } from 'src/app/models/channel/channel-statistics';
 
 export class ChannelCreateUtilities {
+  public static create(
+    channelBrandingSettings?: ChannelBrandingSettings,
+    snippet?: ChannelSnippet,
+    statistics?: ChannelStatistics
+  ): Channel {
+    const channel: Channel = {
+      brandingSettings: channelBrandingSettings,
+      id: '123',
+      snippet: snippet,
+      statistics: statistics
+    };
+
+    return channel;
+  }
+
   public static createBrandingSettings(): ChannelBrandingSettings {
     const channelBrandingSettings: ChannelBrandingSettings = {
       channel: undefined,
@@ -26,20 +41,5 @@ export class ChannelCreateUtilities {
     };
 
     return channelBrandingSettings;
-  }
-
-  public static createChannel(
-    channelBrandingSettings?: ChannelBrandingSettings,
-    snippet?: ChannelSnippet,
-    statistics?: ChannelStatistics
-  ): Channel {
-    const channel: Channel = {
-      brandingSettings: channelBrandingSettings,
-      id: '123',
-      snippet: snippet,
-      statistics: statistics
-    };
-
-    return channel;
   }
 }

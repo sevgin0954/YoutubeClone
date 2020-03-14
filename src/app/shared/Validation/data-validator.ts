@@ -2,62 +2,62 @@ import { ExceptionConstants } from '../Constants/exception-constants';
 
 export class DataValidator {
 
-  public static anyNotNullOrUndefined(obj: object, argumentName: string): void {
+  public static anyNotNullOrUndefined(obj: object, argumentsInfo: string): void {
     const values = Object.values(obj);
     const firstNotNullOrUndefinedValue = values.find(v => v !== null && v !== undefined);
     if (firstNotNullOrUndefinedValue === null || firstNotNullOrUndefinedValue === undefined) {
       const exceptionMessage =
-        this.appendArgumentName(ExceptionConstants.INVALID_ARGUMENT, argumentName);
+        this.appendArgumentName(ExceptionConstants.INVALID_ARGUMENT, argumentsInfo);
       throw Error(exceptionMessage);
     }
   }
 
-  public static emptyCollection<T>(collection: T[], argumentName: string): void {
+  public static emptyCollection<T>(collection: T[], argumentsInfo: string): void {
     if (collection.length === 0) {
-      const errorMessage = this.appendArgumentName(ExceptionConstants.EMPTY_COLLECTION, argumentName);
+      const errorMessage = this.appendArgumentName(ExceptionConstants.EMPTY_COLLECTION, argumentsInfo);
       throw Error(errorMessage);
     }
   }
 
-  public static emptyString(str: string, argumentName: string): void {
+  public static emptyString(str: string, argumentsInfo: string): void {
     if (str === '') {
-      const errorMessage = this.appendArgumentName(ExceptionConstants.EMPTY_STRING, argumentName);
+      const errorMessage = this.appendArgumentName(ExceptionConstants.EMPTY_STRING, argumentsInfo);
       throw Error(errorMessage);
     }
   }
 
-  public static maxNumber(number: number, maxNumber: number, argumentName: string): void {
+  public static maxNumber(number: number, maxNumber: number, argumentsInfo: string): void {
     if (number > maxNumber) {
       const exceptionMessage =
-        this.appendArgumentName(ExceptionConstants.EXCEEDED_MAX_VALUE, argumentName);
+        this.appendArgumentName(ExceptionConstants.EXCEEDED_MAX_VALUE, argumentsInfo);
       throw Error(exceptionMessage);
     }
   }
 
-  public static minNumber(number: number, minNumber: number, argumentName: string): void {
+  public static minNumber(number: number, minNumber: number, argumentsInfo: string): void {
     if (number < minNumber) {
-      const errorMessage = this.appendArgumentName(ExceptionConstants.NEGATIVE_NUMBER, argumentName);
+      const errorMessage = this.appendArgumentName(ExceptionConstants.NEGATIVE_NUMBER, argumentsInfo);
       throw Error(errorMessage);
     }
   }
 
-  public static notANumber(numberStr: string, argumentName: string): void {
+  public static notANumber(numberStr: string, argumentsInfo: string): void {
     if (Number.isNaN(+numberStr)) {
-      const exceptionMessage = this.appendArgumentName(ExceptionConstants.NOT_A_NUMBER, argumentName);
+      const exceptionMessage = this.appendArgumentName(ExceptionConstants.NOT_A_NUMBER, argumentsInfo);
       throw Error(exceptionMessage);
     }
   }
 
-  public static nullOrUndefinied(data: any, argumentName: string): void {
+  public static nullOrUndefinied(data: any, argumentsInfo: string): void {
     if (data === null || data === undefined) {
-      const errorMessage = this.appendArgumentName(ExceptionConstants.NULL_OR_UNDEFINED, argumentName);
+      const errorMessage = this.appendArgumentName(ExceptionConstants.NULL_OR_UNDEFINED, argumentsInfo);
       throw Error(errorMessage);
     }
   }
 
-  public static validateCollection(collection: any[], argumentName: string): void {
-    this.nullOrUndefinied(collection, argumentName);
-    this.emptyCollection(collection, argumentName);
+  public static validateCollection(collection: any[], argumentsInfo: string): void {
+    this.nullOrUndefinied(collection, argumentsInfo);
+    this.emptyCollection(collection, argumentsInfo);
   }
 
   public static validateIndex(index: number, collection: any[], indexArgumentName: string): void {
@@ -68,12 +68,12 @@ export class DataValidator {
     }
   }
 
-  public static validateString(str: string, argumentName: string): void {
-    this.nullOrUndefinied(str, argumentName);
-    this.emptyString(str, argumentName);
+  public static validateString(str: string, argumentsInfo: string): void {
+    this.nullOrUndefinied(str, argumentsInfo);
+    this.emptyString(str, argumentsInfo);
   }
 
-  private static appendArgumentName(errorMessage: string, argumentName: string): string {
-    return errorMessage + ` Argument name: ${argumentName}`;
+  private static appendArgumentName(errorMessage: string, argumentsInfo: string): string {
+    return errorMessage + ` Argument info: ${argumentsInfo}`;
   }
 }

@@ -14,7 +14,7 @@ export class PageArguments {
   }
 
   set maxResults(maxResultsCount: number) {
-    DataValidator.minNumber(maxResultsCount, 0, 'maxResults');
+    DataValidator.minNumber(maxResultsCount, 1, 'maxResults');
 
     this.maxResultsCount = maxResultsCount;
   }
