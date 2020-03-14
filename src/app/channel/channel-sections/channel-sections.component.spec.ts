@@ -1,7 +1,7 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelSectionsComponent } from './channel-sections.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { of } from 'rxjs';
 import { ChannelSectionService } from '../services/channel-section.service';
@@ -52,7 +52,7 @@ describe('ChannelSectionsComponent', () => {
     // Act
 
     // Assert
-    expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+    expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
   });
 
   it('with empty channelId input should throw an exception', () => {
@@ -65,7 +65,19 @@ describe('ChannelSectionsComponent', () => {
     // Act
 
     // Assert
-    expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+    expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
+  });
+
+  it('with not string channelId type should throw an exception', () => {
+    // Arrange
+    const channelId: any = 5;
+    const exceptionRegex = new RegExp(ExceptionConstants.INCORRECT_TYPE);
+
+    // Act
+    component.channelId = channelId;
+
+    // Assert
+    expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
   });
 
   it('should call channelSectionService\'s getByChannelId method with channelId in ngOnChanges', () => {
@@ -106,18 +118,6 @@ describe('ChannelSectionsComponent', () => {
     expect(component.channelSections[0].snippet.position).toEqual(0);
     expect(component.channelSections[1].snippet.position).toEqual(1);
   });
-
-  function createChannelSections(channelId: string): ChannelSection[] {
-    const channelSectionSnippet1 = ChannelSectionCreateUtilities.createSnippet(channelId, 0);
-    const channelSection1 = ChannelSectionCreateUtilities.create(channelSectionSnippet1, '123');
-
-    const channelSectionSnippet2 = ChannelSectionCreateUtilities.createSnippet(channelId, 1);
-    const channelSection2 = ChannelSectionCreateUtilities.create(channelSectionSnippet2, '456');
-
-    const channelSections: ChannelSection[] = [channelSection2, channelSection1];
-
-    return channelSections;
-  }
 });
 
 describe('ChannelSectionsComponent\'s getSectionType method', () => {
@@ -134,3 +134,15 @@ describe('ChannelSectionsComponent\'s getSectionType method', () => {
     expect(result).toEqual(channelSection.snippet.type);
   });
 });
+
+function createChannelSections(channelId: string): ChannelSection[] {
+  const channelSectionSnippet1 = ChannelSectionCreateUtilities.createSnippet(channelId, 0);
+  const channelSection1 = ChannelSectionCreateUtilities.create(channelSectionSnippet1, '123');
+
+  const channelSectionSnippet2 = ChannelSectionCreateUtilities.createSnippet(channelId, 1);
+  const channelSection2 = ChannelSectionCreateUtilities.create(channelSectionSnippet2, '456');
+
+  const channelSections: ChannelSection[] = [channelSection2, channelSection1];
+
+  return channelSections;
+}

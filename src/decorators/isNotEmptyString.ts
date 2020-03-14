@@ -3,15 +3,11 @@ import { DataValidator } from 'src/app/shared/Validation/data-validator';
 export default function isNotEmptyString(targetPrototype: any, propertyName: string): void {
 
   const NG_ON_CHANGES_NAME = 'ngOnChanges';
-  const NG_ON_INIT_NAME = 'ngOnInit';
 
   /** ngOnChanges might not be implemented by this component */
   const ngOnChangesClone: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
 
   Object.defineProperty(targetPrototype, NG_ON_CHANGES_NAME, {
-    value: propertyValue
-  });
-  Object.defineProperty(targetPrototype, NG_ON_INIT_NAME, {
     value: propertyValue
   });
 

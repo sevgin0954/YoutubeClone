@@ -39,7 +39,7 @@ export class MultipleChannelsPlaylistComponent implements OnInit {
     const channelsEndIndex = this.channelsStartIndex + MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
 
     const currentPagePlaylistIds = channelIds.slice(this.channelsStartIndex, channelsEndIndex);
-    const pageArgs = new PageArguments(0, null);
+    const pageArgs = new PageArguments(1, undefined);
     const resourceProprties = [
       ChannelResourceProperties.snippet,
       ChannelResourceProperties.statistics,

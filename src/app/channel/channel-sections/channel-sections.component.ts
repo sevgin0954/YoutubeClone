@@ -7,6 +7,7 @@ import { SnippetType } from 'src/app/shared/enums/snippet-type';
 import isRequired from 'src/decorators/isRequired';
 import isNotEmptyString from 'src/decorators/isNotEmptyString';
 import { Subscription } from 'rxjs';
+import isType from 'src/decorators/isType';
 
 @Component({
   selector: 'app-channel-sections',
@@ -15,8 +16,9 @@ import { Subscription } from 'rxjs';
 })
 export class ChannelSectionsComponent implements OnChanges, OnDestroy {
 
-  @isRequired
   @isNotEmptyString
+  @isRequired
+  @isType('string')
   @Input() channelId: string;
   channelSections: ChannelSection[];
   snippetStyle: typeof ChannelSectionStyle = ChannelSectionStyle;
