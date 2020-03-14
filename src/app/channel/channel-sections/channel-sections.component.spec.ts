@@ -55,6 +55,19 @@ describe('ChannelSectionsComponent', () => {
     expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
   });
 
+  it('with undefinied channelId input should throw an exception', () => {
+    // Arrange
+    const channelId = undefined;
+    const exceptionRegex = new RegExp(ExceptionConstants.REQUIRED_INPUT);
+
+    component.channelId = channelId;
+
+    // Act
+
+    // Assert
+    expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
+  });
+
   it('with empty channelId input should throw an exception', () => {
     // Arrange
     const channelId = '';
