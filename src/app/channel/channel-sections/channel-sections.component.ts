@@ -5,7 +5,6 @@ import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { SnippetType } from 'src/app/shared/enums/snippet-type';
 import isRequired from 'src/decorators/isRequired';
-import isNotEmptyString from 'src/decorators/isNotEmptyString';
 import { Subscription } from 'rxjs';
 import isType from 'src/decorators/isType';
 import { ChannelSectionResource } from 'src/app/shared/enums/resource-properties/channel-section-resource';
