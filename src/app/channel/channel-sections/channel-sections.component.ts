@@ -17,7 +17,6 @@ import { ChannelSectionResource } from 'src/app/shared/enums/resource-properties
 })
 export class ChannelSectionsComponent implements OnChanges, OnDestroy {
 
-  @isNotEmptyString
   @isRequired
   @isType('string')
   @Input() channelId: string;

@@ -52,7 +52,7 @@ describe('ChannelSectionsComponent', () => {
     // Act
 
     // Assert
-    expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
+    expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
   });
 
   it('with undefinied channelId input should throw an exception', () => {
@@ -65,20 +65,7 @@ describe('ChannelSectionsComponent', () => {
     // Act
 
     // Assert
-    expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
-  });
-
-  it('with empty channelId input should throw an exception', () => {
-    // Arrange
-    const channelId = '';
-    const exceptionRegex = new RegExp(ExceptionConstants.EMPTY_STRING);
-
-    component.channelId = channelId;
-
-    // Act
-
-    // Assert
-    expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
+    expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
   });
 
   it('with not string channelId type should throw an exception', () => {
@@ -90,17 +77,17 @@ describe('ChannelSectionsComponent', () => {
     component.channelId = channelId;
 
     // Assert
-    expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
+    expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
   });
 
-  it('should call channelSectionService\'s getByChannelId method with channelId in ngOnChanges', () => {
+  it('should call channelSectionService\'s getByChannelId method with channelId after initialization', () => {
     // Arrange
     const channelId = 'randomChannelId'
     const getByChannelIdFunc = channelSectionService.getByChannelId;
 
     // Act
     component.channelId = channelId;
-    component.ngOnChanges();
+    fixture.detectChanges();
 
     // Assert
     const calledChannelId = ArgumentsUtilities.getMostRecentArgument(getByChannelIdFunc, 0);
