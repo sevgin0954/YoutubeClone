@@ -2,6 +2,10 @@ import { Component, Input } from '@angular/core';
 
 import { CommentsService } from 'src/app/comment/services/comments.service';
 import { Comment } from 'src/app/models/comment/comment';
+import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { CommentResource } from 'src/app/shared/enums/resource-properties/comment-resource';
+
+const MAX_RESULTS = 20;
 
 @Component({
   selector: 'app-comment-replies',
@@ -31,7 +35,12 @@ export class CommentRepliesComponent {
     if (this.nextPageToken || this.isFirstPage) {
       this.isFirstPage = false;
 
-      this.commentsService.getByParentId(this.parentId, this.nextPageToken).subscribe(data => {
+      const pageArgs = new PageArguments(MAX_RESULTS, this.nextPageToken);
+      const resources = [
+        CommentResource.id,
+        CommentResource.snippet
+      ];
+      this.commentsService.getByParentId(this.parentId, pageArgs, resources).subscribe(data => {
         this.nextPageToken = data.nextPageToken;
         this.comments.push(...data.items);
 
