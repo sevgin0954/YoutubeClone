@@ -10,23 +10,23 @@ import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 
 let component: ChannelSectionsComponent;
-  let fixture: ComponentFixture<ChannelSectionsComponent>;
-  let channelSectionService: any;
+let fixture: ComponentFixture<ChannelSectionsComponent>;
+let channelSectionService: any;
 
-  beforeEach(() => {
-    channelSectionService = jasmine.createSpyObj('ChannelSectionService', ['getByChannelId']);
+beforeEach(() => {
+  channelSectionService = jasmine.createSpyObj('ChannelSectionService', ['getByChannelId']);
+});
+beforeEach((() => {
+  TestBed.configureTestingModule({
+    declarations: [ChannelSectionsComponent],
+    providers: [{ provide: ChannelSectionService, useValue: channelSectionService }],
+    schemas: [NO_ERRORS_SCHEMA]
   });
-  beforeEach((() => {
-    TestBed.configureTestingModule({
-      declarations: [ChannelSectionsComponent],
-      providers: [{ provide: ChannelSectionService, useValue: channelSectionService }],
-      schemas: [NO_ERRORS_SCHEMA]
-    });
-  }));
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelSectionsComponent);
-    component = fixture.componentInstance;
-  });
+}));
+beforeEach(() => {
+  fixture = TestBed.createComponent(ChannelSectionsComponent);
+  component = fixture.componentInstance;
+});
 
 describe('ChannelSectionsComponent', () => {
 

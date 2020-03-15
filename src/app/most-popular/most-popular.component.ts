@@ -21,22 +21,20 @@ const VIDEO_TITLE_DISPLAYED_ROWS = 2;
 })
 export class MostPopularComponent implements OnInit, OnDestroy {
 
-  isFirstPage: boolean = true;
-  isCurrentlyLoadingVideos: boolean = false;
   isMoreVideos: boolean = true;
-  videos: Video[];
+  videos: Video[] = [];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
   videoTitleMaxDisplayedRows: number = VIDEO_TITLE_DISPLAYED_ROWS;
+  private isCurrentlyLoadingVideos: boolean = false;
+  private isFirstPage: boolean = true;
   private nextPageToken: string;
-  private videosSubscription: Subscription;
+  private subscription: Subscription;
 
   constructor(
     private videoService: VideoService,
     private windowService: WindowService,
     public formatterService: FormatterService
-  ) {
-    this.videos = [];
-  }
+  ) { }
 
   ngOnInit() {
     this.loadMoreVideos();
@@ -59,7 +57,7 @@ export class MostPopularComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadMoreVideos(): void {
+  private loadMoreVideos(): void {
     this.isCurrentlyLoadingVideos = true;
 
     const pageArgument = new PageArguments(MAX_RESULTS_PER_PAGE, this.nextPageToken);
@@ -70,7 +68,7 @@ export class MostPopularComponent implements OnInit, OnDestroy {
       VideoResource.statistics,
       VideoResource.player
     ];
-    this.videosSubscription = this.videoService
+    this.subscription = this.videoService
       .getMostPopular(REGION_CODE, pageArgument, resources)
       .subscribe(data => {
         this.nextPageToken = data.nextPageToken;
@@ -81,6 +79,6 @@ export class MostPopularComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.videosSubscription.unsubscribe();
+    this.subscription.unsubscribe();
   }
 }

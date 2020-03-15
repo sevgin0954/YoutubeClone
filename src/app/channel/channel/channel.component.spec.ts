@@ -56,7 +56,7 @@ describe('ChannelComponent', () => {
     expect(nativeElement.getElementsByTagName(expectedTag).length).toBeGreaterThanOrEqual(1);
   });
 
-  it('should initialize channel after ngOnInit is called', () => {
+  it('should initialize channel after initialization is called', () => {
     // Arrange
 
     // Act
