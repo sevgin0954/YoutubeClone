@@ -9,7 +9,7 @@ import { pluck } from 'rxjs/operators';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
-import { VideoResourceProperties } from '../shared/enums/resource-properties/video-resource-properties';
+import { VideoResource } from '../shared/enums/resource-properties/video-resource';
 import { DataValidator } from '../shared/Validation/data-validator';
 import { RegionCode } from '../shared/enums/region-code';
 
@@ -24,7 +24,7 @@ export class VideoService {
     private http: HttpClient
   ) { }
 
-  getMostPopular(regionCode: RegionCode, pageArgs: PageArguments, resources: VideoResourceProperties[]):
+  getMostPopular(regionCode: RegionCode, pageArgs: PageArguments, resources: VideoResource[]):
     Observable<ServiceModel<Video[]>> {
     this.validateGetMostPopularArguments(regionCode, pageArgs, resources);
 
@@ -33,7 +33,7 @@ export class VideoService {
       regionCode: RegionCode[regionCode],
       maxResults: pageArgs.maxResults
     };
-    QueryParamsUtility.addResources(queryParams, resources, VideoResourceProperties);
+    QueryParamsUtility.addResources(queryParams, resources, VideoResource);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
     const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
@@ -45,20 +45,20 @@ export class VideoService {
   private validateGetMostPopularArguments(
     regionCode: RegionCode,
     pageArgs: PageArguments,
-    resources: VideoResourceProperties[]
+    resources: VideoResource[]
   ): void {
     DataValidator.nullOrUndefinied(regionCode, 'regionCode');
     DataValidator.nullOrUndefinied(pageArgs, 'pageArgs');
     DataValidator.validateCollection(resources, 'resources');
   }
 
-  getByIds(ids: string[], resources: VideoResourceProperties[]): Observable<Video[]> {
+  getByIds(ids: string[], resources: VideoResource[]): Observable<Video[]> {
     this.validateGetByIds(ids, resources);
 
     const queryParams = {
       id: ids.join(',')
     };
-    QueryParamsUtility.addResources(queryParams, resources, VideoResourceProperties);
+    QueryParamsUtility.addResources(queryParams, resources, VideoResource);
     const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     const data$ = this.http.get(url.toString())
       .pipe(
@@ -68,7 +68,7 @@ export class VideoService {
     return data$;
   }
 
-  private validateGetByIds(ids: string[], resources: VideoResourceProperties[]): void {
+  private validateGetByIds(ids: string[], resources: VideoResource[]): void {
     DataValidator.validateCollection(ids, 'ids');
     DataValidator.validateCollection(resources, 'resources');
   }

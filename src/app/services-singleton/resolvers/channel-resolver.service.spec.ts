@@ -1,7 +1,7 @@
 import { ChannelResolverService } from './channel-resolver.service';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
-import { ChannelResourceProperties } from 'src/app/shared/enums/resource-properties/channel-resource-properties';
+import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
 import { of, Observable } from 'rxjs';
 import { Channel } from 'src/app/models/channel/channel';
 
@@ -83,9 +83,9 @@ describe('ChannelResolverService\s resolve method', () => {
   it('should call channelService with the correct resources', () => {
     // Arrange
     const expectedResources = [
-      ChannelResourceProperties.brandingSettings,
-      ChannelResourceProperties.snippet,
-      ChannelResourceProperties.statistics,
+      ChannelResource.brandingSettings,
+      ChannelResource.snippet,
+      ChannelResource.statistics,
     ];
 
     // Act

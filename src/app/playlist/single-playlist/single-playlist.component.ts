@@ -9,8 +9,8 @@ import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
-import { PlaylistItemResourceProperties } from 'src/app/shared/enums/resource-properties/playlist-item-resource-properties';
-import { VideoResourceProperties } from 'src/app/shared/enums/resource-properties/video-resource-properties';
+import { PlaylistItemResource } from 'src/app/shared/enums/resource-properties/playlist-item-resource';
+import { VideoResource } from 'src/app/shared/enums/resource-properties/video-resource';
 
 @Component({
   selector: 'app-single-playlist',
@@ -51,8 +51,8 @@ export class SinglePlaylistComponent implements OnInit {
     const maxResults = MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
     const pageArgs = new PageArguments(maxResults, this.nextPageToken);
     const resources = [
-      PlaylistItemResourceProperties.snippet,
-      PlaylistItemResourceProperties.contentDetails
+      PlaylistItemResource.snippet,
+      PlaylistItemResource.contentDetails
     ];
     this.playlistService.getById(playlistId, pageArgs, resources).pipe(
       concatMap(data => {
@@ -61,9 +61,9 @@ export class SinglePlaylistComponent implements OnInit {
         this.totalResultsCount = data.pageInfo.totalResults;
 
         const resources = [
-          VideoResourceProperties.contentDetails,
-          VideoResourceProperties.snippet,
-          VideoResourceProperties.statistics
+          VideoResource.contentDetails,
+          VideoResource.snippet,
+          VideoResource.statistics
         ];
         return this.videoService.getByIds(videoIds, resources);
       })

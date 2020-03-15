@@ -5,7 +5,7 @@ import { VideoService } from '../video.service';
 import { Video } from 'src/app/models/video/video';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { VideoResourceProperties } from 'src/app/shared/enums/resource-properties/video-resource-properties';
+import { VideoResource } from 'src/app/shared/enums/resource-properties/video-resource';
 import { DataValidator } from 'src/app/shared/Validation/data-validator';
 
 @Injectable({
@@ -23,9 +23,9 @@ export class VideoResolverService implements Resolve<Video> {
     DataValidator.emptyString(id, 'id');
 
     const resources = [
-      VideoResourceProperties.contentDetails,
-      VideoResourceProperties.snippet,
-      VideoResourceProperties.statistics
+      VideoResource.contentDetails,
+      VideoResource.snippet,
+      VideoResource.statistics
     ];
     const video$ = this.videoService.getByIds([id], resources).pipe(
       map(data => data[0])

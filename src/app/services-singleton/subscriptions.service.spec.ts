@@ -2,7 +2,7 @@ import { SubscriptionsService } from "./subscriptions.service";
 import { ExceptionConstants } from '../shared/Constants/exception-constants';
 import { Observable, of } from 'rxjs';
 import { Subscription } from '../models/subscribption/subscription';
-import { SubscriptionResourceProperties } from '../shared/enums/resource-properties/subscription-resource-properties';
+import { SubscriptionResource } from '../shared/enums/resource-properties/subscription-resource';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { ServiceModel } from '../models/service-models/service-model';
 import { SubscriptionSnippetResourceId } from '../models/subscribption/subscription-snippet-resourceId';
@@ -109,12 +109,12 @@ describe('SubscriptionsService\s getById method', () => {
 
   it('with resources should call httpClient with query params with the resources reparated by a comma', () => {
     // Arrange
-    const resource1 = SubscriptionResourceProperties.id;
-    const resource2 = SubscriptionResourceProperties.snippet;
+    const resource1 = SubscriptionResource.id;
+    const resource2 = SubscriptionResource.snippet;
     const resources = [resource1, resource2];
 
     const resourcesQuery =
-      `part=${SubscriptionResourceProperties[resource1]},${SubscriptionResourceProperties[resource2]}`;
+      `part=${SubscriptionResource[resource1]},${SubscriptionResource[resource2]}`;
 
     // Act
     callMethodWithResources(resources);
@@ -146,7 +146,7 @@ describe('SubscriptionsService\s getById method', () => {
 
   function callMethodWithChannelId(channelId: string): Observable<Subscription> {
     const resources = [
-      SubscriptionResourceProperties.id
+      SubscriptionResource.id
     ];
     const data$ = service.getById(channelId, resources);
 
@@ -154,7 +154,7 @@ describe('SubscriptionsService\s getById method', () => {
   }
 
   function callMethodWithResources(
-    resources: SubscriptionResourceProperties[]
+    resources: SubscriptionResource[]
   ): Observable<Subscription> {
     const channelId = '123';
     const data$ = service.getById(channelId, resources);
@@ -244,9 +244,9 @@ describe('SubscriptionsService\s subscribe method', () => {
 
   it('should call httpClient with query params with only resources property', () => {
     // Arrange
-    const resource1 = SubscriptionResourceProperties.id;
+    const resource1 = SubscriptionResource.id;
     const resources = [resource1];
-    const resourcesQuery = `part=${SubscriptionResourceProperties[resource1]}`;
+    const resourcesQuery = `part=${SubscriptionResource[resource1]}`;
 
     // Act
     callMethodWithResources(resources);
@@ -259,11 +259,11 @@ describe('SubscriptionsService\s subscribe method', () => {
 
   it('with resources should call httpClient with query params with resources splited by a comma', () => {
     // Arrange
-    const resource1 = SubscriptionResourceProperties.id;
-    const resource2 = SubscriptionResourceProperties.snippet;
+    const resource1 = SubscriptionResource.id;
+    const resource2 = SubscriptionResource.snippet;
     const resources = [resource1, resource2];
     const resourcesQuery
-      = `part=${SubscriptionResourceProperties[resource1]},${SubscriptionResourceProperties[resource2]}`;
+      = `part=${SubscriptionResource[resource1]},${SubscriptionResource[resource2]}`;
 
     // Act
     callMethodWithResources(resources);
@@ -303,7 +303,7 @@ describe('SubscriptionsService\s subscribe method', () => {
 
   function callMethodWithChannelId(channelId: string): Observable<Subscription> {
     const resources = [
-      SubscriptionResourceProperties.id
+      SubscriptionResource.id
     ];
     const data$ = service.subscribe(channelId, resources);
 
@@ -318,7 +318,7 @@ describe('SubscriptionsService\s subscribe method', () => {
   }
 
   function callMethodWithResources(
-    resources: SubscriptionResourceProperties[]
+    resources: SubscriptionResource[]
   ): Observable<Subscription> {
     const channelId = '123';
     const data$ = service.subscribe(channelId, resources);

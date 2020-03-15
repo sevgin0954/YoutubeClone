@@ -3,7 +3,7 @@ import { of, Observable } from 'rxjs';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { TestConstants } from 'src/tests-common/test-constants';
 import { PageArguments } from '../shared/arguments/page-arguments';
-import { ChannelResourceProperties } from '../shared/enums/resource-properties/channel-resource-properties';
+import { ChannelResource } from '../shared/enums/resource-properties/channel-resource';
 import { Channel } from '../models/channel/channel';
 import { ServiceModel } from '../models/service-models/service-model';
 import { ExceptionConstants } from '../shared/Constants/exception-constants';
@@ -69,8 +69,8 @@ describe('ChannelService\'s getSubscriptions method', () => {
 
   it('with resourceProprties should call httpClient get with query param with resource properies', () => {
     // Arrange
-    const snippetResourceProperty = ChannelResourceProperties.snippet;
-    const idResourceProperty = ChannelResourceProperties.id;
+    const snippetResourceProperty = ChannelResource.snippet;
+    const idResourceProperty = ChannelResource.id;
     const partParam = getChannelResourceString(snippetResourceProperty, idResourceProperty);
 
     // Act
@@ -184,7 +184,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
   });
 
   function callMethodWithDefaultResources(): Observable<ServiceModel<Channel[]>> {
-    const data$ = service.getSubscriptions(pageArgs, [ChannelResourceProperties.id]);
+    const data$ = service.getSubscriptions(pageArgs, [ChannelResource.id]);
 
     return data$;
   }
@@ -215,8 +215,8 @@ describe('ChannelService\'s getByIds method', () => {
 
   it('should call httpClient get with query param with resource propery', () => {
     // Arrange
-    const idResourceProperty = ChannelResourceProperties.id;
-    const snippetResourceProperty = ChannelResourceProperties.snippet;
+    const idResourceProperty = ChannelResource.id;
+    const snippetResourceProperty = ChannelResource.snippet;
     const resourceQueryParam = getChannelResourceString(idResourceProperty, snippetResourceProperty);
 
     // Act
@@ -234,7 +234,7 @@ describe('ChannelService\'s getByIds method', () => {
     const idsQueryParam = `${id1},${id2}`;
 
     // Act
-    service.getByIds([id1, id2], pageArgs, [ChannelResourceProperties.id]);
+    service.getByIds([id1, id2], pageArgs, [ChannelResource.id]);
 
     // Assert
     const actualPath = ArgumentsUtilities.getMostRecentArgument(httpClient.get, 0);
@@ -295,8 +295,8 @@ describe('ChannelService\'s getByIds method', () => {
 
   it('with resourceProperties should call httpClient with query params with resource properties', () => {
     // Arrange
-    const idResourceProperty = ChannelResourceProperties.id;
-    const snippetResourceProperty = ChannelResourceProperties.snippet;
+    const idResourceProperty = ChannelResource.id;
+    const snippetResourceProperty = ChannelResource.snippet;
     const partQueryString = getChannelResourceString(idResourceProperty, snippetResourceProperty);
 
     // Act
@@ -330,7 +330,7 @@ describe('ChannelService\'s getByIds method', () => {
   });
 
   function callMethodWithDefaultArguments(): Observable<ServiceModel<Channel[]>> {
-    const resourceProperties = [ChannelResourceProperties.id];
+    const resourceProperties = [ChannelResource.id];
     const ids = ['123'];
     const data$ = service.getByIds(ids, pageArgs, resourceProperties);
 
@@ -339,8 +339,8 @@ describe('ChannelService\'s getByIds method', () => {
 });
 
 function getChannelResourceString(resourceProperty1: number, resourceProeprty2: number): string {
-  const resource1String = ChannelResourceProperties[resourceProperty1];
-  const resource2String = ChannelResourceProperties[resourceProeprty2];
+  const resource1String = ChannelResource[resourceProperty1];
+  const resource2String = ChannelResource[resourceProeprty2];
   const partParam = `part=${resource1String},${resource2String}`;
 
   return partParam;

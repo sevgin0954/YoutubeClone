@@ -7,7 +7,7 @@ import { FormatterService } from '../services-singleton/formatter.service';
 import { Subscription } from 'rxjs';
 import { VideoThumbnailSize } from '../shared/enums/video-thumbnail-size';
 import { PageArguments } from '../shared/arguments/page-arguments';
-import { VideoResourceProperties } from '../shared/enums/resource-properties/video-resource-properties';
+import { VideoResource } from '../shared/enums/resource-properties/video-resource';
 import { RegionCode } from '../shared/enums/region-code';
 
 const MAX_RESULTS_PER_PAGE = 25;
@@ -64,11 +64,11 @@ export class MostPopularComponent implements OnInit, OnDestroy {
 
     const pageArgument = new PageArguments(MAX_RESULTS_PER_PAGE, this.nextPageToken);
     const resources = [
-      VideoResourceProperties.snippet,
-      VideoResourceProperties.contentDetails,
-      VideoResourceProperties.status,
-      VideoResourceProperties.statistics,
-      VideoResourceProperties.player
+      VideoResource.snippet,
+      VideoResource.contentDetails,
+      VideoResource.status,
+      VideoResource.statistics,
+      VideoResource.player
     ];
     this.videosSubscription = this.videoService
       .getMostPopular(REGION_CODE, pageArgument, resources)

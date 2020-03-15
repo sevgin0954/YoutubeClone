@@ -6,7 +6,7 @@ import { Channel } from 'src/app/models/channel/channel';
 import { ChannelService } from 'src/app/services-singleton/channel.service';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
-import { ChannelResourceProperties } from 'src/app/shared/enums/resource-properties/channel-resource-properties';
+import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
 
 @Component({
   selector: 'app-multiple-channels-playlist',
@@ -41,9 +41,9 @@ export class MultipleChannelsPlaylistComponent implements OnInit {
     const currentPagePlaylistIds = channelIds.slice(this.channelsStartIndex, channelsEndIndex);
     const pageArgs = new PageArguments(1, undefined);
     const resourceProprties = [
-      ChannelResourceProperties.snippet,
-      ChannelResourceProperties.statistics,
-      ChannelResourceProperties.id
+      ChannelResource.snippet,
+      ChannelResource.statistics,
+      ChannelResource.id
     ];
     this.channelService.getByIds(currentPagePlaylistIds, pageArgs, resourceProprties)
       .subscribe(data => {

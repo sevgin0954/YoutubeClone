@@ -1,4 +1,4 @@
-export enum VideoResourceProperties {
+export enum VideoResource {
   contentDetails = 0,
   fileDetails = 1,
   id = 2,

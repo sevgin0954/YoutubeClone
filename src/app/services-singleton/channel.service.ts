@@ -7,7 +7,7 @@ import { Url } from 'src/app/shared/url';
 import { Observable } from 'rxjs';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { PageArguments } from '../shared/arguments/page-arguments';
-import { ChannelResourceProperties } from '../shared/enums/resource-properties/channel-resource-properties';
+import { ChannelResource } from '../shared/enums/resource-properties/channel-resource';
 import { DataValidator } from '../shared/Validation/data-validator';
 import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
 
@@ -22,7 +22,7 @@ export class ChannelService {
 
   getSubscriptions(
     pageArgs: PageArguments,
-    resources: ChannelResourceProperties[]
+    resources: ChannelResource[]
   ): Observable<ServiceModel<Channel[]>> {
 
     DataValidator.nullOrUndefinied(pageArgs, 'pageArgs');
@@ -32,7 +32,7 @@ export class ChannelService {
       mine: 'true',
       maxResults: pageArgs.maxResults
     }
-    QueryParamsUtility.addResources(queryParams, resources, ChannelResourceProperties);
+    QueryParamsUtility.addResources(queryParams, resources, ChannelResource);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
     const url = new Url(MainConstants.BASE_URL, ['subscriptions'], queryParams);
@@ -44,7 +44,7 @@ export class ChannelService {
   getByIds(
     ids: string[],
     pageArgs: PageArguments,
-    resources: ChannelResourceProperties[]
+    resources: ChannelResource[]
   ): Observable<ServiceModel<Channel[]>> {
     this.validateGetByIdArguments(ids, resources);
 
@@ -52,7 +52,7 @@ export class ChannelService {
       id: ids.join(','),
       maxResults: pageArgs.maxResults.toString()
     };
-    QueryParamsUtility.addResources(queryParams, resources, ChannelResourceProperties);
+    QueryParamsUtility.addResources(queryParams, resources, ChannelResource);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
     const url = new Url(MainConstants.BASE_URL, ['channels'], queryParams);
@@ -63,7 +63,7 @@ export class ChannelService {
 
   private validateGetByIdArguments(
     ids: string[],
-    resourceProprties: ChannelResourceProperties[]
+    resourceProprties: ChannelResource[]
   ): void {
     this.validateIdsArgument(ids);
     this.validateResourceProperties(resourceProprties);
@@ -75,7 +75,7 @@ export class ChannelService {
     DataValidator.emptyCollection(ids, idsArgumentName);
   }
 
-  private validateResourceProperties(resourceProprties: ChannelResourceProperties[]): void {
+  private validateResourceProperties(resourceProprties: ChannelResource[]): void {
     DataValidator.nullOrUndefinied(resourceProprties, 'resourceProprties');
     DataValidator.emptyCollection(resourceProprties, 'resourceProprties');
   }

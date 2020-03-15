@@ -8,7 +8,7 @@ import { Url } from '../shared/url';
 import { ServiceModel } from '../models/service-models/service-model';
 import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
 import { PageArguments } from '../shared/arguments/page-arguments';
-import { PlaylistItemResourceProperties } from '../shared/enums/resource-properties/playlist-item-resource-properties';
+import { PlaylistItemResource } from '../shared/enums/resource-properties/playlist-item-resource';
 import { DataValidator } from '../shared/Validation/data-validator';
 
 const PATH = 'playlistItems';
@@ -22,7 +22,7 @@ export class PlaylistItemsService {
     private http: HttpClient
   ) { }
 
-  getById(playlistId: string, pageArgs: PageArguments, resources: PlaylistItemResourceProperties[]):
+  getById(playlistId: string, pageArgs: PageArguments, resources: PlaylistItemResource[]):
     Observable<ServiceModel<PlaylistItem[]>> {
 
     this.validateArguments(playlistId, pageArgs, resources);
@@ -31,7 +31,7 @@ export class PlaylistItemsService {
       playlistId: playlistId,
       maxResults: pageArgs.maxResults
     };
-    QueryParamsUtility.addResources(queryParams, resources, PlaylistItemResourceProperties);
+    QueryParamsUtility.addResources(queryParams, resources, PlaylistItemResource);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
     const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<PlaylistItem[]>>(url.toString());
@@ -42,7 +42,7 @@ export class PlaylistItemsService {
   private validateArguments(
     playlistId: string,
     pageArgs: PageArguments,
-    resources: PlaylistItemResourceProperties[]
+    resources: PlaylistItemResource[]
   ): void {
     DataValidator.emptyString(playlistId, 'playlistId');
     DataValidator.nullOrUndefinied(playlistId, 'playlistId');

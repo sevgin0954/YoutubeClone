@@ -4,7 +4,7 @@ import { ServiceModel } from '../models/service-models/service-model';
 import { PlaylistItem } from '../models/playlist/playlist-item';
 import { Observable, of } from 'rxjs';
 import { PageArguments } from '../shared/arguments/page-arguments';
-import { PlaylistItemResourceProperties } from '../shared/enums/resource-properties/playlist-item-resource-properties';
+import { PlaylistItemResource } from '../shared/enums/resource-properties/playlist-item-resource';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 
@@ -138,12 +138,12 @@ describe('PlaylistItemsService\s getById method', () => {
 
   it('with resources should add call httpClient with query params with resources separated by comma', () => {
     // Arrange
-    const resource1 = PlaylistItemResourceProperties.id;
-    const resource2 = PlaylistItemResourceProperties.snippet;
+    const resource1 = PlaylistItemResource.id;
+    const resource2 = PlaylistItemResource.snippet;
     const resources = [resource1, resource2];
 
-    const resource1Name = PlaylistItemResourceProperties[resource1];
-    const resource2Name = PlaylistItemResourceProperties[resource2];
+    const resource1Name = PlaylistItemResource[resource1];
+    const resource2Name = PlaylistItemResource[resource2];
     const partQuery = `part=${resource1Name},${resource2Name}`;
 
     // Act
@@ -188,7 +188,7 @@ describe('PlaylistItemsService\s getById method', () => {
   function callMethodWithPlaylistId(playlistId: string): Observable<ServiceModel<PlaylistItem[]>> {
     const pageArgs = new PageArguments(1, '123');
     const resources = [
-      PlaylistItemResourceProperties.id
+      PlaylistItemResource.id
     ];
     const data$ = service.getById(playlistId, pageArgs, resources);
 
@@ -198,7 +198,7 @@ describe('PlaylistItemsService\s getById method', () => {
   function callMethodWithPageArgs(pageArgs: PageArguments): Observable<ServiceModel<PlaylistItem[]>> {
     const playlistId = '123';
     const resources = [
-      PlaylistItemResourceProperties.id
+      PlaylistItemResource.id
     ];
     const data$ = service.getById(playlistId, pageArgs, resources);
 
@@ -206,7 +206,7 @@ describe('PlaylistItemsService\s getById method', () => {
   }
 
   function callMethodWithResources(
-    resources:  PlaylistItemResourceProperties[]
+    resources:  PlaylistItemResource[]
   ): Observable<ServiceModel<PlaylistItem[]>> {
     const pageArgs = new PageArguments(1, '123');
     const playlistId = '123';

@@ -1,4 +1,4 @@
-export enum ChannelResourceProperties {
+export enum ChannelResource {
   auditDetails = 0,
   brandingSettings = 1,
   contentDetails = 2,

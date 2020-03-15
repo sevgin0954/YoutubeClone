@@ -2,7 +2,7 @@ import { ChannelSectionService } from "./channel-section.service";
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { Observable, of } from 'rxjs';
-import { ChannelSectionResourceProperties } from 'src/app/shared/enums/resource-properties/channel-section-resource-properties';
+import { ChannelSectionResource } from 'src/app/shared/enums/resource-properties/channel-section-resource';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 import { ChannelSectionCreateUtilities } from 'src/tests-common/create-utilities/channel-section-create-utilities';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
@@ -95,12 +95,12 @@ describe('ChannelSectionService\'s getByChannelId method', () => {
 
   it('with resources should call httpClient with query params with part equal to the resources separated by commas', () => {
     // Arrange
-    const resources1 = ChannelSectionResourceProperties.id;
-    const resources2 = ChannelSectionResourceProperties.contentDetails;
+    const resources1 = ChannelSectionResource.id;
+    const resources2 = ChannelSectionResource.contentDetails;
     const resources = [resources1, resources2];
 
-    const resource1Name = ChannelSectionResourceProperties[resources1];
-    const resource2Name = ChannelSectionResourceProperties[resources2];
+    const resource1Name = ChannelSectionResource[resources1];
+    const resource2Name = ChannelSectionResource[resources2];
     const resourcesQuery = `part=${resource1Name},${resource2Name}`;
 
     // Act
@@ -125,7 +125,7 @@ describe('ChannelSectionService\'s getByChannelId method', () => {
 
   it('should return channel sections', (done) => {
     // Arrange
-    const resources1 = ChannelSectionResourceProperties.id;
+    const resources1 = ChannelSectionResource.id;
     const expectedReturnedData = [returnedItem1];
 
     // Act
@@ -147,7 +147,7 @@ describe('ChannelSectionService\'s getByChannelId method', () => {
 
   function callMethodWithChannelId(channelId: string): Observable<ChannelSection[]> {
     const resources = [
-      ChannelSectionResourceProperties.id
+      ChannelSectionResource.id
     ];
     const data$ = service.getByChannelId(channelId, resources);
 
@@ -155,7 +155,7 @@ describe('ChannelSectionService\'s getByChannelId method', () => {
   }
 
   function callMethodWithResources(
-    resources: ChannelSectionResourceProperties[]
+    resources: ChannelSectionResource[]
   ): Observable<ChannelSection[]> {
     var channelId = '123';
     const data$ = service.getByChannelId(channelId, resources);

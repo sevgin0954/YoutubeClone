@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { ChannelService } from '../channel.service';
 import { map } from 'rxjs/operators';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
-import { ChannelResourceProperties } from 'src/app/shared/enums/resource-properties/channel-resource-properties';
+import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
 import { DataValidator } from 'src/app/shared/Validation/data-validator';
 
 @Injectable({
@@ -25,9 +25,9 @@ export class ChannelResolverService implements Resolve<Channel> {
 
     const pageArgs = new PageArguments(1, undefined);
     const resourceProprties = [
-      ChannelResourceProperties.brandingSettings,
-      ChannelResourceProperties.snippet,
-      ChannelResourceProperties.statistics,
+      ChannelResource.brandingSettings,
+      ChannelResource.snippet,
+      ChannelResource.statistics,
     ];
     const channel$ = this.channelService.getByIds([channelId], pageArgs, resourceProprties)
       .pipe(

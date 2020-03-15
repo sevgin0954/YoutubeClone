@@ -1,4 +1,4 @@
-export enum ChannelSectionResourceProperties {
+export enum ChannelSectionResource {
   contentDetails = 0,
   id = 1,
   localizations = 2,

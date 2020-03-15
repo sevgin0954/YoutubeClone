@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { ServiceModel } from '../models/service-models/service-model';
 import { Video } from '../models/video/video';
 import { PageArguments } from '../shared/arguments/page-arguments';
-import { VideoResourceProperties } from '../shared/enums/resource-properties/video-resource-properties';
+import { VideoResource } from '../shared/enums/resource-properties/video-resource';
 import { RegionCode } from '../shared/enums/region-code';
 import { UrlUtilities } from 'src/tests-common/utilities/url-utilities';
 import { MainConstants } from '../shared/Constants/main-constants';
@@ -76,7 +76,7 @@ describe('VideoService\s getMostPopular method', () => {
   it('with resources with null resource in the collection should throw an exception', () => {
     // Arrange
     const resources = [
-      VideoResourceProperties.id,
+      VideoResource.id,
       null
     ];
     const exceptionRegex = new RegExp(ExceptionConstants.INVALID_ARGUMENT);
@@ -141,11 +141,11 @@ describe('VideoService\s getMostPopular method', () => {
   it('with resources should call httpClient with query params with resources joined by a comma', () => {
     // Arrange
     const resources = [
-      VideoResourceProperties.id,
-      VideoResourceProperties.fileDetails
+      VideoResource.id,
+      VideoResource.fileDetails
     ];
-    const resource1Name = VideoResourceProperties[resources[0]];
-    const resource2Name = VideoResourceProperties[resources[1]];
+    const resource1Name = VideoResource[resources[0]];
+    const resource2Name = VideoResource[resources[1]];
     const resourcesQuery = `part=${resource1Name},${resource2Name}`;
 
     // Act
@@ -158,12 +158,12 @@ describe('VideoService\s getMostPopular method', () => {
 
   it('with repeating resources should call httpClient with query params with only distinct resources joined by a comma', () => {
     // Arrange
-    const resource = VideoResourceProperties.id;
+    const resource = VideoResource.id;
     const resources = [
       resource,
       resource
     ];
-    const resourceName = VideoResourceProperties[resource];
+    const resourceName = VideoResource[resource];
     const expectedResourcesQuery = `part=${resourceName}`;
 
     // Act
@@ -197,7 +197,7 @@ describe('VideoService\s getMostPopular method', () => {
   function callMethodWithPageArgs(pageArgs: PageArguments): Observable<ServiceModel<Video[]>> {
     const regionCode = RegionCode.BG;
     const resources = [
-      VideoResourceProperties.id
+      VideoResource.id
     ];
     const data$ = service.getMostPopular(regionCode, pageArgs, resources);
 
@@ -207,7 +207,7 @@ describe('VideoService\s getMostPopular method', () => {
   function callMethodWithRegionCode(regionCode: RegionCode): Observable<ServiceModel<Video[]>> {
     const pageArgs = new PageArguments(1, undefined);
     const resources = [
-      VideoResourceProperties.id
+      VideoResource.id
     ];
     const data$ = service.getMostPopular(regionCode, pageArgs, resources);
 
@@ -215,7 +215,7 @@ describe('VideoService\s getMostPopular method', () => {
   }
 
   function callMethodWithResouces(
-    resources: VideoResourceProperties[]
+    resources: VideoResource[]
   ): Observable<ServiceModel<Video[]>> {
     const pageArgs = new PageArguments(1, undefined);
     const regionCode = RegionCode.BG;

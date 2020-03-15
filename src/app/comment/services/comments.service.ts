@@ -6,8 +6,10 @@ import { MainConstants } from '../../shared/Constants/main-constants';
 import { HttpClient } from '@angular/common/http';
 import { Url } from '../../shared/url';
 import { Comment } from '../../models/comment/comment';
+import { QueryParamsUtility } from 'src/app/shared/utilities/query-params-utility';
+import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 
-const BASE_URL = MainConstants.BASE_URL + '/comments'
+const PATH = 'comments'
 
 @Injectable()
 export class CommentsService {
@@ -16,22 +18,20 @@ export class CommentsService {
     private http: HttpClient
   ) { }
 
-  getByParentId(parentId: string, nextPageToken: string): Observable<ServiceModel<Comment[]>> {
+  getByParentId(
+    parentId: string,
+    pageArgs: PageArguments,
+    resources: 
+  ): Observable<ServiceModel<Comment[]>> {
     const queryParams = {
       part: 'id,snippet',
       parentId: parentId
     };
-    this.addPageToken(queryParams, nextPageToken);
+    QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
-    const url = new Url(BASE_URL, [], queryParams);
+    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     var data$ = this.http.get<ServiceModel<Comment[]>>(url.toString());
 
     return data$;
-  }
-
-  private addPageToken(queryParams: any, pageToken: string) {
-    if (pageToken) {
-      queryParams.pageToken = pageToken;
-    }
   }
 }

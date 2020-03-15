@@ -7,7 +7,7 @@ import { pluck, map } from 'rxjs/operators';
 import { Subscription } from '../models/subscribption/subscription';
 import { MainConstants } from '../shared/Constants/main-constants';
 import { Config } from 'protractor';
-import { SubscriptionResourceProperties } from '../shared/enums/resource-properties/subscription-resource-properties';
+import { SubscriptionResource } from '../shared/enums/resource-properties/subscription-resource';
 import { DataValidator } from '../shared/Validation/data-validator';
 import { ServiceModel } from '../models/service-models/service-model';
 import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
@@ -24,14 +24,14 @@ export class SubscriptionsService {
     private http: HttpClient
   ) { }
 
-  getById(channelId: string, resources: SubscriptionResourceProperties[]): Observable<Subscription> {
+  getById(channelId: string, resources: SubscriptionResource[]): Observable<Subscription> {
     this.validateArguments(channelId, resources);
 
     const queryParams: any = {
       forChannelId: channelId,
       mine: true
     };
-    QueryParamsUtility.addResources(queryParams, resources, SubscriptionResourceProperties);
+    QueryParamsUtility.addResources(queryParams, resources, SubscriptionResource);
     const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<Subscription[]>>(url.toString())
       .pipe(
@@ -42,11 +42,11 @@ export class SubscriptionsService {
     return data$;
   }
 
-  subscribe(channelId: string, resources: SubscriptionResourceProperties[]): Observable<Subscription> {
+  subscribe(channelId: string, resources: SubscriptionResource[]): Observable<Subscription> {
     this.validateArguments(channelId, resources);
 
     const queryParams: any = {};
-    QueryParamsUtility.addResources(queryParams, resources, SubscriptionResourceProperties);
+    QueryParamsUtility.addResources(queryParams, resources, SubscriptionResource);
     const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
 
     const resourceId: SubscriptionSnippetResourceId = {
@@ -63,7 +63,7 @@ export class SubscriptionsService {
     return data$;
   }
 
-  private validateArguments(channelId: string, resources: SubscriptionResourceProperties[]): void {
+  private validateArguments(channelId: string, resources: SubscriptionResource[]): void {
     DataValidator.validateString(channelId, 'channelId');
     DataValidator.validateCollection(resources, 'resources');
   }
