@@ -1,4 +1,4 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelSectionsComponent } from './channel-sections.component';
@@ -8,6 +8,19 @@ import { ChannelSectionService } from '../services/channel-section.service';
 import { ChannelSectionCreateUtilities } from 'src/tests-common/create-utilities/channel-section-create-utilities';
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
+import { ChannelSectionType } from 'src/app/shared/enums/channel-section-type';
+
+const MULTPLE_CHANNELS_PLAYIST_TEMPLATE = 'multiple-channels-playlist';
+@Component({ selector: 'app-multiple-channels-playlist', template: MULTPLE_CHANNELS_PLAYIST_TEMPLATE })
+class MultipleChannelsPlaylistComponent { }
+
+const MULTPLE_PLAYLISTS_TEMPLATE = 'app-multiple-playlists';
+@Component({ selector: 'app-multiple-playlists', template: MULTPLE_PLAYLISTS_TEMPLATE })
+class MultiplePlaylistsComponent { }
+
+const SINGLE_PLAYLIST_TEMPLATE = 'app-single-playlist';
+@Component({ selector: 'app-single-playlist', template: SINGLE_PLAYLIST_TEMPLATE })
+class SinglePlaylistComponent { }
 
 let component: ChannelSectionsComponent;
 let fixture: ComponentFixture<ChannelSectionsComponent>;
@@ -18,7 +31,12 @@ beforeEach(() => {
 });
 beforeEach((() => {
   TestBed.configureTestingModule({
-    declarations: [ChannelSectionsComponent],
+    declarations: [
+      ChannelSectionsComponent,
+      MultipleChannelsPlaylistComponent,
+      MultiplePlaylistsComponent,
+      SinglePlaylistComponent
+    ],
     providers: [{ provide: ChannelSectionService, useValue: channelSectionService }],
     schemas: [NO_ERRORS_SCHEMA]
   });
@@ -135,6 +153,55 @@ describe('ChannelSectionsComponent\'s getSectionType method', () => {
   });
 });
 
+describe('ChannelSectionsComponent\'s template', () => {
+
+  beforeEach(() => {
+    component.channelId = '123';
+  });
+
+  it('with multipleChannels channelSection should call MulitpleChannelsPlaylist component', () => {
+    // Arrange
+    const channelSection = createChannelSectionWithType(ChannelSectionType.multipleChannels);
+
+    const data$ = of([channelSection]);
+    channelSectionService.getByChannelId.and.returnValue(data$);
+
+    // Act
+    fixture.detectChanges();
+
+    // Assert
+    expect(fixture.nativeElement.innerHTML).toContain(MULTPLE_CHANNELS_PLAYIST_TEMPLATE);
+  });
+
+  it('with multiplePlaylists channelSection should call MultiplePlaylists component', () => {
+    // Arrange
+    const channelSection = createChannelSectionWithType(ChannelSectionType.multiplePlaylists);
+
+    const data$ = of([channelSection]);
+    channelSectionService.getByChannelId.and.returnValue(data$);
+
+    // Act
+    fixture.detectChanges();
+
+    // Assert
+    expect(fixture.nativeElement.innerHTML).toContain(MULTPLE_PLAYLISTS_TEMPLATE);
+  });
+
+  it('with singlePlaylist channelSection should call SinglePlaylist component', () => {
+    // Arrange
+    const channelSection = createChannelSectionWithType(ChannelSectionType.singlePlaylist);
+
+    const data$ = of([channelSection]);
+    channelSectionService.getByChannelId.and.returnValue(data$);
+
+    // Act
+    fixture.detectChanges();
+
+    // Assert
+    expect(fixture.nativeElement.innerHTML).toContain(SINGLE_PLAYLIST_TEMPLATE);
+  });
+});
+
 function createChannelSections(channelId: string): ChannelSection[] {
   const channelSectionSnippet1 = ChannelSectionCreateUtilities.createSnippet(channelId, 0);
   const channelSection1 = ChannelSectionCreateUtilities.create(channelSectionSnippet1, '123');
@@ -145,4 +212,13 @@ function createChannelSections(channelId: string): ChannelSection[] {
   const channelSections: ChannelSection[] = [channelSection2, channelSection1];
 
   return channelSections;
+}
+
+function createChannelSectionWithType(type: ChannelSectionType): ChannelSection {
+  const channelSectionSnippet = ChannelSectionCreateUtilities
+    .createSnippet('123', 0, type);
+  const channelSection = ChannelSectionCreateUtilities
+    .create(channelSectionSnippet);
+
+  return channelSection;
 }

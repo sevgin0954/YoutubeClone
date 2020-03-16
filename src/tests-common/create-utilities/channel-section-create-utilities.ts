@@ -1,5 +1,6 @@
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { ChannelSectionSnippet } from 'src/app/models/channel-section/channel-section-snippet';
+import { ChannelSectionType } from 'src/app/shared/enums/channel-section-type';
 
 export class ChannelSectionCreateUtilities {
   public static create(snippet?: ChannelSectionSnippet, id?: string): ChannelSection {
@@ -12,7 +13,11 @@ export class ChannelSectionCreateUtilities {
     return channelSection;
   }
 
-  public static createSnippet(channelId?: string, position?: number): ChannelSectionSnippet {
+  public static createSnippet(
+    channelId?: string,
+    position?: number,
+    type?: ChannelSectionType
+  ): ChannelSectionSnippet {
     const channelSectionSnippet = {
       position: position,
       channelId: channelId,
@@ -20,7 +25,7 @@ export class ChannelSectionCreateUtilities {
       localized: undefined,
       style: 'randomStyle',
       title: 'randomTitle',
-      type: 'randomType'
+      type: ChannelSectionType[type]
     };
 
     return channelSectionSnippet;
