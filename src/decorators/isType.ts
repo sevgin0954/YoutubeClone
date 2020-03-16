@@ -1,6 +1,6 @@
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 
-export default function isType(requiredType: string) {
+export default function isType(requiredType: 'string' | 'object' | 'number') {
   return (targetPrototype: any, propertyName: string) => {
 
     const NG_ON_CHANGES_NAME = 'ngOnChanges';

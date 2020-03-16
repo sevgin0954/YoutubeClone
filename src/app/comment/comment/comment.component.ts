@@ -13,7 +13,7 @@ import isType from 'src/decorators/isType';
 export class CommentComponent {
 
   @isRequired
-  @isType('Comment')
+  @isType('object')
   @Input() comment: Comment;
   maxDisplayedRows: number = 3;
 
