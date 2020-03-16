@@ -7,33 +7,33 @@ import { Channel } from 'src/app/models/channel/channel';
 import { Observable, of } from 'rxjs';
 import { ChannelCreateUtilities } from 'src/tests-common/create-utilities/channel-create-utilities';
 
+const channelBrandingSettings = ChannelCreateUtilities.createBrandingSettings();
+const channel: Channel = ChannelCreateUtilities.create(channelBrandingSettings);
+const routerData: Observable<Data> = of({
+  channel: channel
+});
+
+let routeService: any;
+let fixture: ComponentFixture<ChannelComponent>;
+let component: ChannelComponent;
+
+beforeEach(() => {
+  routeService = {};
+  routeService.data = routerData;
+});
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    declarations: [ChannelComponent],
+    providers: [{ provide: ActivatedRoute, useValue: routeService }],
+    schemas: [NO_ERRORS_SCHEMA]
+  });
+});
+beforeEach(() => {
+  fixture = TestBed.createComponent(ChannelComponent);
+  component = fixture.componentInstance;
+});
+
 describe('ChannelComponent', () => {
-
-  const channelBrandingSettings = ChannelCreateUtilities.createBrandingSettings();
-  const channel: Channel = ChannelCreateUtilities.create(channelBrandingSettings);
-  const routerData: Observable<Data> = of({
-    channel: channel
-  });
-
-  let routeService: any;
-  let fixture: ComponentFixture<ChannelComponent>;
-  let component: ChannelComponent;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [ChannelComponent],
-      providers: [{ provide: ActivatedRoute, useValue: routeService }],
-      schemas: [NO_ERRORS_SCHEMA]
-    });
-  });
-  beforeEach(() => {
-    routeService = {};
-    routeService.data = routerData;
-  });
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ChannelComponent);
-    component = fixture.componentInstance;
-  });
 
   it('should be created', () => {
     // Arrange
@@ -43,6 +43,19 @@ describe('ChannelComponent', () => {
     // Assert
     expect(component).toBeTruthy();
   });
+
+  it('should initialize channel after initialization is called', () => {
+    // Arrange
+
+    // Act
+    fixture.detectChanges();
+
+    // Assert
+    expect(component.channel).toEqual(channel);
+  });
+});
+
+describe('ChannelComponent\'s template', () => {
 
   it('should contain picture tag', () => {
     // Arrange
@@ -54,15 +67,5 @@ describe('ChannelComponent', () => {
 
     // Assert
     expect(nativeElement.getElementsByTagName(expectedTag).length).toBeGreaterThanOrEqual(1);
-  });
-
-  it('should initialize channel after initialization is called', () => {
-    // Arrange
-
-    // Act
-    fixture.detectChanges();
-
-    // Assert
-    expect(component.channel).toEqual(channel);
   });
 });
