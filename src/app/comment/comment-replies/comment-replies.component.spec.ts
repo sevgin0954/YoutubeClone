@@ -1,14 +1,17 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommentRepliesComponent } from './comment-replies.component';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 import { CommentsService } from '../services/comments.service';
 import { Comment } from 'src/app/models/comment/comment';
 import { of } from 'rxjs';
-import { ServiceModel } from 'src/app/models/service-models/service-model';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { ServiceModelCreateUtilities } from 'src/tests-common/create-utilities/service-model-create-utilities';
+
+const COMMENT_COMPONENT_SELECTOR = 'app-comment';
+const LOADING_COMPONENT_SELECTOR = 'app-loading';
 
 let component: CommentRepliesComponent;
 let fixture: ComponentFixture<CommentRepliesComponent>;
@@ -19,7 +22,9 @@ beforeEach(() => {
 });
 beforeEach(() => {
   TestBed.configureTestingModule({
-    declarations: [CommentRepliesComponent],
+    declarations: [
+      CommentRepliesComponent
+    ],
     providers: [
       { provide: CommentsService, useValue: commentsService }
     ],
@@ -109,15 +114,8 @@ describe('CommentRepliesComponent', () => {
 
 describe('CommentRepliesComponent\'s onShowMoreReplies method', () => {
 
-  let comments: Comment[] = [
-    { id: '123', snippet: undefined },
-    { id: '456', snippet: undefined }
-  ];
-  let serviceModel: ServiceModel<Comment[]> = {
-    items: comments,
-    nextPageToken: undefined,
-    pageInfo: undefined
-  };
+  let comments = createComments();
+  let serviceModel = ServiceModelCreateUtilities.create(comments);
 
   beforeEach(() => {
     const data$ = of(serviceModel);
@@ -141,7 +139,7 @@ describe('CommentRepliesComponent\'s onShowMoreReplies method', () => {
     component.totalRepliesCount = -1;
     // @ts-ignore
     component.parentId = '123';
-    const exceptionRegex = new RegExp(ExceptionConstants.NEGATIVE_NUMBER);
+    const exceptionRegex = new RegExp(ExceptionConstants.NUMBER_OUT_OF_RANGE);
 
     // Act
 
@@ -405,11 +403,7 @@ describe('CommentRepliesComponent\'s onHideReplies', () => {
 describe('CommentRepliesComponent\'s onShowReplies', () => {
 
   beforeEach(() => {
-    const serviceModel: ServiceModel<Comment[]> = {
-      items: [],
-      nextPageToken: undefined,
-      pageInfo: undefined
-    };
+    let serviceModel = ServiceModelCreateUtilities.create();
     const data$ = of(serviceModel);
     commentsService.getByParentId.and.returnValue(data$);
   });
@@ -460,100 +454,186 @@ describe('CommentRepliesComponent\'s onShowReplies', () => {
 
 describe('CommentRepliesComponent\'s template', () => {
 
+  const totalRepliesCount = 1;
+
+  beforeEach(() => {
+    component.totalRepliesCount = totalRepliesCount;
+    // @ts-ignore
+    component.parentId = '123';
+  });
+
   it('with false shouldShowReplies should not show replies elements', () => {
     // Arrange
+    component.shouldShowReplies = false;
 
     // Act
+    fixture.detectChanges();
 
     // Assert
+    const componentHtml: HTMLElement = fixture.nativeElement.innerHTML;
+    expect(componentHtml).not.toContain(COMMENT_COMPONENT_SELECTOR);
   });
 
   it('with true shouldShowReplies should show replies elements', () => {
     // Arrange
+    component.shouldShowReplies = true;
+    component.comments = createComments();
 
     // Act
+    fixture.detectChanges();
 
     // Assert
+    const componentHtml: HTMLElement = fixture.nativeElement.innerHTML;
+    expect(componentHtml).toContain(COMMENT_COMPONENT_SELECTOR);
   });
 
   it('with true shouldShowLoading should show loading element', () => {
     // Arrange
+    component.shouldShowLoading = true;
 
     // Act
+    fixture.detectChanges();
 
     // Assert
+    const componentHtml: HTMLElement = fixture.nativeElement.innerHTML;
+    expect(componentHtml).toContain(LOADING_COMPONENT_SELECTOR);
   });
 
   it('with false shouldShowLoading should not show loading element', () => {
     // Arrange
+    component.shouldShowLoading = false;
 
     // Act
+    fixture.detectChanges();
 
     // Assert
+    const componentHtml: HTMLElement = fixture.nativeElement.innerHTML;
+    expect(componentHtml).not.toContain(LOADING_COMPONENT_SELECTOR);
   });
 
-  it('with true shouldShowMoreRepliesBtn and true shouldShowReplies should show show more comments button element', () => {
+  it('with true shouldShowMoreRepliesBtn and true shouldShowReplies should show show-more-comments button element', () => {
     // Arrange
+    component.shouldShowMoreRepliesBtn = true;
+    component.shouldShowReplies = true;
 
     // Act
+    fixture.detectChanges();
 
     // Assert
+    const showMoreCommentsBtn = getShowMoreCommentsButton();
+    expect(showMoreCommentsBtn).toBeTruthy();
   });
 
   it('with false shouldShowMoreRepliesBtn and true shouldShowReplies should not show show-more-comments button element', () => {
     // Arrange
+    component.shouldShowMoreRepliesBtn = false;
+    component.shouldShowReplies = true;
 
     // Act
+    fixture.detectChanges();
 
     // Assert
+    const showMoreCommentsBtn = getShowMoreCommentsButton();
+    expect(showMoreCommentsBtn).toBeFalsy();
   });
 
   it('with true shouldShowMoreRepliesBtn and false shouldShowReplies should not show show-more-comments button element', () => {
     // Arrange
+    component.shouldShowMoreRepliesBtn = true;
+    component.shouldShowReplies = false;
 
     // Act
+    fixture.detectChanges();
 
     // Assert
+    const showMoreCommentsBtn = getShowMoreCommentsButton();
+    expect(showMoreCommentsBtn).toBeFalsy();
   });
 
   it('when show-more-comments button is clicked should call onShowMoreReplies method', () => {
     // Arrange
+    component.shouldShowMoreRepliesBtn = true;
+    component.shouldShowReplies = true;
+
+    spyOn(component, 'onShowMoreReplies');
 
     // Act
+    fixture.detectChanges();
+
+    const showMoreCommentsBtn = getShowMoreCommentsButton();
+    showMoreCommentsBtn.click();
 
     // Assert
+    expect(component.onShowMoreReplies).toHaveBeenCalledTimes(1);
   });
 
-  // fit('without replies should not show show-comments button', () => {
-  //   // Arrange
-  //   const repliesCount = 0;
-  //   component.totalRepliesCount = repliesCount;
-  //   // @ts-ignore
-  //   component.parentId = '123';
-
-  //   // Act
-  //   fixture.detectChanges();
-
-  //   // Assert
-  //   const rootElement: HTMLElement = fixture.nativeElement;
-  //   const showCommentsButton = getShowCommentsButton(rootElement, repliesCount);
-  //   expect(showCommentsButton.hasAttribute('hidden')).toBeTruthy();
-  // });
-
-  it('', () => {
+  it('when show comments button is clicked should call onShowReplies method', () => {
     // Arrange
+    component.shouldShowMoreRepliesBtn = true;
+    component.shouldShowReplies = true;
+
+    spyOn(component, 'onShowReplies');
 
     // Act
+    fixture.detectChanges();
+
+    const showCommentsBtn = getShowCommentsButton(totalRepliesCount);
+    showCommentsBtn.click();
 
     // Assert
+    expect(component.onShowReplies).toHaveBeenCalledTimes(1);
   });
 
-  function getShowCommentsButton(rootElement: HTMLElement, repliesCount: number): Element {
+  it('when hide comments button is clicked should call onHideReplies method', () => {
+    // Arrange
+    component.shouldShowMoreRepliesBtn = true;
+    component.shouldShowReplies = true;
+
+    spyOn(component, 'onHideReplies');
+
+    // Act
+    fixture.detectChanges();
+
+    const hidenCommentsBtn = getHideCommentsButton();
+    hidenCommentsBtn.click();
+
+    // Assert
+    expect(component.onHideReplies).toHaveBeenCalledTimes(1);
+  });
+
+  function getHideCommentsButton(): HTMLElement {
+    const rootElement: HTMLElement = fixture.nativeElement;
+    const buttons = rootElement.querySelectorAll('.comments-toggle-button, .show-button');
+
+    const buttonText = 'Hide comments';
+    const hideCommentsButton: any = Array.from(buttons).find(btn => btn.innerHTML.includes(buttonText));
+
+    return hideCommentsButton;
+  }
+
+  function getShowCommentsButton(repliesCount: number): HTMLElement {
+    const rootElement: HTMLElement = fixture.nativeElement;
     const buttons = rootElement.querySelectorAll('.comments-toggle-button, .show-button');
 
     const buttonText = `Show ${repliesCount} comments`;
-    const showCommentsButton = Array.from(buttons).find(btn => btn.innerHTML.includes(buttonText));
+    const showCommentsButton: any = Array.from(buttons).find(btn => btn.innerHTML.includes(buttonText));
 
     return showCommentsButton;
   }
+
+  function getShowMoreCommentsButton(): HTMLElement {
+    const rootElement: HTMLElement = fixture.nativeElement;
+    const showMoreCommentsBtn: any = rootElement.querySelector('.show-more-button');
+
+    return showMoreCommentsBtn;
+  }
 });
+
+function createComments(): Comment[] {
+  const comments: Comment[] = [
+    { id: '123', snippet: undefined },
+    { id: '456', snippet: undefined }
+  ];
+
+  return comments;
+}
