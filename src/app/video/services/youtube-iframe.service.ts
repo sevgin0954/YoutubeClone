@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 
-const PLAYER_INFO_KEY = 'b';
-const PLAYER_HTML_ELEMENT_KEY = 'a';
-
 @Injectable()
 export class YoutubeIframeService {
 
   private ratio: number;
-  //private reframed: Boolean = false;
   private player: any;
   private videoId: string;
-  //private YT: any;
 
   isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -33,7 +28,6 @@ export class YoutubeIframeService {
   }
 
   private startVideo(isReposnsive: boolean, shouldOverflow: boolean) {
-    //this.reframed = false;
     this.player = new window['YT'].Player('player', {
       videoId: this.videoId,
       playerVars: {
@@ -67,7 +61,7 @@ export class YoutubeIframeService {
   }
 
   private setMaxHeight(value: string): void {
-    const playerElement: HTMLElement = this.player[PLAYER_HTML_ELEMENT_KEY];
+    const playerElement: HTMLElement = this.player.getIframe();
 
     playerElement.style.maxHeight = value;
   }
@@ -82,22 +76,22 @@ export class YoutubeIframeService {
   }
 
   private initRation(): void {
-    const playerInfo = this.player[PLAYER_INFO_KEY].b;
-    const width = playerInfo.width;
-    const height = playerInfo.height;
+    const playerElement = this.player.getIframe();
+    const width = playerElement.width;
+    const height = playerElement.height;
 
     this.ratio = width / height;
   }
 
   private makeResponsive(): void {
-    const playerElement = this.player[PLAYER_HTML_ELEMENT_KEY];
+    const playerElement = this.player.getIframe();
 
     playerElement.width = '100%';
     playerElement.height = 'auto';
   }
 
   resizeHeight(): void {
-    const playerElement = this.player[PLAYER_HTML_ELEMENT_KEY];
+    const playerElement = this.player.getIframe();
 
     const currentWidth = playerElement.offsetWidth;
     const resizedHeight = Math.ceil(currentWidth / this.ratio);
