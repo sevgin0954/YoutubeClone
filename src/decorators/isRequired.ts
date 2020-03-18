@@ -16,7 +16,8 @@ export default function isRequired(targetPrototype: any, propertyName: string): 
   });
 
   function propertyValue(): void {
-    if (this[propertyName] === null || this[propertyName] === undefined) {
+    const propertyValue = this[propertyName];
+    if (propertyValue === null || propertyValue === undefined) {
       const className = targetPrototype.constructor.name;
       const argumentsInfo = `Input name: ${propertyName}; class name: ${className}`;
       const exceptionMessage = ExceptionConstants.REQUIRED_INPUT + ' ' + argumentsInfo;

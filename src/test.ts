@@ -16,7 +16,7 @@ getTestBed().initTestEnvironment(
 );
 // Then we find all the tests.
 //const context = require.context('./app/services-singleton', true, /\.spec\.ts$/);
-const context = require.context('./', true, /comment\.component\.spec\.ts$/);
+const context = require.context('./', true, /comment-replies\.component\.spec\.ts$/);
 
 // And load the modules.
 context.keys().map(context);

@@ -1,8 +1,10 @@
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 
-export default function isType(requiredType: 'string' | 'object' | 'number'): Function {
+export default function isInRange(
+  minNumber: number,
+  maxNumber: number = Number.MAX_SAFE_INTEGER
+): Function {
   return (targetPrototype: any, propertyName: string) => {
-
     const NG_ON_CHANGES_NAME = 'ngOnChanges';
 
     /** ngOnChanges might not be implemented by this component */
@@ -13,16 +15,12 @@ export default function isType(requiredType: 'string' | 'object' | 'number'): Fu
     });
 
     function propertyValue(): void {
-      const argumentType = typeof this[propertyName];
-      if (argumentType !== requiredType) {
+      const propertyValue = this[propertyName];
+      if (propertyValue < minNumber || propertyValue > maxNumber) {
         const className = targetPrototype.constructor.name;
-        const argumentsInfo =
-          `Input name: ${propertyName}; ` +
-          `Class name: ${className}; ` +
-          `Required type: ${requiredType}; ` +
-          `Actual type: ${argumentType}`;
-        const exceptionMessage = ExceptionConstants.INCORRECT_TYPE + ' ' + argumentsInfo;
-        throw TypeError(exceptionMessage);
+        const argumentsInfo = `Input name: ${propertyName}; class name: ${className}`;
+        const exceptionMessage = ExceptionConstants.NUMBER_OUT_OF_RANGE + ' ' + argumentsInfo;
+        throw Error(exceptionMessage);
       }
 
       if (ngOnChangesClone) {

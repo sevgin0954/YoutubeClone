@@ -1,5 +1,5 @@
 <div [attr.hidden]="shouldShowReplies ? null : 'hidden'"
-  *ngFor="let comment of comments; let currentIndex = index;">
+  *ngFor="let comment of comments">
   <hr>
   <app-comment class="comment" [comment]="comment"></app-comment>
 </div>
@@ -8,7 +8,7 @@
   <app-loading class="loading-container" *ngIf="shouldShowLoading"></app-loading>
 </div>
 
-<div *ngIf="shouldShowMoreReplies && shouldShowReplies">
+<div *ngIf="shouldShowMoreRepliesBtn && shouldShowReplies">
   <button class="mt-2" class="show-more-button" (click)="onShowMoreReplies()">
     <i class="far fa-arrow-alt-circle-down"></i>
     Show more comments

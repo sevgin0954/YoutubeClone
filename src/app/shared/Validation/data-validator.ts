@@ -1,5 +1,6 @@
 import { ExceptionConstants } from '../Constants/exception-constants';
 
+// TODO: Split to smaller classes
 export class DataValidator {
 
   public static anyNotNullOrUndefined(obj: object, argumentsInfo: string): void {
@@ -58,6 +59,13 @@ export class DataValidator {
   public static validateCollection(collection: any[], argumentsInfo: string): void {
     this.nullOrUndefinied(collection, argumentsInfo);
     this.emptyCollection(collection, argumentsInfo);
+  }
+
+  public static validateFoundElement(element: any, argumentsInfo: string): void {
+    if (element === null || element === undefined) {
+      const errorMessage = this.appendArgumentName(ExceptionConstants.NOT_FOUND, argumentsInfo);
+      throw Error(errorMessage);
+    }
   }
 
   public static validateIndex(index: number, collection: any[], indexArgumentName: string): void {

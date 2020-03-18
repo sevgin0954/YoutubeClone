@@ -1,7 +1,7 @@
 import { ElementDisplayService } from "./elements-display.service";
 import { ExceptionConstants } from '../shared/Constants/exception-constants';
 import { ElementUtilities } from 'src/tests-common/utilities/element-utilities';
-import { SetupStubs } from 'src/tests-common/setup-stubs';
+import { SetupStubs } from 'src/tests-common/utilities/setup-stubs-utilities';
 
 let service: any;
 let elementsPredicateService: any;
