@@ -10,18 +10,6 @@ import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 import { ChannelSectionType } from 'src/app/shared/enums/channel-section-type';
 
-const MULTPLE_CHANNELS_PLAYIST_TEMPLATE = 'multiple-channels-playlist';
-@Component({ selector: 'app-multiple-channels-playlist', template: MULTPLE_CHANNELS_PLAYIST_TEMPLATE })
-class MultipleChannelsPlaylistComponent { }
-
-const MULTPLE_PLAYLISTS_TEMPLATE = 'app-multiple-playlists';
-@Component({ selector: 'app-multiple-playlists', template: MULTPLE_PLAYLISTS_TEMPLATE })
-class MultiplePlaylistsComponent { }
-
-const SINGLE_PLAYLIST_TEMPLATE = 'app-single-playlist';
-@Component({ selector: 'app-single-playlist', template: SINGLE_PLAYLIST_TEMPLATE })
-class SinglePlaylistComponent { }
-
 let component: ChannelSectionsComponent;
 let fixture: ComponentFixture<ChannelSectionsComponent>;
 let channelSectionService: any;
@@ -32,10 +20,7 @@ beforeEach(() => {
 beforeEach((() => {
   TestBed.configureTestingModule({
     declarations: [
-      ChannelSectionsComponent,
-      MultipleChannelsPlaylistComponent,
-      MultiplePlaylistsComponent,
-      SinglePlaylistComponent
+      ChannelSectionsComponent
     ],
     providers: [{ provide: ChannelSectionService, useValue: channelSectionService }],
     schemas: [NO_ERRORS_SCHEMA]
@@ -154,6 +139,10 @@ describe('ChannelSectionsComponent\'s getSectionType method', () => {
 });
 
 describe('ChannelSectionsComponent\'s template', () => {
+
+  const MULTPLE_CHANNELS_PLAYIST_TEMPLATE = 'multiple-channels-playlist';
+  const MULTPLE_PLAYLISTS_TEMPLATE = 'app-multiple-playlists';
+  const SINGLE_PLAYLIST_TEMPLATE = 'app-single-playlist';
 
   beforeEach(() => {
     component.channelId = '123';
