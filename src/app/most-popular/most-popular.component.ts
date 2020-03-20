@@ -3,7 +3,6 @@ import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { Video } from '../models/video/video';
 import { VideoService } from '../services-singleton/video.service';
 import { WindowService } from '../services-singleton/window.service';
-import { FormatterService } from '../services-singleton/formatter.service';
 import { Subscription } from 'rxjs';
 import { VideoThumbnailSize } from '../shared/enums/video-thumbnail-size';
 import { PageArguments } from '../shared/arguments/page-arguments';
@@ -12,6 +11,7 @@ import { RegionCode } from '../shared/enums/region-code';
 import { GeolocationService } from '../services-singleton/geolocation.service';
 
 const MAX_RESULTS_PER_PAGE = 25;
+const VIDEO_DESCRIPTION_DISPLAYED_ROWS = 3;
 const VIDEO_TITLE_DISPLAYED_ROWS = 2;
 
 @Component({
@@ -22,6 +22,7 @@ const VIDEO_TITLE_DISPLAYED_ROWS = 2;
 export class MostPopularComponent implements OnInit, OnDestroy {
 
   areMoreVideos: boolean = true;
+  videoDescriptionMaxDisplayedRows: number = VIDEO_DESCRIPTION_DISPLAYED_ROWS;
   videos: Video[] = [];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
   videoTitleMaxDisplayedRows: number = VIDEO_TITLE_DISPLAYED_ROWS;
@@ -32,7 +33,6 @@ export class MostPopularComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
 
   constructor(
-    public formatterService: FormatterService,
     private geolacationService: GeolocationService,
     private videoService: VideoService,
     private windowService: WindowService
@@ -62,7 +62,7 @@ export class MostPopularComponent implements OnInit, OnDestroy {
     if (this.areMoreVideos) {
       this.windowService.onReachBottom(() => {
         this.loadMoreVideos();
-        this.isFirstPage = this.isFirstPage;
+        this.isFirstPage = false;
       });
     }
   }
