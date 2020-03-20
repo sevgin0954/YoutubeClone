@@ -30,7 +30,11 @@ export class NavbarSideComponent implements AfterViewChecked {
     }
   }
 
-  private findElementWithAttribute(nodes: NodeList, attributeName: string, attributeValue: string): Element {
+  private findElementWithAttribute(
+    nodes: NodeList,
+    attributeName: string,
+    attributeValue: string
+  ): Element {
     const elementsAsArray = Array.from(nodes);
     const selectedElement = elementsAsArray
       .find(n => (n as Element).getAttribute(attributeName) === attributeValue);

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/services-singleton/auth.service';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,13 @@ export class JwtInterceptorService implements HttpInterceptor {
     private router: Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const hasSkipHeader = request.headers.has(MainConstants.SKIP_INTERCEPTOR_HEADER);
+    if (hasSkipHeader) {
+      const modifiedHeaders = request.headers.delete(MainConstants.SKIP_INTERCEPTOR_HEADER);
+
+      return next.handle(request.clone({headers: modifiedHeaders}));
+    }
+
     const token = this.authService.getToken();
     const alteredRequest = request.clone({
       setHeaders: {

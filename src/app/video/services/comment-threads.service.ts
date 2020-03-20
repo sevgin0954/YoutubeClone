@@ -11,7 +11,7 @@ import { PageArguments } from '../../shared/arguments/page-arguments';
 import { QueryParamsUtility } from '../../shared/utilities/query-params-utility';
 import { DataValidator } from '../../shared/Validation/data-validator';
 
-const BASE_URL = MainConstants.BASE_URL + '/commentThreads';
+const BASE_URL = MainConstants.YOUTUBE_BASE_URL + '/commentThreads';
 
 @Injectable()
 export class CommentThreadsService {

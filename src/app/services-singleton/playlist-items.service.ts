@@ -33,7 +33,7 @@ export class PlaylistItemsService {
     };
     QueryParamsUtility.addResources(queryParams, resources, PlaylistItemResource);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
-    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<PlaylistItem[]>>(url.toString());
 
     return data$;

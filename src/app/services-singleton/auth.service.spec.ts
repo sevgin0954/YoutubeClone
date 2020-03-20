@@ -24,7 +24,7 @@ describe('AuthService', () => {
     service.setToken(token);
 
     // Assert
-    expect(window.localStorage.setItem).toHaveBeenCalledWith(MainConstants.AuthTokenKey, token);
+    expect(window.localStorage.setItem).toHaveBeenCalledWith(MainConstants.AUTH_TOKEN_KEY, token);
   });
 
   it('getToken should get token from localStorage', () => {
@@ -47,6 +47,6 @@ describe('AuthService', () => {
     service.logout();
 
     // Assert
-    expect(window.localStorage.removeItem).toHaveBeenCalledWith(MainConstants.AuthTokenKey);
+    expect(window.localStorage.removeItem).toHaveBeenCalledWith(MainConstants.AUTH_TOKEN_KEY);
   });
 });

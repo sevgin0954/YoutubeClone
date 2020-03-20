@@ -57,7 +57,7 @@ describe('ChannelService\'s getSubscriptions method', () => {
 
   it('should call httpClient with url path', () => {
     // Arrange
-    const expectedPath: string = `${MainConstants.BASE_URL}/subscriptions`;
+    const expectedPath: string = `${MainConstants.YOUTUBE_BASE_URL}/subscriptions`;
 
     // Act
     callMethodWithDefaultResources();

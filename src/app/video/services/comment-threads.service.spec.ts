@@ -27,7 +27,7 @@ describe('CommentThreadsService getByVideoId', () => {
 
   it('should call httpClient service with correct path', () => {
     // Arrange
-    const expectedUrl = MainConstants.BASE_URL + '/commentThreads';
+    const expectedUrl = MainConstants.YOUTUBE_BASE_URL + '/commentThreads';
 
     // Act
     callMethodWithDefaultArguments();

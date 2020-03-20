@@ -113,7 +113,7 @@ describe('ChannelSectionService\'s getByChannelId method', () => {
 
   it('should call httpClient with correct path', () => {
     // Arrange
-    const expectedPath = MainConstants.BASE_URL + '/' + 'channelSections';
+    const expectedPath = MainConstants.YOUTUBE_BASE_URL + '/' + 'channelSections';
 
     // Act
     callMethodWithDefaultArguments();

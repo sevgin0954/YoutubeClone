@@ -84,7 +84,7 @@ describe('SubscriptionsService\s getById method', () => {
 
   it('should call httpClient with correct path', () => {
     // Arrange
-    const expectedPath = MainConstants.BASE_URL + '/' + 'subscriptions';
+    const expectedPath = MainConstants.YOUTUBE_BASE_URL + '/' + 'subscriptions';
 
     // Act
     callMethodWithDefaultArguments();
@@ -275,7 +275,7 @@ describe('SubscriptionsService\s subscribe method', () => {
 
   it('should call httpClient with correct path', () => {
     // Arrange
-    const expectedPath = MainConstants.BASE_URL + '/' + 'subscriptions';
+    const expectedPath = MainConstants.YOUTUBE_BASE_URL + '/' + 'subscriptions';
 
     // Act
     callMethodWithDefaultArguments();
@@ -400,7 +400,7 @@ describe('SubscriptionsService\s unsubscribe method', () => {
 
   it('should call httpClient with correct path', () => {
     // Arrange
-    const expectedPath = MainConstants.BASE_URL + '/' + 'subscriptions';
+    const expectedPath = MainConstants.YOUTUBE_BASE_URL + '/' + 'subscriptions';
 
     // Act
     callMethodWithDefaultArguments();

@@ -24,7 +24,7 @@ export class PlaylistsService {
       maxResults: maxResults
     };
     this.addPageToken(queryParams, pageToken);
-    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<Playlist[]>>(url.toString());
 
     return data$;

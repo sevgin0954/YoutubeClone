@@ -31,7 +31,7 @@ export class ChannelSectionService {
       channelId: channelId
     };
     QueryParamsUtility.addResources(queryParams, resources, ChannelSectionResource);
-    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams)
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams)
     const data$ = this.http.get(url.toString()).pipe(
       pluck<any, ChannelSection[]>('items')
     );

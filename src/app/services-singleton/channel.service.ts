@@ -35,7 +35,7 @@ export class ChannelService {
     QueryParamsUtility.addResources(queryParams, resources, ChannelResource);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
-    const url = new Url(MainConstants.BASE_URL, ['subscriptions'], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, ['subscriptions'], queryParams);
     const data$ = this.http.get<ServiceModel<Channel[]>>(url.toString());
 
     return data$;
@@ -55,7 +55,7 @@ export class ChannelService {
     QueryParamsUtility.addResources(queryParams, resources, ChannelResource);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
-    const url = new Url(MainConstants.BASE_URL, ['channels'], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, ['channels'], queryParams);
     const data$ = this.http.get<ServiceModel<Channel[]>>(url.toString());
 
     return data$;

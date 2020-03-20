@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { pluck, map } from 'rxjs/operators';
 import { Config } from 'protractor';
 
-const BASE_URL = MainConstants.BASE_URL + '/videos'
+const BASE_URL = MainConstants.YOUTUBE_BASE_URL + '/videos'
 
 @Injectable()
 export class VideoRatingService {

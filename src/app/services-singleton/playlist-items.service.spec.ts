@@ -156,7 +156,7 @@ describe('PlaylistItemsService\s getById method', () => {
 
   it('should call httpClient with correct path', () => {
     // Arrange
-    const basePath = MainConstants.BASE_URL + '/' + 'playlistItems';
+    const basePath = MainConstants.YOUTUBE_BASE_URL + '/' + 'playlistItems';
 
     // Act
     callMethodWithDefaultArgument();

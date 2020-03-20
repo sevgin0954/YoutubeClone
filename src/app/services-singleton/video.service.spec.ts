@@ -177,7 +177,7 @@ describe('VideoService\s getMostPopular method', () => {
 
   it('should call httpClient with correct path', () => {
     // Arrange
-    const expectedPath = MainConstants.BASE_URL + '/' + 'videos';
+    const expectedPath = MainConstants.YOUTUBE_BASE_URL + '/' + 'videos';
 
     // Act
     callMethodWithDefaultArguments();

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../services-singleton/auth.service';
+import { SecurityConstants } from 'src/app/shared/constants/security-constants';
 
 @Component({
   selector: 'app-signin',
@@ -34,7 +35,8 @@ export class SigninComponent implements OnInit {
     }
     else {
       // TODO: Add dynamically based on the required permissions
-      window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?client_id=576498499876-u841pl14j9pdgemtlaqk1a6tjih8vb2c.apps.googleusercontent.com&' +
+      window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' +
+      `client_id=${SecurityConstants.YOUTUBE_CLIENT_ID}&` +
       'redirect_uri=http://localhost:4200/signin&' +
       'response_type=token&' +
       'scope=' +

@@ -24,7 +24,7 @@ describe('MostPopularComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('', () => {
+  it('during initialization should load videos in ngOnInit', () => {
     // Arrange
 
     // Act
@@ -32,7 +32,7 @@ describe('MostPopularComponent', () => {
     // Assert
   });
 
-  it('', () => {
+  it('should not allow to load more videos while loading videos during the initialization', () => {
     // Arrange
 
     // Act
@@ -40,7 +40,7 @@ describe('MostPopularComponent', () => {
     // Assert
   });
 
-  it('', () => {
+  it('when the bottom of the page is reached should load more videos', () => {
     // Arrange
 
     // Act
@@ -48,7 +48,23 @@ describe('MostPopularComponent', () => {
     // Assert
   });
 
-  it('', () => {
+  it('when the bottom of the page is reached should add the newly loaded videos to the videos collection', () => {
+    // Arrange
+
+    // Act
+
+    // Assert
+  });
+
+  it('should not allow to load more videos while loading videos when bottom is reached', () => {
+    // Arrange
+
+    // Act
+
+    // Assert
+  });
+
+  it('should call videoService.getMostPopular with', () => {
     // Arrange
 
     // Act

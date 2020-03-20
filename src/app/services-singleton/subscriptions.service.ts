@@ -32,7 +32,7 @@ export class SubscriptionsService {
       mine: true
     };
     QueryParamsUtility.addResources(queryParams, resources, SubscriptionResource);
-    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<Subscription[]>>(url.toString())
       .pipe(
         pluck<ServiceModel<Subscription[]>, Subscription[]>('items'),
@@ -47,7 +47,7 @@ export class SubscriptionsService {
 
     const queryParams: any = {};
     QueryParamsUtility.addResources(queryParams, resources, SubscriptionResource);
-    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
 
     const resourceId: SubscriptionSnippetResourceId = {
       kind:"youtube#channel",
@@ -74,7 +74,7 @@ export class SubscriptionsService {
     const queryParams: any = {
       id: channelId
     };
-    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
     const data$ = this.http.delete<Config>(url.toString(), { observe: 'response' })
       .pipe(
         map(data => data.status)

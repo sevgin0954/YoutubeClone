@@ -35,7 +35,7 @@ export class CommentsService {
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
     QueryParamsUtility.addResources(queryParams, resources, CommentResource);
 
-    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
     var data$ = this.http.get<ServiceModel<Comment[]>>(url.toString());
 
     return data$;

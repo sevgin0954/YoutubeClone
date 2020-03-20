@@ -36,7 +36,7 @@ export class VideoService {
     QueryParamsUtility.addResources(queryParams, resources, VideoResource);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
-    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<Video[]>>(url.toString());
 
     return data$;
@@ -59,7 +59,7 @@ export class VideoService {
       id: ids.join(',')
     };
     QueryParamsUtility.addResources(queryParams, resources, VideoResource);
-    const url = new Url(MainConstants.BASE_URL, [PATH], queryParams);
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
     const data$ = this.http.get(url.toString())
       .pipe(
         pluck<any, Video[]>('items')
