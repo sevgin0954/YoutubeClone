@@ -12,7 +12,8 @@ export class NavbarSideComponent implements AfterViewChecked {
   buttonList: ElementRef;
 
   constructor(
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngAfterViewChecked(): void {
     this.selectCurrentPageLink();
@@ -23,8 +24,10 @@ export class NavbarSideComponent implements AfterViewChecked {
 
     this.removeClass(ulNodes, 'active');
 
-    const currentRoute = this.router.url.slice(1);
-    const selectedElement = this.findElementWithAttribute(ulNodes, 'data-route', currentRoute);
+    const urlParts = this.router.url.split('?');
+    const urlPaths = urlParts[0].split('/');
+    const urlLastPath = urlPaths[urlPaths.length - 1];
+    const selectedElement = this.findElementWithAttribute(ulNodes, 'data-route', urlLastPath);
     if (selectedElement) {
       selectedElement.classList.add('active');
     }
