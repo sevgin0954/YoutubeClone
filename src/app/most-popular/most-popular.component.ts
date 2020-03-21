@@ -1,8 +1,7 @@
-import { Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 
 import { Video } from '../models/video/video';
 import { VideoService } from '../services-singleton/video.service';
-import { WindowService } from '../services-singleton/window.service';
 import { Subscription } from 'rxjs';
 import { VideoThumbnailSize } from '../shared/enums/video-thumbnail-size';
 import { PageArguments } from '../shared/arguments/page-arguments';
@@ -22,11 +21,11 @@ const VIDEO_TITLE_DISPLAYED_ROWS = 2;
 export class MostPopularComponent implements OnInit, OnDestroy {
 
   areMoreVideos: boolean = true;
+  isCurrentlyLoading: boolean = false;
   videoDescriptionMaxDisplayedRows: number = VIDEO_DESCRIPTION_DISPLAYED_ROWS;
   videos: Video[] = [];
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
   videoTitleMaxDisplayedRows: number = VIDEO_TITLE_DISPLAYED_ROWS;
-  private isCurrentlyLoading: boolean = false;
   private isFirstPage: boolean = true;
   private nextPageToken: string;
   private regionCode: RegionCode;
@@ -34,8 +33,7 @@ export class MostPopularComponent implements OnInit, OnDestroy {
 
   constructor(
     private geolacationService: GeolocationService,
-    private videoService: VideoService,
-    private windowService: WindowService
+    private videoService: VideoService
   ) { }
 
   ngOnInit() {
@@ -50,24 +48,7 @@ export class MostPopularComponent implements OnInit, OnDestroy {
     this.subscription.add(regionSubscription);
   }
 
-  @HostListener("window:scroll")
-  private onScroll(): void {
-    if (this.isCurrentlyLoading) {
-      return;
-    }
-    if (this.nextPageToken === undefined && this.isFirstPage === false) {
-      this.areMoreVideos = false;
-    }
-
-    if (this.areMoreVideos) {
-      this.windowService.onReachBottom(() => {
-        this.loadMoreVideos();
-        this.isFirstPage = false;
-      });
-    }
-  }
-
-  private loadMoreVideos(): void {
+  loadMoreVideos = (): void => {
     this.isCurrentlyLoading = true;
 
     const pageArgument = new PageArguments(MAX_RESULTS_PER_PAGE, this.nextPageToken);
@@ -84,9 +65,18 @@ export class MostPopularComponent implements OnInit, OnDestroy {
         this.nextPageToken = data.nextPageToken;
         this.videos.push(...data.items);
 
+        this.isFirstPage = false;
         this.isCurrentlyLoading = false;
+
+        this.updateAreMoreVideos();
       });
     this.subscription.add(videoSubscription);
+  }
+
+  private updateAreMoreVideos(): void {
+    if (this.nextPageToken === undefined && this.isFirstPage === false) {
+      this.areMoreVideos = false;
+    }
   }
 
   ngOnDestroy(): void {

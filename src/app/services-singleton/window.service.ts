@@ -8,19 +8,25 @@ import { ExceptionConstants } from '../shared/Constants/exception-constants';
 })
 export class WindowService {
 
-  isElementOverflowingVerticaly(element: Element): boolean {
+  isElementInsideTheScreenVerticaly(element: Element): boolean {
     this.validateElement(element);
 
-    let isOverflowing = false;
+    const rect: ClientRect = element.getBoundingClientRect();
+    const windowHeight = document.documentElement.clientHeight;
+    const isTopInside = rect.top <= windowHeight && rect.top >= 0;
+    const isBottomInside = rect.bottom >= 0 && rect.bottom <= windowHeight;
 
-    let rect: ClientRect = element.getBoundingClientRect();
-    const isRightSideOverflowing = rect.right > window.screen.width;
+    return isTopInside || isBottomInside;
+  }
+
+  isElementOverflowingHorizontaly(element: Element): boolean {
+    this.validateElement(element);
+
+    const rect: ClientRect = element.getBoundingClientRect();
+    const isRightSideOverflowing = rect.right > document.body.clientWidth;
     const isLeftSideOverflowing = rect.left < 0;
-    if (isRightSideOverflowing || isLeftSideOverflowing) {
-      isOverflowing = true;
-    }
 
-    return isOverflowing;
+    return isRightSideOverflowing || isLeftSideOverflowing;
   }
 
   private validateElement(element: Element): void {
@@ -30,12 +36,6 @@ export class WindowService {
       const message =
         ExceptionConstants.HAVING_ATTRIBUTE + ' Argument name: element; Attribute name: hidden';
       throw Error(message);
-    }
-  }
-
-  onReachBottom(callback: Function): void {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      callback();
     }
   }
 }

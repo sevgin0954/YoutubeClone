@@ -1,11 +1,10 @@
-import { Component, HostListener, Input, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Subscription } from 'rxjs';
 import { CommentThread } from 'src/app/models/comment/comment-thread';
 import { CommentThreadOrder } from 'src/app/shared/enums/comment-thread-order';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
-import { WindowService } from 'src/app/services-singleton/window.service';
 import { CommentThreadsService } from 'src/app/video/services/comment-threads.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 
@@ -33,7 +32,6 @@ export class VideoCommentsComponent implements OnDestroy {
 
   constructor(
     public formatterService: FormatterService,
-    private windowService: WindowService,
     private commentThreadsService: CommentThreadsService,
     public domSanitizer: DomSanitizer
   ) {
@@ -48,24 +46,7 @@ export class VideoCommentsComponent implements OnDestroy {
     this.commentThreads = [];
   }
 
-  @HostListener("window:scroll")
-  private onReachBottom(): void {
-    if (this.isCurrentlyLoadingComments) {
-      return;
-    }
-    if (this.nextPageToken === undefined && this.isFirstPage === false) {
-      this.isMoreComments = false;
-    }
-
-    if (this.isMoreComments) {
-      this.windowService.onReachBottom(() => {
-        this.loadComments();
-        this.isFirstPage = false;
-      });
-    }
-  }
-
-  private loadComments(): void {
+  loadMoreComments = (): void => {
     this.isCurrentlyLoadingComments = true;
 
     const pageArgs = new PageArguments(MAX_RESULTS, this.nextPageToken);
@@ -75,9 +56,18 @@ export class VideoCommentsComponent implements OnDestroy {
         this.nextPageToken = data.nextPageToken;
         this.commentThreads.push(...data.items);
 
+        this.isFirstPage = false;
         this.isCurrentlyLoadingComments = false;
         this.isOrderButtonDisabled = false;
+
+        this.updateIsMoreComments();
       });
+  }
+
+  private updateIsMoreComments(): void {
+    if (this.nextPageToken === undefined && this.isFirstPage === false) {
+      this.isMoreComments = false;
+    }
   }
 
   onChangeOrder(newOrder: CommentThreadOrder): void {

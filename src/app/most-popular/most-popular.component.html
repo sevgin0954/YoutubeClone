@@ -17,6 +17,9 @@
   </div>
 </div>
 
-<div *ngIf="areMoreVideos" class="d-flex">
-  <app-loading class="loading-container"></app-loading>
+<div class="d-flex" *ngIf="areMoreVideos">
+  <app-loading-elements class="loading-container"
+    [isLoadingDisabled]="isCurrentlyLoading"
+    [loadingCallback]="loadMoreVideos">
+  </app-loading-elements>
 </div>

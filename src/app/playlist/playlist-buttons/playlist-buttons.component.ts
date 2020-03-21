@@ -41,7 +41,7 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
   private updatePlaylistElementsHiddenAttribute(): void {
     const lastButton = this.getLastVisibleButton();
 
-    let isRightBtnOverflowing = this.windowService.isElementOverflowingVerticaly(lastButton.nativeElement);
+    let isRightBtnOverflowing = this.windowService.isElementOverflowingHorizontaly(lastButton.nativeElement);
     if (isRightBtnOverflowing) {
       const playlistNativeElements = this.playlistElements.map(e => e.nativeElement);
       this.playlistElementService

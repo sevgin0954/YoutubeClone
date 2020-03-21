@@ -9,6 +9,9 @@
   </a>
 </div>
 
-<div *ngIf="isMoreSubscriptions" class="d-flex">
-  <app-loading class="loading-container"></app-loading>
+<div class="d-flex" *ngIf="isMoreSubscriptions">
+  <app-loading-elements class="loading-container"
+    [isLoadingDisabled]="isCurrentlyLoading"
+    [loadingCallback]="loadMoreSubscriptions">
+  </app-loading-elements>
 </div>

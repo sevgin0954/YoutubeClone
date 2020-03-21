@@ -30,7 +30,10 @@
     <hr>
   </div>
 
-  <div *ngIf="isMoreComments">
-    <app-loading class="loading-container"></app-loading>
+  <div class="d-flex" *ngIf="isMoreComments">
+    <app-loading-elements class="loading-container"
+      [isLoadingDisabled]="isCurrentlyLoadingComments"
+      [loadingCallback]="loadMoreComments">
+    </app-loading-elements>
   </div>
 </div>
