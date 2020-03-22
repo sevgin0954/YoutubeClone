@@ -4,20 +4,22 @@
   width: 100%;
 }
 
-.channelsContainer {
-  display: flex;
-  flex-wrap: wrap;
-}
-
 .channel {
   box-sizing: content-box;
-  width: 240px;
-  padding: 2rem;
   border: 0.001rem solid grey;
+  display: block;
   margin: 0.04rem;
+  padding: 2rem;
+  width: 240px;
   word-wrap: break-word;
 }
 .channel:hover {
   outline: $dark-blue solid 1px;
   text-decoration: none;
+}
+
+.channelsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  margin: $content-margin;
 }
