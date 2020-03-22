@@ -1,4 +1,5 @@
-@import "./../../variables.scss";
+@import "./../../../variables.scss";
+@import "../styles.scss";
 
 .navbar {
   background-color: $white;
@@ -6,20 +7,8 @@
   position: fixed;
 }
 
-.navbar .navbar-nav .nav-link {
-  color: black;
-}
-.navbar .navbar-nav>.nav-item>.nav-link:hover, .navbar .active>.nav-link {
-  color: $dark-blue;
-}
-
 .navbar-dummy {
   width: 185px;
-}
-
-.nav-link > i {
-  margin-right: 1rem;
-  font-size: 1.2rem;
 }
 
 @media (max-width: 874px) {

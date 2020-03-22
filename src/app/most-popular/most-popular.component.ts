@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { Video } from '../models/video/video';
 import { VideoService } from '../services-singleton/video.service';
@@ -8,6 +8,7 @@ import { PageArguments } from '../shared/arguments/page-arguments';
 import { VideoResource } from '../shared/enums/resource-properties/video-resource';
 import { RegionCode } from '../shared/enums/region-code';
 import { GeolocationService } from '../services-singleton/geolocation.service';
+import { ExceptionConstants } from '../shared/Constants/exception-constants';
 
 const MAX_RESULTS_PER_PAGE = 25;
 const VIDEO_DESCRIPTION_DISPLAYED_ROWS = 3;
@@ -49,6 +50,8 @@ export class MostPopularComponent implements OnInit, OnDestroy {
   }
 
   loadMoreVideos = (): void => {
+    this.validateIfAbleToLoadMoreVideos();
+
     this.isCurrentlyLoading = true;
 
     const pageArgument = new PageArguments(MAX_RESULTS_PER_PAGE, this.nextPageToken);
@@ -71,6 +74,15 @@ export class MostPopularComponent implements OnInit, OnDestroy {
         this.updateAreMoreVideos();
       });
     this.subscription.add(videoSubscription);
+  }
+
+  private validateIfAbleToLoadMoreVideos(): void {
+    if (this.isCurrentlyLoading) {
+      throw Error(ExceptionConstants.CURRENTLY_LOADING);
+    }
+    if (this.areMoreVideos === false) {
+      throw Error(ExceptionConstants.NO_MORE_ELEMENTS_TO_LOAD);
+    }
   }
 
   private updateAreMoreVideos(): void {

@@ -7,19 +7,16 @@ import { CommentModule } from './comment/comment.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptorService } from './services-singleton/interceptors/jwt-interceptor.service';
 import { MostPopularComponent } from './most-popular/most-popular.component';
-import { NavbarSideComponent } from './navbar-side/navbar-side.component';
-import { NavbarTopComponent } from './navbar-top/navbar-top.component';
 import { SharedModule } from './shared/shared.module';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { VideoMiniModule } from './video-mini/video-mini.module';
+import { NavbarModule } from './navbar/navbar.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     SubscriptionsComponent,
-    MostPopularComponent,
-    NavbarSideComponent,
-    NavbarTopComponent,
+    MostPopularComponent
   ],
   imports: [
     AppRoutingModule,
@@ -27,7 +24,8 @@ import { VideoMiniModule } from './video-mini/video-mini.module';
     CommentModule,
     HttpClientModule,
     SharedModule,
-    VideoMiniModule
+    VideoMiniModule,
+    NavbarModule
   ],
   providers: [
     {
