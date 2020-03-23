@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild, AfterViewChecked } from '@angular/core';
 import { NavbarSelectorService } from '../services/navbar-selector.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-bottom',
@@ -11,12 +12,16 @@ export class NavbarBottomComponent implements AfterViewChecked {
   @ViewChild('buttonList', {static: false}) buttonList: ElementRef;
 
   constructor(
-    private navbarSelectorService: NavbarSelectorService
+    private navbarSelectorService: NavbarSelectorService,
+    private router: Router
   ) { }
 
   ngAfterViewChecked(): void {
     const ulElements = this.buttonList.nativeElement.childNodes;
     const ulElementsAsArray: Element[] = Array.from(ulElements);
-    this.navbarSelectorService.selectCurrentPageLink(ulElementsAsArray);
+
+    const url = this.router.url;
+
+    this.navbarSelectorService.selectCurrentPageLink(ulElementsAsArray, url);
   }
 }

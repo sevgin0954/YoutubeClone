@@ -1,37 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+
+import { NavbarSelectorServiceValidator as ServiceValidator } from './navbar-selector.service.validator';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavbarSelectorService {
 
-  constructor(
-    private router: Router
-  ) { }
+  selectCurrentPageLink(elements: Element[], url: string): void {
+    ServiceValidator.validateSelectCurrentPageLinkArguments(elements, url);
 
-  selectCurrentPageLink(children: Element[]): void {
-    this.removeClass(children, 'active');
+    this.removeClass(elements, 'active');
 
-    const urlParts = this.router.url.split('?');
-    const urlPaths = urlParts[0].split('/');
+    const urlParts = url.split('?');
+    const urlPaths = urlParts[0].split('/').filter(path => path !== '');
+
+    ServiceValidator.validateUrlPaths(urlPaths);
+
     const urlLastPath = urlPaths[urlPaths.length - 1];
-    const selectedElement = this.findElementWithAttribute(children, 'data-route', urlLastPath);
-    if (selectedElement) {
-      selectedElement.classList.add('active');
-    }
+    const selectedElement = this.findElementWithAttribute(elements, 'data-route', urlLastPath);
+
+    ServiceValidator.validateElement(selectedElement, urlLastPath);
+
+    selectedElement.classList.add('active');
   }
 
   private findElementWithAttribute(
-    children: Element[],
+    elements: Element[],
     attributeName: string,
     attributeValue: string
   ): Element {
-    const elementsAsArray = Array.from(children);
-    const selectedElement = elementsAsArray
-      .find(n => (n as Element).getAttribute(attributeName) === attributeValue);
+    const selectedElement = elements.find(n => n.getAttribute(attributeName) === attributeValue);
 
-    return <Element>selectedElement;
+    return selectedElement;
   }
 
   private removeClass(elements: Element[], className: string): void {

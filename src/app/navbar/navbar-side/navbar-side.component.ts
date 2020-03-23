@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { NavbarSelectorService } from '../services/navbar-selector.service';
 
@@ -12,12 +13,16 @@ export class NavbarSideComponent implements AfterViewChecked {
   @ViewChild('buttonList', {static: false}) buttonList: ElementRef;
 
   constructor(
-    private navbarSelectorService: NavbarSelectorService
+    private navbarSelectorService: NavbarSelectorService,
+    private router: Router
   ) { }
 
   ngAfterViewChecked(): void {
     const ulElements = this.buttonList.nativeElement.childNodes;
     const ulElementsAsArray: Element[] = Array.from(ulElements);
-    this.navbarSelectorService.selectCurrentPageLink(ulElementsAsArray);
+
+    const url = this.router.url;
+
+    this.navbarSelectorService.selectCurrentPageLink(ulElementsAsArray, url);
   }
 }
