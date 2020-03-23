@@ -1,6 +1,10 @@
 @import "./../../../variables.scss";
 @import "../styles.scss";
 
+.menu-text {
+  font-size: 1.1rem;
+}
+
 .navbar {
   background-color: $white;
   width: 185px;
