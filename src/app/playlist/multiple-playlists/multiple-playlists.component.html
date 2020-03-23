@@ -1,8 +1,26 @@
 <app-playlist-buttons [loadMoreCallBack]="loadMoreCallBack" [totalResultsCount]="totalResultsCount">
-  <div #playlist class="playlist">
+  <div class="playlist">
     <div #playlistElement class="playlist-element" *ngFor="let playlist of playlists">
-      <div>
-        <a [routerLink]="['/channel', playlist.snippet.channelId]">
+      <div class="thumbnail-conteiner">
+        <a class="thumbnail-button" [routerLink]="['/channel', playlist.snippet.channelId]">
+          <div class="thumbnail-overlay play-all-container">
+            <div class="play-all-text">
+              <i class="fas fa-play"></i>
+              Play all
+            </div>
+          </div>
+
+          <div class="thumbnail-overlay playlist-videos-count-container">
+            <div class="playlist-videos-count-text">
+              <div>
+                <i class="fas fa-stream"></i>
+              </div>
+              <div>
+                {{ playlist.contentDetails.itemCount }}
+              </div>
+            </div>
+          </div>
+
           <img class="thumbnail" src="{{ getThumnailUrl(playlist.snippet.thumbnails) }}"
             alt="{{ playlist.snippet.title }}">
         </a>

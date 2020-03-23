@@ -37,32 +37,6 @@ describe('NavbarSelectorService', () => {
     expect(() => callMethodWithUrl(url)).toThrowError(exceptionRegex);
   });
 
-  it('without path and only / should throw an exception', () => {
-    // Arrange
-    const url = '/';
-    const exceptionRegex = new RegExp(ExceptionConstants.INVALID_ARGUMENT);
-
-    // Act
-
-    // Assert
-    expect(() => callMethodWithUrl(url)).toThrowError(exceptionRegex);
-  });
-
-  it('with path that does not match any element should throw an exception', () => {
-    // Arrange
-    const elements = [
-      createElement('bbb')
-    ];
-    const url = '/aaa';
-
-    const exceptionRegex = new RegExp(ExceptionConstants.NOT_FOUND);
-
-    // Act
-
-    // Assert
-    expect(() => service.selectCurrentPageLink(elements, url)).toThrowError(exceptionRegex);
-  });
-
   it('with empty elements collection should throw an exception', () => {
     // Arrange
     const elements = [];
