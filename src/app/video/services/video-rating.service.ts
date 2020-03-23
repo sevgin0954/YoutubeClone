@@ -7,6 +7,7 @@ import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { HttpClient } from '@angular/common/http';
 import { pluck, map } from 'rxjs/operators';
 import { Config } from 'protractor';
+import { DataValidator } from 'src/app/shared/Validation/data-validator';
 
 const BASE_URL = MainConstants.YOUTUBE_BASE_URL + '/videos'
 
@@ -18,6 +19,8 @@ constructor(
 ) { }
 
   getRating(id: string): Observable<RatingType> {
+    DataValidator.validateString(id, 'id');
+
     const queryParams = {
       id: id
     };
@@ -37,6 +40,9 @@ constructor(
   }
 
   rate(id: string, rating: RatingType): Observable<number> {
+    DataValidator.validateString(id, 'id');
+    DataValidator.nullOrUndefinied(rating, 'rating');
+
     const queryParams = {
       id: id,
       rating: RatingType[rating]

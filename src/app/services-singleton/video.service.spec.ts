@@ -79,7 +79,7 @@ describe('VideoService\s getMostPopular method', () => {
       VideoResource.id,
       null
     ];
-    const exceptionRegex = new RegExp(ExceptionConstants.INVALID_ARGUMENT);
+    const exceptionRegex = new RegExp(ExceptionConstants.NULL_OR_UNDEFINED);
 
     // Act
 

@@ -15,8 +15,8 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting()
 );
 // Then we find all the tests.
-//const context = require.context('./app/services-singleton', true, /\.spec\.ts$/);
-const context = require.context('./', true, /playlists\.service\.spec\.ts$/);
+const context = require.context('./app/services-singleton', true, /\.spec\.ts$/);
+//const context = require.context('./', true, /playlists\.service\.spec\.ts$/);
 
 // And load the modules.
 context.keys().map(context);

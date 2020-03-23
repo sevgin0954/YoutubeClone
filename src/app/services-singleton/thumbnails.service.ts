@@ -29,7 +29,13 @@ export class ThumbnailsService {
 
   private validateThumbnailsArgument(thumbnails: VideoThumbnails): void {
     DataValidator.nullOrUndefinied(thumbnails, 'thumbnails');
-    DataValidator.anyNullOrUndefined(thumbnails, 'thumbnails');
+
+    const thumbnailPropertyValues = Object.values(thumbnails);
+    const firstDefinedValue = thumbnailPropertyValues.find(v => v !== null && v !== undefined);
+    if (firstDefinedValue == null) {
+      const exceptionMessage = ExceptionConstants.INVALID_ARGUMENT + ' thumbnails property';
+      throw Error(exceptionMessage);
+    }
   }
 
   private getLargestThumnail(): VideoThumbnailSize {
