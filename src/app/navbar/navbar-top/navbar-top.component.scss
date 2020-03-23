@@ -15,9 +15,15 @@
 
 .navbar-menu {
   margin-right: 0.5rem;
+  padding-left: 0
 }
 .navbar-menu:focus {
   box-shadow: none;
+}
+
+.search-button:hover, .search-button:focus  {
+  border: 0.1rem $dark-blue;
+  box-shadow: 0 0 0.2rem 0.1rem $dark-blue;
 }
 
 .search-container {

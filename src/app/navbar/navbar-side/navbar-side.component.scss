@@ -7,6 +7,10 @@
   position: fixed;
 }
 
+.nav-item {
+  font-size: 1.2rem;
+}
+
 .navbar-dummy {
   width: 185px;
 }
@@ -24,5 +28,9 @@
 
   .navbar-dummy {
     width: $navbar-width;
+  }
+
+  .nav-link .menu-icon {
+    font-size: 1.5rem;
   }
 }

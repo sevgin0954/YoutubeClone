@@ -57,6 +57,11 @@ button:disabled {
   color: gray;
 }
 
+input.input:focus {
+  border: 0.1rem $dark-blue;
+  box-shadow: 0 0 0.2rem 0.1rem $dark-blue;
+}
+
 .loading-container {
   font-size: 2.2rem;
   margin-bottom: 2rem;
