@@ -9,6 +9,10 @@ import { Playlist } from 'src/app/models/playlist/playlist';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';
 import { VideoThumbnails } from 'src/app/models/thumbnail/video-thumbnails';
+import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
+
+const MAX_RESULTS_PER_PAGE = 5;
 
 @Component({
   selector: 'app-multiple-playlists',
@@ -24,6 +28,7 @@ export class MultiplePlaylistsComponent implements OnInit, OnDestroy {
   playlists: Playlist[] = [];
   thumbnailSize: string = VideoThumbnailSize[VideoThumbnailSize.default];
   totalResultsCount: number;
+  private nextPageToken: string;
   private playlistsStartIndex: number = 0;
   private subscription: Subscription;
 
@@ -50,8 +55,15 @@ export class MultiplePlaylistsComponent implements OnInit, OnDestroy {
     const playlistsEndIndex = this.playlistsStartIndex + MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
 
     const currentPagePlaylistIds = playlistIds.slice(this.playlistsStartIndex, playlistsEndIndex);
-    this.subscription = this.playlistsService.getByIds(currentPagePlaylistIds, null, 0)
+    const pageArgs = new PageArguments(MAX_RESULTS_PER_PAGE, this.nextPageToken);
+    const resources = [
+      PlaylistResource.snippet,
+      PlaylistResource.contentDetails
+    ];
+
+    this.subscription = this.playlistsService.getByIds(currentPagePlaylistIds, pageArgs, resources)
       .subscribe(data => {
+      this.nextPageToken = data.nextPageToken;
       this.playlists.push(...data.items);
 
       this.playlistsStartIndex = playlistsEndIndex;

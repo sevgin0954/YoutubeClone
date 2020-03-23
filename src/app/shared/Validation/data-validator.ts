@@ -3,14 +3,26 @@ import { ExceptionConstants } from '../Constants/exception-constants';
 // TODO: Split to smaller classes
 export class DataValidator {
 
-  public static anyNotNullOrUndefined(obj: object, argumentsInfo: string): void {
+  public static anyEmptyString(obj: object, argumentsInfo: string): void {
     const values = Object.values(obj);
-    const firstNotNullOrUndefinedValue = values.find(v => v !== null && v !== undefined);
-    if (firstNotNullOrUndefinedValue === null || firstNotNullOrUndefinedValue === undefined) {
-      const exceptionMessage =
-        this.appendArgumentName(ExceptionConstants.INVALID_ARGUMENT, argumentsInfo);
-      throw Error(exceptionMessage);
-    }
+    values.forEach(currentValue => {
+      if (currentValue === '') {
+        const exceptionMessage =
+          this.appendArgumentName(ExceptionConstants.EMPTY_STRING, argumentsInfo);
+        throw Error(exceptionMessage);
+      }
+    });
+  }
+
+  public static anyNullOrUndefined(obj: object, argumentsInfo: string): void {
+    const values = Object.values(obj);
+    values.forEach(currentValue => {
+      if (currentValue == null) {
+        const exceptionMessage =
+          this.appendArgumentName(ExceptionConstants.NULL_OR_UNDEFINED, argumentsInfo);
+        throw Error(exceptionMessage);
+      }
+    });
   }
 
   public static emptyCollection<T>(collection: T[], argumentsInfo: string): void {
@@ -50,7 +62,7 @@ export class DataValidator {
   }
 
   public static nullOrUndefinied(data: any, argumentsInfo: string): void {
-    if (data === null || data === undefined) {
+    if (data == null) {
       const errorMessage = this.appendArgumentName(ExceptionConstants.NULL_OR_UNDEFINED, argumentsInfo);
       throw Error(errorMessage);
     }
@@ -62,7 +74,7 @@ export class DataValidator {
   }
 
   public static validateFoundElement(element: any, argumentsInfo: string): void {
-    if (element === null || element === undefined) {
+    if (element == null) {
       const errorMessage = this.appendArgumentName(ExceptionConstants.NOT_FOUND, argumentsInfo);
       throw Error(errorMessage);
     }

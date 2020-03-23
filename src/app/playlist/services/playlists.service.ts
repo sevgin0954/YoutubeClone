@@ -6,6 +6,10 @@ import { Playlist } from '../../models/playlist/playlist';
 import { MainConstants } from '../../shared/Constants/main-constants';
 import { Url } from '../../shared/url';
 import { Observable } from 'rxjs';
+import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
+import { QueryParamsUtility } from 'src/app/shared/utilities/query-params-utility';
+import { DataValidator } from 'src/app/shared/Validation/data-validator';
 
 const PATH: string = 'playlists';
 
@@ -16,23 +20,35 @@ export class PlaylistsService {
     private http: HttpClient
   ) { }
 
-  getByIds(ids: string[], pageToken: string, maxResults: number)
+  getByIds(ids: string[], pageArgs: PageArguments, resources: PlaylistResource[])
     : Observable<ServiceModel<Playlist[]>> {
+
+    this.validateGetByIdsArguments(ids, pageArgs, resources);
+
     const queryParams = {
-      part: 'snippet,contentDetails',
       id: ids.join(','),
-      maxResults: maxResults
+      maxResults: pageArgs.maxResults
     };
-    this.addPageToken(queryParams, pageToken);
+
+    QueryParamsUtility.addResources(queryParams, resources, PlaylistResource);
+    QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
+
     const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
     const data$ = this.http.get<ServiceModel<Playlist[]>>(url.toString());
 
     return data$;
   }
 
-  private addPageToken(queryParams: any, pageToken: string): void {
-    if (pageToken) {
-      queryParams.pageToken = pageToken;
-    }
+  private validateGetByIdsArguments(
+    ids: string[],
+    pageArgs: PageArguments,
+    resources: PlaylistResource[]
+  ): void {
+    DataValidator.validateCollection(ids, 'ids');
+    DataValidator.anyEmptyString(ids, 'ids');
+    DataValidator.anyNullOrUndefined(ids, 'ids');
+
+    DataValidator.nullOrUndefinied(pageArgs, 'pageArgs');
+    DataValidator.validateCollection(resources, 'resources');
   }
 }

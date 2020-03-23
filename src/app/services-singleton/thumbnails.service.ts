@@ -29,7 +29,7 @@ export class ThumbnailsService {
 
   private validateThumbnailsArgument(thumbnails: VideoThumbnails): void {
     DataValidator.nullOrUndefinied(thumbnails, 'thumbnails');
-    DataValidator.anyNotNullOrUndefined(thumbnails, 'thumbnails');
+    DataValidator.anyNullOrUndefined(thumbnails, 'thumbnails');
   }
 
   private getLargestThumnail(): VideoThumbnailSize {

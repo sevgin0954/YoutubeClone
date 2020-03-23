@@ -1,5 +1,6 @@
 import { EnumUtility } from './enum-utility';
 import { ExceptionConstants } from '../Constants/exception-constants';
+import { DataValidator } from '../Validation/data-validator';
 
 type EnumType = {
   [num: number]: string;
@@ -8,7 +9,7 @@ type EnumType = {
 export class QueryParamsUtility {
 
   public static addResources(queryParams: any, resources: number[], enumType: EnumType): void {
-    this.validateResources(resources);
+    DataValidator.anyNullOrUndefined(resources, 'resources');
 
     const distinctResources = [...new Set(resources)];
     const part = EnumUtility.join(distinctResources, ',', enumType);
@@ -16,9 +17,9 @@ export class QueryParamsUtility {
   }
 
   private static validateResources(resources: number[]): void {
-    const firstInvalidResourceIndex = resources.findIndex(r => r === undefined || r === null);
+    const firstInvalidResourceIndex = resources.findIndex(r => r == null);
     if (firstInvalidResourceIndex >= 0) {
-      const exceptionMessage = ExceptionConstants.INVALID_ARGUMENT + ' Argument name: resources';
+      const exceptionMessage = ExceptionConstants.NULL_OR_UNDEFINED + ' Argument name: resources';
       throw Error(exceptionMessage);
     }
   }
