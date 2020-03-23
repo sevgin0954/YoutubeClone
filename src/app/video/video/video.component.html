@@ -9,7 +9,9 @@
 <hr>
 
 <div class="video-content-container">
-  <app-channel-mini *ngIf="channel" [channel]="channel"></app-channel-mini>
+  <div class="video-channel">
+    <app-channel-mini *ngIf="channel" [channel]="channel"></app-channel-mini>
+  </div>
 
   <div class="video-text">
     <app-video-description [channel]="channel" [text]="video.snippet.description">

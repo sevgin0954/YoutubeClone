@@ -1,6 +1,6 @@
 @import './../../../variables.scss';
 
-$container-margin-left: 1rem;
+$container-margin-left: $content-margin;
 
 :host(app-most-popular) {
   width: 100%;
