@@ -1,4 +1,4 @@
-import { Injectable, ChangeDetectorRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { ElementDisplayService } from '../../services-singleton/elements-display.service';
 
