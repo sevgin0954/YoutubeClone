@@ -21,7 +21,7 @@ export class CommentThreadsService {
   ) { }
 
   getByVideoId(videoId: string, order: CommentThreadOrder, pageArgs: PageArguments):
-    Observable<ServiceModel<CommentThread[]>> {
+  Observable<ServiceModel<CommentThread[]>> {
 
     this.validateArguments(videoId, order);
 

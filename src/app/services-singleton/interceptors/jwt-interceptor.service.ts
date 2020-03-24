@@ -2,7 +2,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Observable, of, EMPTY } from 'rxjs';
+import { Observable, of, EMPTY, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/services-singleton/auth.service';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
@@ -32,14 +32,14 @@ export class JwtInterceptorService implements HttpInterceptor {
     });
 
     return next.handle(alteredRequest).pipe(
-      catchError((err) => {
-        if (err instanceof HttpErrorResponse && err.status === 401) {
+      catchError((error) => {
+        if (error instanceof HttpErrorResponse && error.status === 401) {
           this.router.navigate(['/signin']);
 
           return EMPTY;
         }
 
-        return of(err);
+        return throwError(error);
       })
     );
   }

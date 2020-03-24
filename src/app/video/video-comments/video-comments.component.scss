@@ -46,11 +46,12 @@ img {
   margin-left: $container-margin-left;
 }
 
-.replies-container {
-  margin-left: 48px;
-}
-
-#no-comments-text {
+.no-comments-text {
+  color: gray;
   font-size: 1.3rem;
   text-align: center;
+}
+
+.replies-container {
+  margin-left: 48px;
 }

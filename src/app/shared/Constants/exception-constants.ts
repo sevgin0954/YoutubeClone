@@ -2,6 +2,7 @@ export class ExceptionConstants {
   public static readonly EMPTY_COLLECTION = 'Collection cannot be empty.';
   public static readonly EMPTY_STRING = 'String cannot be empty.';
   public static readonly EXCEEDED_MAX_VALUE = 'Element has exceeded the maximum value.';
+  public static readonly CANNOT_ACCESS_VIDEO_COMMENTS = 'Comments are disabled';
   public static readonly CURRENTLY_LOADING = 'Loading is already in progress.';
   public static readonly HAVING_ATTRIBUTE = 'Element should not have attribute.';
   public static readonly INDEX_OUT_OF_RANGE = 'Index was out of range.';

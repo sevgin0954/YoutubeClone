@@ -1,12 +1,13 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 import { CommentThread } from 'src/app/models/comment/comment-thread';
 import { CommentThreadOrder } from 'src/app/shared/enums/comment-thread-order';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { CommentThreadsService } from 'src/app/video/services/comment-threads.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { finalize, map, catchError } from 'rxjs/operators';
 
 const MAX_RESULTS = 20;
 
@@ -19,6 +20,7 @@ export class VideoCommentsComponent implements OnDestroy {
 
   @Input() commentCount: number;
   @Input() parentId: string;
+  areCommentsDisabled: boolean = false;
   commentThreads: CommentThread[];
   commentThreadOrder: typeof CommentThreadOrder = CommentThreadOrder;
   isCurrentlyLoadingComments: boolean = false;
@@ -52,16 +54,27 @@ export class VideoCommentsComponent implements OnDestroy {
     const pageArgs = new PageArguments(MAX_RESULTS, this.nextPageToken);
     this.videoSubscribtion = this.commentThreadsService
       .getByVideoId(this.parentId, this.order, pageArgs)
-      .subscribe(data => {
-        this.nextPageToken = data.nextPageToken;
-        this.commentThreads.push(...data.items);
+      .pipe(
+        finalize(() => {
+          this.isFirstPage = false;
+          this.isCurrentlyLoadingComments = false;
 
-        this.isFirstPage = false;
-        this.isCurrentlyLoadingComments = false;
-        this.isOrderButtonDisabled = false;
+          this.updateIsMoreComments();
+        })
+      )
+      .subscribe(
+        data => {
+          this.nextPageToken = data.nextPageToken;
+          this.commentThreads.push(...data.items);
 
-        this.updateIsMoreComments();
-      });
+          this.isOrderButtonDisabled = false;
+        },
+        error => {
+          if (error.status === 403) {
+            this.areCommentsDisabled = true;
+          }
+        }
+      );
   }
 
   private updateIsMoreComments(): void {

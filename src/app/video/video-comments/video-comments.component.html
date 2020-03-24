@@ -30,14 +30,13 @@
     <hr>
   </div>
 
-  <div class="d-flex" *ngIf="isMoreComments">
-    <app-loading-elements class="loading-container"
-      [isLoadingDisabled]="isCurrentlyLoadingComments"
-      [loadingCallback]="loadMoreComments">
-    </app-loading-elements>
+  <app-loading-elements class="loading-container" *ngIf="isMoreComments && areCommentsDisabled === false"
+    [isLoadingDisabled]="isCurrentlyLoadingComments" [loadingCallback]="loadMoreComments">
+  </app-loading-elements>
+  <div class="no-comments-text" *ngIf="isMoreComments === false && areCommentsDisabled === false">
+    No comments
   </div>
-
-  <ng-template #noCommentsContainer>
-    <div id="no-comments-text">No comments</div>
-  </ng-template>
+  <div class="no-comments-text" *ngIf="areCommentsDisabled">
+    Comments are disabled
+  </div>
 </div>
