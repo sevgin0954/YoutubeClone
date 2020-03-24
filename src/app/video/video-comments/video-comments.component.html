@@ -1,5 +1,5 @@
 <div class="video-comments-container">
-  <div class="d-flex mb-4" *ngIf="commentCount > 0">
+  <div class="d-flex mb-4" *ngIf="commentCount > 0; else noCommentsContainer">
     {{ commentCount }} comments
 
     <div class="dropdown ml-2">
@@ -36,4 +36,8 @@
       [loadingCallback]="loadMoreComments">
     </app-loading-elements>
   </div>
+
+  <ng-template #noCommentsContainer>
+    <div id="no-comments-text">No comments</div>
+  </ng-template>
 </div>
