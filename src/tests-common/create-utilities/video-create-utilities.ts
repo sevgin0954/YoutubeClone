@@ -11,7 +11,8 @@ export class VideoCreateUtilities {
       statistics: undefined,
       player: undefined,
       liveStreamingDetails: undefined,
-      localizations: undefined
+      localizations: undefined,
+      fileDetails: undefined
     };
 
     return video;

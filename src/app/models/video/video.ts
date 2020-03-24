@@ -1,14 +1,16 @@
 import {
   VideoSnippet, VideoContantDetails, VideoPlayer, VideoStreamingDetails,
   VideoLocalization, VideoStatus, VideoStatistics } from '.'
+import { VideoFileDetails } from './video-file-details';
 
 export interface Video {
-  id: string,
-  snippet: VideoSnippet,
   contentDetails: VideoContantDetails,
-  status: VideoStatus,
-  statistics: VideoStatistics,
-  player: VideoPlayer,
+  fileDetails: VideoFileDetails,
+  id: string
   liveStreamingDetails: VideoStreamingDetails,
-  localizations: VideoLocalization
+  localizations: VideoLocalization,
+  snippet: VideoSnippet,
+  player: VideoPlayer,
+  statistics: VideoStatistics,
+  status: VideoStatus,
 }

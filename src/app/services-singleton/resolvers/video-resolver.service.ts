@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 import { VideoResource } from 'src/app/shared/enums/resource-properties/video-resource';
 import { DataValidator } from 'src/app/shared/Validation/data-validator';
 
+const MAX_DIMENSIONS = 8192;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,9 +27,12 @@ export class VideoResolverService implements Resolve<Video> {
     const resources = [
       VideoResource.contentDetails,
       VideoResource.snippet,
-      VideoResource.statistics
+      VideoResource.statistics,
+      VideoResource.player
     ];
-    const video$ = this.videoService.getByIds([id], resources).pipe(
+    const maxHeight = MAX_DIMENSIONS;
+    const maxWidth = MAX_DIMENSIONS;
+    const video$ = this.videoService.getByIds([id], resources, maxHeight, maxWidth).pipe(
       map(data => data[0])
     );
 

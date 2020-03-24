@@ -30,15 +30,26 @@ export class VideoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.video = this.route.snapshot.data['video'];
 
-    const isResponsive = true;
-    const shouldOverflow = false;
-    this.youtubeIframeService.init(this.video.id, isResponsive, shouldOverflow);
+    this.initVideo();
+    this.initChannel();
+  }
 
+  private initVideo(): void {
+    const isResponsive = true;
+
+    const videoHeight = this.video.player.embedHeight;
+    const videoWidth = this.video.player.embedWidth;
+    const aspectRation = videoWidth / videoHeight;
+
+    this.youtubeIframeService.init(this.video.id, isResponsive, aspectRation);
+  }
+
+  private initChannel(): void {
     const channelId = this.video.snippet.channelId;
     const pageArgs = new PageArguments(1, null);
     const resourceProperties = [
       ChannelResource.snippet,
-      ChannelResource.statistics,
+      ChannelResource.statistics
     ];
     this.subscribtion = this.channelService.getByIds([channelId], pageArgs, resourceProperties)
       .subscribe(channel => {

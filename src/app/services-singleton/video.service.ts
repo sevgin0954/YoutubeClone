@@ -52,12 +52,13 @@ export class VideoService {
     DataValidator.validateCollection(resources, 'resources');
   }
 
-  getByIds(ids: string[], resources: VideoResource[]): Observable<Video[]> {
+  getByIds(ids: string[], resources: VideoResource[], maxHeight?: number, maxWidth?: number): Observable<Video[]> {
     this.validateGetByIds(ids, resources);
 
     const queryParams = {
       id: ids.join(',')
     };
+    this.tryAddMaxDimensions(queryParams, maxHeight, maxWidth);
     QueryParamsUtility.addResources(queryParams, resources, VideoResource);
     const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
     const data$ = this.http.get(url.toString())
@@ -66,6 +67,15 @@ export class VideoService {
       );
 
     return data$;
+  }
+
+  private tryAddMaxDimensions(queryParams: any, maxHeight: number, maxWidth: number): void {
+    if (maxHeight != null) {
+      queryParams.maxHeight = maxHeight;
+    }
+    if (maxWidth != null) {
+      queryParams.maxWidth = maxWidth;
+    }
   }
 
   private validateGetByIds(ids: string[], resources: VideoResource[]): void {
