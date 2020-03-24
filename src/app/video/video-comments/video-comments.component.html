@@ -1,5 +1,5 @@
 <div class="video-comments-container">
-  <div class="d-flex mb-4" *ngIf="commentCount > 0; else noCommentsContainer">
+  <div class="d-flex mb-4" *ngIf="commentCount > 0">
     {{ commentCount }} comments
 
     <div class="dropdown ml-2">
@@ -19,9 +19,11 @@
   </div>
 
   <div *ngFor="let thread of commentThreads">
-    <app-comment [comment]="thread.snippet.topLevelComment"></app-comment>
+    <div class="video-comment-container">
+      <app-comment [comment]="thread.snippet.topLevelComment"></app-comment>
+    </div>
 
-    <div class="replies-container">
+    <div class="video-comment-container replies-container">
       <app-comment-replies *ngIf="thread.snippet.totalReplyCount > 0" [parentId]="thread.id"
         [totalRepliesCount]="thread.snippet.totalReplyCount">
       </app-comment-replies>
@@ -30,9 +32,11 @@
     <hr>
   </div>
 
-  <app-loading-elements class="loading-container" *ngIf="isMoreComments && areCommentsDisabled === false"
-    [isLoadingDisabled]="isCurrentlyLoadingComments" [loadingCallback]="loadMoreComments">
-  </app-loading-elements>
+  <div class="loading-container">
+    <app-loading-elements *ngIf="isMoreComments && areCommentsDisabled === false"
+      [isLoadingDisabled]="isCurrentlyLoadingComments" [loadingCallback]="loadMoreComments">
+    </app-loading-elements>
+  </div>
   <div class="no-comments-text" *ngIf="isMoreComments === false && areCommentsDisabled === false">
     No comments
   </div>

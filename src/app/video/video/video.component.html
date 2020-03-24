@@ -2,8 +2,10 @@
   <div id="player"></div>
 </div>
 
-<div class="video-header-container">
-  <app-video-header [video]="video"></app-video-header>
+<div class="video-content-container">
+  <div class="video-header-container">
+    <app-video-header [video]="video"></app-video-header>
+  </div>
 </div>
 
 <hr>
@@ -12,7 +14,9 @@
   <div class="video-channel">
     <app-channel-mini *ngIf="channel" [channel]="channel"></app-channel-mini>
   </div>
+</div>
 
+<div class="video-content-container">
   <div class="video-text">
     <app-video-description [channel]="channel" [text]="video.snippet.description">
     </app-video-description>
@@ -21,6 +25,4 @@
 
 <hr>
 
-<div class="video-content-container video-text">
-  <app-video-comments [parentId]="video.id" [commentCount]="video.statistics.commentCount"></app-video-comments>
-</div>
+<app-video-comments [parentId]="video.id" [commentCount]="video.statistics.commentCount"></app-video-comments>

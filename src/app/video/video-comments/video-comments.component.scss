@@ -1,7 +1,5 @@
 @import './../../../variables.scss';
 
-$container-margin-left: $content-margin;
-
 :host(app-most-popular) {
   width: 100%;
 }
@@ -32,8 +30,13 @@ $container-margin-left: $content-margin;
   margin-bottom: 0.125rem;
 }
 
+.video-comment-container {
+  margin-left: $content-margin;
+  margin-right: $content-margin;
+}
+
 hr {
-  margin-left: -$container-margin-left;
+  margin-left: $content-margin;
 }
 
 img {
@@ -42,8 +45,7 @@ img {
 }
 
 .video-comments-container {
-  margin-bottom: 1.5rem;
-  margin-left: $container-margin-left;
+  margin-bottom: $navbar-bottom-height;
 }
 
 .no-comments-text {

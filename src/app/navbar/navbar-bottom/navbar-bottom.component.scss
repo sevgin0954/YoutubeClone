@@ -1,6 +1,7 @@
 @import "../styles.scss";
+@import "../../../variables.scss";
 
-$navbarHeight: 2.1rem;
+$navbarHeight: $navbar-bottom-height;
 $navbarWidth: 100%;
 
 .navbar {

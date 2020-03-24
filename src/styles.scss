@@ -63,8 +63,9 @@ input.input:focus {
 }
 
 .loading-container {
+  display: flex;
   font-size: 2.2rem;
-  margin-bottom: 2rem;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
 }
