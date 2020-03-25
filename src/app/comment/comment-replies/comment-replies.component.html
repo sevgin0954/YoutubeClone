@@ -1,4 +1,4 @@
-<div [attr.hidden]="shouldShowReplies ? null : 'hidden'"
+<div class="loading-container" [attr.hidden]="shouldShowReplies ? null : 'hidden'"
   *ngFor="let comment of comments">
   <hr>
   <app-comment class="comment" [comment]="comment"></app-comment>
