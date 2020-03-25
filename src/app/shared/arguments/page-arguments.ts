@@ -1,10 +1,10 @@
 import { DataValidator } from '../Validation/data-validator';
 
 export class PageArguments {
-  constructor(
-    private maxResultsCount: number,
-    private pageTokenString: string
-  ) {
+  private maxResultsCount: number;
+  private pageTokenString: string;
+
+  constructor(maxResultsCount: number, pageTokenString: string) {
     this.maxResults = maxResultsCount;
     this.pageToken = pageTokenString;
   }
@@ -25,5 +25,7 @@ export class PageArguments {
 
   set pageToken(pageTokenString: string) {
     DataValidator.emptyString(pageTokenString, 'pageToken');
+
+    this.pageTokenString = pageTokenString;
   }
 }

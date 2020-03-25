@@ -1,23 +1,25 @@
 import { ArrowClickButtonService } from "./arrow-click-button.service";
 
-let playlistElementService: any;
-let service: ArrowClickButtonService;
+describe('', () => {
+  let playlistElementService: any;
+  let service: ArrowClickButtonService;
 
-beforeEach(() => {
-  playlistElementService = jasmine
-    .createSpyObj('ElementDisplayService', [
-      'showLastHiddenElementFromLeft',
-      'showFirstHiddenElementFromRight',
-      'hideFirstShownElement'
-    ]);
-});
-beforeEach(() => {
-  service = new ArrowClickButtonService(playlistElementService);
-});
+  beforeEach(() => {
+    playlistElementService = jasmine
+      .createSpyObj('ElementDisplayService', [
+        'showLastHiddenElementFromLeft',
+        'showFirstHiddenElementFromRight',
+        'hideFirstShownElement'
+      ]);
+  });
+  beforeEach(() => {
+    service = new ArrowClickButtonService(playlistElementService);
+  });
 
-describe('ArrowClickButtonService', () => {
+  describe('ArrowClickButtonService', () => {
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
   });
 });

@@ -1,13 +1,13 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { Subscription, throwError } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CommentThread } from 'src/app/models/comment/comment-thread';
 import { CommentThreadOrder } from 'src/app/shared/enums/comment-thread-order';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { CommentThreadsService } from 'src/app/video/services/comment-threads.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
-import { finalize, map, catchError } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 const MAX_RESULTS = 20;
 

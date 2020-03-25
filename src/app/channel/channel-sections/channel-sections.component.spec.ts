@@ -1,5 +1,5 @@
-import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { ChannelSectionsComponent } from './channel-sections.component';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
@@ -10,204 +10,206 @@ import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 import { ChannelSectionType } from 'src/app/shared/enums/channel-section-type';
 
-let component: ChannelSectionsComponent;
-let fixture: ComponentFixture<ChannelSectionsComponent>;
-let channelSectionService: any;
-
-beforeEach(() => {
-  channelSectionService = jasmine.createSpyObj('ChannelSectionService', ['getByChannelId']);
-});
-beforeEach((() => {
-  TestBed.configureTestingModule({
-    declarations: [
-      ChannelSectionsComponent
-    ],
-    providers: [{ provide: ChannelSectionService, useValue: channelSectionService }],
-    schemas: [NO_ERRORS_SCHEMA]
-  });
-}));
-beforeEach(() => {
-  fixture = TestBed.createComponent(ChannelSectionsComponent);
-  component = fixture.componentInstance;
-});
-
-describe('ChannelSectionsComponent', () => {
-
-  const channelId = 'randomChannelId'
-  const channelSections = createChannelSections(channelId);
-  const channelSectionData$ = of(channelSections);
+describe('', () => {
+  let component: ChannelSectionsComponent;
+  let fixture: ComponentFixture<ChannelSectionsComponent>;
+  let channelSectionService: any;
 
   beforeEach(() => {
-    channelSectionService.getByChannelId.and.returnValue(channelSectionData$);
+    channelSectionService = jasmine.createSpyObj('ChannelSectionService', ['getByChannelId']);
+  });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [
+        ChannelSectionsComponent
+      ],
+      providers: [{ provide: ChannelSectionService, useValue: channelSectionService }],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents();
+  }));
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ChannelSectionsComponent);
+    component = fixture.componentInstance;
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  describe('ChannelSectionsComponent', () => {
 
-  it('with null channelId input should throw an exception', () => {
-    // Arrange
-    const channelId = null;
-    const exceptionRegex = new RegExp(ExceptionConstants.REQUIRED_INPUT);
-
-    component.channelId = channelId;
-
-    // Act
-
-    // Assert
-    expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
-  });
-
-  it('with undefinied channelId input should throw an exception', () => {
-    // Arrange
-    const channelId = undefined;
-    const exceptionRegex = new RegExp(ExceptionConstants.REQUIRED_INPUT);
-
-    component.channelId = channelId;
-
-    // Act
-
-    // Assert
-    expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
-  });
-
-  it('with not string channelId type should throw an exception', () => {
-    // Arrange
-    const channelId: any = 5;
-    const exceptionRegex = new RegExp(ExceptionConstants.INCORRECT_TYPE);
-
-    // Act
-    component.channelId = channelId;
-
-    // Assert
-    expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
-  });
-
-  it('should call channelSectionService\'s getByChannelId method with channelId after initialization', () => {
-    // Arrange
     const channelId = 'randomChannelId'
-    const getByChannelIdFunc = channelSectionService.getByChannelId;
+    const channelSections = createChannelSections(channelId);
+    const channelSectionData$ = of(channelSections);
 
-    // Act
-    component.channelId = channelId;
-    fixture.detectChanges();
+    beforeEach(() => {
+      channelSectionService.getByChannelId.and.returnValue(channelSectionData$);
+    });
 
-    // Assert
-    const calledChannelId = ArgumentsUtilities.getMostRecentArgument(getByChannelIdFunc, 0);
-    expect(calledChannelId).toEqual(channelId);
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
+
+    it('with null channelId input should throw an exception', () => {
+      // Arrange
+      const channelId = null;
+      const exceptionRegex = new RegExp(ExceptionConstants.REQUIRED_INPUT);
+
+      component.channelId = channelId;
+
+      // Act
+
+      // Assert
+      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+    });
+
+    it('with undefinied channelId input should throw an exception', () => {
+      // Arrange
+      const channelId = undefined;
+      const exceptionRegex = new RegExp(ExceptionConstants.REQUIRED_INPUT);
+
+      component.channelId = channelId;
+
+      // Act
+
+      // Assert
+      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+    });
+
+    it('with not string channelId type should throw an exception', () => {
+      // Arrange
+      const channelId: any = 5;
+      const exceptionRegex = new RegExp(ExceptionConstants.INCORRECT_TYPE);
+
+      // Act
+      component.channelId = channelId;
+
+      // Assert
+      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+    });
+
+    it('should call channelSectionService\'s getByChannelId method with channelId after initialization', () => {
+      // Arrange
+      const channelId = 'randomChannelId'
+      const getByChannelIdFunc = channelSectionService.getByChannelId;
+
+      // Act
+      component.channelId = channelId;
+      fixture.detectChanges();
+
+      // Assert
+      const calledChannelId = ArgumentsUtilities.getMostRecentArgument(getByChannelIdFunc, 0);
+      expect(calledChannelId).toEqual(channelId);
+    });
+
+    it('should load channelSections after channelId has been set', () => {
+      // Arrange
+      component.channelId = channelId;
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      expect(component.channelSections.length).toEqual(2);
+      expect(component.channelSections).toContain(channelSections[0]);
+      expect(component.channelSections).toContain(channelSections[1]);
+    });
+
+    it('should load channelSections sorted by a position in ascending order', () => {
+      // Arrange
+      component.channelId = channelId;
+
+      // Act
+      fixture.detectChanges();
+
+      // Assert
+      expect(component.channelSections[0].snippet.position).toEqual(0);
+      expect(component.channelSections[1].snippet.position).toEqual(1);
+    });
   });
 
-  it('should load channelSections after channelId has been set', () => {
-    // Arrange
-    component.channelId = channelId;
+  describe('ChannelSectionsComponent\'s getSectionType method', () => {
 
-    // Act
-    fixture.detectChanges();
+    it('should return channelSection type', () => {
+      // Arrange
+      const channelSectionSnippet = ChannelSectionCreateUtilities.createSnippet();
+      const channelSection = ChannelSectionCreateUtilities.create(channelSectionSnippet);
 
-    // Assert
-    expect(component.channelSections.length).toEqual(2);
-    expect(component.channelSections).toContain(channelSections[0]);
-    expect(component.channelSections).toContain(channelSections[1]);
+      // Act
+      const result = component.getSectionType(channelSection);
+
+      // Assert
+      expect(result).toEqual(channelSection.snippet.type);
+    });
   });
 
-  it('should load channelSections sorted by a position in ascending order', () => {
-    // Arrange
-    component.channelId = channelId;
+  describe('ChannelSectionsComponent\'s template', () => {
 
-    // Act
-    fixture.detectChanges();
+    const MULTPLE_CHANNELS_PLAYIST_TEMPLATE = 'multiple-channels-playlist';
+    const MULTPLE_PLAYLISTS_TEMPLATE = 'app-multiple-playlists';
+    const SINGLE_PLAYLIST_TEMPLATE = 'app-single-playlist';
 
-    // Assert
-    expect(component.channelSections[0].snippet.position).toEqual(0);
-    expect(component.channelSections[1].snippet.position).toEqual(1);
-  });
-});
+    beforeEach(() => {
+      component.channelId = '123';
+    });
 
-describe('ChannelSectionsComponent\'s getSectionType method', () => {
+    it('with multipleChannels channelSection should call MulitpleChannelsPlaylist component', () => {
+      // Arrange
+      const channelSection = createChannelSectionWithType(ChannelSectionType.multipleChannels);
 
-  it('should return channelSection type', () => {
-    // Arrange
-    const channelSectionSnippet = ChannelSectionCreateUtilities.createSnippet();
-    const channelSection = ChannelSectionCreateUtilities.create(channelSectionSnippet);
+      const data$ = of([channelSection]);
+      channelSectionService.getByChannelId.and.returnValue(data$);
 
-    // Act
-    const result = component.getSectionType(channelSection);
+      // Act
+      fixture.detectChanges();
 
-    // Assert
-    expect(result).toEqual(channelSection.snippet.type);
-  });
-});
+      // Assert
+      expect(fixture.nativeElement.innerHTML).toContain(MULTPLE_CHANNELS_PLAYIST_TEMPLATE);
+    });
 
-describe('ChannelSectionsComponent\'s template', () => {
+    it('with multiplePlaylists channelSection should call MultiplePlaylists component', () => {
+      // Arrange
+      const channelSection = createChannelSectionWithType(ChannelSectionType.multiplePlaylists);
 
-  const MULTPLE_CHANNELS_PLAYIST_TEMPLATE = 'multiple-channels-playlist';
-  const MULTPLE_PLAYLISTS_TEMPLATE = 'app-multiple-playlists';
-  const SINGLE_PLAYLIST_TEMPLATE = 'app-single-playlist';
+      const data$ = of([channelSection]);
+      channelSectionService.getByChannelId.and.returnValue(data$);
 
-  beforeEach(() => {
-    component.channelId = '123';
-  });
+      // Act
+      fixture.detectChanges();
 
-  it('with multipleChannels channelSection should call MulitpleChannelsPlaylist component', () => {
-    // Arrange
-    const channelSection = createChannelSectionWithType(ChannelSectionType.multipleChannels);
+      // Assert
+      expect(fixture.nativeElement.innerHTML).toContain(MULTPLE_PLAYLISTS_TEMPLATE);
+    });
 
-    const data$ = of([channelSection]);
-    channelSectionService.getByChannelId.and.returnValue(data$);
+    it('with singlePlaylist channelSection should call SinglePlaylist component', () => {
+      // Arrange
+      const channelSection = createChannelSectionWithType(ChannelSectionType.singlePlaylist);
 
-    // Act
-    fixture.detectChanges();
+      const data$ = of([channelSection]);
+      channelSectionService.getByChannelId.and.returnValue(data$);
 
-    // Assert
-    expect(fixture.nativeElement.innerHTML).toContain(MULTPLE_CHANNELS_PLAYIST_TEMPLATE);
-  });
+      // Act
+      fixture.detectChanges();
 
-  it('with multiplePlaylists channelSection should call MultiplePlaylists component', () => {
-    // Arrange
-    const channelSection = createChannelSectionWithType(ChannelSectionType.multiplePlaylists);
-
-    const data$ = of([channelSection]);
-    channelSectionService.getByChannelId.and.returnValue(data$);
-
-    // Act
-    fixture.detectChanges();
-
-    // Assert
-    expect(fixture.nativeElement.innerHTML).toContain(MULTPLE_PLAYLISTS_TEMPLATE);
+      // Assert
+      expect(fixture.nativeElement.innerHTML).toContain(SINGLE_PLAYLIST_TEMPLATE);
+    });
   });
 
-  it('with singlePlaylist channelSection should call SinglePlaylist component', () => {
-    // Arrange
-    const channelSection = createChannelSectionWithType(ChannelSectionType.singlePlaylist);
+  function createChannelSections(channelId: string): ChannelSection[] {
+    const channelSectionSnippet1 = ChannelSectionCreateUtilities.createSnippet(channelId, 0);
+    const channelSection1 = ChannelSectionCreateUtilities.create(channelSectionSnippet1, '123');
 
-    const data$ = of([channelSection]);
-    channelSectionService.getByChannelId.and.returnValue(data$);
+    const channelSectionSnippet2 = ChannelSectionCreateUtilities.createSnippet(channelId, 1);
+    const channelSection2 = ChannelSectionCreateUtilities.create(channelSectionSnippet2, '456');
 
-    // Act
-    fixture.detectChanges();
+    const channelSections: ChannelSection[] = [channelSection2, channelSection1];
 
-    // Assert
-    expect(fixture.nativeElement.innerHTML).toContain(SINGLE_PLAYLIST_TEMPLATE);
-  });
-});
+    return channelSections;
+  }
 
-function createChannelSections(channelId: string): ChannelSection[] {
-  const channelSectionSnippet1 = ChannelSectionCreateUtilities.createSnippet(channelId, 0);
-  const channelSection1 = ChannelSectionCreateUtilities.create(channelSectionSnippet1, '123');
+  function createChannelSectionWithType(type: ChannelSectionType): ChannelSection {
+    const channelSectionSnippet = ChannelSectionCreateUtilities
+      .createSnippet('123', 0, type);
+    const channelSection = ChannelSectionCreateUtilities
+      .create(channelSectionSnippet);
 
-  const channelSectionSnippet2 = ChannelSectionCreateUtilities.createSnippet(channelId, 1);
-  const channelSection2 = ChannelSectionCreateUtilities.create(channelSectionSnippet2, '456');
-
-  const channelSections: ChannelSection[] = [channelSection2, channelSection1];
-
-  return channelSections;
-}
-
-function createChannelSectionWithType(type: ChannelSectionType): ChannelSection {
-  const channelSectionSnippet = ChannelSectionCreateUtilities
-    .createSnippet('123', 0, type);
-  const channelSection = ChannelSectionCreateUtilities
-    .create(channelSectionSnippet);
-
-  return channelSection;
-}
+    return channelSection;
+  }
+})

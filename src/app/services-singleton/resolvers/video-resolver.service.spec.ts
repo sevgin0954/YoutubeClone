@@ -1,18 +1,20 @@
 import { VideoResolverService } from './video-resolver.service';
 
-let service: VideoResolverService;
-let videoService: any;
+describe('', () => {
+  let service: VideoResolverService;
+  let videoService: any;
 
-beforeEach(() => {
-  videoService = jasmine.createSpyObj('VideoService', ['getByIds']);
-});
-beforeEach(() => {
-  service = new VideoResolverService(videoService);
-});
+  beforeEach(() => {
+    videoService = jasmine.createSpyObj('VideoService', ['getByIds']);
+  });
+  beforeEach(() => {
+    service = new VideoResolverService(videoService);
+  });
 
-describe('VideoResolverService', () => {
+  describe('VideoResolverService', () => {
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
   });
 });
