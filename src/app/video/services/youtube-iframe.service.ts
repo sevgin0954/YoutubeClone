@@ -9,12 +9,12 @@ export class YoutubeIframeService {
 
   isRestricted = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-  init(id: string, isReposnsive: boolean, aspectRatio: number) {
+  init(id: string, isReposnsive: boolean, aspectRatio: number, onReadyCallback?: Function) {
     this.videoId = id;
     this.aspectRatio = aspectRatio;
 
     if (window['YT']) {
-      this.startVideo(isReposnsive);
+      this.startVideo(isReposnsive, onReadyCallback);
       return;
     }
 
@@ -24,11 +24,11 @@ export class YoutubeIframeService {
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     window['onYouTubeIframeAPIReady'] = () => {
-      this.startVideo(isReposnsive);
+      this.startVideo(isReposnsive, onReadyCallback);
     }
   }
 
-  private startVideo(isReposnsive: boolean) {
+  private startVideo(isReposnsive: boolean, onReadyCallback) {
     this.player = new window['YT'].Player('player', {
       videoId: this.videoId,
       playerVars: {
@@ -42,18 +42,18 @@ export class YoutubeIframeService {
         playsinline: 1
       },
       events: {
-        'onReady': this.onPlayerReady.bind(this, isReposnsive)
+        'onReady': this.onPlayerReady.bind(this, isReposnsive, onReadyCallback)
       }
     });
   }
 
-  private onPlayerReady(isReponsive: boolean, event: any) {
+  private onPlayerReady(isReponsive: boolean, onReadyCallback, event: any) {
+    onReadyCallback();
+
     this.playVideo(event);
 
     if (isReponsive) {
       this.makeResponsive();
-      // Should be called twice, otherwise it wont calculate the height properly
-      this.resizeHeight();
       this.resizeHeight();
     }
   }
@@ -76,7 +76,6 @@ export class YoutubeIframeService {
     const playerElement = this.player.getIframe();
 
     const currentWidth = playerElement.offsetWidth;
-    console.log(currentWidth)
     const resizedHeight = Math.ceil(currentWidth / this.aspectRatio);
     playerElement.height = resizedHeight;
   }

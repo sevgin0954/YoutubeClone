@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription as RxjsSubscribtion } from 'rxjs';
@@ -14,11 +14,13 @@ import { ChannelResource } from 'src/app/shared/enums/resource-properties/channe
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss']
 })
-export class VideoComponent implements OnInit, OnDestroy {
+export class VideoComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  @ViewChild('playerContainer', { static: false }) playerContainer: ElementRef;
   channel: Channel;
   video: Video;
   maxDisplayedCharacters: number = 120;
+  private resizeSubscription: any;
   private subscribtion: RxjsSubscribtion;
 
   constructor(
@@ -30,18 +32,27 @@ export class VideoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.video = this.route.snapshot.data['video'];
 
-    this.initVideo();
     this.initChannel();
   }
 
-  private initVideo(): void {
+  ngAfterViewInit(): void {
+    this.initVideo(() => {
+      // @ts-ignore
+      this.resizeSubscription = new ResizeObserver(subscribers => {
+        this.youtubeIframeService.resizeHeight();
+      });
+      this.resizeSubscription.observe(this.playerContainer.nativeElement);
+    });
+  }
+
+  private initVideo(onReadyCallback: Function): void {
     const isResponsive = true;
 
     const videoHeight = this.video.player.embedHeight;
     const videoWidth = this.video.player.embedWidth;
     const aspectRation = videoWidth / videoHeight;
 
-    this.youtubeIframeService.init(this.video.id, isResponsive, aspectRation);
+    this.youtubeIframeService.init(this.video.id, isResponsive, aspectRation, onReadyCallback);
   }
 
   private initChannel(): void {
@@ -58,11 +69,7 @@ export class VideoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.resizeSubscription.unobserve(this.playerContainer.nativeElement);
     this.subscribtion.unsubscribe();
-  }
-
-  @HostListener('window:resize')
-  onVideoResize(): void {
-    this.youtubeIframeService.resizeHeight();
   }
 }

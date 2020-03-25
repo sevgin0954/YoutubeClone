@@ -70,6 +70,12 @@ input.input:focus {
   margin-right: auto;
 }
 
+.player-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 70vw;
+}
+
 .show-button {
   border: none;
   background-color: inherit;
