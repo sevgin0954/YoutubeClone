@@ -47,20 +47,15 @@ export class YoutubeIframeService {
     });
   }
 
-  private onPlayerReady(isReposnsive: boolean, event: any) {
+  private onPlayerReady(isReponsive: boolean, event: any) {
     this.playVideo(event);
 
-    if (isReposnsive) {
-      this.setMaxHeight('inherit');
+    if (isReponsive) {
       this.makeResponsive();
+      // Should be called twice, otherwise it wont calculate the height properly
+      this.resizeHeight();
       this.resizeHeight();
     }
-  }
-
-  private setMaxHeight(value: string): void {
-    const playerElement: HTMLElement = this.player.getIframe();
-
-    playerElement.style.maxHeight = value;
   }
 
   playVideo(event: any): void {
@@ -81,6 +76,7 @@ export class YoutubeIframeService {
     const playerElement = this.player.getIframe();
 
     const currentWidth = playerElement.offsetWidth;
+    console.log(currentWidth)
     const resizedHeight = Math.ceil(currentWidth / this.aspectRatio);
     playerElement.height = resizedHeight;
   }
