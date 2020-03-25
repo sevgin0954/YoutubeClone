@@ -69,6 +69,7 @@ export class YoutubeIframeService {
 
   private makeResponsive(): void {
     const playerElement = this.player.getIframe();
+    playerElement.style.maxHeight = 'inherit';
     playerElement.width = '100%';
   }
 
