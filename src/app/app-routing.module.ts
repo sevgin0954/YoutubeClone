@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'signin', loadChildren: './authentication/authentication.module#AuthenticationModule' },
   { path: 'subscriptions', component: SubscriptionsComponent },
   { path: 'video', loadChildren: './video/video.module#VideoModule', data: { preload: true } },
-  { path: 'channel', loadChildren: './channel/channel.module#ChannelModule' }
+  { path: 'channel', loadChildren: './channel/channel.module#ChannelModule' },
+  { path: 'categories', loadChildren: './category/category.module#CategoryModule' }
 ];
 
 @NgModule({

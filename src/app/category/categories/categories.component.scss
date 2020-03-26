@@ -1,0 +1,23 @@
+@import "./../../../variables.scss";
+
+:host {
+  width: 100%;
+}
+
+.categories-container {
+  display: flex;
+  flex-flow: wrap;
+  margin-left: $content-margin;
+  margin-top: $content-margin;
+}
+
+.category-container {
+  border: 0.001rem solid grey;
+  margin: 0.04rem;
+  // padding: 2rem;
+  word-wrap: break-word;
+}
+.category-container:hover {
+  outline: #28587B solid 1px;
+  text-decoration: none;
+}

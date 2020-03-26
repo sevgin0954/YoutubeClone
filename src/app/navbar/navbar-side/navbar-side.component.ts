@@ -1,7 +1,6 @@
-import { Component, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Component, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { NavbarSelectorService } from '../services/navbar-selector.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-side',
@@ -10,7 +9,7 @@ import { NavbarSelectorService } from '../services/navbar-selector.service';
 })
 export class NavbarSideComponent implements AfterViewChecked {
 
-  @ViewChild('buttonList', {static: false}) buttonList: ElementRef;
+  @ViewChild('buttonList', { static: false }) buttonList: ElementRef;
 
   constructor(
     private navbarSelectorService: NavbarSelectorService,

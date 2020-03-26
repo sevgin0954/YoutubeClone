@@ -1,0 +1,20 @@
+@import './../../../variables.scss';
+
+.category-container {
+  color: $dark-blue;
+  padding: 2rem;
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+
+.icon {
+  font-size: 3rem;
+  margin: 0;
+}
+
+.text {
+  font-size: 1.3rem;
+  font-style: italic;
+  font-variant: small-caps;
+  font-weight: 400;
+}

@@ -1,12 +1,21 @@
-import { TestBed } from '@angular/core/testing';
-
 import { CategoriesService } from './categories.service';
 
-describe('CategoriesService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+describe('', () => {
 
-  it('should be created', () => {
-    const service: CategoriesService = TestBed.get(CategoriesService);
-    expect(service).toBeTruthy();
+  let http: any;
+  let service: CategoriesService;
+
+  beforeEach(() => {
+    http = jasmine.createSpyObj('HttpClient', ['get']);
+  });
+  beforeEach(() => {
+    service = new CategoriesService(http);
+  });
+
+  describe('CategoriesService', () => {
+
+    it('should be created', () => {
+      expect(service).toBeTruthy();
+    });
   });
 });

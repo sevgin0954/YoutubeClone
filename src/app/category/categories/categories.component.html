@@ -1,1 +1,9 @@
-<p>categories works!</p>
+<div class="categories-container">
+  <div class="category-container" *ngFor="let currentCategory of categories$ | async">
+    <app-category [category]="currentCategory"></app-category>
+  </div>
+
+  <div class="loading-container" *ngIf="isLoading">
+    <app-loading></app-loading>
+  </div>
+</div>

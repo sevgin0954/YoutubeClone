@@ -1,6 +1,6 @@
 import { VideoCategorySnippet } from './video-category-snippet';
 
 export interface VideoCategory {
-  id: string,
+  id: 'UCBR8-60-B28hp2BmDPdntcQ',
   snippet: VideoCategorySnippet
 }

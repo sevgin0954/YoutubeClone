@@ -2,6 +2,16 @@
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 @import "./variables.scss";
 
+a.no-style:link {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+a.no-style:visited {
+  text-decoration: inherit;
+  color: inherit;
+}
+
 a[disabled] {
   pointer-events: none;
 }
