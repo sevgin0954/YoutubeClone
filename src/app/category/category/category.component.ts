@@ -1,10 +1,11 @@
 import { Component, Input, OnChanges } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+
 import { VideoCategory } from 'src/app/models/video-category/video-category';
 import isRequired from 'src/decorators/isRequired';
 import isType from 'src/decorators/isType';
-import categoriesIcons from '../categoryIcon';
+import getCategoryIcon from '../categoryIcon';
 import { VideoCategoryType } from 'src/app/shared/enums/video-category-type';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-category',
@@ -30,7 +31,7 @@ export class CategoryComponent implements OnChanges {
 
   ngOnChanges(): void {
     const categoryType = VideoCategoryType[this.category.snippet.title];
-    const categoryValue = categoriesIcons.get(categoryType);
+    const categoryValue = getCategoryIcon(categoryType);
 
     this._icon = categoryValue;
   }

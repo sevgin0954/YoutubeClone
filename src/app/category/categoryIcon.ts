@@ -40,4 +40,11 @@ categoriesIcons.set(VideoCategoryType["Videoblogging"], GENERIC_VIDEO_ICON);
 Object.freeze(categoriesIcons);
 Object.seal(categoriesIcons);
 
-export default categoriesIcons;
+export default function getCategoryIcon(categoryType: VideoCategoryType): string {
+  let categoryIcon = categoriesIcons.get(categoryType);
+  if (categoryIcon == null) {
+    categoryIcon = GENERIC_VIDEO_ICON;
+  }
+
+  return categoryIcon;
+};
