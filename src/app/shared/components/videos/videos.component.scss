@@ -1,0 +1,40 @@
+@import "./../../../../variables.scss";
+
+.video-container {
+  display: flex;
+  margin-bottom: 1rem;
+  margin-top: $content-margin;
+  margin-left: $content-margin;
+}
+
+.video-info {
+  margin-left: 0.4rem;
+}
+
+:host ::ng-deep {
+  .thumbnail {
+    width: 246px;
+  }
+}
+
+@media(max-width: 500px) {
+  :host ::ng-deep {
+    .thumbnail {
+      max-height: 200px;
+      width: 100%;
+    }
+  }
+
+  .video-description {
+    display: none;
+  }
+
+  .video-container {
+    flex-direction: column;
+    margin-left: 0;
+  }
+
+  .video-info {
+    margin-left: 0;
+  }
+}

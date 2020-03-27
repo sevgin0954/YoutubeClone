@@ -12,7 +12,8 @@ const routes: Routes = [
   { path: 'subscriptions', component: SubscriptionsComponent },
   { path: 'video', loadChildren: './video/video.module#VideoModule', data: { preload: true } },
   { path: 'channel', loadChildren: './channel/channel.module#ChannelModule' },
-  { path: 'categories', loadChildren: './category/category.module#CategoryModule' }
+  { path: 'categories', loadChildren: './category/category.module#CategoryModule' },
+  { path: 'category', loadChildren: './category/category.module#CategoryModule' }
 ];
 
 @NgModule({

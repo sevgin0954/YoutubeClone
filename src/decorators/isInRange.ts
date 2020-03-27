@@ -1,4 +1,5 @@
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { SimpleChanges } from '@angular/core';
 
 export default function isInRange(
   minNumber: number,
@@ -11,10 +12,10 @@ export default function isInRange(
     const ngOnChangesClone: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
 
     Object.defineProperty(targetPrototype, NG_ON_CHANGES_NAME, {
-      value: propertyValue
+      value: onChangesNewFunc
     });
 
-    function propertyValue(): void {
+    function onChangesNewFunc(changes: SimpleChanges): void {
       const propertyValue = this[propertyName];
       if (propertyValue < minNumber || propertyValue > maxNumber) {
         const className = targetPrototype.constructor.name;
@@ -24,7 +25,7 @@ export default function isInRange(
       }
 
       if (ngOnChangesClone) {
-        ngOnChangesClone.call(this);
+        ngOnChangesClone.call(this, changes);
       }
     }
   }

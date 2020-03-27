@@ -6,15 +6,18 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoriesService } from './services/categories.service';
 import { SharedModule } from '../shared/shared.module';
 import { CategoryComponent } from './category/category.component';
+import { CategoryVideoComponent } from './category-video/category-video.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: CategoriesComponent }
+  { path: ':id', component: CategoryVideoComponent },
+  { path: '', pathMatch: 'full', component: CategoriesComponent },
 ];
 
 @NgModule({
   declarations: [
     CategoriesComponent,
-    CategoryComponent
+    CategoryComponent,
+    CategoryVideoComponent
   ],
   imports: [
     RouterModule.forChild(routes),

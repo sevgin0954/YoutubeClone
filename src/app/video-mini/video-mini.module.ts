@@ -4,9 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { VideoInfoComponent } from './video-info/video-info.component';
 import { VideoThumbnailComponent } from './video-thumbnail/video-thumbnail.component';
-import { SharedModule } from '../shared/shared.module';
-
-
+import { TextModule } from '../text/text.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +14,7 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     RouterModule,
-    SharedModule
+    TextModule
   ],
   exports: [
     VideoInfoComponent,

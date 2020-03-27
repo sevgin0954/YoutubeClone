@@ -5,6 +5,7 @@ import { CommentRepliesComponent } from './comment-replies/comment-replies.compo
 import { CommentComponent } from './comment/comment.component';
 import { SharedModule } from '../shared/shared.module';
 import { CommentsService } from './services/comments.service';
+import { TextModule } from '../text/text.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { CommentsService } from './services/comments.service';
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    TextModule
   ],
   providers: [
     CommentsService

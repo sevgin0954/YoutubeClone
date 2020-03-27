@@ -1,25 +1,6 @@
-<div class="video-container" *ngFor="let video of videos">
-  <app-video-thumbnail [video]="video" [size]="videoSize"></app-video-thumbnail>
-
-  <div class="video-info">
-    <app-video-info class="video-title"
-      [video]="video"
-      [titleMaxDisplayedRows]="videoTitleMaxDisplayedRows">
-    </app-video-info>
-
-    <div class="info-small video-description">
-      <app-text-reveal
-        [text]="video.snippet.description"
-        [maxDisplayedRows]="videoDescriptionMaxDisplayedRows"
-        [shouldShowButtons]="false">
-      </app-text-reveal>
-    </div>
-  </div>
-</div>
-
-<div class="d-flex" *ngIf="areMoreVideos">
-  <app-loading-elements class="loading-container"
-    [isLoadingDisabled]="isCurrentlyLoading"
-    [loadingCallback]="loadMoreVideos">
-  </app-loading-elements>
-</div>
+<ng-container *ngIf="isCurrentlyLoading === false">
+  <app-videos
+    [loadVideosCallback]="loadVideosCallback"
+    [filterArgument]="regionCode">
+  </app-videos>
+</ng-container>

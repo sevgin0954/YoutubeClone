@@ -1,6 +1,7 @@
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { SimpleChanges } from '@angular/core';
 
-export default function isType(requiredType: 'string' | 'object' | 'number'): Function {
+export default function isType(requiredType: 'string' | 'object' | 'number' | 'function'): Function {
   return (targetPrototype: any, propertyName: string) => {
 
     const NG_ON_CHANGES_NAME = 'ngOnChanges';
@@ -12,7 +13,7 @@ export default function isType(requiredType: 'string' | 'object' | 'number'): Fu
       value: propertyValue
     });
 
-    function propertyValue(): void {
+    function propertyValue(changes: SimpleChanges): void {
       const argumentType = typeof this[propertyName];
       if (argumentType !== requiredType) {
         const className = targetPrototype.constructor.name;
@@ -26,7 +27,7 @@ export default function isType(requiredType: 'string' | 'object' | 'number'): Fu
       }
 
       if (ngOnChangesClone) {
-        ngOnChangesClone.call(this);
+        ngOnChangesClone.call(this, changes);
       }
     }
   }

@@ -11,6 +11,8 @@ import { SharedModule } from './shared/shared.module';
 import { SubscriptionsComponent } from './subscriptions/subscriptions.component';
 import { VideoMiniModule } from './video-mini/video-mini.module';
 import { NavbarModule } from './navbar/navbar.module';
+import { VideoModule } from './video/video.module';
+import { TextModule } from './text/text.module';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { NavbarModule } from './navbar/navbar.module';
     HttpClientModule,
     SharedModule,
     VideoMiniModule,
-    NavbarModule
+    NavbarModule,
+    VideoModule,
+    TextModule
   ],
   providers: [
     {
