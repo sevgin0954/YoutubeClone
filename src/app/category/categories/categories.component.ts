@@ -4,7 +4,7 @@ import { CategoriesService } from '../services/categories.service';
 import { Subscription, Observable } from 'rxjs';
 import { VideoCategory } from 'src/app/models/video-category/video-category';
 import { GeolocationService } from 'src/app/services-singleton/geolocation.service';
-import { concatMap, finalize } from 'rxjs/operators';
+import { concatMap, finalize, map } from 'rxjs/operators';
 import { VideoCategoryResource } from 'src/app/shared/enums/resource-properties/video-category-resource';
 
 @Component({
@@ -29,7 +29,9 @@ export class CategoriesComponent implements OnInit {
           VideoCategoryResource.snippet
         ];
 
-        return this.categoriesService.getByRegionCode(regionCode, resources);
+        return this.categoriesService.getByRegionCode(regionCode, resources).pipe(
+          map(categories => categories.filter(category => category.snippet.assignable))
+        );
       }),
       finalize(() => {
         this.isLoading = false;
