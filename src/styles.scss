@@ -81,6 +81,12 @@ input.input:focus {
   margin-right: auto;
 }
 
+.no-results-text {
+  color: gray;
+  font-size: 1.3rem;
+  text-align: center;
+}
+
 .player-container {
   max-height: 70vw;
 }

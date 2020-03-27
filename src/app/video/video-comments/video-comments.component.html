@@ -37,10 +37,10 @@
       [isLoadingDisabled]="isCurrentlyLoadingComments" [loadingCallback]="loadMoreComments">
     </app-loading-elements>
   </div>
-  <div class="no-comments-text" *ngIf="isMoreComments === false && areCommentsDisabled === false">
+  <div class="no-results-text" *ngIf="isMoreComments === false && areCommentsDisabled === false">
     No comments
   </div>
-  <div class="no-comments-text" *ngIf="areCommentsDisabled">
+  <div class="no-results-text" *ngIf="areCommentsDisabled">
     Comments are disabled
   </div>
 </div>
