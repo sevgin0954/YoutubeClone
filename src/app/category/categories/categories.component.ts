@@ -23,19 +23,16 @@ export class CategoriesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.categories$ = this.geolocationService.getRegionCode().pipe(
-      concatMap(regionCode => {
-        const resources = [
-          VideoCategoryResource.snippet
-        ];
-
-        return this.categoriesService.getByRegionCode(regionCode, resources).pipe(
-          map(categories => categories.filter(category => category.snippet.assignable))
-        );
-      }),
-      finalize(() => {
-        this.isLoading = false;
-      })
-    );
+    this.geolocationService.getRegionCode().subscribe(regionCode => {
+      const resources = [
+        VideoCategoryResource.snippet
+      ];
+      this.categories$ = this.categoriesService.getByRegionCode(regionCode, resources).pipe(
+        map(categories => categories.filter(category => category.snippet.assignable)),
+        finalize(() => {
+          this.isLoading = false;
+        })
+      );
+    });
   }
 }

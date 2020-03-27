@@ -1,16 +1,5 @@
 @import "./../../../../variables.scss";
 
-.video-container {
-  display: flex;
-  margin-bottom: 1rem;
-  margin-top: $content-margin;
-  margin-left: $content-margin;
-}
-
-.video-info {
-  margin-left: 0.4rem;
-}
-
 :host ::ng-deep {
   .thumbnail {
     width: 246px;
@@ -37,4 +26,19 @@
   .video-info {
     margin-left: 0;
   }
+}
+
+.no-results-text {
+  margin-bottom: $navbar-bottom-height;
+}
+
+.video-container {
+  display: flex;
+  margin-bottom: 1rem;
+  margin-top: $content-margin;
+  margin-left: $content-margin;
+}
+
+.video-info {
+  margin-left: 0.4rem;
 }

@@ -9,6 +9,7 @@ import { ExceptionConstants } from '../../Constants/exception-constants';
 import { VideoResource } from '../../enums/resource-properties/video-resource';
 import { PageArguments } from '../../arguments/page-arguments';
 import { ServiceModel } from 'src/app/models/service-models/service-model';
+import { finalize } from 'rxjs/operators';
 
 type loadVideosCallback = (filterArgument: any, pageArgs: PageArguments, resources: any[])
   => Observable<ServiceModel<Video[]>>;
@@ -75,16 +76,27 @@ export class VideosComponent implements OnChanges, OnDestroy {
       VideoResource.statistics,
       VideoResource.player
     ];
-    const videoSubscription = this.loadVideosCallback(this.filterArgument, pageArgument, resources)
-      .subscribe(data => {
+    const videoSubscription = this.loadVideosCallback(
+      this.filterArgument,
+      pageArgument,
+      resources
+    ).pipe(
+      finalize(() => {
+        this.isCurrentlyLoading = false;
+      })
+    ).subscribe(
+      data => {
         this.nextPageToken = data.nextPageToken;
         this.videos.push(...data.items);
 
         this.isFirstPage = false;
-        this.isCurrentlyLoading = false;
 
         this.updateAreMoreVideos();
-      });
+      },
+      error => {
+        this.areMoreVideos = false;
+      }
+    );
     this.subscription.add(videoSubscription);
   }
 
