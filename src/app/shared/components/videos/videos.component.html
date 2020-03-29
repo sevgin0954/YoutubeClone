@@ -1,4 +1,4 @@
-<div class="video-container" *ngFor="let video of videos">
+<article class="video-container" *ngFor="let video of videos">
   <app-video-thumbnail [video]="video" [size]="thumbnailSize"></app-video-thumbnail>
 
   <div class="video-info">
@@ -15,7 +15,7 @@
       </app-text-reveal>
     </div>
   </div>
-</div>
+</article>
 
 <div class="d-flex" *ngIf="areMoreVideos">
   <app-loading-elements class="loading-container"

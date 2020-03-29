@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { VideoService } from 'src/app/services-singleton/video.service';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { VideoService } from 'src/app/services-singleton/video.service';
 import { pluck } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-category-video',
-  templateUrl: './category-video.component.html',
-  styleUrls: ['./category-video.component.scss']
+  templateUrl: './category-videos.component.html',
+  styleUrls: ['./category-videos.component.scss']
 })
-export class CategoryVideoComponent implements OnInit {
+export class CategoryVideosComponent implements OnInit {
 
   categoryId$: Observable<string>;
   loadVideosCallback: Function = this.videoService.getByCategoryId;

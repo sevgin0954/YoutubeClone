@@ -10,7 +10,6 @@
   display: block;
   margin: 0.04rem;
   padding: 2rem;
-  width: 240px;
   word-wrap: break-word;
 }
 .channel:hover {
@@ -19,7 +18,18 @@
 }
 
 .channels-container {
-  display: flex;
-  flex-wrap: wrap;
+  color: $dark-blue;
+  display: grid;
+  box-sizing: content-box;
+  grid-template-columns: repeat(auto-fit, minmax(19.1rem, 1fr));
   margin: $content-margin;
+}
+
+.loading-container {
+  margin-bottom: $navbar-bottom-height;
+}
+
+.thumbnail {
+  display: block;
+  margin: auto;
 }

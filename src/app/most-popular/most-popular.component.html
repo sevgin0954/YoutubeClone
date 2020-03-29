@@ -1,6 +1,8 @@
 <ng-container *ngIf="isCurrentlyLoading === false">
-  <app-videos
-    [loadVideosCallback]="loadVideosCallback"
-    [filterArgument]="regionCode">
-  </app-videos>
+  <main>
+    <app-videos
+      [loadVideosCallback]="loadVideosCallback"
+      [filterArgument]="regionCode">
+    </app-videos>
+  </main>
 </ng-container>

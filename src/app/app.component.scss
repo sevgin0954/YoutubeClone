@@ -1,6 +1,6 @@
 @import './../variables.scss';
 
-@media (max-width: 600px) {
+@media (max-width: #{$bottom-navbar-max-width}) {
   #navbar-side {
     display: none;
   }
@@ -10,7 +10,8 @@
   }
 }
 
-@media (min-width: 601px) {
+$hide-bottom-navbar-min-width: calc(#{$bottom-navbar-max-width} + 1px);
+@media (min-width: #{$hide-bottom-navbar-min-width}) {
   #navbar-bottom {
     display: none;
   }

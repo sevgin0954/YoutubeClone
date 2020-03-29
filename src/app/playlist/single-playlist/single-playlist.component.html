@@ -1,9 +1,8 @@
 <app-playlist-buttons [loadMoreCallBack]="loadMoreCallBack" [totalResultsCount]="totalResultsCount">
-  <div #playlist class="playlist">
-    <div class="playlist-element" #playlistElement
-      *ngFor="let video of videos; let currentIndex = index;">
+  <section #playlist class="playlist">
+    <article class="playlist-element" #playlistElement *ngFor="let video of videos; let currentIndex = index;">
       <app-video-thumbnail [video]="video" [size]="videoSize"></app-video-thumbnail>
       <app-video-info [video]="video" [titleMaxDisplayedRows]="titleMaxDisplayedRows"></app-video-info>
-    </div>
-  </div>
+    </article>
+  </section>
 </app-playlist-buttons>

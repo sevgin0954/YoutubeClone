@@ -2,18 +2,22 @@
 @import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 @import "./variables.scss";
 
+a {
+  color: $dark-blue;
+}
 a.no-style:link {
   text-decoration: inherit;
   color: inherit;
 }
-
 a.no-style:visited {
   text-decoration: inherit;
   color: inherit;
 }
-
 a[disabled] {
   pointer-events: none;
+}
+a:hover {
+  color: $dark-blue;
 }
 
 body {
@@ -76,7 +80,6 @@ input.input:focus {
   display: flex;
   font-size: 2.2rem;
   justify-content: center;
-  margin-bottom: $navbar-bottom-height;
   margin-left: auto;
   margin-right: auto;
 }

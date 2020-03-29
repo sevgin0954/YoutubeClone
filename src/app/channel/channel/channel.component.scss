@@ -1,7 +1,11 @@
 @import '../../../variables.scss';
 
+:host {
+  width: 100%;
+}
+
 img {
-  max-width: 100%;
+  width: 100%;
   height: auto;
 }
 
@@ -17,5 +21,11 @@ img {
 
   .info-small {
     font-size: calc(0.9rem * 1.1);
+  }
+}
+
+@media (max-width: #{$bottom-navbar-max-width}) {
+  .content-container {
+    margin-left: $content-margin;
   }
 }

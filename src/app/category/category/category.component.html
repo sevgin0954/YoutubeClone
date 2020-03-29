@@ -1,8 +1,10 @@
-<a class="no-style" routerLink="/category/{{ category.id }}">
-  <div class="category-container">
-    <p class="icon" [innerHTML]="icon"></p>
-    <div class="text">
-      {{ category.snippet.title }}
+<article>
+  <a class="no-style" routerLink="/category/{{ category.id }}">
+    <div class="category-container">
+      <p class="icon" [innerHTML]="icon"></p>
+      <div class="text">
+        {{ category.snippet.title }}
+      </div>
     </div>
-  </div>
-</a>
+  </a>
+</article>

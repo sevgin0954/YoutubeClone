@@ -1,0 +1,6 @@
+<ng-container *ngIf="(categoryId$ | async) as categoryId">
+  <main>
+    <app-videos [loadVideosCallback]="loadVideosCallback" [filterArgument]="categoryId">
+    </app-videos>
+  </main>
+</ng-container>

@@ -6,10 +6,10 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CategoriesService } from './services/categories.service';
 import { SharedModule } from '../shared/shared.module';
 import { CategoryComponent } from './category/category.component';
-import { CategoryVideoComponent } from './category-video/category-video.component';
+import { CategoryVideosComponent } from './category-videos/category-videos.component';
 
 const routes: Routes = [
-  { path: ':id', component: CategoryVideoComponent },
+  { path: ':id', component: CategoryVideosComponent },
   { path: '', pathMatch: 'full', component: CategoriesComponent },
 ];
 
@@ -17,7 +17,7 @@ const routes: Routes = [
   declarations: [
     CategoriesComponent,
     CategoryComponent,
-    CategoryVideoComponent
+    CategoryVideosComponent
   ],
   imports: [
     RouterModule.forChild(routes),

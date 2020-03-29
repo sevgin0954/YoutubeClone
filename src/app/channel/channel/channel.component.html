@@ -1,4 +1,4 @@
-<div *ngIf="channel">
+<main *ngIf="channel">
   <picture>
     <source media="(max-width: calc(320px + 185px))" srcset="{{
       channel.brandingSettings.image.bannerMobileLowImageUrl }}">
@@ -24,11 +24,13 @@
     <img src="{{ channel.brandingSettings.image.bannerTabletExtraHdImageUrl }}">
   </picture>
 
-  <div>
-    <div class="mr-4 mt-4 mb-4">
+  <div class="content-container">
+    <article class="mr-4 mt-4 mb-4">
       <app-channel-mini [channel]="channel"></app-channel-mini>
-    </div>
+    </article>
 
-    <app-channel-sections [channelId]="channel.id"></app-channel-sections>
+    <article>
+      <app-channel-sections [channelId]="channel.id"></app-channel-sections>
+    </article>
   </div>
-</div>
+</main>

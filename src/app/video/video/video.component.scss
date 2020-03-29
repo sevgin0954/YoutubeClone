@@ -1,19 +1,28 @@
 @import "../../../variables.scss";
 
-.player-container {
-  max-height: 70vh;
-}
-
 :host(app-video) {
   width: 100%;
 }
 
+:host::ng-deep {
+  hr {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+}
+
+.player-container {
+  max-height: 70vh;
+}
+
 .video-content-container {
-  margin-right: 2rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .video-channel {
   margin-left: $content-margin;
+  margin-right: $content-margin;
 }
 
 .video-header-container {

@@ -30,18 +30,13 @@
   margin-bottom: 0.125rem;
 }
 
-.video-comment-container {
-  margin-left: $content-margin;
-  margin-right: $content-margin;
-}
-
-hr {
-  margin-left: $content-margin;
-}
-
 img {
   width: 48px;
   height: 48px;
+}
+
+.loading-container {
+  margin-bottom: $navbar-bottom-height;
 }
 
 .video-comments-container {
