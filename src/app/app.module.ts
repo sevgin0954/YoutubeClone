@@ -1,10 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommentModule } from './comment/comment.module';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptorService } from './services-singleton/interceptors/jwt-interceptor.service';
 import { MostPopularComponent } from './most-popular/most-popular.component';
 import { SharedModule } from './shared/shared.module';

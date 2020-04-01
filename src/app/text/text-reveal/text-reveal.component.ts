@@ -1,4 +1,6 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, HostListener } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, OnChanges } from '@angular/core';
+
+import { TextElementService } from '../services/text-element.service';
 
 @Component({
   selector: 'app-text-reveal',
@@ -6,7 +8,7 @@ import { Component, Input, ViewChild, ElementRef, AfterViewChecked, ChangeDetect
   styleUrls: ['./text-reveal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TextRevealComponent implements AfterViewChecked {
+export class TextRevealComponent implements AfterViewChecked, OnChanges {
 
   @Input() shouldShowButtons: boolean = false;
   @Input() text: string;
@@ -17,65 +19,52 @@ export class TextRevealComponent implements AfterViewChecked {
   canTextOverflow: boolean = true;
 
   constructor(
-    private changeDetectionRef: ChangeDetectorRef
+    private changeDetectionRef: ChangeDetectorRef,
+    private textElementService: TextElementService
   ) { }
 
   ngAfterViewChecked(): void {
     if (this.isShowingMore === false) {
-      this.setAttributes();
+      this.textElementService.setHiddenStyles(this.textElement.nativeElement, this.maxDisplayedRows);
     }
-    const isOverflowing = this.checkIsTextOverflowing();
-    this.isTextOverflowing = isOverflowing;
-    if (isOverflowing === this.isTextOverflowing) {
+
+    // Update buttons
+    const isCurrentlyOverflowing = this.textElementService
+      .checkIsTextOverflowingParent(this.textElement.nativeElement);
+    if (isCurrentlyOverflowing !== this.isTextOverflowing) {
+      this.isTextOverflowing = isCurrentlyOverflowing;
+
+      // Updates the view and displays or hide the buttons
       this.changeDetectionRef.detectChanges();
     }
   }
 
-  private checkIsTextOverflowing(): boolean {
-    const textNativeElement = this.textElement.nativeElement;
-
-    return textNativeElement.scrollHeight > textNativeElement.clientHeight;
-  }
-
-  @HostListener('window:resize')
-  private onResize(): void {
-    this.isShowingMore = false;
-    this.canTextOverflow = this.checkIfTextCanOverflow();
-
-    this.changeDetectionRef.markForCheck();
-  }
-
-  private checkIfTextCanOverflow(): boolean {
-    let canOverflow = true;
-
-    const rowsCount = this.countLinesOfText();
-    if (this.isTextOverflowing === false && this.isShowingMore && rowsCount <= this.maxDisplayedRows) {
-      canOverflow = false;
+  ngOnChanges(): void {
+    if (this.shouldShowButtons === true) {
+      this.addResizeListener();
     }
-
-    return canOverflow;
+    else if (this.shouldShowButtons === false) {
+      this.removeResizeListener();
+    }
   }
 
-  private countLinesOfText(): number {
-    const textLineHeightStyle = window.getComputedStyle(this.textElement.nativeElement).lineHeight;
-    const textLineHeight = this.cssValueToNumber(textLineHeightStyle);
-    const clientHeight = this.textElement.nativeElement.clientHeight;
-    const rowsCount = clientHeight / textLineHeight;
-
-    return rowsCount;
+  private addResizeListener(): void {
+    window.addEventListener('resize', this.updateButtonsFields.bind(this));
   }
 
-  private cssValueToNumber(value: string): number {
-    const firstNonNumberCharacter = Array.from(value).find(ch => isNaN(+ch) === true);
-    const firstNonNumberIndex = value.indexOf(firstNonNumberCharacter);
-    const number = +value.substring(0, firstNonNumberIndex);
+  private removeResizeListener(): void {
+    window.removeEventListener('resize', this.updateButtonsFields.bind(this));
+  }
 
-    return number;
+  updateButtonsFields(): void {
+    this.isShowingMore = false;
+    this.canTextOverflow = this.textElementService
+      .checkIfTextCanOverflow(this.textElement.nativeElement, this.isShowingMore, this.maxDisplayedRows);
   }
 
   showLess(): void {
     this.isShowingMore = false;
-    this.setAttributes();
+    this.textElementService.setHiddenStyles(this.textElement.nativeElement, this.maxDisplayedRows);
   }
 
   showMore(): void {
@@ -83,10 +72,7 @@ export class TextRevealComponent implements AfterViewChecked {
     this.textElement.nativeElement.removeAttribute('style');
   }
 
-  setAttributes(): void {
-    const styleValue =
-    `-webkit-line-clamp: ${this.maxDisplayedRows};` +
-    `display: -webkit-box;`;
-    this.textElement.nativeElement.setAttribute('style', styleValue);
+  onChangeDetection() {
+    console.log('change detection text revealchange detection text revealchange detection text revealchange detection text reveal')
   }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { PlaylistItemsService } from 'src/app/services-singleton/playlist-items.service';
@@ -17,7 +17,7 @@ import { VideoResource } from 'src/app/shared/enums/resource-properties/video-re
   templateUrl: './single-playlist.component.html',
   styleUrls: ['./single-playlist.component.scss']
 })
-export class SinglePlaylistComponent implements OnInit {
+export class SinglePlaylistComponent implements OnInit, AfterViewInit {
 
   @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
@@ -32,9 +32,17 @@ export class SinglePlaylistComponent implements OnInit {
   private nextPageToken: string;
 
   constructor(
+    private changeDetectionRef: ChangeDetectorRef,
     private playlistService: PlaylistItemsService,
-    private videoService: VideoService
+    private videoService: VideoService,
   ) { }
+  ngDoCheck(): void {
+    console.log('doChekc single')
+  }
+
+  ngAfterViewInit(): void {
+    this.changeDetectionRef.detach();
+  }
 
   ngOnInit(): void {
     this.loadMoreVideos(() => { });

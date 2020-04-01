@@ -12,6 +12,7 @@ $navbarWidth: 100%;
   position: fixed;
   top: calc(100% - #{$navbarHeight});
   width: $navbarWidth;
+  z-index: 1020;
 }
 
 .nav-item {

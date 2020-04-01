@@ -1,7 +1,9 @@
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 import { SimpleChanges } from '@angular/core';
 
-export default function isType(requiredType: 'string' | 'object' | 'number' | 'function'): Function {
+export default function isType(
+  requiredType: 'boolean' | 'string' | 'object' | 'number' | 'function'
+): Function {
   return (targetPrototype: any, propertyName: string) => {
 
     const NG_ON_CHANGES_NAME = 'ngOnChanges';

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, ViewChildren, QueryList } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChildren, QueryList, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
@@ -13,11 +13,16 @@ import { ChannelResource } from 'src/app/shared/enums/resource-properties/channe
   templateUrl: './multiple-channels-playlist.component.html',
   styleUrls: ['./multiple-channels-playlist.component.scss']
 })
-export class MultipleChannelsPlaylistComponent implements OnInit {
+export class MultipleChannelsPlaylistComponent implements OnInit, AfterViewInit {
 
   constructor(
-    private channelService: ChannelService
+    private channelService: ChannelService,
+    private changeDetectionRef: ChangeDetectorRef
   ) { }
+
+  ngDoCheck(): void {
+    console.log('doChekc child multiple channels')
+  }
 
   @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
@@ -27,6 +32,10 @@ export class MultipleChannelsPlaylistComponent implements OnInit {
   channels: Channel[] = [];
   totalResultsCount: number;
   private channelsStartIndex: number = 0;
+
+  ngAfterViewInit(): void {
+    this.changeDetectionRef.detach();
+  }
 
   ngOnInit(): void {
     this.loadMoreVideos(() => { });

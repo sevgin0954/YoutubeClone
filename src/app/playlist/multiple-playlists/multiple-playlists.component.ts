@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
@@ -19,7 +19,7 @@ const MAX_RESULTS_PER_PAGE = 5;
   templateUrl: './multiple-playlists.component.html',
   styleUrls: ['./multiple-playlists.component.scss']
 })
-export class MultiplePlaylistsComponent implements OnInit, OnDestroy {
+export class MultiplePlaylistsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() channelSection: ChannelSection;
   @Input() style: ChannelSectionStyle;
@@ -34,13 +34,21 @@ export class MultiplePlaylistsComponent implements OnInit, OnDestroy {
 
   constructor(
     private playlistsService: PlaylistsService,
-    private thumbnailService: ThumbnailsService
+    private thumbnailService: ThumbnailsService,
+    private changeDetectionRef: ChangeDetectorRef
   ) { }
+  ngDoCheck(): void {
+    console.log('doChekc child multiple playlists')
+  }
 
   getThumnailUrl(thumbnails: VideoThumbnails): string {
     const url = this.thumbnailService.getThumbnailUrl(VideoThumbnailSize.default, thumbnails);
 
     return url;
+  }
+
+  ngAfterViewInit(): void {
+    this.changeDetectionRef.detach();
   }
 
   ngOnInit() {

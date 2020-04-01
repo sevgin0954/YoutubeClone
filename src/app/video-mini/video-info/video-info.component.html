@@ -1,11 +1,11 @@
-<div>
+<header>
   <a class="video-title" routerLink="/video/{{ video.id }}">
     <app-text-reveal
       [text]="video.snippet.title"
       [maxDisplayedRows]="titleMaxDisplayedRows">
     </app-text-reveal>
   </a>
-</div>
+</header>
 
 <div class="info-small">
   <a class="channel-title" routerLink="/channel/{{ video.snippet.channelId }}">

@@ -19,13 +19,13 @@ export class VideoThumbnailComponent {
     private thumbnailsService: ThumbnailsService
   ) { }
 
+  get sizeString(): string {
+    return VideoThumbnailSize[this.size];
+  }
+
   getThumbnailUrl(thumbnails: VideoThumbnails): string {
     const url = this.thumbnailsService.getThumbnailUrl(this.size, thumbnails);
 
     return url;
-  }
-
-  get sizeString(): string {
-    return VideoThumbnailSize[this.size];
   }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, QueryList, ContentChildren, TemplateRef, Input, AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, ViewChild, QueryList, ContentChildren, TemplateRef, Input, AfterViewChecked, ChangeDetectionStrategy, HostListener } from '@angular/core';
 
 import { ElementDisplayService } from '../../services-singleton/elements-display.service';
 import { ArrowDisplayButtonService } from '../services/arrow-display-button.service';
@@ -27,9 +27,11 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
     private playlistElementService: ElementDisplayService,
     private arrowButtonService: ArrowDisplayButtonService,
     private windowService: WindowService,
-    private changeDetectorRef: ChangeDetectorRef,
     private arrowClickButtonService: ArrowClickButtonService
   ) { }
+  ngDoCheck(): void {
+    console.log('doChekc parent ')
+  }
 
   ngAfterViewChecked(): void {
     if (this.playlistElements.first && this.playlistElements.last) {
@@ -86,8 +88,6 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
   onLeftBtnClick(): void {
     const playlistElements: Element[] = this.playlistElements.map(e => e.nativeElement);
     this.arrowClickButtonService.onLeftBtnClick(playlistElements);
-
-    this.changeDetectorRef.markForCheck();
   }
 
   onRightBtnClick(): void {
@@ -97,8 +97,6 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
 
       this.loadingBtn.nativeElement.setAttribute('hidden', 'hidden');
       this.rightBtn.nativeElement.removeAttribute('hidden');
-
-      this.changeDetectorRef.markForCheck();
     });
 
     this.arrowClickButtonService.onRightBtnClick(
@@ -110,7 +108,6 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
     );
   }
 
-  onPlaylistResize(): void {
-    this.changeDetectorRef.markForCheck();
-  }
+  @HostListener('window:resize')
+  private onWindowResize(): void { }
 }
