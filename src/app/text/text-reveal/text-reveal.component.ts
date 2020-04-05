@@ -71,8 +71,4 @@ export class TextRevealComponent implements AfterViewChecked, OnChanges {
     this.isShowingMore = true;
     this.textElement.nativeElement.removeAttribute('style');
   }
-
-  onChangeDetection() {
-    console.log('change detection text revealchange detection text revealchange detection text revealchange detection text reveal')
-  }
 }

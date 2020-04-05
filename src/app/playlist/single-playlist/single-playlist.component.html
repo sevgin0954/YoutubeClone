@@ -1,8 +1,11 @@
-<app-playlist-buttons [loadMoreCallBack]="loadMoreCallBack" [totalResultsCount]="totalResultsCount">
-  <section #playlist class="playlist">
-    <article class="playlist-element" #playlistElement *ngFor="let video of videos; let currentIndex = index;">
-      <app-video-thumbnail [video]="video" [size]="videoSize"></app-video-thumbnail>
-      <app-video-info [video]="video" [titleMaxDisplayedRows]="titleMaxDisplayedRows"></app-video-info>
-    </article>
-  </section>
-</app-playlist-buttons>
+<section class="playlists-container" *ngIf="videos.length > 0">
+  <app-playlist-buttons
+    [playlistElements]="videos"
+    [loadMoreCallBack]="loadMoreCallBack"
+    [totalResultsCount]="totalResultsCount">
+    <ng-template #playlistElementTemplate let-video>
+      <app-single-playlist-template [video]="video">
+      </app-single-playlist-template>
+    </ng-template>
+  </app-playlist-buttons>
+</section>

@@ -1,0 +1,57 @@
+@import './../style.scss';
+
+$thumbanilTextLineHeight: 1.5rem;
+
+.thumbnail-conteiner {
+  position: relative;
+  width: 100%;
+}
+
+.thumbnail-overlay {
+  background-color: black;
+  opacity: 0.7;
+  position: absolute;
+}
+
+.play-all-container {
+  display: none;
+}
+
+.playlist-videos-count-container {
+  color: white;
+  margin-left: auto;
+  top: 0; left: 0; bottom: 0; right: 0;
+  width: 35%;
+}
+
+.playlist-videos-count-text {
+  position: absolute;
+  font-size: 1.2rem;
+  text-align: center;
+  top: 30%;
+  width: 100%;
+}
+
+.thumbnail-conteiner:hover {
+  .play-all-container {
+    display: block;
+    height: 100%;
+    opacity: 0.7;
+    width: 100%;
+  }
+
+  .play-all-text {
+    font-size: 1.3rem;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    height: $thumbanilTextLineHeight;
+    margin: auto;
+    text-align: center;
+    color: white;
+    line-height: $thumbanilTextLineHeight;
+  }
+
+  .playlist-videos-count-container {
+    display: none;
+  }
+}

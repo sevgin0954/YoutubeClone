@@ -1,11 +1,10 @@
-import { Component, Input, OnInit, ElementRef, ViewChild, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, OnInit, ElementRef, ViewChild } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { PlaylistItemsService } from 'src/app/services-singleton/playlist-items.service';
 import { VideoService } from 'src/app/services-singleton/video.service';
 import { concatMap } from 'rxjs/operators';
 import { Video } from 'src/app/models/video/video';
-import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
@@ -17,32 +16,29 @@ import { VideoResource } from 'src/app/shared/enums/resource-properties/video-re
   templateUrl: './single-playlist.component.html',
   styleUrls: ['./single-playlist.component.scss']
 })
-export class SinglePlaylistComponent implements OnInit, AfterViewInit {
+export class SinglePlaylistComponent implements OnInit {
 
-  @Input() channelSection: ChannelSection;
-  @Input() style: ChannelSectionStyle;
-  @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
+  @Input()
+  channelSection: ChannelSection;
+
+  @Input()
+  style: ChannelSectionStyle;
+
+  @ViewChild('rightBtn', { static: false })
+  rightBtn: ElementRef;
+
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
     this.loadMoreVideos(onLoadedMoreCallback);
   totalResultsCount: number;
   videos: Video[] = [];
-  videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
   titleMaxDisplayedRows: number = 2;
   private isFirstPage: boolean = true;
   private nextPageToken: string;
 
   constructor(
-    private changeDetectionRef: ChangeDetectorRef,
     private playlistService: PlaylistItemsService,
     private videoService: VideoService,
   ) { }
-  ngDoCheck(): void {
-    console.log('doChekc single')
-  }
-
-  ngAfterViewInit(): void {
-    this.changeDetectionRef.detach();
-  }
 
   ngOnInit(): void {
     this.loadMoreVideos(() => { });

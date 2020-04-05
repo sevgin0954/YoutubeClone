@@ -3,7 +3,12 @@
     <i class="fas fa-arrow-circle-right"></i>
   </button>
 
-  <ng-content></ng-content>
+  <div #element *ngFor="let currentPlaylistElement of playlistElements">
+    <ng-container
+      [ngTemplateOutlet]="playlistElementTemplateRef"
+      [ngTemplateOutletContext]="{ $implicit: currentPlaylistElement }">
+    </ng-container>
+  </div>
 
   <button #rightBtn class="btn-arrow" (click)="onRightBtnClick()">
     <i class="fas fa-arrow-circle-left"></i>

@@ -1,40 +1,53 @@
-import { Component, ElementRef, ViewChild, QueryList, ContentChildren, TemplateRef, Input, AfterViewChecked, ChangeDetectionStrategy, HostListener } from '@angular/core';
+import { Component, ElementRef, ViewChild, TemplateRef, Input, HostListener, ContentChild, QueryList, ViewChildren } from '@angular/core';
 
 import { ElementDisplayService } from '../../services-singleton/elements-display.service';
 import { ArrowDisplayButtonService } from '../services/arrow-display-button.service';
-import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { WindowService } from 'src/app/services-singleton/window.service';
 import { ArrowClickButtonService } from '../services/arrow-click-button.service';
+import isRequired from 'src/decorators/isRequired';
+import isType from 'src/decorators/isType';
 
 @Component({
   selector: 'app-playlist-buttons',
   templateUrl: './playlist-buttons.component.html',
-  styleUrls: ['./playlist-buttons.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./playlist-buttons.component.scss']
 })
-export class PlaylistButtonsComponent implements AfterViewChecked {
+export class PlaylistButtonsComponent {
 
-  @ContentChildren('playlistElement') playlistElements: QueryList<ElementRef>;
-  @Input() loadMoreCallBack: Function;
-  @Input() channelSection: ChannelSection[];
-  @Input() itemTemplate: TemplateRef<HTMLElement>;
-  @Input() totalResultsCount: number;
+  @ContentChild('playlistElementTemplate', {static: false})
+  playlistElementTemplateRef: TemplateRef<any>;
+
+  @ViewChildren('element')
+  playlistViewElements: QueryList<ElementRef>;
+
+  @isRequired
+  @isType('object')
+  @Input()
+  playlistElements: any[];
+
+  @isRequired
+  @isType('function')
+  @Input()
+  loadMoreCallBack: Function;
+
+  @isRequired
+  @isType('number')
+  @Input()
+  totalResultsCount: number;
+
   @ViewChild('leftBtn', { static: false }) leftBtn: ElementRef;
   @ViewChild('loadingBtn', { static: false }) loadingBtn: ElementRef;
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
 
   constructor(
     private playlistElementService: ElementDisplayService,
-    private arrowButtonService: ArrowDisplayButtonService,
+    private arrowDisplayButtonService: ArrowDisplayButtonService,
     private windowService: WindowService,
     private arrowClickButtonService: ArrowClickButtonService
   ) { }
-  ngDoCheck(): void {
-    console.log('doChekc parent ')
-  }
 
   ngAfterViewChecked(): void {
-    if (this.playlistElements.first && this.playlistElements.last) {
+    if (this.playlistViewElements.first && this.playlistViewElements.last) {
       this.updatePlaylistElementsHiddenAttribute();
       this.updateButtons();
     }
@@ -45,7 +58,7 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
 
     let isRightBtnOverflowing = this.windowService.isElementOverflowingHorizontaly(lastButton.nativeElement);
     if (isRightBtnOverflowing) {
-      const playlistNativeElements = this.playlistElements.map(e => e.nativeElement);
+      const playlistNativeElements = this.playlistViewElements.map(e => e.nativeElement);
       this.playlistElementService
         .tryHideRightOverflowingElements(playlistNativeElements, lastButton.nativeElement);
     }
@@ -55,7 +68,7 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
   }
 
   private showElements(lastButton: ElementRef): void {
-    const playlistNativeElements = this.playlistElements.map(e => e.nativeElement);
+    const playlistNativeElements = this.playlistViewElements.map(e => e.nativeElement);
 
     this.playlistElementService
       .tryShowRightHiddenElements(playlistNativeElements, lastButton.nativeElement);
@@ -73,25 +86,25 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
   }
 
   private updateButtons(): void {
-    const isLastElementHidden = this.playlistElements.last.nativeElement.hasAttribute('hidden');
-    this.arrowButtonService.updateRightButtonDisabledAttribute(
+    const isLastElementHidden = this.playlistViewElements.last.nativeElement.hasAttribute('hidden');
+    this.arrowDisplayButtonService.updateRightButtonDisabledAttribute(
       this.rightBtn,
       isLastElementHidden,
-      this.playlistElements.length,
+      this.playlistViewElements.length,
       this.totalResultsCount
     );
 
-    const isFirstElementHidden = this.playlistElements.first.nativeElement.hasAttribute('hidden');
-    this.arrowButtonService.updateLeftButtonDisabledAttribute(this.leftBtn, isFirstElementHidden);
+    const isFirstElementHidden = this.playlistViewElements.first.nativeElement.hasAttribute('hidden');
+    this.arrowDisplayButtonService.updateLeftButtonDisabledAttribute(this.leftBtn, isFirstElementHidden);
   }
 
   onLeftBtnClick(): void {
-    const playlistElements: Element[] = this.playlistElements.map(e => e.nativeElement);
+    const playlistElements: Element[] = this.playlistViewElements.map(e => e.nativeElement);
     this.arrowClickButtonService.onLeftBtnClick(playlistElements);
   }
 
   onRightBtnClick(): void {
-    const playlistElements: Element[] = this.playlistElements.map(e => e.nativeElement);
+    const playlistElements: Element[] = this.playlistViewElements.map(e => e.nativeElement);
     const loadMoreCallBack: Function = () => this.loadMoreCallBack(() => {
       this.playlistElementService.hideFirstShownElement(playlistElements);
 
@@ -108,6 +121,7 @@ export class PlaylistButtonsComponent implements AfterViewChecked {
     );
   }
 
+  // Runs change detection on resize
   @HostListener('window:resize')
   private onWindowResize(): void { }
 }

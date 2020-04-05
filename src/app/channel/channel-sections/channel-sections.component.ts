@@ -18,7 +18,9 @@ export class ChannelSectionsComponent implements OnChanges, OnDestroy {
 
   @isRequired
   @isType('string')
-  @Input() channelId: string;
+  @Input()
+  channelId: string;
+
   channelSections: ChannelSection[];
   sectionStyle: typeof ChannelSectionStyle = ChannelSectionStyle;
   sectionType: typeof ChannelSectionType = ChannelSectionType;

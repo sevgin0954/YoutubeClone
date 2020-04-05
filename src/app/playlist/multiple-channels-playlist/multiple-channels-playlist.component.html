@@ -1,8 +1,13 @@
-<app-playlist-buttons [loadMoreCallBack]="loadMoreCallBack" [totalResultsCount]="totalResultsCount">
-  <div #playlist class="playlist">
-    <div class="playlist-element" #playlistElement
-      *ngFor="let channel of channels; let currentIndex = index;">
-      <app-channel-mini [channel]="channel"></app-channel-mini>
-    </div>
+<ng-container *ngIf="channels.length > 0">
+  <app-playlist-buttons
+  [playlistElements]="channels"
+  [loadMoreCallBack]="loadMoreCallBack"
+  [totalResultsCount]="totalResultsCount">
+  <div class="playlists-container">
+    <ng-template #playlistElementTemplate let-channel>
+      <app-multiple-channels-playlist-template [channel]="channel">
+      </app-multiple-channels-playlist-template>
+    </ng-template>
   </div>
 </app-playlist-buttons>
+</ng-container>

@@ -1,0 +1,24 @@
+@import './../style.scss';
+
+:host ::ng-deep {
+  .main-container {
+    height: 100%;
+  }
+
+  .subscribe-btn {
+    margin-top: auto;
+  }
+}
+
+.playlist-element {
+  height: 100%;
+}
+
+.playlist-element:first-child {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.playlist-element:last-child {
+  padding-right: 0;
+}

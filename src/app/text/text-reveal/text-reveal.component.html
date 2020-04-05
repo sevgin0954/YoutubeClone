@@ -1,5 +1,4 @@
 <div class="text" #textElement>{{ text }}</div>
-{{onChangeDetection()}}
 <ng-container *ngIf="shouldShowButtons && canTextOverflow">
   <button *ngIf="isTextOverflowing && isShowingMore === false" class="info-small show-button" (click)="showMore()">
     Show more

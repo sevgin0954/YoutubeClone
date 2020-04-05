@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnChanges } from '@angular/core';
+import { Component, Input, OnDestroy, OnChanges, Output, EventEmitter } from '@angular/core';
 
 import { Channel } from 'src/app/models/channel/channel';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
@@ -6,6 +6,8 @@ import { Subscription as VideoSubscribtion } from 'src/app/models/subscribption/
 import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.service';
 import { Subscription as RxjsSubscription } from 'rxjs';
 import { SubscriptionResource } from '../../enums/resource-properties/subscription-resource';
+import isRequired from 'src/decorators/isRequired';
+import isType from 'src/decorators/isType';
 
 @Component({
   selector: 'app-channel-mini',
@@ -14,7 +16,17 @@ import { SubscriptionResource } from '../../enums/resource-properties/subscripti
 })
 export class ChannelMiniComponent implements OnChanges, OnDestroy {
 
-  @Input() channel: Channel;
+  @isRequired
+  @isType('object')
+  @Input()
+  channel: Channel;
+
+  @Output()
+  private channelLoaded = new EventEmitter();
+
+  @Output()
+  private update = new EventEmitter();
+
   isSubscribed: boolean;
   private videoSubscription: VideoSubscribtion;
   private rxjsSubscription: RxjsSubscription;
@@ -38,6 +50,8 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
         else {
           this.isSubscribed = false;
         }
+
+        this.channelLoaded.emit();
     });
   }
 
@@ -48,6 +62,8 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
     this.subscriptionsService.subscribe(this.channel.id, resources).subscribe(data => {
       this.isSubscribed = true;
       this.videoSubscription = data;
+
+      this.update.emit();
     });
   }
 
@@ -57,6 +73,8 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
         this.isSubscribed = false;
         this.videoSubscription = undefined;
       }
+
+      this.update.emit();
     });
   }
 

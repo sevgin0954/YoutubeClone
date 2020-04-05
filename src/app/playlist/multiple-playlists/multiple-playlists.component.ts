@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
@@ -7,8 +7,6 @@ import { PlaylistsService } from 'src/app/playlist/services/playlists.service';
 import { Subscription } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
-import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';
-import { VideoThumbnails } from 'src/app/models/thumbnail/video-thumbnails';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
 
@@ -19,10 +17,14 @@ const MAX_RESULTS_PER_PAGE = 5;
   templateUrl: './multiple-playlists.component.html',
   styleUrls: ['./multiple-playlists.component.scss']
 })
-export class MultiplePlaylistsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MultiplePlaylistsComponent implements OnInit, OnDestroy {
 
-  @Input() channelSection: ChannelSection;
-  @Input() style: ChannelSectionStyle;
+  @Input()
+  channelSection: ChannelSection;
+
+  @Input()
+  style: ChannelSectionStyle;
+
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
     this.loadMorePlaylists(onLoadedMoreCallback);
   playlists: Playlist[] = [];
@@ -33,23 +35,8 @@ export class MultiplePlaylistsComponent implements OnInit, OnDestroy, AfterViewI
   private subscription: Subscription;
 
   constructor(
-    private playlistsService: PlaylistsService,
-    private thumbnailService: ThumbnailsService,
-    private changeDetectionRef: ChangeDetectorRef
+    private playlistsService: PlaylistsService
   ) { }
-  ngDoCheck(): void {
-    console.log('doChekc child multiple playlists')
-  }
-
-  getThumnailUrl(thumbnails: VideoThumbnails): string {
-    const url = this.thumbnailService.getThumbnailUrl(VideoThumbnailSize.default, thumbnails);
-
-    return url;
-  }
-
-  ngAfterViewInit(): void {
-    this.changeDetectionRef.detach();
-  }
 
   ngOnInit() {
     this.loadMorePlaylists(() => { });
@@ -57,8 +44,6 @@ export class MultiplePlaylistsComponent implements OnInit, OnDestroy, AfterViewI
 
   loadMorePlaylists(onLoadedMoreCallback: Function): void {
     const playlistIds = this.channelSection.contentDetails.playlists;
-
-    this.totalResultsCount = playlistIds.length;
 
     const playlistsEndIndex = this.playlistsStartIndex + MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
 
@@ -73,6 +58,7 @@ export class MultiplePlaylistsComponent implements OnInit, OnDestroy, AfterViewI
       .subscribe(data => {
       this.nextPageToken = data.nextPageToken;
       this.playlists.push(...data.items);
+      this.totalResultsCount = data.pageInfo.totalResults;
 
       this.playlistsStartIndex = playlistsEndIndex;
 
