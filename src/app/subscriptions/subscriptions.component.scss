@@ -4,11 +4,14 @@
   width: 100%;
 }
 
+article.channel-container {
+  margin: 0.04rem;
+}
+
 .channel {
-  box-sizing: content-box;
   border: 0.001rem solid grey;
   display: block;
-  margin: 0.04rem;
+  height: 100%;
   padding: 2rem;
   word-wrap: break-word;
 }
@@ -20,7 +23,7 @@
 .channels-container {
   color: $dark-blue;
   display: grid;
-  box-sizing: content-box;
+  grid-auto-rows: auto;
   grid-template-columns: repeat(auto-fit, minmax(19.1rem, 1fr));
   margin: $content-margin;
 }
