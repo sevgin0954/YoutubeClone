@@ -4,6 +4,10 @@
   width: 100%;
 }
 
+.content-container {
+  margin-left: $content-margin;
+}
+
 img {
   width: 100%;
   height: auto;
@@ -21,11 +25,5 @@ img {
 
   .info-small {
     font-size: calc(0.9rem * 1.1);
-  }
-}
-
-@media (max-width: #{$bottom-navbar-max-width}) {
-  .content-container {
-    margin-left: $content-margin;
   }
 }
