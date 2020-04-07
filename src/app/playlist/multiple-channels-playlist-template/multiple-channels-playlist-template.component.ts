@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { Channel } from 'src/app/models/channel/channel';
 import isRequired from 'src/decorators/isRequired';
@@ -7,29 +7,22 @@ import isType from 'src/decorators/isType';
 @Component({
   selector: 'app-multiple-channels-playlist-template',
   templateUrl: './multiple-channels-playlist-template.component.html',
-  styleUrls: ['./multiple-channels-playlist-template.component.scss']
+  styleUrls: ['./multiple-channels-playlist-template.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MultipleChannelsPlaylistTemplateComponent implements AfterViewChecked {
+export class MultipleChannelsPlaylistTemplateComponent {
 
   @isRequired
   @isType('object')
   @Input()
   channel: Channel;
 
-  private hasContentLoaded = false;
-
   constructor(
     private changeDetectionRef: ChangeDetectorRef
   ) { }
 
-  ngAfterViewChecked(): void {
-    if (this.hasContentLoaded) {
-      this.changeDetectionRef.detach();
-    }
-  }
-
   onChannelLoaded(): void {
-    this.hasContentLoaded = true;
+    this.changeDetectionRef.detectChanges();
   }
 
   onUpdate(): void {

@@ -1,4 +1,4 @@
-import { Component, Input, ChangeDetectorRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { Video } from 'src/app/models/video/video';
 import isRequired from 'src/decorators/isRequired';
@@ -8,22 +8,16 @@ import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 @Component({
   selector: 'app-single-playlist-template',
   templateUrl: './single-playlist-template.component.html',
-  styleUrls: ['./single-playlist-template.component.scss']
+  styleUrls: ['./single-playlist-template.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SinglePlaylistTemplateComponent implements AfterViewInit {
+export class SinglePlaylistTemplateComponent {
 
   @isRequired
   @isType('object')
   @Input()
   video: Video;
 
+  titleMaxDisplayedRows: number = 2;
   videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
-
-  constructor(
-    private changeDetectionRef: ChangeDetectorRef
-  ) { }
-
-  ngAfterViewInit(): void {
-    this.changeDetectionRef.detach();
-  }
 }

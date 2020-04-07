@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { Playlist } from 'src/app/models/playlist/playlist';
 import isRequired from 'src/decorators/isRequired';
@@ -10,9 +10,10 @@ import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service
 @Component({
   selector: 'app-multiple-playlists-template',
   templateUrl: './multiple-playlists-template.component.html',
-  styleUrls: ['./multiple-playlists-template.component.scss']
+  styleUrls: ['./multiple-playlists-template.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MultiplePlaylistsTemplateComponent implements AfterViewInit {
+export class MultiplePlaylistsTemplateComponent {
 
   @isRequired
   @isType('object')
@@ -20,17 +21,13 @@ export class MultiplePlaylistsTemplateComponent implements AfterViewInit {
   playlist: Playlist;
 
   constructor(
-    private thumbnailService: ThumbnailsService,
-    private changeDetectionRef: ChangeDetectorRef
+    private thumbnailService: ThumbnailsService
   ) { }
+
 
   getThumnailUrl(thumbnails: VideoThumbnails): string {
     const url = this.thumbnailService.getThumbnailUrl(VideoThumbnailSize.default, thumbnails);
 
     return url;
-  }
-
-  ngAfterViewInit(): void {
-    this.changeDetectionRef.detach();
   }
 }
