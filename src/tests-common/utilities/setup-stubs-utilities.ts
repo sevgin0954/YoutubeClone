@@ -13,7 +13,7 @@ export class SetupStubs {
     });
   }
 
-  public static setupWindowIsOverflowingFunc(windowService, element: Element, returnResult: boolean): void {
+  public static setupWindowIsElementOverflowingHorizontaly(windowService, element: Element, returnResult: boolean): void {
     windowService.isElementOverflowingHorizontaly.and.callFake((elementInput) => {
       if (elementInput === element) {
         return returnResult;

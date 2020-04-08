@@ -55,6 +55,7 @@ describe('', () => {
 
     it('with less tnan 1 totalRepliesCount should throw an exception', () => {
       // Arrange
+
       // @ts-ignore
       component.parentId = '123';
       component.totalRepliesCount = 0;
@@ -63,7 +64,9 @@ describe('', () => {
       // Act
 
       // Assert
-      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+
+      // @ts-ignore
+      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
     });
 
     it('with not number type for totalRepliesCount should throw an exception', () => {
@@ -75,7 +78,9 @@ describe('', () => {
       // Act
 
       // Assert
-      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+
+      // @ts-ignore
+      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
     });
 
     it('without parentId should throw an exception', () => {
@@ -85,7 +90,9 @@ describe('', () => {
       // Act
 
       // Assert
-      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+
+      // @ts-ignore
+      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
     });
 
     it('with not string type for parentId should throw an exception', () => {
@@ -97,7 +104,9 @@ describe('', () => {
       // Act
 
       // Assert
-      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+
+      // @ts-ignore
+      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
     });
 
     function setupComponentWithParentId(parentId: any): void {
@@ -145,7 +154,9 @@ describe('', () => {
       // Act
 
       // Assert
-      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+
+      // @ts-ignore
+      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
     });
 
     [

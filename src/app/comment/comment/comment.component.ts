@@ -15,6 +15,7 @@ export class CommentComponent {
   @isRequired
   @isType('object')
   @Input() comment: Comment;
+
   maxDisplayedRows: number = 3;
 
   constructor(

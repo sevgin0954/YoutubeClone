@@ -1,5 +1,6 @@
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 import { SimpleChanges } from '@angular/core';
+
+import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 
 export default function isType(
   requiredType: 'boolean' | 'string' | 'object' | 'number' | 'function'
@@ -9,7 +10,7 @@ export default function isType(
     const NG_ON_CHANGES_NAME = 'ngOnChanges';
 
     /** ngOnChanges might not be implemented by this component */
-    const ngOnChangesClone: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
+    const ngOnChangesOriginalFunc: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
 
     Object.defineProperty(targetPrototype, NG_ON_CHANGES_NAME, {
       value: propertyValue
@@ -28,8 +29,8 @@ export default function isType(
         throw TypeError(exceptionMessage);
       }
 
-      if (ngOnChangesClone) {
-        ngOnChangesClone.call(this, changes);
+      if (ngOnChangesOriginalFunc) {
+        ngOnChangesOriginalFunc.call(this, changes);
       }
     }
   }

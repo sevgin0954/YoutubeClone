@@ -81,7 +81,6 @@ export class PlaylistElementService {
     return isThereShownElelement !== undefined;
   }
 
-
   tryShowHiddenElementsFromBeginingUntilOverflow(elements: Element[], lastShownElement: Element):
   boolean {
     this.validateElements(elements);
@@ -128,8 +127,7 @@ export class PlaylistElementService {
     let isThereMoreSpace = true;
     while (isThereMoreSpace) {
       const lastHiddenElementFromLeft =
-        elements
-          .find(this.elementsPredicateService.getLastHiddenElementFromLeft);
+        elements.find(this.elementsPredicateService.getLastHiddenElementFromLeft);
       if (lastHiddenElementFromLeft) {
         const isElementShown = this.elementDisplayService
           .tryShowElementIfNotOverflowing(lastHiddenElementFromLeft, lastShownElement);

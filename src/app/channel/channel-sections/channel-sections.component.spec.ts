@@ -74,14 +74,14 @@ describe('', () => {
 
     it('with not string channelId type should throw an exception', () => {
       // Arrange
-      const channelId: any = 5;
+      const channelId: any = 123;
       const exceptionRegex = new RegExp(ExceptionConstants.INCORRECT_TYPE);
 
       // Act
       component.channelId = channelId;
 
       // Assert
-      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
     });
 
     it('should call channelSectionService\'s getByChannelId method with channelId after initialization', () => {
@@ -91,7 +91,7 @@ describe('', () => {
 
       // Act
       component.channelId = channelId;
-      fixture.detectChanges();
+      component.ngOnChanges();
 
       // Assert
       const calledChannelId = ArgumentsUtilities.getMostRecentArgument(getByChannelIdFunc, 0);
@@ -103,7 +103,7 @@ describe('', () => {
       component.channelId = channelId;
 
       // Act
-      fixture.detectChanges();
+      component.ngOnChanges();
 
       // Assert
       expect(component.channelSections.length).toEqual(2);
@@ -116,7 +116,7 @@ describe('', () => {
       component.channelId = channelId;
 
       // Act
-      fixture.detectChanges();
+      component.ngOnChanges();
 
       // Assert
       expect(component.channelSections[0].snippet.position).toEqual(0);
@@ -157,6 +157,7 @@ describe('', () => {
       channelSectionService.getByChannelId.and.returnValue(data$);
 
       // Act
+      component.ngOnChanges();
       fixture.detectChanges();
 
       // Assert
@@ -171,6 +172,7 @@ describe('', () => {
       channelSectionService.getByChannelId.and.returnValue(data$);
 
       // Act
+      component.ngOnChanges();
       fixture.detectChanges();
 
       // Assert
@@ -185,6 +187,7 @@ describe('', () => {
       channelSectionService.getByChannelId.and.returnValue(data$);
 
       // Act
+      component.ngOnChanges();
       fixture.detectChanges();
 
       // Assert

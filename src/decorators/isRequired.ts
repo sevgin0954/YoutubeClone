@@ -8,8 +8,8 @@ export default function isRequired(targetPrototype: any, propertyName: string): 
   const NG_ON_INIT_NAME = 'ngOnInit';
 
   /** ngOnChanges might not be implemented by this component */
-  const ngOnChangesClone: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
-  const ngOnInitClone: Function | null = targetPrototype[NG_ON_INIT_NAME];
+  const ngOnChangesOriginalFunc: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
+  const ngOnInitOriginalFunc: Function | null = targetPrototype[NG_ON_INIT_NAME];
 
   Object.defineProperty(targetPrototype, NG_ON_INIT_NAME, {
     value: onInitNewFunc
@@ -21,16 +21,16 @@ export default function isRequired(targetPrototype: any, propertyName: string): 
   function onChangesNewFunc(changes: SimpleChanges): void {
     validate.call(this);
 
-    if (ngOnChangesClone) {
-      ngOnChangesClone.call(this, changes);
+    if (ngOnChangesOriginalFunc) {
+      ngOnChangesOriginalFunc.call(this, changes);
     }
   }
 
   function onInitNewFunc(): void {
     validate.call(this);
 
-    if (ngOnInitClone) {
-      ngOnInitClone.call(this);
+    if (ngOnInitOriginalFunc) {
+      ngOnInitOriginalFunc.call(this);
     }
   }
 

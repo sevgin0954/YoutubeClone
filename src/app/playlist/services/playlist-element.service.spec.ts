@@ -5,13 +5,27 @@ import { PlaylistElementService } from './playlist-element.service';
 
 describe('', () => {
   let service: any;
+  let elementDisplayService: any;
   let elementsPredicateService: any;
   let windowService: any;
 
   beforeEach(() => {
+    elementDisplayService = jasmine.createSpyObj(
+      'ElementDisplayService',
+      [
+        'isElementOverflowingHorizontaly',
+        'tryShowElementIfNotOverflowing'
+      ]
+    );
+  });
+  beforeEach(() => {
     elementsPredicateService = jasmine.createSpyObj(
       'ElementsPredicateService',
-      ['getFirstHiddenElementFromRight', 'getLastHiddenElementFromLeft', 'getLastShownElement']
+      [
+        'getFirstHiddenElementFromRight',
+        'getLastHiddenElementFromLeft',
+        'getLastShownElement'
+      ]
     );
   });
   beforeEach(() => {
@@ -22,13 +36,13 @@ describe('', () => {
   });
   beforeEach(() => {
     service = new PlaylistElementService(
-      elementsPredicateService,
+      elementDisplayService,
       elementsPredicateService,
       windowService
     );
   });
 
-  describe('ElementsDisplayService\'s showFirstHiddenElementFromRight method', () => {
+  describe('PlaylistElementService\'s showFirstHiddenElementFromRight method', () => {
 
     it('with null elements should throw an exception', () => {
       // Arrange
@@ -70,8 +84,10 @@ describe('', () => {
       const firstHiddenElement = ElementUtilities.createHiddenElement();
       const secondHiddenElement = ElementUtilities.createHiddenElement();
 
-      SetupStubs
-        .setupPredicateStub(elementsPredicateService.getFirstHiddenElementFromRight, firstHiddenElement);
+      SetupStubs.setupPredicateStub(
+        elementsPredicateService.getFirstHiddenElementFromRight,
+        firstHiddenElement
+      );
 
       const elements = [
         shownElement,
@@ -91,7 +107,7 @@ describe('', () => {
     }
   });
 
-  describe('ElementsDisplayService\'s hideFirstShownElement method', () => {
+  describe('PlaylistElementService\'s hideFirstShownElement method', () => {
     it('with null elements should throw an exception', () => {
       // Arrange
       const elements = null;
@@ -146,7 +162,7 @@ describe('', () => {
     }
   });
 
-  describe('ElementsDisplayService\'s hideLastShowElement method', () => {
+  describe('PlaylistElementService\'s hideLastShowElement method', () => {
 
     it('with null elements should throw an exception', () => {
       // Arrange
@@ -190,7 +206,8 @@ describe('', () => {
       const secondShownElement = document.createElement('div');
       const elements = [hiddenElement, firstShownElement, secondShownElement];
 
-      SetupStubs.setupPredicateStub(elementsPredicateService.getLastShownElement, secondShownElement);
+      SetupStubs
+        .setupPredicateStub(elementsPredicateService.getLastShownElement, secondShownElement);
 
       // Act
       callMethodWithElements(elements);
@@ -204,7 +221,7 @@ describe('', () => {
     }
   });
 
-  describe('ElementsDisplayService\'s tryHideRightOverflowingElements', () => {
+  describe('PlaylistElementService\'s tryHideRightOverflowingElements', () => {
 
     beforeEach(() => {
       spyOn(service, 'hideLastShowElement');
@@ -260,7 +277,7 @@ describe('', () => {
       const lastShowElement = document.createElement('div');
 
       const isLastElementOverflowing = false;
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShowElement, isLastElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShowElement, isLastElementOverflowing);
 
       // Act
       callMethodWithLastShownElement(lastShowElement);
@@ -290,7 +307,7 @@ describe('', () => {
     it('with overflowing lastShownElement and not hidden element should hide shown element from the right side until there is no more shown elements from the right side', () => {
 
       // Arrange
-      spyOn(service, 'isThereVisibleElement');
+      spyOn(service, 'isThereShownElement');
 
       const lastShowElement = document.createElement('div');
 
@@ -299,7 +316,7 @@ describe('', () => {
       const elements = [firstElement, secondElement];
 
       windowService.isElementOverflowingHorizontaly.and.returnValue(true);
-      service.isThereVisibleElement.and.returnValues(true, false);
+      service.isThereShownElement.and.returnValues(true, false);
 
       // Act
       service.tryHideRightOverflowingElements(elements, lastShowElement);
@@ -328,7 +345,7 @@ describe('', () => {
       const lastShowElement = document.createElement('div');
 
       const isElementOverflowing = true;
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShowElement, isElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShowElement, isElementOverflowing);
 
       // Act
       const result = service.tryHideRightOverflowingElements(elements, lastShowElement);
@@ -351,7 +368,7 @@ describe('', () => {
     function callMethodWithIsLastElementOverflowing(isLastElementOverflowing: boolean): boolean {
       const lastShownElement = document.createElement('div');
 
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isLastElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShownElement, isLastElementOverflowing);
 
       const result = callMethodWithLastShownElement(lastShownElement);
 
@@ -381,7 +398,7 @@ describe('', () => {
     }
   });
 
-  describe('ElementsDisplayService\'s tryShowLeftHiddenElements', () => {
+  describe('PlaylistElementService\'s tryShowLastHiddenElementsFromLeftUntilOverflow', () => {
 
     it(`with null elements should throw an exception`, () => {
       // Arrange
@@ -438,7 +455,7 @@ describe('', () => {
       SetupStubs.setupPredicateStub(elementsPredicateService.getLastHiddenElementFromLeft, firstElement);
 
       const isElementOverflowing = true;
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShownElement, isElementOverflowing);
 
       // Act
       callMethodWithAllArguments(elements, lastShownElement);
@@ -458,7 +475,7 @@ describe('', () => {
       SetupStubs.setupPredicateStub(elementsPredicateService.getLastHiddenElementFromLeft, firstElement);
 
       const isElementOverflowing = true;
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShownElement, isElementOverflowing);
 
       // Act
       const result = callMethodWithAllArguments(elements, lastShownElement);
@@ -476,7 +493,7 @@ describe('', () => {
       const lastShownElement = document.createElement('div');
 
       const isElementOverflowing = false;
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShownElement, isElementOverflowing);
 
       // Act
       callMethodWithAllArguments(elements, lastShownElement);
@@ -494,7 +511,7 @@ describe('', () => {
       const lastShownElement = document.createElement('div');
 
       const isElementOverflowing = false;
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShownElement, isElementOverflowing);
 
       // Act
       const result = callMethodWithAllArguments(elements, lastShownElement);
@@ -507,12 +524,12 @@ describe('', () => {
       // Arrange
       const firstElement = ElementUtilities.createHiddenElement();
       const secondElement = ElementUtilities.createHiddenElement();
-      const thridElement = document.createElement('div');
-      const elements = [firstElement, secondElement, thridElement];
+      const thirdElement = ElementUtilities.createHiddenElement();
+      const elements = [firstElement, secondElement, thirdElement];
 
       const lastShownElement = document.createElement('div');
 
-      windowService.isElementOverflowingHorizontaly.and.returnValues(false, false, true);
+      elementDisplayService.tryShowElementIfNotOverflowing.and.returnValues(true, true, false);
       SetupStubs.setupPredicateStub(
         elementsPredicateService.getLastHiddenElementFromLeft,
         firstElement,
@@ -523,8 +540,7 @@ describe('', () => {
       callMethodWithAllArguments(elements, lastShownElement);
 
       // Assert
-      expect(firstElement.hasAttribute('hidden')).toBeFalsy();
-      expect(secondElement.hasAttribute('hidden')).toBeFalsy();
+      expect(elementDisplayService.tryShowElementIfNotOverflowing).toHaveBeenCalledTimes(2);
     });
 
     it(`with hidden elements from left and not overflowing lastShownElement should return true`, () => {
@@ -536,7 +552,7 @@ describe('', () => {
 
       const lastShownElement = document.createElement('div');
 
-      windowService.isElementOverflowingHorizontaly.and.returnValues(false, false, true);
+      elementDisplayService.tryShowElementIfNotOverflowing.and.returnValues(true, true, false);
       SetupStubs.setupPredicateStub(
         elementsPredicateService.getLastHiddenElementFromLeft,
         firstElement,
@@ -551,14 +567,16 @@ describe('', () => {
     });
 
     function callMethodWithAllArguments(elements: Element[], lastShownElement: Element): boolean {
-      const result = service.tryShowLeftHiddenElements(elements, lastShownElement);
+      const result = service
+        .tryShowLastHiddenElementsFromLeftUntilOverflow(elements, lastShownElement);
 
       return result;
     }
 
     function callMethodWithElements(elements: Element[]): boolean {
       const lastShowElement = document.createElement('div');
-      const result = service.tryShowLeftHiddenElements(elements, lastShowElement);
+      const result = service
+        .tryShowLastHiddenElementsFromLeftUntilOverflow(elements, lastShowElement);
 
       return result;
     }
@@ -567,7 +585,8 @@ describe('', () => {
       const elements = [
         document.createElement('div')
       ];
-      const result = service.tryShowLeftHiddenElements(elements, lastShowElement);
+      const result = service
+        .tryShowLastHiddenElementsFromLeftUntilOverflow(elements, lastShowElement);
 
       return result;
     }

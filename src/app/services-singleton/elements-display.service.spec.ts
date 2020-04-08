@@ -5,15 +5,8 @@ import { SetupStubs } from 'src/tests-common/utilities/setup-stubs-utilities';
 
 describe('', () => {
   let service: any;
-  let elementsPredicateService: any;
   let windowService: any;
 
-  beforeEach(() => {
-    elementsPredicateService = jasmine.createSpyObj(
-      'ElementsPredicateService',
-      ['getFirstHiddenElementFromRight', 'getLastHiddenElementFromLeft', 'getLastShownElement']
-    );
-  });
   beforeEach(() => {
     windowService = jasmine.createSpyObj(
       'WindowService',
@@ -21,7 +14,7 @@ describe('', () => {
     );
   });
   beforeEach(() => {
-    service = new ElementDisplayService(elementsPredicateService);
+    service = new ElementDisplayService(windowService);
   });
 
   describe('ElementsDisplayService', () => {
@@ -61,7 +54,7 @@ describe('', () => {
       const lastShownElement = document.createElement('div');
 
       const isLastElementOverflowing = true;
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isLastElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShownElement, isLastElementOverflowing);
 
       // Act
       service.tryShowElementIfNotOverflowing(elementToShow, lastShownElement);
@@ -76,7 +69,7 @@ describe('', () => {
       const lastShownElement = document.createElement('div');
 
       const isLastElementOverflowing = false;
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isLastElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShownElement, isLastElementOverflowing);
 
       // Act
       callMethodWithElementToShow(elementToShow);
@@ -133,7 +126,7 @@ describe('', () => {
       const elementToShow = ElementUtilities.createHiddenElement();
       const lastShownElement = document.createElement('div');
 
-      SetupStubs.setupWindowIsOverflowingFunc(windowService, lastShownElement, isLastElementOverflowing);
+      SetupStubs.setupWindowIsElementOverflowingHorizontaly(windowService, lastShownElement, isLastElementOverflowing);
 
       const result = service.tryShowElementIfNotOverflowing(elementToShow, lastShownElement);
 

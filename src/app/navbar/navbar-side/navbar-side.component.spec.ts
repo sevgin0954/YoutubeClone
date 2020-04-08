@@ -98,7 +98,8 @@ describe('', () => {
       fixture.detectChanges();
 
       // Assert
-      const highlightedElements = menues.filter(m => m.classList.contains(HIGHLIGHTED_CLASS) === false);
+      const highlightedElements = menues
+        .filter(m => m.classList.contains(HIGHLIGHTED_CLASS));
       expect(highlightedElements.length).toEqual(1);
     });
 

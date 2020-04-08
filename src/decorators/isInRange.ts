@@ -9,7 +9,7 @@ export default function isInRange(
     const NG_ON_CHANGES_NAME = 'ngOnChanges';
 
     /** ngOnChanges might not be implemented by this component */
-    const ngOnChangesClone: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
+    const ngOnChangesOriginalFunc: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
 
     Object.defineProperty(targetPrototype, NG_ON_CHANGES_NAME, {
       value: onChangesNewFunc
@@ -24,8 +24,8 @@ export default function isInRange(
         throw Error(exceptionMessage);
       }
 
-      if (ngOnChangesClone) {
-        ngOnChangesClone.call(this, changes);
+      if (ngOnChangesOriginalFunc) {
+        ngOnChangesOriginalFunc.call(this, changes);
       }
     }
   }

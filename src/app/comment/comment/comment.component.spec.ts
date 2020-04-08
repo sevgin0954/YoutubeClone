@@ -55,7 +55,9 @@ describe('', () => {
       // Act
 
       // Assert
-      expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
+
+      // @ts-ignore
+      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
     });
   });
 
