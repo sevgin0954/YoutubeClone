@@ -1,18 +1,18 @@
-import { Component, ElementRef, ViewChild, TemplateRef, Input, HostListener, ContentChild, QueryList, ViewChildren } from '@angular/core';
+import { Component, ElementRef, ViewChild, TemplateRef, Input, ContentChild, QueryList, ViewChildren, AfterViewChecked, AfterViewInit } from '@angular/core';
 
-import { ElementDisplayService } from '../../services-singleton/elements-display.service';
 import { ArrowDisplayButtonService } from '../services/arrow-display-button.service';
 import { WindowService } from 'src/app/services-singleton/window.service';
 import { ArrowClickButtonService } from '../services/arrow-click-button.service';
 import isRequired from 'src/decorators/isRequired';
 import isType from 'src/decorators/isType';
+import { PlaylistElementService } from '../services/playlist-element.service';
 
 @Component({
   selector: 'app-playlist-buttons',
   templateUrl: './playlist-buttons.component.html',
   styleUrls: ['./playlist-buttons.component.scss']
 })
-export class PlaylistButtonsComponent {
+export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked {
 
   @ContentChild('playlistElementTemplate', {static: false})
   playlistElementTemplateRef: TemplateRef<any>;
@@ -39,14 +39,38 @@ export class PlaylistButtonsComponent {
   @ViewChild('loadingBtn', { static: false }) loadingBtn: ElementRef;
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
 
+  private resizeSubscription: any;
+
   constructor(
-    private playlistElementService: ElementDisplayService,
     private arrowDisplayButtonService: ArrowDisplayButtonService,
+    private arrowClickButtonService: ArrowClickButtonService,
+    private playlistElementService: PlaylistElementService,
     private windowService: WindowService,
-    private arrowClickButtonService: ArrowClickButtonService
   ) { }
 
+  ngAfterViewInit(): void {
+    this.setupOnWindowResizeEvent();
+  }
+
+  private setupOnWindowResizeEvent(): void {
+    // @ts-ignore
+    this.resizeSubscription = new ResizeObserver(subscribers => {
+      this.onWindowResize();
+    });
+
+    const htmlElement = document.querySelector('html');
+    this.resizeSubscription.observe(htmlElement);
+  }
+
   ngAfterViewChecked(): void {
+    this.updatePlaylist();
+  }
+
+  private onWindowResize(): void {
+    this.updatePlaylist();
+  }
+
+  private updatePlaylist(): void {
     if (this.playlistViewElements.first && this.playlistViewElements.last) {
       this.updatePlaylistElementsHiddenAttribute();
       this.updateButtons();
@@ -69,11 +93,16 @@ export class PlaylistButtonsComponent {
 
   private showElements(lastButton: ElementRef): void {
     const playlistNativeElements = this.playlistViewElements.map(e => e.nativeElement);
+    const lastShownElement = lastButton.nativeElement;
 
-    this.playlistElementService
-      .tryShowRightHiddenElements(playlistNativeElements, lastButton.nativeElement);
-    this.playlistElementService
-      .tryShowLeftHiddenElements(playlistNativeElements, lastButton.nativeElement);
+    const areElementsFromRightShown = this.playlistElementService
+      .tryShowFirstHiddenElementsFromRightUntilOverflow(playlistNativeElements, lastShownElement);
+    const areElementsFromLeftShown = this.playlistElementService
+      .tryShowLastHiddenElementsFromLeftUntilOverflow(playlistNativeElements, lastShownElement);
+    if (areElementsFromRightShown === false && areElementsFromLeftShown === false) {
+      this.playlistElementService
+        .tryShowHiddenElementsFromBeginingUntilOverflow(playlistNativeElements, lastShownElement);
+    }
   }
 
   private getLastVisibleButton(): ElementRef {
@@ -121,7 +150,7 @@ export class PlaylistButtonsComponent {
     );
   }
 
-  // Runs change detection on resize
-  @HostListener('window:resize')
-  private onWindowResize(): void { }
+  ngOnDestroy(): void {
+    this.resizeSubscription.unobserve(window);
+  }
 }

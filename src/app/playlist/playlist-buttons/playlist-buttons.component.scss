@@ -7,4 +7,28 @@
     writing-mode: vertical-lr;
     font: 1rem 'Open Sans Condensed', sans-serif;
   }
+
+  @media (max-width: 330px) {
+    $thumbnial-width: 170px;
+
+    .playlist-element {
+      width: $thumbnial-width !important;
+    }
+
+    .thumbnail {
+      width: $thumbnial-width !important;
+    }
+  }
+
+  @media (max-width: 290px) {
+    $thumbnial-width: 140px;
+
+    .playlist-element {
+      width: $thumbnial-width !important;
+    }
+
+    .thumbnail {
+      width: $thumbnial-width !important;
+    }
+  }
 }

@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 
-import { WindowService } from 'src/app/services-singleton/window.service';
 import { ElementsPredicateService } from 'src/app/services-singleton/elements-predicate.service';
-import { DataValidator } from '../shared/Validation/data-validator';
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
-import { ElementValidator } from '../shared/validation/element-validator';
+import { DataValidator } from 'src/app/shared/Validation/data-validator';
+import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ElementValidator } from 'src/app/shared/validation/element-validator';
+import { WindowService } from 'src/app/services-singleton/window.service';
+import { ElementDisplayService } from 'src/app/services-singleton/element-display.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class ElementDisplayService {
+@Injectable()
+export class PlaylistElementService {
 
   constructor(
+    private elementDisplayService: ElementDisplayService,
     private elementsPredicateService: ElementsPredicateService,
     private windowService: WindowService
   ) { }
@@ -54,40 +54,19 @@ export class ElementDisplayService {
     lastHiddenElementFromLeft.removeAttribute('hidden');
   }
 
-  tryShowElementIfNotOverflowing(elementToShow: Element, lastShownElement: Element): boolean {
-    this.validateElementToShow(elementToShow);
-    this.validateLastShownElement(lastShownElement);
-
-    let isElementShown = true;
-
-    elementToShow.removeAttribute('hidden');
-    const isLastElementOverflowing = this.windowService.isElementOverflowingHorizontaly(lastShownElement);
-    if (isLastElementOverflowing) {
-      elementToShow.setAttribute('hidden', 'hidden');
-      isElementShown = false;
-    }
-
-    return isElementShown;
-  }
-
-  private validateElementToShow(elementToShow: Element): void {
-    DataValidator.nullOrUndefinied(elementToShow, 'elementToShow');
-    ElementValidator.hasAttribute(elementToShow, 'hidden');
-  }
-
   tryHideRightOverflowingElements(elements: Element[], lastShownElement: Element): boolean {
     this.validateElements(elements);
     this.validateLastShownElement(lastShownElement);
 
     let isSuccessful = false;
 
-    let isThereShownElement = this.isThereVisibleElement(elements);
+    let isThereShownElement = this.isThereShownElement(elements);
     let isLastShowElementOverflowing = this.windowService.isElementOverflowingHorizontaly(lastShownElement);
     while (isLastShowElementOverflowing && isThereShownElement) {
       this.hideLastShowElement(elements);
 
       isLastShowElementOverflowing = this.windowService.isElementOverflowingHorizontaly(lastShownElement);
-      isThereShownElement = this.isThereVisibleElement(elements);
+      isThereShownElement = this.isThereShownElement(elements);
 
       isSuccessful = true;
     }
@@ -95,19 +74,51 @@ export class ElementDisplayService {
     return isSuccessful;
   }
 
-  private isThereVisibleElement(elements: Element[]): boolean {
+  private isThereShownElement(elements: Element[]): boolean {
     const isThereShownElelement = elements
       .find(e => e.hasAttribute('hidden') === false);
 
     return isThereShownElelement !== undefined;
   }
 
-  tryShowLeftHiddenElements(elements: Element[], lastShownElement: Element): boolean {
+
+  tryShowHiddenElementsFromBeginingUntilOverflow(elements: Element[], lastShownElement: Element):
+  boolean {
     this.validateElements(elements);
     this.validateLastShownElement(lastShownElement);
 
     let isSuccessful = false;
 
+    const firstElement = elements[0];
+    const isFirstElementHidden = firstElement.hasAttribute('hidden');
+    if (isFirstElementHidden === false) {
+      return isSuccessful;
+    }
+
+    for (let i = 0; i < elements.length; i++) {
+      const currentElement = elements[i];
+
+      if (currentElement.hasAttribute('hidden') === false) {
+        break;
+      }
+
+      const isCurrentElementShown = this.elementDisplayService
+        .tryShowElementIfNotOverflowing(currentElement, lastShownElement);
+      if (isCurrentElementShown) {
+        isSuccessful = true;
+      }
+    }
+
+    return isSuccessful;
+  }
+
+  tryShowLastHiddenElementsFromLeftUntilOverflow(elements: Element[], lastShownElement: Element): boolean {
+    this.validateElements(elements);
+    this.validateLastShownElement(lastShownElement);
+
+    let isSuccessful = false;
+
+    // If the first element is not hidden there are no hidden elements on the left side
     const firstElement = elements[0];
     const isFirstElementHidden = firstElement.hasAttribute('hidden');
     if (isFirstElementHidden === false) {
@@ -120,8 +131,8 @@ export class ElementDisplayService {
         elements
           .find(this.elementsPredicateService.getLastHiddenElementFromLeft);
       if (lastHiddenElementFromLeft) {
-        const isElementShown =
-          this.tryShowElementIfNotOverflowing(lastHiddenElementFromLeft, lastShownElement);
+        const isElementShown = this.elementDisplayService
+          .tryShowElementIfNotOverflowing(lastHiddenElementFromLeft, lastShownElement);
         if (isElementShown) {
           isSuccessful = true;
         }
@@ -136,12 +147,13 @@ export class ElementDisplayService {
     return isSuccessful;
   }
 
-  tryShowRightHiddenElements(elements: Element[], lastShownElement: Element): boolean {
+  tryShowFirstHiddenElementsFromRightUntilOverflow(elements: Element[], lastShownElement: Element): boolean {
     this.validateElements(elements);
     this.validateLastShownElement(lastShownElement);
 
     let isSuccessful = false;
 
+    // If the last element is not hidden there are no hidden elements on the left side
     const lastElement = elements[elements.length - 1];
     const isLastElementHidden = lastElement.hasAttribute('hidden');
     if (isLastElementHidden === false) {
@@ -153,8 +165,8 @@ export class ElementDisplayService {
       const firstHiddenElementFromRight = elements
         .find(this.elementsPredicateService.getFirstHiddenElementFromRight);
       if (firstHiddenElementFromRight) {
-        const isElementShown =
-          this.tryShowElementIfNotOverflowing(firstHiddenElementFromRight, lastShownElement);
+        const isElementShown = this.elementDisplayService
+          .tryShowElementIfNotOverflowing(firstHiddenElementFromRight, lastShownElement);
         if (isElementShown) {
           isSuccessful = true;
         }
@@ -167,11 +179,6 @@ export class ElementDisplayService {
     }
 
     return isSuccessful;
-  }
-
-  private validateLastShownElement(lastShownElement: Element): void {
-    DataValidator.nullOrUndefinied(lastShownElement, 'lastShownElement');
-    ElementValidator.doesNotHaveAttribute(lastShownElement, 'hidden');
   }
 
   private validateElements(elements: Element[]): void {
@@ -185,5 +192,10 @@ export class ElementDisplayService {
     if (!element) {
       throw Error(ExceptionConstants.NOT_FOUND);
     }
+  }
+
+  private validateLastShownElement(lastShownElement: Element): void {
+    DataValidator.nullOrUndefinied(lastShownElement, 'lastShownElement');
+    ElementValidator.doesNotHaveAttribute(lastShownElement, 'hidden');
   }
 }

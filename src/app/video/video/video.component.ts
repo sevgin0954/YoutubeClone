@@ -72,8 +72,4 @@ export class VideoComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resizeSubscription.unobserve(this.playerContainer.nativeElement);
     this.subscribtion.unsubscribe();
   }
-
-  onChangee(): void {
-    console.log('change video component')
-  }
 }

@@ -14,6 +14,7 @@ import { PlaylistsService } from './services/playlists.service';
 import { MultipleChannelsPlaylistTemplateComponent } from './multiple-channels-playlist-template/multiple-channels-playlist-template.component';
 import { MultiplePlaylistsTemplateComponent } from './multiple-playlists-template/multiple-playlists-template.component';
 import { SinglePlaylistTemplateComponent } from './single-playlist-template/single-playlist-template.component';
+import { PlaylistElementService } from './services/playlist-element.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SinglePlaylistTemplateComponent } from './single-playlist-template/sing
   providers: [
     ArrowDisplayButtonService,
     ArrowClickButtonService,
-    PlaylistsService
+    PlaylistsService,
+    PlaylistElementService
   ],
   exports: [
     MultipleChannelsPlaylistComponent,
