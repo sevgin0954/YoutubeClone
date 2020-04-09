@@ -17,7 +17,7 @@ export class LoadingElementsComponent {
   ) { }
 
   @HostListener("window:scroll")
-  private onScroll(): void {
+  onScroll(): void {
     if (this.isLoadingDisabled) {
       return;
     }

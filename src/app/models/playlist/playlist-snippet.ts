@@ -1,11 +1,11 @@
-import { Thumbnail } from '../thumbnail/thumbnail';
+import { VideoThumbnails } from '../thumbnail/video-thumbnails';
 
 export interface PlaylistSnippet {
   publishedAt: Date,
   channelId: string,
   title: string,
   description: string,
-  thumbnails: Thumbnail[],
+  thumbnails: VideoThumbnails,
   channelTitle: string,
   tags: [
     string

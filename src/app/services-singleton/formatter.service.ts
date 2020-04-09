@@ -89,7 +89,7 @@ export class FormatterService {
     DataValidator.maxNumber(integerPartLength, maxNumber, integerPartLengthArgument);
   }
 
-  getDateFromNowString(date: string): string {
+  getDateFromNowString(date: Date): string {
     const result = moment(date).fromNow();
 
     return result;
