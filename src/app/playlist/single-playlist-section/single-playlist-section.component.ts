@@ -12,11 +12,11 @@ import { PlaylistItemResource } from 'src/app/shared/enums/resource-properties/p
 import { VideoResource } from 'src/app/shared/enums/resource-properties/video-resource';
 
 @Component({
-  selector: 'app-single-playlist',
-  templateUrl: './single-playlist.component.html',
-  styleUrls: ['./single-playlist.component.scss']
+  selector: 'app-single-playlist-section',
+  templateUrl: './single-playlist-section.component.html',
+  styleUrls: ['./single-playlist-section.component.scss']
 })
-export class SinglePlaylistComponent implements OnInit {
+export class SinglePlaylistSectionComponent implements OnInit {
 
   @Input()
   channelSection: ChannelSection;

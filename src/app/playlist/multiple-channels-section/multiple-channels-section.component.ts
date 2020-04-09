@@ -11,11 +11,11 @@ import { ChannelResource } from 'src/app/shared/enums/resource-properties/channe
 const MAX_RESULTS_PER_PAGE = 5;
 
 @Component({
-  selector: 'app-multiple-channels-playlist',
-  templateUrl: './multiple-channels-playlist.component.html',
-  styleUrls: ['./multiple-channels-playlist.component.scss']
+  selector: 'app-multiple-channels-section',
+  templateUrl: './multiple-channels-section.component.html',
+  styleUrls: ['./multiple-channels-section.component.scss']
 })
-export class MultipleChannelsPlaylistComponent implements OnInit {
+export class MultipleChannelsSectionComponent implements OnInit {
 
   constructor(
     private channelService: ChannelService

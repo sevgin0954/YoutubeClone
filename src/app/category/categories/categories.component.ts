@@ -5,6 +5,7 @@ import { VideoCategory } from 'src/app/models/video-category/video-category';
 import { GeolocationService } from 'src/app/services-singleton/geolocation.service';
 import { finalize, map } from 'rxjs/operators';
 import { VideoCategoryResource } from 'src/app/shared/enums/resource-properties/video-category-resource';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-categories',

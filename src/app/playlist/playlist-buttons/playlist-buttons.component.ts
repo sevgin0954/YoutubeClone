@@ -1,10 +1,10 @@
 import { Component, ElementRef, ViewChild, TemplateRef, Input, ContentChild, QueryList, ViewChildren, AfterViewChecked, AfterViewInit } from '@angular/core';
 
-import { ArrowDisplayButtonService } from '../services/arrow-display-button.service';
 import { WindowService } from 'src/app/services-singleton/window.service';
-import { ArrowClickButtonService } from '../services/arrow-click-button.service';
 import isRequired from 'src/decorators/isRequired';
 import isType from 'src/decorators/isType';
+import { ArrowDisplayButtonService } from '../services/arrow-display-button.service';
+import { ArrowClickButtonService } from '../services/arrow-click-button.service';
 import { PlaylistElementService } from '../services/playlist-element.service';
 
 @Component({

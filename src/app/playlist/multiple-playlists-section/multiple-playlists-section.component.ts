@@ -13,11 +13,11 @@ import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playl
 const MAX_RESULTS_PER_PAGE = 5;
 
 @Component({
-  selector: 'app-multiple-playlists',
-  templateUrl: './multiple-playlists.component.html',
-  styleUrls: ['./multiple-playlists.component.scss']
+  selector: 'app-multiple-playlists-section',
+  templateUrl: './multiple-playlists-section.component.html',
+  styleUrls: ['./multiple-playlists-section.component.scss']
 })
-export class MultiplePlaylistsComponent implements OnInit, OnDestroy {
+export class MultiplePlaylistsSectionComponent implements OnInit, OnDestroy {
 
   @Input()
   channelSection: ChannelSection;

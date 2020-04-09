@@ -5,9 +5,9 @@ import isRequired from 'src/decorators/isRequired';
 import isType from 'src/decorators/isType';
 
 @Component({
-  selector: 'app-multiple-channels-playlist-template',
-  templateUrl: './multiple-channels-playlist-template.component.html',
-  styleUrls: ['./multiple-channels-playlist-template.component.scss'],
+  selector: 'app-multiple-channels-playlist',
+  templateUrl: './multiple-channels-playlist.component.html',
+  styleUrls: ['./multiple-channels-playlist.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MultipleChannelsPlaylistTemplateComponent {

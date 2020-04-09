@@ -3,29 +3,29 @@
     <ng-container *ngIf="getSectionType(section) === sectionType[sectionType.multipleChannels]">
       <hr>
 
-      <app-multiple-channels-playlist
+      <app-multiple-channels-section
         [channelSection]="section"
         [title]="section.snippet.title"
         [style]="sectionStyle[section.snippet.style]">
-      </app-multiple-channels-playlist>
+      </app-multiple-channels-section>
     </ng-container>
 
     <ng-container *ngIf="getSectionType(section) === sectionType[sectionType.multiplePlaylists]">
       <hr>
 
-      <app-multiple-playlists
+      <app-multiple-playlists-section
         [channelSection]="section"
         [style]="sectionStyle[section.snippet.style]">
-      </app-multiple-playlists>
+      </app-multiple-playlists-section>
     </ng-container>
 
     <ng-container *ngIf="getSectionType(section) === sectionType[sectionType.singlePlaylist]">
       <hr>
 
-      <app-single-playlist
+      <app-single-playlist-section
         [channelSection]="section"
         [style]="sectionStyle[section.snippet.style]">
-      </app-single-playlist>
+      </app-single-playlist-section>
     </ng-container>
   </ng-container>
 </div>
