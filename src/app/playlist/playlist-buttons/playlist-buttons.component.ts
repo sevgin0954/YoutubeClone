@@ -39,6 +39,7 @@ export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked
   @ViewChild('loadingBtn', { static: false }) loadingBtn: ElementRef;
   @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
 
+  private htmlElement: Element;
   private resizeSubscription: any;
 
   constructor(
@@ -58,8 +59,8 @@ export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked
       this.onWindowResize();
     });
 
-    const htmlElement = document.querySelector('html');
-    this.resizeSubscription.observe(htmlElement);
+    this.htmlElement = document.querySelector('html');
+    this.resizeSubscription.observe(this.htmlElement);
   }
 
   ngAfterViewChecked(): void {
@@ -151,6 +152,6 @@ export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked
   }
 
   ngOnDestroy(): void {
-    this.resizeSubscription.unobserve(window);
+    this.resizeSubscription.unobserve(this.htmlElement);
   }
 }
