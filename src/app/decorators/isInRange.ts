@@ -1,5 +1,6 @@
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 import { SimpleChanges } from '@angular/core';
+
+import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 
 export default function isInRange(
   minNumber: number,
@@ -12,7 +13,8 @@ export default function isInRange(
     const ngOnChangesOriginalFunc: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
 
     Object.defineProperty(targetPrototype, NG_ON_CHANGES_NAME, {
-      value: onChangesNewFunc
+      value: onChangesNewFunc,
+      configurable: true
     });
 
     function onChangesNewFunc(changes: SimpleChanges): void {

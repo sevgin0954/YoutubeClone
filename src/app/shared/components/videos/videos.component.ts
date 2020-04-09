@@ -1,18 +1,15 @@
 import { Component, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 
 import { Video } from '../../../models/video/video';
-import isRequired from 'src/decorators/isRequired';
-import isType from 'src/decorators/isType';
+import isRequired from 'src/app/decorators/isRequired';
+import isType from 'src/app/decorators/isType';
 import { VideoThumbnailSize } from '../../enums/video-thumbnail-size';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ExceptionConstants } from '../../Constants/exception-constants';
 import { VideoResource } from '../../enums/resource-properties/video-resource';
 import { PageArguments } from '../../arguments/page-arguments';
-import { ServiceModel } from 'src/app/models/service-models/service-model';
 import { finalize } from 'rxjs/operators';
-
-type loadVideosCallback = (filterArgument: any, pageArgs: PageArguments, resources: any[])
-  => Observable<ServiceModel<Video[]>>;
+import { loadVideosCallback } from 'src/app/types';
 
 const MAX_RESULTS_PER_PAGE = 25;
 const VIDEO_DESCRIPTION_DISPLAYED_ROWS = 3;

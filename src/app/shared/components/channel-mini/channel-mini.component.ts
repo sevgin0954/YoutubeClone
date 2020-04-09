@@ -6,8 +6,8 @@ import { Subscription as VideoSubscribtion } from 'src/app/models/subscribption/
 import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.service';
 import { Subscription as RxjsSubscription } from 'rxjs';
 import { SubscriptionResource } from '../../enums/resource-properties/subscription-resource';
-import isRequired from 'src/decorators/isRequired';
-import isType from 'src/decorators/isType';
+import isRequired from 'src/app/decorators/isRequired';
+import isType from 'src/app/decorators/isType';
 
 @Component({
   selector: 'app-channel-mini',

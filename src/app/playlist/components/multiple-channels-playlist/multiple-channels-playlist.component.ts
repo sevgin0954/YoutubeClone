@@ -1,8 +1,8 @@
 import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
 import { Channel } from 'src/app/models/channel/channel';
-import isRequired from 'src/decorators/isRequired';
-import isType from 'src/decorators/isType';
+import isRequired from 'src/app/decorators/isRequired';
+import isType from 'src/app/decorators/isType';
 
 @Component({
   selector: 'app-multiple-channels-playlist',

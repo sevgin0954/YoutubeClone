@@ -4,9 +4,9 @@ import { CommentsService } from 'src/app/comment/services/comments.service';
 import { Comment } from 'src/app/models/comment/comment';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { CommentResource } from 'src/app/shared/enums/resource-properties/comment-resource';
-import isRequired from 'src/decorators/isRequired';
-import isType from 'src/decorators/isType';
-import isInRange from 'src/decorators/isInRange';
+import isRequired from 'src/app/decorators/isRequired';
+import isType from 'src/app/decorators/isType';
+import isInRange from 'src/app/decorators/isInRange';
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 import { DataValidator } from 'src/app/shared/Validation/data-validator';
 

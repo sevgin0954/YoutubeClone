@@ -1,8 +1,8 @@
 import { Component, ElementRef, ViewChild, TemplateRef, Input, ContentChild, QueryList, ViewChildren, AfterViewChecked, AfterViewInit } from '@angular/core';
 
 import { WindowService } from 'src/app/services-singleton/window.service';
-import isRequired from 'src/decorators/isRequired';
-import isType from 'src/decorators/isType';
+import isRequired from 'src/app/decorators/isRequired';
+import isType from 'src/app/decorators/isType';
 import { ArrowDisplayButtonService } from '../services/arrow-display-button.service';
 import { ArrowClickButtonService } from '../services/arrow-click-button.service';
 import { PlaylistElementService } from '../services/playlist-element.service';
@@ -14,7 +14,7 @@ import { PlaylistElementService } from '../services/playlist-element.service';
 })
 export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked {
 
-  @ContentChild('playlistElementTemplate', {static: false})
+  @ContentChild('playlistElementTemplate')
   playlistElementTemplateRef: TemplateRef<any>;
 
   @ViewChildren('element')
@@ -35,9 +35,9 @@ export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked
   @Input()
   totalResultsCount: number;
 
-  @ViewChild('leftBtn', { static: false }) leftBtn: ElementRef;
-  @ViewChild('loadingBtn', { static: false }) loadingBtn: ElementRef;
-  @ViewChild('rightBtn', { static: false }) rightBtn: ElementRef;
+  @ViewChild('leftBtn') leftBtn: ElementRef;
+  @ViewChild('loadingBtn') loadingBtn: ElementRef;
+  @ViewChild('rightBtn') rightBtn: ElementRef;
 
   private htmlElement: Element;
   private resizeSubscription: any;

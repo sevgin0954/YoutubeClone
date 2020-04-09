@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarSideComponent implements AfterViewChecked {
 
-  @ViewChild('buttonList', { static: false }) buttonList: ElementRef;
+  @ViewChild('buttonList') buttonList: ElementRef;
 
   constructor(
     private navbarSelectorService: NavbarSelectorService,

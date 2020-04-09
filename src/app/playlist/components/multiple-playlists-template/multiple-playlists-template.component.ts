@@ -1,8 +1,8 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { Playlist } from 'src/app/models/playlist/playlist';
-import isRequired from 'src/decorators/isRequired';
-import isType from 'src/decorators/isType';
+import isRequired from 'src/app/decorators/isRequired';
+import isType from 'src/app/decorators/isType';
 import { VideoThumbnails } from 'src/app/models/thumbnail/video-thumbnails';
 import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';

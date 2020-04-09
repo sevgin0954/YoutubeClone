@@ -12,10 +12,12 @@ export default function isRequired(targetPrototype: any, propertyName: string): 
   const ngOnInitOriginalFunc: Function | null = targetPrototype[NG_ON_INIT_NAME];
 
   Object.defineProperty(targetPrototype, NG_ON_INIT_NAME, {
-    value: onInitNewFunc
+    value: onInitNewFunc,
+    configurable: true
   });
   Object.defineProperty(targetPrototype, NG_ON_CHANGES_NAME, {
-    value: onChangesNewFunc
+    value: onChangesNewFunc,
+    configurable: true
   });
 
   function onChangesNewFunc(changes: SimpleChanges): void {

@@ -13,7 +13,8 @@ export default function isType(
     const ngOnChangesOriginalFunc: Function | null = targetPrototype[NG_ON_CHANGES_NAME];
 
     Object.defineProperty(targetPrototype, NG_ON_CHANGES_NAME, {
-      value: propertyValue
+      value: propertyValue,
+      configurable: true
     });
 
     function propertyValue(changes: SimpleChanges): void {

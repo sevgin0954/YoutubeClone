@@ -4,9 +4,9 @@ import { ChannelSectionService } from 'src/app/channel/services/channel-section.
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { ChannelSectionType } from 'src/app/shared/enums/channel-section-type';
-import isRequired from 'src/decorators/isRequired';
+import isRequired from 'src/app/decorators/isRequired';
 import { Subscription } from 'rxjs';
-import isType from 'src/decorators/isType';
+import isType from 'src/app/decorators/isType';
 import { ChannelSectionResource } from 'src/app/shared/enums/resource-properties/channel-section-resource';
 
 @Component({

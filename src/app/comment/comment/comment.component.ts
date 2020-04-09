@@ -2,8 +2,8 @@ import { Component, Input } from '@angular/core';
 
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Comment } from 'src/app/models/comment/comment';
-import isRequired from 'src/decorators/isRequired';
-import isType from 'src/decorators/isType';
+import isRequired from 'src/app/decorators/isRequired';
+import isType from 'src/app/decorators/isType';
 
 @Component({
   selector: 'app-comment',

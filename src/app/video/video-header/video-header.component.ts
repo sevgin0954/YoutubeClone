@@ -13,8 +13,8 @@ import { RatingType } from 'src/app/shared/enums/rating-type';
 export class VideoHeaderComponent implements AfterViewInit {
 
   @Input() video: Video;
-  @ViewChild('likeBtn', { static: false }) likeButton: ElementRef;
-  @ViewChild('dislikeBtn', { static: false }) dislikeButton: ElementRef;
+  @ViewChild('likeBtn') likeButton: ElementRef;
+  @ViewChild('dislikeBtn') dislikeButton: ElementRef;
   currentRating: RatingType;
   RatingType = RatingType;
 

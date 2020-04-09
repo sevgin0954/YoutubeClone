@@ -10,7 +10,7 @@ export class LoadingElementsComponent {
 
   @Input() isLoadingDisabled: boolean;
   @Input() loadingCallback: Function;
-  @ViewChild('loading', { static: false }) private loadingElement: ElementRef;
+  @ViewChild('loading') private loadingElement: ElementRef;
 
   constructor(
     private windowService: WindowService

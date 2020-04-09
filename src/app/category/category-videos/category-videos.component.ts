@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { VideoService } from 'src/app/services-singleton/video.service';
 import { pluck } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { loadVideosCallback } from 'src/app/types';
 
 @Component({
   selector: 'app-category-video',
@@ -13,7 +14,7 @@ import { Observable } from 'rxjs';
 export class CategoryVideosComponent implements OnInit {
 
   categoryId$: Observable<string>;
-  loadVideosCallback: Function = this.videoService.getByCategoryId;
+  loadVideosCallback: loadVideosCallback = this.videoService.getByCategoryId;
 
   constructor(
     private videoService: VideoService,

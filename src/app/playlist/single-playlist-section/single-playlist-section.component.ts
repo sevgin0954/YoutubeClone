@@ -24,7 +24,7 @@ export class SinglePlaylistSectionComponent implements OnInit {
   @Input()
   style: ChannelSectionStyle;
 
-  @ViewChild('rightBtn', { static: false })
+  @ViewChild('rightBtn')
   rightBtn: ElementRef;
 
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>

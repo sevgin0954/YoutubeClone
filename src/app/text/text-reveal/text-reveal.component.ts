@@ -13,7 +13,7 @@ export class TextRevealComponent implements AfterViewChecked, OnChanges {
   @Input() shouldShowButtons: boolean = false;
   @Input() text: string;
   @Input() maxDisplayedRows: number;
-  @ViewChild('textElement', { static: false }) textElement: ElementRef;
+  @ViewChild('textElement') textElement: ElementRef;
   isShowingMore: boolean = false;
   isTextOverflowing: boolean = false;
   canTextOverflow: boolean = true;

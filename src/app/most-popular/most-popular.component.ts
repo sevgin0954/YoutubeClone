@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { VideoService } from '../services-singleton/video.service';
 import { RegionCode } from '../shared/enums/region-code';
 import { GeolocationService } from '../services-singleton/geolocation.service';
+import { loadVideosCallback } from '../types';
 
 @Component({
   selector: 'app-most-popular',
@@ -11,7 +12,7 @@ import { GeolocationService } from '../services-singleton/geolocation.service';
 })
 export class MostPopularComponent {
 
-  loadVideosCallback: Function = this.videoService.getMostPopular;
+  loadVideosCallback: loadVideosCallback = this.videoService.getMostPopular;
   isCurrentlyLoading: boolean = true;
   regionCode: RegionCode;
 

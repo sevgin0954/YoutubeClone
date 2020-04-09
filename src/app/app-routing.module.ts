@@ -8,12 +8,12 @@ import { CustomPreloading } from './custom-preloading';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'trending' },
   { path: 'trending', component: MostPopularComponent },
-  { path: 'signin', loadChildren: './authentication/authentication.module#AuthenticationModule' },
+  { path: 'signin', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
   { path: 'subscriptions', component: SubscriptionsComponent },
-  { path: 'video', loadChildren: './video/video.module#VideoModule', data: { preload: true } },
-  { path: 'channel', loadChildren: './channel/channel.module#ChannelModule' },
-  { path: 'categories', loadChildren: './category/category.module#CategoryModule' },
-  { path: 'category', loadChildren: './category/category.module#CategoryModule' }
+  { path: 'video', loadChildren: () => import('./video/video.module').then(m => m.VideoModule), data: { preload: true } },
+  { path: 'channel', loadChildren: () => import('./channel/channel.module').then(m => m.ChannelModule) },
+  { path: 'categories', loadChildren: () => import('./category/category.module').then(m => m.CategoryModule) },
+  { path: 'category', loadChildren: () => import('./category/category.module').then(m => m.CategoryModule) }
 ];
 
 @NgModule({
