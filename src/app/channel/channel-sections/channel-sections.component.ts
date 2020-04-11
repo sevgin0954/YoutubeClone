@@ -6,7 +6,6 @@ import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style'
 import { ChannelSectionType } from 'src/app/shared/enums/channel-section-type';
 import isRequired from 'src/app/decorators/isRequired';
 import { Subscription } from 'rxjs';
-import isType from 'src/app/decorators/isType';
 import { ChannelSectionResource } from 'src/app/shared/enums/resource-properties/channel-section-resource';
 
 @Component({
@@ -17,7 +16,6 @@ import { ChannelSectionResource } from 'src/app/shared/enums/resource-properties
 export class ChannelSectionsComponent implements OnChanges, OnDestroy {
 
   @isRequired
-  @isType('string')
   @Input()
   channelId: string;
 
@@ -39,7 +37,8 @@ export class ChannelSectionsComponent implements OnChanges, OnDestroy {
       ChannelSectionResource.snippet,
       ChannelSectionResource.contentDetails
     ]
-    this.subscription = this.channelSectionService.getByChannelId(this.channelId, resources).subscribe(sections => {
+    this.subscription = this.channelSectionService.getByChannelId(this.channelId, resources)
+    .subscribe(sections => {
       const sortedChannels = sections.sort((a, b) => a.snippet.position - b.snippet.position);
       this.channelSections = sortedChannels;
     });

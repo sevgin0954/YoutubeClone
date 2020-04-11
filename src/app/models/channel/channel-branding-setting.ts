@@ -1,20 +1,7 @@
+import { ChannelImages } from './channel-images';
+
 export interface ChannelBrandingSettings {
-  image: {
-    bannerImageUrl: string
-    bannerMobileImageUrl: string
-    bannerTabletLowImageUrl: string
-    bannerTabletImageUrl: string
-    bannerTabletHdImageUrl: string
-    bannerTabletExtraHdImageUrl: string
-    bannerMobileLowImageUrl: string
-    bannerMobileMediumHdImageUrl: string
-    bannerMobileHdImageUrl: string
-    bannerMobileExtraHdImageUrl: string
-    bannerTvImageUrl: string
-    bannerTvLowImageUrl: string
-    bannerTvMediumImageUrl: string
-    bannerTvHighImageUrl: string
-  },
+  image: ChannelImages,
   channel: {
     title: string,
     description: string,

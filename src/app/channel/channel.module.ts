@@ -8,6 +8,7 @@ import { PlaylistModule } from '../playlist/playlist.module';
 import { ChannelSectionsComponent } from './channel-sections/channel-sections.component';
 import { ChannelResolverService } from '../services-singleton/resolvers/channel-resolver.service';
 import { ChannelSectionService } from './services/channel-section.service';
+import { ChannelImageComponent } from './components/channel-image/channel-image.component';
 
 const routes: Routes = [
   { path: ':id', component: ChannelComponent, resolve: { channel: ChannelResolverService } }
@@ -16,7 +17,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ChannelComponent,
-    ChannelSectionsComponent
+    ChannelSectionsComponent,
+    ChannelImageComponent
   ],
   imports: [
     RouterModule.forChild(routes),
