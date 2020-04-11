@@ -2,7 +2,6 @@ import { Component, ElementRef, ViewChild, TemplateRef, Input, ContentChild, Que
 
 import { WindowService } from 'src/app/services-singleton/window.service';
 import isRequired from 'src/app/decorators/isRequired';
-import isType from 'src/app/decorators/isType';
 import { ArrowDisplayButtonService } from '../services/arrow-display-button.service';
 import { ArrowClickButtonService } from '../services/arrow-click-button.service';
 import { PlaylistElementService } from '../services/playlist-element.service';
@@ -21,17 +20,14 @@ export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked
   playlistViewElements: QueryList<ElementRef>;
 
   @isRequired
-  @isType('object')
   @Input()
   playlistElements: any[];
 
   @isRequired
-  @isType('function')
   @Input()
   loadMoreCallBack: Function;
 
   @isRequired
-  @isType('number')
   @Input()
   totalResultsCount: number;
 

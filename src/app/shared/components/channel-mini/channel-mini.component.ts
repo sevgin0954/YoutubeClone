@@ -7,7 +7,6 @@ import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.s
 import { Subscription as RxjsSubscription } from 'rxjs';
 import { SubscriptionResource } from '../../enums/resource-properties/subscription-resource';
 import isRequired from 'src/app/decorators/isRequired';
-import isType from 'src/app/decorators/isType';
 
 @Component({
   selector: 'app-channel-mini',
@@ -17,15 +16,14 @@ import isType from 'src/app/decorators/isType';
 export class ChannelMiniComponent implements OnChanges, OnDestroy {
 
   @isRequired
-  @isType('object')
   @Input()
   channel: Channel;
 
   @Output()
-  private channelLoaded = new EventEmitter();
+  channelLoaded = new EventEmitter();
 
   @Output()
-  private update = new EventEmitter();
+  update = new EventEmitter();
 
   isSubscribed: boolean;
   private videoSubscription: VideoSubscribtion;

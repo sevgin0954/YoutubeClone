@@ -2,7 +2,6 @@ import { Component, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/
 
 import { Video } from '../../../models/video/video';
 import isRequired from 'src/app/decorators/isRequired';
-import isType from 'src/app/decorators/isType';
 import { VideoThumbnailSize } from '../../enums/video-thumbnail-size';
 import { Subscription } from 'rxjs';
 import { ExceptionConstants } from '../../Constants/exception-constants';
@@ -23,11 +22,12 @@ const VIDEO_TITLE_DISPLAYED_ROWS = 2;
 export class VideosComponent implements OnChanges, OnDestroy {
 
   @isRequired
-  @isType('function')
-  @Input() loadVideosCallback: loadVideosCallback;
+  @Input()
+  loadVideosCallback: loadVideosCallback;
 
   @isRequired
-  @Input() filterArgument: any;
+  @Input()
+  filterArgument: any;
 
   thumbnailSize: VideoThumbnailSize = VideoThumbnailSize.medium;
   videoDescriptionMaxDisplayedRows: number = VIDEO_DESCRIPTION_DISPLAYED_ROWS;

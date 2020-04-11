@@ -2,7 +2,6 @@ import { Component, Input, ChangeDetectionStrategy, ChangeDetectorRef } from '@a
 
 import { Channel } from 'src/app/models/channel/channel';
 import isRequired from 'src/app/decorators/isRequired';
-import isType from 'src/app/decorators/isType';
 
 @Component({
   selector: 'app-multiple-channels-playlist',
@@ -13,7 +12,6 @@ import isType from 'src/app/decorators/isType';
 export class MultipleChannelsPlaylistTemplateComponent {
 
   @isRequired
-  @isType('object')
   @Input()
   channel: Channel;
 

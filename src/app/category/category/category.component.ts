@@ -3,7 +3,6 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { VideoCategory } from 'src/app/models/video-category/video-category';
 import isRequired from 'src/app/decorators/isRequired';
-import isType from 'src/app/decorators/isType';
 import getCategoryIcon from '../categoryIcon';
 import { VideoCategoryType } from 'src/app/shared/enums/video-category-type';
 
@@ -15,8 +14,9 @@ import { VideoCategoryType } from 'src/app/shared/enums/video-category-type';
 export class CategoryComponent implements OnChanges {
 
   @isRequired
-  @isType('object')
-  @Input() category: VideoCategory;
+  @Input()
+  category: VideoCategory;
+
   private _icon: string;
 
   constructor(
