@@ -1,6 +1,7 @@
 import { Component, AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
-import { NavbarSelectorService } from '../services/navbar-selector.service';
 import { Router } from '@angular/router';
+
+import { NavbarSelectorService } from '../services/navbar-selector.service';
 
 @Component({
   selector: 'app-navbar-side',

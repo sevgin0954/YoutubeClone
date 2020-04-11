@@ -5,9 +5,9 @@ import isRequired from 'src/app/decorators/isRequired';
 import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 
 @Component({
-  selector: 'app-single-playlist-template',
-  templateUrl: './single-playlist-template.component.html',
-  styleUrls: ['./single-playlist-template.component.scss'],
+  selector: 'app-single-playlist-playlist',
+  templateUrl: './single-playlist-playlist.component.html',
+  styleUrls: ['./single-playlist-playlist.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SinglePlaylistTemplateComponent {

@@ -8,13 +8,13 @@ import { ArrowDisplayButtonService } from './services/arrow-display-button.servi
 import { ArrowClickButtonService } from './services/arrow-click-button.service';
 import { PlaylistsService } from './services/playlists.service';
 import { MultipleChannelsPlaylistTemplateComponent } from './components/multiple-channels-playlist/multiple-channels-playlist.component';
-import { MultiplePlaylistsTemplateComponent } from './components/multiple-playlists-template/multiple-playlists-template.component';
-import { SinglePlaylistTemplateComponent } from './components/single-playlist-template/single-playlist-template.component';
+import { MultiplePlaylistsTemplateComponent } from './components/multiple-playlists-playlist/multiple-playlists-playlist.component';
 import { PlaylistElementService } from './services/playlist-element.service';
 import { SinglePlaylistSectionComponent } from './single-playlist-section/single-playlist-section.component';
 import { MultipleChannelsSectionComponent } from './multiple-channels-section/multiple-channels-section.component';
 import { PlaylistButtonsComponent } from './playlist-buttons/playlist-buttons.component';
 import { MultiplePlaylistsSectionComponent } from './multiple-playlists-section/multiple-playlists-section.component';
+import { SinglePlaylistTemplateComponent } from './components/single-playlist-playlist/single-playlist-playlist.component';
 
 @NgModule({
   declarations: [
