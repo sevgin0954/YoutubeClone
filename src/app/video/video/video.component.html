@@ -9,8 +9,8 @@
 
   <hr>
 
-  <section class="video-channel">
-    <app-channel-mini *ngIf="channel" [channel]="channel"></app-channel-mini>
+  <section class="video-channel" *ngIf="channel">
+    <app-channel-mini [channel]="channel"></app-channel-mini>
   </section>
 
   <section class="video-text">

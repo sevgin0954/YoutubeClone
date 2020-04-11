@@ -7,12 +7,12 @@ import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';
 
 @Component({
-  selector: 'app-multiple-playlists-playlist',
-  templateUrl: './multiple-playlists-playlist.component.html',
-  styleUrls: ['./multiple-playlists-playlist.component.scss'],
+  selector: 'app-playlist',
+  templateUrl: './playlist.component.html',
+  styleUrls: ['./playlist.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MultiplePlaylistsTemplateComponent {
+export class PlaylistComponent {
 
   @isRequired
   @Input()
@@ -21,7 +21,6 @@ export class MultiplePlaylistsTemplateComponent {
   constructor(
     private thumbnailService: ThumbnailsService
   ) { }
-
 
   getThumnailUrl(thumbnails: VideoThumbnails): string {
     const url = this.thumbnailService.getThumbnailUrl(VideoThumbnailSize.default, thumbnails);

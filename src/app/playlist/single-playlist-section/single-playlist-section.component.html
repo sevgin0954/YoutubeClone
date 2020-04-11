@@ -1,11 +1,17 @@
 <section class="playlists-container" *ngIf="videos.length > 0">
-  <app-playlist-buttons
-    [playlistElements]="videos"
-    [loadMoreCallBack]="loadMoreCallBack"
-    [totalResultsCount]="totalResultsCount">
-    <ng-template #playlistElementTemplate let-video>
-      <app-single-playlist-playlist [video]="video">
-      </app-single-playlist-playlist>
-    </ng-template>
-  </app-playlist-buttons>
+  <section>
+    <app-playlist-header [title]="channelSection.snippet.title"></app-playlist-header>
+
+    <app-playlist-buttons
+      [playlistElements]="videos"
+      [loadMoreCallBack]="loadMoreCallBack"
+      [totalResultsCount]="totalResultsCount">
+      <ng-template #playlistElementTemplate let-video>
+        <article class="playlist-element">
+          <app-video-thumbnail [video]="video" [size]="videoSize"></app-video-thumbnail>
+          <app-video-info [video]="video" [titleMaxDisplayedRows]="titleMaxDisplayedRows"></app-video-info>
+        </article>
+      </ng-template>
+    </app-playlist-buttons>
+  </section>
 </section>

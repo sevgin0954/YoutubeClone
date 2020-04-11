@@ -1,0 +1,8 @@
+<div class="info-small">
+  <span *ngIf="channelStatistics.hiddenSubscriberCount === false">
+    {{ formatterService.getFormattedNumberString(channelStatistics.subscriberCount) }}
+  </span>
+  <span *ngIf="channelStatistics.hiddenSubscriberCount === true">
+    hidden
+  </span> subscribers
+</div>

@@ -10,6 +10,7 @@ import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistItemResource } from 'src/app/shared/enums/resource-properties/playlist-item-resource';
 import { VideoResource } from 'src/app/shared/enums/resource-properties/video-resource';
+import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 
 @Component({
   selector: 'app-single-playlist-section',
@@ -30,8 +31,9 @@ export class SinglePlaylistSectionComponent implements OnInit {
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
     this.loadMoreVideos(onLoadedMoreCallback);
   totalResultsCount: number;
-  videos: Video[] = [];
   titleMaxDisplayedRows: number = 2;
+  videos: Video[] = [];
+  videoSize: VideoThumbnailSize = VideoThumbnailSize.medium;
   private isFirstPage: boolean = true;
   private nextPageToken: string;
 

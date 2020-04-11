@@ -1,13 +1,18 @@
 <ng-container *ngIf="channels.length > 0">
-  <app-playlist-buttons
+  <app-playlist-header [title]="channelSection.snippet.title"></app-playlist-header>
+
+  <article class="playlist-element">
+    <app-playlist-buttons
   [playlistElements]="channels"
   [loadMoreCallBack]="loadMoreCallBack"
   [totalResultsCount]="totalResultsCount">
-  <div class="playlists-container">
-    <ng-template #playlistElementTemplate let-channel>
-      <app-multiple-channels-playlist [channel]="channel">
-      </app-multiple-channels-playlist>
-    </ng-template>
-  </div>
+  <ng-template #playlistElementTemplate let-channel>
+    <article class="playlist-element">
+      <app-channel-mini
+        [channel]="channel">
+      </app-channel-mini>
+    </article>
+  </ng-template>
 </app-playlist-buttons>
+  </article>
 </ng-container>

@@ -9,6 +9,7 @@ import { Playlist } from 'src/app/models/playlist/playlist';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
+import isRequired from 'src/app/decorators/isRequired';
 
 const MAX_RESULTS_PER_PAGE = 5;
 
@@ -19,9 +20,11 @@ const MAX_RESULTS_PER_PAGE = 5;
 })
 export class MultiplePlaylistsSectionComponent implements OnInit, OnDestroy {
 
+  @isRequired
   @Input()
   channelSection: ChannelSection;
 
+  @isRequired
   @Input()
   style: ChannelSectionStyle;
 

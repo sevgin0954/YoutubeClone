@@ -14,6 +14,7 @@ import { VideoHeaderComponent } from './video-header/video-header.component';
 import { CommentThreadsService } from './services/comment-threads.service';
 import { VideoMiniModule } from '../video-mini/video-mini.module';
 import { TextModule } from '../text/text.module';
+import { ChannelMiniModule } from '../channel-mini/channel-mini.module';
 
 const routes: Routes = [
   { path: ':id', component: VideoComponent, resolve: { video: VideoResolverService } }
@@ -32,7 +33,8 @@ const routes: Routes = [
     SharedModule,
     CommentModule,
     VideoMiniModule,
-    TextModule
+    TextModule,
+    ChannelMiniModule
   ],
   providers: [
     CommentThreadsService,

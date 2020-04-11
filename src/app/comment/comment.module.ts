@@ -8,6 +8,7 @@ import { CommentsService } from './services/comments.service';
 import { TextModule } from '../text/text.module';
 import { CommentThreadComponent } from './components/comment-thread/comment-thread.component';
 import { CommentsOrderDropdownComponent } from './components/comments-order-dropdown/comments-order-dropdown.component';
+import { ChannelMiniModule } from '../channel-mini/channel-mini.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CommentsOrderDropdownComponent } from './components/comments-order-drop
   imports: [
     CommonModule,
     SharedModule,
-    TextModule
+    TextModule,
+    ChannelMiniModule
   ],
   providers: [
     CommentsService

@@ -1,19 +1,26 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { Video } from 'src/app/models/video/video';
 import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
 import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';
 import { VideoThumbnails } from 'src/app/models/thumbnail/video-thumbnails';
+import isRequired from 'src/app/decorators/isRequired';
 
 @Component({
   selector: 'app-video-thumbnail',
   templateUrl: './video-thumbnail.component.html',
-  styleUrls: ['./video-thumbnail.component.scss']
+  styleUrls: ['./video-thumbnail.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class VideoThumbnailComponent {
 
-  @Input() video: Video;
-  @Input() private size: VideoThumbnailSize;
+  @isRequired
+  @Input()
+  video: Video;
+
+  @isRequired
+  @Input()
+  private size: VideoThumbnailSize;
 
   constructor(
     private thumbnailsService: ThumbnailsService

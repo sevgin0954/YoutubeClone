@@ -1,36 +1,27 @@
-import { Component, Input, OnDestroy, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
 
-import { Channel } from 'src/app/models/channel/channel';
-import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Subscription as VideoSubscribtion } from 'src/app/models/subscribption/subscription';
-import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.service';
-import { Subscription as RxjsSubscription } from 'rxjs';
-import { SubscriptionResource } from '../../enums/resource-properties/subscription-resource';
+import { SubscriptionResource } from 'src/app/shared/enums/resource-properties/subscription-resource';
 import isRequired from 'src/app/decorators/isRequired';
+import { Subscription } from 'rxjs';
+import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.service';
 
 @Component({
-  selector: 'app-channel-mini',
-  templateUrl: './channel-mini.component.html',
-  styleUrls: ['./channel-mini.component.scss']
+  selector: 'app-channel-subscribe-button',
+  templateUrl: './channel-subscribe-button.component.html',
+  styleUrls: ['./channel-subscribe-button.component.scss']
 })
-export class ChannelMiniComponent implements OnChanges, OnDestroy {
+export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
 
   @isRequired
   @Input()
-  channel: Channel;
-
-  @Output()
-  channelLoaded = new EventEmitter();
-
-  @Output()
-  update = new EventEmitter();
+  channelId: string;
 
   isSubscribed: boolean;
   private videoSubscription: VideoSubscribtion;
-  private rxjsSubscription: RxjsSubscription;
+  private rxjsSubscription: Subscription;
 
   constructor(
-    public formatterService: FormatterService,
     private subscriptionsService: SubscriptionsService,
   ) { }
 
@@ -39,7 +30,7 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
       SubscriptionResource.snippet
     ];
     this.rxjsSubscription = this.subscriptionsService
-      .getById(this.channel.id, resources)
+      .getById(this.channelId, resources)
       .subscribe(videoSubscribtion => {
         if (videoSubscribtion) {
           this.isSubscribed = true;
@@ -48,8 +39,6 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
         else {
           this.isSubscribed = false;
         }
-
-        this.channelLoaded.emit();
     });
   }
 
@@ -57,11 +46,9 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
     const resources = [
       SubscriptionResource.snippet
     ];
-    this.subscriptionsService.subscribe(this.channel.id, resources).subscribe(data => {
+    this.subscriptionsService.subscribe(this.channelId, resources).subscribe(data => {
       this.isSubscribed = true;
       this.videoSubscription = data;
-
-      this.update.emit();
     });
   }
 
@@ -71,8 +58,6 @@ export class ChannelMiniComponent implements OnChanges, OnDestroy {
         this.isSubscribed = false;
         this.videoSubscription = undefined;
       }
-
-      this.update.emit();
     });
   }
 

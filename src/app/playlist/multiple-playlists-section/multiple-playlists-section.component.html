@@ -1,12 +1,16 @@
 <ng-container *ngIf="playlists.length > 0">
-  <app-playlist-buttons
-  [playlistElements]="playlists"
-  [loadMoreCallBack]="loadMoreCallBack"
-  [totalResultsCount]="totalResultsCount">
-  <div class="playlists-container">
-    <ng-template #playlistElementTemplate let-playlist>
-      <app-multiple-playlists-playlist [playlist]="playlist"></app-multiple-playlists-playlist>
-    </ng-template>
-  </div>
-</app-playlist-buttons>
+  <section>
+    <app-playlist-header [title]="channelSection.snippet.title"></app-playlist-header>
+
+    <app-playlist-buttons
+      [playlistElements]="playlists"
+      [loadMoreCallBack]="loadMoreCallBack"
+      [totalResultsCount]="totalResultsCount">
+      <ng-template #playlistElementTemplate let-playlist>
+        <article class="playlist-element">
+          <app-playlist [playlist]="playlist"></app-playlist>
+        </article>
+      </ng-template>
+    </app-playlist-buttons>
+  </section>
 </ng-container>

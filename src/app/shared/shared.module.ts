@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { ChannelMiniComponent } from './components/channel-mini/channel-mini.component';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LoadingElementsComponent } from './components/loading-elements/loading-elements.component';
 import { VideosComponent } from './components/videos/videos.component';
@@ -11,7 +10,6 @@ import { TextModule } from '../text/text.module';
 
 @NgModule({
   declarations: [
-    ChannelMiniComponent,
     LoadingComponent,
     LoadingElementsComponent,
     VideosComponent
@@ -23,7 +21,6 @@ import { TextModule } from '../text/text.module';
     TextModule
   ],
   exports: [
-    ChannelMiniComponent,
     LoadingComponent,
     LoadingElementsComponent,
     VideosComponent

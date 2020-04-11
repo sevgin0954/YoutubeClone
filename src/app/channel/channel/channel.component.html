@@ -2,9 +2,22 @@
   <app-channel-image [images]="channel.brandingSettings.image"></app-channel-image>
 
   <div class="content-container">
-    <article class="mr-4 mt-4 mb-4">
-      <app-channel-mini [channel]="channel"></app-channel-mini>
-    </article>
+    <header class="header">
+      <app-channel-banner
+        [id]="channel.id"
+        [url]="channel.snippet.thumbnails.default.url">
+      </app-channel-banner>
+
+      <div class="ml-2 mr-auto">
+        <h1 class="channel-title">{{ channel.snippet.title }}</h1>
+
+        <app-channel-subscribers-info
+          [channelStatistics]="channel.statistics">
+        </app-channel-subscribers-info>
+      </div>
+
+      <app-channel-subscribe-button [channelId]="channel.id"></app-channel-subscribe-button>
+    </header>
 
     <article>
       <app-channel-sections [channelId]="channel.id"></app-channel-sections>

@@ -7,6 +7,7 @@ import { ChannelService } from 'src/app/services-singleton/channel.service';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
+import isRequired from 'src/app/decorators/isRequired';
 
 const MAX_RESULTS_PER_PAGE = 5;
 
@@ -21,8 +22,14 @@ export class MultipleChannelsSectionComponent implements OnInit {
     private channelService: ChannelService
   ) { }
 
-  @Input() channelSection: ChannelSection;
-  @Input() style: ChannelSectionStyle;
+  @isRequired
+  @Input()
+  channelSection: ChannelSection;
+
+  @isRequired
+  @Input()
+  style: ChannelSectionStyle;
+
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
     this.loadMoreVideos(onLoadedMoreCallback);
   channels: Channel[] = [];

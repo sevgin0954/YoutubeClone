@@ -16,6 +16,7 @@ a[disabled] {
 }
 a:hover {
   color: $dark-blue;
+  text-decoration: none;
 }
 
 body {
@@ -46,18 +47,68 @@ button:disabled {
   opacity: 0.5;
 }
 
-.channel-thumbnail {
-  height: $channel-thumbnail-height;
-  width: $channel-thumbnail-width;
-  border-radius: 50%;
-}
-
 .channel-title {
   color: $dark-blue;
 }
 .channel-title:hover {
   text-decoration: none;
 }
+
+h1 {
+  display: inline;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-size: inherit;
+  font-weight: normal;
+}
+h2 {
+  display: inline;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-size: inherit;
+  font-weight: normal;
+}
+h3 {
+  display: inline;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-size: inherit;
+  font-weight: normal;
+}
+h4 {
+  display: inline;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-size: inherit;
+  font-weight: normal;
+}
+h5 {
+  display: inline;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-size: inherit;
+  font-weight: normal;
+}
+h6 {
+  display: inline;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  font-size: inherit;
+  font-weight: normal;
+}
+
 
 .info-medium {
   font-size: 1.1rem;
@@ -108,4 +159,18 @@ input.input:focus {
 .video-title:hover {
   text-decoration: none;
   color: black;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  left: -10000px;
+}
+.visually-hidden:focus {
+  height: auto;
+  left: 20px;
+  outline: 2px dotted $dark-blue;
+  width: auto;
 }

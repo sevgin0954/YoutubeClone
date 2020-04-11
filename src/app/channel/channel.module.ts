@@ -9,6 +9,7 @@ import { ChannelSectionsComponent } from './channel-sections/channel-sections.co
 import { ChannelResolverService } from '../services-singleton/resolvers/channel-resolver.service';
 import { ChannelSectionService } from './services/channel-section.service';
 import { ChannelImageComponent } from './components/channel-image/channel-image.component';
+import { ChannelMiniModule } from '../channel-mini/channel-mini.module';
 
 const routes: Routes = [
   { path: ':id', component: ChannelComponent, resolve: { channel: ChannelResolverService } }
@@ -24,7 +25,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     SharedModule,
     PlaylistModule,
-    CommonModule
+    CommonModule,
+    ChannelMiniModule
   ],
   providers: [
     ChannelSectionService

@@ -1,8 +1,8 @@
 <div [id]="comment.id" class="d-flex">
-  <a class="channel-thumbnail" href="https://www.youtube.com/user/{{ getAuthorChannelId() }}"
-    [attr.disabled]="getAuthorChannelId() ? null : 'disabled'">
-    <img class="channel-thumbnail" src="{{ comment.snippet.authorProfileImageUrl }}">
-  </a>
+  <app-channel-banner
+    [id]="getAuthorChannelId()"
+    [url]="comment.snippet.authorProfileImageUrl">
+  </app-channel-banner>
 
   <div>
     <div>
