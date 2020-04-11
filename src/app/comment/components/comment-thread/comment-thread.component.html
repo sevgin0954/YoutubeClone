@@ -1,0 +1,10 @@
+<div class="video-comment-container">
+  <app-comment [comment]="thread.snippet.topLevelComment"></app-comment>
+</div>
+
+<div class="video-comment-container replies-container">
+  <app-comment-replies *ngIf="thread.snippet.totalReplyCount > 0"
+    [parentId]="thread.id"
+    [totalRepliesCount]="thread.snippet.totalReplyCount">
+  </app-comment-replies>
+</div>

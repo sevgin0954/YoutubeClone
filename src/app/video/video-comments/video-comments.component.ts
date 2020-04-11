@@ -8,6 +8,7 @@ import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { CommentThreadsService } from 'src/app/video/services/comment-threads.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { finalize } from 'rxjs/operators';
+import isRequired from 'src/app/decorators/isRequired';
 
 const MAX_RESULTS = 20;
 
@@ -18,16 +19,20 @@ const MAX_RESULTS = 20;
 })
 export class VideoCommentsComponent implements OnDestroy {
 
-  @Input() commentCount: number;
-  @Input() parentId: string;
+  @isRequired
+  @Input()
+  commentCount: number;
+
+  @isRequired
+  @Input()
+  parentId: string;
+
   areCommentsDisabled: boolean = false;
-  commentThreads: CommentThread[];
-  commentThreadOrder: typeof CommentThreadOrder = CommentThreadOrder;
+  commentThreads: CommentThread[] = [];
   isCurrentlyLoadingComments: boolean = false;
   isMoreComments: boolean = true;
   isOrderButtonDisabled: boolean = false;
   order: CommentThreadOrder = CommentThreadOrder.relevance;
-  orderKeys: string[];
   private isFirstPage: boolean = true;
   private nextPageToken: string;
   private videoSubscribtion: Subscription;
@@ -36,11 +41,7 @@ export class VideoCommentsComponent implements OnDestroy {
     public formatterService: FormatterService,
     private commentThreadsService: CommentThreadsService,
     public domSanitizer: DomSanitizer
-  ) {
-    this.commentThreads = [];
-    this.orderKeys = Object.keys(this.commentThreadOrder)
-      .filter(x => (parseInt(x) >= 0));
-  }
+  ) { }
 
   resetComments(): void {
     this.nextPageToken = undefined;

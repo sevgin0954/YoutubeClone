@@ -1,11 +1,11 @@
-<div class="loading-container" [attr.hidden]="shouldShowReplies ? null : 'hidden'"
+<div [attr.hidden]="shouldShowReplies ? null : 'hidden'"
   *ngFor="let comment of comments">
   <hr>
   <app-comment class="comment" [comment]="comment"></app-comment>
 </div>
 
-<div>
-  <app-loading class="loading-container" *ngIf="shouldShowLoading"></app-loading>
+<div class="loading-container" *ngIf="shouldShowLoading">
+  <app-loading></app-loading>
 </div>
 
 <div *ngIf="shouldShowMoreRepliesBtn && shouldShowReplies">

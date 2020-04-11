@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Comment } from 'src/app/models/comment/comment';
@@ -8,7 +8,8 @@ import isType from 'src/app/decorators/isType';
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.scss']
+  styleUrls: ['./comment.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CommentComponent {
 
