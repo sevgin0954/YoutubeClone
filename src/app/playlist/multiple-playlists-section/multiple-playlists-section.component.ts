@@ -2,8 +2,8 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
-import { VideoThumbnailSize } from 'src/app/shared/enums/video-thumbnail-size';
-import { PlaylistsService } from 'src/app/playlist/services/playlists.service';
+import { ThumbnailSize } from 'src/app/shared/enums/thumbnail-size';
+import { PlaylistService } from 'src/app/playlist/services/playlist.service';
 import { Subscription } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { MainConstants } from 'src/app/shared/Constants/main-constants';
@@ -31,14 +31,14 @@ export class MultiplePlaylistsSectionComponent implements OnInit, OnDestroy {
   loadMoreCallBack: Function = (onLoadedMoreCallback: Function) =>
     this.loadMorePlaylists(onLoadedMoreCallback);
   playlists: Playlist[] = [];
-  thumbnailSize: string = VideoThumbnailSize[VideoThumbnailSize.default];
+  thumbnailSize: string = ThumbnailSize[ThumbnailSize.default];
   totalResultsCount: number;
   private nextPageToken: string;
   private playlistsStartIndex: number = 0;
   private subscription: Subscription;
 
   constructor(
-    private playlistsService: PlaylistsService
+    private playlistsService: PlaylistService
   ) { }
 
   ngOnInit() {

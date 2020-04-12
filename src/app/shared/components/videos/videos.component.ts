@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/
 
 import { Video } from '../../../models/video/video';
 import isRequired from 'src/app/decorators/isRequired';
-import { VideoThumbnailSize } from '../../enums/video-thumbnail-size';
+import { ThumbnailSize } from '../../enums/thumbnail-size';
 import { Subscription } from 'rxjs';
 import { ExceptionConstants } from '../../Constants/exception-constants';
 import { VideoResource } from '../../enums/resource-properties/video-resource';
@@ -29,7 +29,7 @@ export class VideosComponent implements OnChanges, OnDestroy {
   @Input()
   filterArgument: any;
 
-  thumbnailSize: VideoThumbnailSize = VideoThumbnailSize.medium;
+  thumbnailSize: ThumbnailSize = ThumbnailSize.medium;
   videoDescriptionMaxDisplayedRows: number = VIDEO_DESCRIPTION_DISPLAYED_ROWS;
   videoTitleMaxDisplayedRows: number = VIDEO_TITLE_DISPLAYED_ROWS;
 

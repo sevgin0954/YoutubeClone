@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ThumbnailsService } from './thumbnails.service';
-import { VideoThumbnailSize } from '../shared/enums/video-thumbnail-size';
+import { ThumbnailSize } from '../shared/enums/thumbnail-size';
 import { VideoThumbnails } from '../models/thumbnail/video-thumbnails';
 import { Thumbnail } from '../models/thumbnail/thumbnail';
 import { ExceptionConstants } from '../shared/Constants/exception-constants';
@@ -63,7 +63,7 @@ describe('', () => {
 
     it('with minSize and thumnails with thumbnail with the same size should return the thumbnail', () => {
       // Arrange
-      const minSize = VideoThumbnailSize.medium;
+      const minSize = ThumbnailSize.medium;
       const mediumThumbnail: Thumbnail = createThumbnail();
       const thumbnails: VideoThumbnails = {
         default: undefined,
@@ -82,7 +82,7 @@ describe('', () => {
 
     it('with minSize and thumbnails without the same size should return the closest size thumbnail larger than minSize', () => {
       // Arrange
-      const minSize = VideoThumbnailSize.default;
+      const minSize = ThumbnailSize.default;
       const mediumThumbnail: Thumbnail = createThumbnail();
       const thumbnails: VideoThumbnails = {
         default: undefined,
@@ -101,7 +101,7 @@ describe('', () => {
 
     it('with minSize and thumbnails without the same size thumbnail or with larger should throw an exception', () => {
       // Arrange
-      const minSize = VideoThumbnailSize.standard;
+      const minSize = ThumbnailSize.standard;
       const mediumThumbnail: Thumbnail = createThumbnail();
       const thumbnails: VideoThumbnails = {
         default: undefined,
@@ -118,7 +118,7 @@ describe('', () => {
       expect(() => service.getThumbnailUrl(minSize, thumbnails)).toThrowError(exceptionRegex);
     });
 
-    function callMethodWithMinSize(minSize: VideoThumbnailSize): string {
+    function callMethodWithMinSize(minSize: ThumbnailSize): string {
       const thumnail: Thumbnail = {
         height: 1,
         url: '123.com',
@@ -137,7 +137,7 @@ describe('', () => {
     }
 
     function callMethodWithThumbnails(thumbnails: VideoThumbnails): string {
-      const minSize = VideoThumbnailSize.default;
+      const minSize = ThumbnailSize.default;
       const urlResult = service.getThumbnailUrl(minSize, thumbnails);
 
       return urlResult;

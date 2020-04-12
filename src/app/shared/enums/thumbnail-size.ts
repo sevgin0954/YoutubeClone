@@ -1,4 +1,4 @@
-export enum VideoThumbnailSize {
+export enum ThumbnailSize {
   default = 0,
   medium = 1,
   high = 2,

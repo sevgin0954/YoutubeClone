@@ -1,6 +1,9 @@
 <section class="playlists-container" *ngIf="videos.length > 0">
   <section>
-    <app-playlist-header [title]="channelSection.snippet.title"></app-playlist-header>
+    <app-single-playlist-section-header *ngIf="playlist && channel"
+      [imgUrl]="getThumbnailUrl()"
+      [title]="playlist.snippet.title">
+    </app-single-playlist-section-header>
 
     <app-playlist-buttons
       [playlistElements]="videos"

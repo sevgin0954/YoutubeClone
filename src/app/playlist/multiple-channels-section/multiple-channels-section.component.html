@@ -1,5 +1,9 @@
 <ng-container *ngIf="channels.length > 0">
-  <app-playlist-header [title]="channelSection.snippet.title"></app-playlist-header>
+  <header>
+    <h2 class="playlists-title">
+      {{ channelSection.snippet.title }}
+    </h2>
+  </header>
 
   <article class="playlist-element">
     <app-playlist-buttons

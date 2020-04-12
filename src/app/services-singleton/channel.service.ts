@@ -10,6 +10,7 @@ import { PageArguments } from '../shared/arguments/page-arguments';
 import { ChannelResource } from '../shared/enums/resource-properties/channel-resource';
 import { DataValidator } from '../shared/Validation/data-validator';
 import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
+import { pluck, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,23 +21,12 @@ export class ChannelService {
     private http: HttpClient
   ) { }
 
-  getSubscriptions(
-    pageArgs: PageArguments,
-    resources: ChannelResource[]
-  ): Observable<ServiceModel<Channel[]>> {
-
-    DataValidator.nullOrUndefinied(pageArgs, 'pageArgs');
-    this.validateResourceProperties(resources);
-
-    const queryParams: any = {
-      mine: 'true',
-      maxResults: pageArgs.maxResults
-    }
-    QueryParamsUtility.addResources(queryParams, resources, ChannelResource);
-    QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
-
-    const url = new Url(MainConstants.YOUTUBE_BASE_URL, ['subscriptions'], queryParams);
-    const data$ = this.http.get<ServiceModel<Channel[]>>(url.toString());
+  getById(id: string, resources: ChannelResource[]): Observable<Channel> {
+    const pageArgs = new PageArguments(1, undefined);
+    const data$ = this.getByIds([id], pageArgs, resources).pipe(
+      pluck('items'),
+      map(items => items[0])
+    );
 
     return data$;
   }
@@ -65,14 +55,29 @@ export class ChannelService {
     ids: string[],
     resourceProprties: ChannelResource[]
   ): void {
-    this.validateIdsArgument(ids);
+    DataValidator.validateCollection(ids, 'ids');
     this.validateResourceProperties(resourceProprties);
   }
 
-  private validateIdsArgument(ids: string[]): void {
-    const idsArgumentName = 'ids';
-    DataValidator.nullOrUndefinied(ids, idsArgumentName);
-    DataValidator.emptyCollection(ids, idsArgumentName);
+  getSubscriptions(
+    pageArgs: PageArguments,
+    resources: ChannelResource[]
+  ): Observable<ServiceModel<Channel[]>> {
+
+    DataValidator.nullOrUndefinied(pageArgs, 'pageArgs');
+    this.validateResourceProperties(resources);
+
+    const queryParams: any = {
+      mine: 'true',
+      maxResults: pageArgs.maxResults
+    }
+    QueryParamsUtility.addResources(queryParams, resources, ChannelResource);
+    QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
+
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, ['subscriptions'], queryParams);
+    const data$ = this.http.get<ServiceModel<Channel[]>>(url.toString());
+
+    return data$;
   }
 
   private validateResourceProperties(resourceProprties: ChannelResource[]): void {

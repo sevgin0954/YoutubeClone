@@ -2,20 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { PlaylistItem } from '../models/playlist/playlist-item';
-import { MainConstants } from '../shared/Constants/main-constants';
-import { Url } from '../shared/url';
-import { ServiceModel } from '../models/service-models/service-model';
-import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
-import { PageArguments } from '../shared/arguments/page-arguments';
-import { PlaylistItemResource } from '../shared/enums/resource-properties/playlist-item-resource';
-import { DataValidator } from '../shared/Validation/data-validator';
+import { PlaylistItem } from '../../models/playlist/playlist-item';
+import { MainConstants } from '../../shared/Constants/main-constants';
+import { Url } from '../../shared/url';
+import { ServiceModel } from '../../models/service-models/service-model';
+import { QueryParamsUtility } from '../../shared/utilities/query-params-utility';
+import { PageArguments } from '../../shared/arguments/page-arguments';
+import { PlaylistItemResource } from '../../shared/enums/resource-properties/playlist-item-resource';
+import { DataValidator } from '../../shared/Validation/data-validator';
 
 const PATH = 'playlistItems';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class PlaylistItemsService {
 
   constructor(
@@ -44,9 +42,7 @@ export class PlaylistItemsService {
     pageArgs: PageArguments,
     resources: PlaylistItemResource[]
   ): void {
-    DataValidator.emptyString(playlistId, 'playlistId');
-    DataValidator.nullOrUndefinied(playlistId, 'playlistId');
-
+    DataValidator.validateString(playlistId, 'playlistId');
     DataValidator.nullOrUndefinied(pageArgs, 'pageArgs');
     DataValidator.validateCollection(resources, 'resources');
   }

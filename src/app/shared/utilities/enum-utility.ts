@@ -1,6 +1,4 @@
-type EnumType = {
-  [num: number]: string;
-}
+import { EnumType } from 'src/app/types';
 
 export class EnumUtility {
   public static join(enums: any[], separator: string, enumKeys: EnumType): string {

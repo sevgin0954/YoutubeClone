@@ -1,4 +1,4 @@
-import { PlaylistsService } from './playlists.service';
+import { PlaylistService } from './playlist.service';
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 import { ServiceModel } from 'src/app/models/service-models/service-model';
 import { Playlist } from 'src/app/models/playlist/playlist';
@@ -10,14 +10,14 @@ import { MainConstants } from 'src/app/shared/Constants/main-constants';
 import { ServiceModelCreateUtilities } from 'src/tests-common/create-utilities/service-model-create-utilities';
 
 describe('', () => {
-  let service: PlaylistsService;
+  let service: PlaylistService;
   let httpService: any;
 
   beforeEach(() => {
     httpService = jasmine.createSpyObj('HttpClient', ['get']);
   });
   beforeEach(() => {
-    service = new PlaylistsService(httpService);
+    service = new PlaylistService(httpService);
   });
 
   describe('PlaylistsService', () => {

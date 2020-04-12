@@ -10,15 +10,26 @@ import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
 import { QueryParamsUtility } from 'src/app/shared/utilities/query-params-utility';
 import { DataValidator } from 'src/app/shared/Validation/data-validator';
+import { pluck, map } from 'rxjs/operators';
 
 const PATH: string = 'playlists';
 
 @Injectable()
-export class PlaylistsService {
+export class PlaylistService {
 
   constructor(
     private http: HttpClient
   ) { }
+
+  getById(id: string, resources: PlaylistResource[]): Observable<Playlist> {
+    const pageArgs = new PageArguments(1, undefined);
+    const data$ = this.getByIds([id], pageArgs, resources).pipe(
+      pluck('items'),
+      map(playlists => playlists[0])
+    );
+
+    return data$;
+  }
 
   getByIds(ids: string[], pageArgs: PageArguments, resources: PlaylistResource[])
     : Observable<ServiceModel<Playlist[]>> {

@@ -1,13 +1,9 @@
 import { ChannelResource } from './channel-resource';
-import { Thumbnail } from '../thumbnail/thumbnail';
+import { ChannelThumbnails } from './channel-thumbnails';
 
 export interface ChannelSnippet {
   title: string,
   description: string,
   resourceId: ChannelResource,
-  thumbnails: {
-    default: Thumbnail,
-    high: Thumbnail,
-    medium: Thumbnail
-  }
+  thumbnails: ChannelThumbnails
 }

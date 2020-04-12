@@ -5,3 +5,7 @@ import { Observable } from "rxjs";
 
 type loadVideosCallback = (filterArgument: any, pageArgs: PageArguments, resources: any[])
   => Observable<ServiceModel<Video[]>>;
+
+type EnumType = {
+  [num: number]: string;
+}
