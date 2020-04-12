@@ -12,12 +12,12 @@
   font-size: 1.3rem;
 }
 
-.header {
+.channel-container {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 1.5rem;
   margin-right: 1.5rem;
   margin-top: 1.5rem;
-
 }
 
 img {
