@@ -7,16 +7,16 @@
 
   <article class="playlist-element">
     <app-playlist-buttons
-  [playlistElements]="channels"
-  [loadMoreCallBack]="loadMoreCallBack"
-  [totalResultsCount]="totalResultsCount">
-  <ng-template #playlistElementTemplate let-channel>
-    <article class="playlist-element">
-      <app-channel-mini
-        [channel]="channel">
-      </app-channel-mini>
-    </article>
-  </ng-template>
-</app-playlist-buttons>
+      [playlistElements]="channels"
+      [loadMoreCallBack]="loadMoreCallBack"
+      [totalResultsCount]="totalResultsCount">
+      <ng-template #playlistElementTemplate let-channel>
+        <article class="playlist-element">
+          <app-channel-mini
+            [channel]="channel">
+          </app-channel-mini>
+        </article>
+      </ng-template>
+    </app-playlist-buttons>
   </article>
 </ng-container>

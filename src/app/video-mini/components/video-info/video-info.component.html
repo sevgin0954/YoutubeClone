@@ -1,9 +1,11 @@
 <header>
   <a class="video-title" routerLink="/video/{{ video.id }}">
-    <app-text-reveal
-      [text]="video.snippet.title"
-      [maxDisplayedRows]="titleMaxDisplayedRows">
-    </app-text-reveal>
+    <h1>
+      <app-text-reveal
+        [text]="video.snippet.title"
+        [maxDisplayedRows]="titleMaxDisplayedRows">
+      </app-text-reveal>
+    </h1>
   </a>
 </header>
 

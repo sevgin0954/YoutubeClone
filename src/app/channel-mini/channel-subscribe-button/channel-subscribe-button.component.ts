@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnDestroy } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, ChangeDetectorRef } from '@angular/core';
 
 import { Subscription as VideoSubscribtion } from 'src/app/models/subscribption/subscription';
 import { SubscriptionResource } from 'src/app/shared/enums/resource-properties/subscription-resource';
@@ -22,6 +22,7 @@ export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
   private rxjsSubscription: Subscription;
 
   constructor(
+    private changeDetectionRef: ChangeDetectorRef,
     private subscriptionsService: SubscriptionsService,
   ) { }
 
@@ -39,6 +40,8 @@ export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
         else {
           this.isSubscribed = false;
         }
+
+        this.changeDetectionRef.detectChanges();
     });
   }
 
@@ -49,6 +52,8 @@ export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
     this.subscriptionsService.subscribe(this.channelId, resources).subscribe(data => {
       this.isSubscribed = true;
       this.videoSubscription = data;
+
+      this.changeDetectionRef.detectChanges();
     });
   }
 
@@ -58,6 +63,8 @@ export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
         this.isSubscribed = false;
         this.videoSubscription = undefined;
       }
+
+      this.changeDetectionRef.detectChanges();
     });
   }
 
