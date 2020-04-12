@@ -10,7 +10,8 @@ import { NavbarSelectorService } from '../services/navbar-selector.service';
 })
 export class NavbarBottomComponent implements AfterViewChecked {
 
-  @ViewChild('buttonList') buttonList: ElementRef;
+  @ViewChild('buttonList')
+  buttonList: ElementRef;
 
   constructor(
     private navbarSelectorService: NavbarSelectorService,

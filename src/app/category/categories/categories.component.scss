@@ -17,7 +17,7 @@
   margin: 0.04rem;
   word-wrap: break-word;
 }
-.category-container:hover {
+.category-container:hover, .category-container:focus-within {
   outline: #28587B solid 1px;
   text-decoration: none;
 }

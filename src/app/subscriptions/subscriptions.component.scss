@@ -25,11 +25,14 @@ article.channel-container {
   display: grid;
   grid-auto-rows: auto;
   grid-template-columns: repeat(auto-fit, minmax(19.1rem, 1fr));
-  margin: $content-margin;
 }
 
 .loading-container {
   margin-bottom: $navbar-bottom-height;
+}
+
+main {
+  margin: $content-margin;
 }
 
 .thumbnail {

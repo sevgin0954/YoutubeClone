@@ -3,3 +3,14 @@
 :host(app-most-popular) {
   width: 100%;
 }
+
+main {
+  margin: $content-margin;
+}
+
+@media(max-width: $videos-mobile-max-width) {
+  main {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

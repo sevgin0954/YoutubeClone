@@ -5,8 +5,10 @@ import { ChannelService } from '../services-singleton/channel.service';
 import { Subscription } from 'rxjs';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { ChannelResource } from '../shared/enums/resource-properties/channel-resource';
+import { MainConstants } from '../shared/Constants/main-constants';
 
 const MAX_RESULTS_PER_PAGE = 30;
+const TITLE = 'Subscription';
 
 @Component({
   selector: 'app-subscriptions',
@@ -18,6 +20,8 @@ export class SubscriptionsComponent implements OnInit, OnDestroy {
   channels: Channel[] = [];
   isCurrentlyLoading: boolean = false;
   isMoreSubscriptions: boolean = true;
+  mainContentId = MainConstants.SKIP_TO_ELEMENT_ID;
+  title: string = TITLE;
   private isFirstPage: boolean = true;
   private nextPageToken: string;
   private channelsSubscribtion: Subscription;

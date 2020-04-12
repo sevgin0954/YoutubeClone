@@ -1,5 +1,5 @@
 <article>
-  <a class="no-style" routerLink="/category/{{ category.id }}">
+  <a class="no-style" [routerLink]="['/category', category.id ,category.snippet.title]">
     <div class="category-container">
       <p class="icon" [innerHTML]="icon"></p>
       <div class="text">

@@ -161,16 +161,21 @@ input.input:focus {
   color: black;
 }
 
-.visually-hidden {
+.offscreen {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  left: -10000px;
+  top: -1000px;
 }
-.visually-hidden:focus {
-  height: auto;
-  left: 20px;
-  outline: 2px dotted $dark-blue;
-  width: auto;
+.offscreen:focus {
+  position: static;
+  border: 1px dotted $dark-blue;
+  box-shadow: 0 0 0.2rem 0.1rem #28587B;
+  margin-right: 1rem;
+}
+
+.offscreen-title {
+  @extend .offscreen;
+
+  display: block;
+  margin-bottom: 1rem;
+  width: 100%;
 }

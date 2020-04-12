@@ -1,5 +1,10 @@
 <main class="categories-container">
-  <div class="category-container" *ngFor="let currentCategory of categories$ | async">
+  <h1 id="{{ mainContentId }}" tabIndex="-1" class="offscreen-title">
+    Categories
+  </h1>
+
+  <div class="category-container"
+    *ngFor="let currentCategory of (categories$ | async)">
     <app-category [category]="currentCategory"></app-category>
   </div>
 

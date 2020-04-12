@@ -16,9 +16,7 @@
 
 .video-container {
   display: flex;
-  margin-bottom: 1rem;
-  margin-top: $content-margin;
-  margin-left: $content-margin;
+  margin-bottom: 1.3rem;
 }
 
 .video-info {
@@ -26,7 +24,7 @@
   margin-right: 0.4rem;
 }
 
-@media(max-width: 500px) {
+@media(max-width: $videos-mobile-max-width) {
   :host ::ng-deep {
     .thumbnail {
       max-height: 200px;

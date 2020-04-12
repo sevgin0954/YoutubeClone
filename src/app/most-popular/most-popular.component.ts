@@ -4,6 +4,9 @@ import { VideoService } from '../services-singleton/video.service';
 import { RegionCode } from '../shared/enums/region-code';
 import { GeolocationService } from '../services-singleton/geolocation.service';
 import { loadVideosCallback } from '../types';
+import { MainConstants } from '../shared/Constants/main-constants';
+
+const TITLE = 'Trending videos';
 
 @Component({
   selector: 'app-most-popular',
@@ -14,7 +17,9 @@ export class MostPopularComponent {
 
   loadVideosCallback: loadVideosCallback = this.videoService.getMostPopular;
   isCurrentlyLoading: boolean = true;
+  mainContentId = MainConstants.SKIP_TO_ELEMENT_ID;
   regionCode: RegionCode;
+  title: string = TITLE;
 
   constructor(
     private geolacationService: GeolocationService,

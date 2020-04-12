@@ -1,5 +1,7 @@
-<div>
-  <a routerLink="/video/{{ video.id }}">
-    <img class="thumbnail" src="{{ getThumbnailUrl(video.snippet.thumbnails) }}" alt="{{ video.snippet.title }}">
-  </a>
-</div>
+<a routerLink="/video/{{ video.id }}" tabindex="-1">
+  <img
+    class="thumbnail"
+    role="presentation"
+    src="{{ getThumbnailUrl(video.snippet.thumbnails) }}"
+    alt="">
+</a>

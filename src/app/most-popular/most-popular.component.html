@@ -1,5 +1,7 @@
 <ng-container *ngIf="isCurrentlyLoading === false">
   <main>
+    <app-offset-header [text]="title"></app-offset-header>
+
     <app-videos
       [loadVideosCallback]="loadVideosCallback"
       [filterArgument]="regionCode">

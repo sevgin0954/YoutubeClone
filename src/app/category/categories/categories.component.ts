@@ -6,6 +6,7 @@ import { GeolocationService } from 'src/app/services-singleton/geolocation.servi
 import { finalize, map } from 'rxjs/operators';
 import { VideoCategoryResource } from 'src/app/shared/enums/resource-properties/video-category-resource';
 import { Observable } from 'rxjs';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
 
 @Component({
   selector: 'app-categories',
@@ -16,6 +17,7 @@ export class CategoriesComponent implements OnInit {
 
   categories$: Observable<VideoCategory[]>;
   isLoading: boolean = true;
+  mainContentId = MainConstants.SKIP_TO_ELEMENT_ID;
 
   constructor(
     private categoriesService: CategoriesService,

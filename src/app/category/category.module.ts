@@ -9,7 +9,7 @@ import { CategoryComponent } from './category/category.component';
 import { CategoryVideosComponent } from './category-videos/category-videos.component';
 
 const routes: Routes = [
-  { path: ':id', component: CategoryVideosComponent },
+  { path: ':id/:name', component: CategoryVideosComponent },
   { path: '', pathMatch: 'full', component: CategoriesComponent },
 ];
 

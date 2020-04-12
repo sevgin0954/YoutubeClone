@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { VideoService } from 'src/app/services-singleton/video.service';
-import { pluck } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { loadVideosCallback } from 'src/app/types';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
 
 @Component({
   selector: 'app-category-video',
@@ -13,7 +12,9 @@ import { loadVideosCallback } from 'src/app/types';
 })
 export class CategoryVideosComponent implements OnInit {
 
-  categoryId$: Observable<string>;
+  categoryId: string;
+  mainContentId = MainConstants.SKIP_TO_ELEMENT_ID;
+  title: string;
   loadVideosCallback: loadVideosCallback = this.videoService.getByCategoryId;
 
   constructor(
@@ -22,9 +23,9 @@ export class CategoryVideosComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.categoryId$ = this.route.params
-      .pipe(
-        pluck('id')
-      );
+    this.categoryId = this.route.snapshot.params['id'];
+    const categoryName = this.route.snapshot.params['name'];
+
+    this.title = `Videos in ${categoryName} category`;
   }
 }

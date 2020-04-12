@@ -7,12 +7,14 @@ import { LoadingElementsComponent } from './components/loading-elements/loading-
 import { VideosComponent } from './components/videos/videos.component';
 import { VideoMiniModule } from '../video-mini/video-mini.module';
 import { TextModule } from '../text/text.module';
+import { OffsetHeaderComponent } from './components/offset-header/offset-header.component';
 
 @NgModule({
   declarations: [
     LoadingComponent,
     LoadingElementsComponent,
-    VideosComponent
+    VideosComponent,
+    OffsetHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { TextModule } from '../text/text.module';
   exports: [
     LoadingComponent,
     LoadingElementsComponent,
-    VideosComponent
+    VideosComponent,
+    OffsetHeaderComponent
   ]
 })
 export class SharedModule { }
