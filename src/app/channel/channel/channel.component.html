@@ -7,7 +7,9 @@
       </app-channel-banner>
 
       <div class="ml-2 mb-2 mr-auto">
-        <h1 class="channel-title">{{ channel.snippet.title }}</h1>
+        <h1 id="{{ mainElementId }}" tabindex="-1" class="channel-title">
+          {{ channel.snippet.title }}
+        </h1>
 
         <app-channel-subscribers-info [channelStatistics]="channel.statistics">
         </app-channel-subscribers-info>

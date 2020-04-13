@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Channel } from 'src/app/models/channel/channel';
 import { Subscription } from 'rxjs';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
 
 @Component({
   selector: 'app-channel',
@@ -12,6 +13,7 @@ import { Subscription } from 'rxjs';
 export class ChannelComponent implements OnInit, OnDestroy {
 
   channel: Channel;
+  mainElementId = MainConstants.SKIP_TO_ELEMENT_ID;
   private subscription: Subscription;
 
   constructor(

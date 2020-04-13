@@ -1,4 +1,10 @@
 @import './../styles.scss';
+@import './../../../variables.scss';
+
+button:focus {
+  border: 2px dotted white;
+  outline: none;
+}
 
 :host ::ng-deep {
   .loading {
