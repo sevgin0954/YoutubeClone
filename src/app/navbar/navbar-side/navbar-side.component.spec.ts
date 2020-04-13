@@ -18,7 +18,8 @@ describe('', () => {
     Object.defineProperty(routerService, 'url', {
       get() {
         return '';
-      }
+      },
+      configurable: true
     });
     routerServiceUrlProperty = spyOnProperty(routerService, 'url');
   });

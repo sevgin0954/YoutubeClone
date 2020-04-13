@@ -8,13 +8,15 @@ import { VideosComponent } from './components/videos/videos.component';
 import { VideoMiniModule } from '../video-mini/video-mini.module';
 import { TextModule } from '../text/text.module';
 import { OffsetHeaderComponent } from './components/offset-header/offset-header.component';
+import { AriaPressedDirective } from './directives/aria-pressed.directive';
 
 @NgModule({
   declarations: [
     LoadingComponent,
     LoadingElementsComponent,
     VideosComponent,
-    OffsetHeaderComponent
+    OffsetHeaderComponent,
+    AriaPressedDirective
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { OffsetHeaderComponent } from './components/offset-header/offset-header.
     LoadingComponent,
     LoadingElementsComponent,
     VideosComponent,
-    OffsetHeaderComponent
+    OffsetHeaderComponent,
+    AriaPressedDirective
   ]
 })
 export class SharedModule { }

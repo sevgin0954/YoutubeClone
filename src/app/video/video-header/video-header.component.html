@@ -12,12 +12,16 @@
 
   <div class="video-buttons-container">
     <button #likeBtn class="thumb-button" (click)="onThumbClick(RatingType.like)"
-    [attr.aria-label]="getAriaLabel('like', video.statistics.likeCount)">
+      [attr.aria-label]="getAriaLabel('like', video.statistics.likeCount)"
+      [appAriaPressed]="isLikeButtonPressed"
+      [class.thumb-active-button]="isLikeButtonPressed">
       <i class="fas fa-thumbs-up"></i>
       {{ formatterService.getFormattedNumberString(video.statistics.likeCount) }}
     </button>
     <button #dislikeBtn class="thumb-button" (click)="onThumbClick(RatingType.dislike)"
-      [attr.aria-label]="getAriaLabel('dislike', video.statistics.dislikeCount)">
+      [attr.aria-label]="getAriaLabel('dislike', video.statistics.dislikeCount)"
+      [appAriaPressed]="isDislikeButtonPressed"
+      [class.thumb-active-button]="isDislikeButtonPressed">
       <i class="fas fa-thumbs-down"></i>
       {{ formatterService.getFormattedNumberString(video.statistics.dislikeCount) }}
     </button>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+// TODO: Move the logic back to component
 @Injectable()
 export class YoutubeIframeService {
 

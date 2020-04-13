@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, Input, ViewChild, ElementRef, OnChanges } from '@angular/core';
 
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Video } from 'src/app/models/video/video';
@@ -12,7 +12,7 @@ import isRequired from 'src/app/decorators/isRequired';
   templateUrl: './video-header.component.html',
   styleUrls: ['./video-header.component.scss']
 })
-export class VideoHeaderComponent implements AfterViewInit {
+export class VideoHeaderComponent implements OnChanges {
 
   @isRequired
   @Input()
@@ -24,16 +24,18 @@ export class VideoHeaderComponent implements AfterViewInit {
   @ViewChild('dislikeBtn')
   dislikeButton: ElementRef;
 
+  isLikeButtonPressed: boolean = false;
+  isDislikeButtonPressed: boolean = false;
   currentRating: RatingType;
-  RatingType = RatingType;
   mainElementId = MainConstants.SKIP_TO_ELEMENT_ID;
+  RatingType = RatingType;
 
   constructor(
     public formatterService: FormatterService,
     private videoRatingService: VideoRatingService
   ) { }
 
-  ngAfterViewInit(): void {
+  ngOnChanges(): void {
     this.initRating();
   }
 
@@ -41,10 +43,10 @@ export class VideoHeaderComponent implements AfterViewInit {
     this.videoRatingService.getRating(this.video.id).subscribe(data => {
       this.currentRating = data;
       if (this.currentRating === RatingType.like) {
-        this.likeButton.nativeElement.classList.add('thumb-active-button');
+        this.isLikeButtonPressed = true;
       }
       else if (this.currentRating === RatingType.dislike) {
-        this.dislikeButton.nativeElement.classList.add('thumb-active-button');
+        this.isDislikeButtonPressed = true;
       }
     });
   }
@@ -76,18 +78,20 @@ export class VideoHeaderComponent implements AfterViewInit {
     this.videoRatingService.rate(this.video.id, newRating).subscribe(data => {
       const responseCode = data;
       if (responseCode === 204) {
-        this.likeButton.nativeElement.classList.remove('thumb-active-button');
-        this.dislikeButton.nativeElement.classList.remove('thumb-active-button');
+        this.isLikeButtonPressed = false;
+        this.isDislikeButtonPressed = false;
 
         if (newRating === RatingType.like) {
-          this.likeButton.nativeElement.classList.add('thumb-active-button');
+          this.isLikeButtonPressed = true;
+
           this.video.statistics.likeCount++;
           if (this.currentRating === RatingType.dislike) {
             this.video.statistics.dislikeCount--;
           }
         }
         else if (newRating === RatingType.dislike) {
-          this.dislikeButton.nativeElement.classList.add('thumb-active-button');
+          this.isDislikeButtonPressed = true;
+
           this.video.statistics.dislikeCount++;
           if (this.currentRating === RatingType.like) {
             this.video.statistics.likeCount--;

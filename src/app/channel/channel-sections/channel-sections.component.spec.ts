@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChannelSectionsComponent } from './channel-sections.component';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
@@ -9,6 +9,7 @@ import { ChannelSectionCreateUtilities } from 'src/tests-common/create-utilities
 import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 import { ChannelSectionType } from 'src/app/shared/enums/channel-section-type';
+import { ChannelCreateUtilities } from 'src/tests-common/create-utilities/channel-create-utilities';
 
 describe('', () => {
   let component: ChannelSectionsComponent;
@@ -18,15 +19,15 @@ describe('', () => {
   beforeEach(() => {
     channelSectionService = jasmine.createSpyObj('ChannelSectionService', ['getByChannelId']);
   });
-  beforeEach(async(() => {
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         ChannelSectionsComponent
       ],
       providers: [{ provide: ChannelSectionService, useValue: channelSectionService }],
       schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents();
-  }));
+    });
+  });
   beforeEach(() => {
     fixture = TestBed.createComponent(ChannelSectionsComponent);
     component = fixture.componentInstance;
@@ -70,18 +71,6 @@ describe('', () => {
 
       // Assert
       expect(() => fixture.detectChanges()).toThrowError(exceptionRegex);
-    });
-
-    it('with not string channelId type should throw an exception', () => {
-      // Arrange
-      const channelId: any = 123;
-      const exceptionRegex = new RegExp(ExceptionConstants.INCORRECT_TYPE);
-
-      // Act
-      component.channelId = channelId;
-
-      // Assert
-      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
     });
 
     it('should call channelSectionService\'s getByChannelId method with channelId after initialization', () => {
@@ -141,9 +130,9 @@ describe('', () => {
 
   describe('ChannelSectionsComponent\'s template', () => {
 
-    const MULTPLE_CHANNELS_PLAYIST_TEMPLATE = 'multiple-channels-playlist';
-    const MULTPLE_PLAYLISTS_TEMPLATE = 'app-multiple-playlists';
-    const SINGLE_PLAYLIST_TEMPLATE = 'app-single-playlist';
+    const MULTPLE_CHANNELS_PLAYIST_TEMPLATE = 'app-multiple-channels-section';
+    const MULTPLE_PLAYLISTS_TEMPLATE = 'app-multiple-playlists-section';
+    const SINGLE_PLAYLIST_TEMPLATE = 'app-single-playlist-section';
 
     beforeEach(() => {
       component.channelId = '123';
@@ -151,7 +140,8 @@ describe('', () => {
 
     it('with multipleChannels channelSection should call MulitpleChannelsPlaylist component', () => {
       // Arrange
-      const channelSection = createChannelSectionWithType(ChannelSectionType.multipleChannels);
+      const channelSection =
+        createChannelSectionWithType(ChannelSectionType.multipleChannels);
 
       const data$ = of([channelSection]);
       channelSectionService.getByChannelId.and.returnValue(data$);
@@ -196,11 +186,16 @@ describe('', () => {
   });
 
   function createChannelSections(channelId: string): ChannelSection[] {
+    const channelSectionContentDetail = ChannelCreateUtilities
+      .createContentDetails(['123'], ['123']);
+
     const channelSectionSnippet1 = ChannelSectionCreateUtilities.createSnippet(channelId, 0);
-    const channelSection1 = ChannelSectionCreateUtilities.create(channelSectionSnippet1, '123');
+    const channelSection1 = ChannelSectionCreateUtilities
+      .create(channelSectionSnippet1, '123', channelSectionContentDetail);
 
     const channelSectionSnippet2 = ChannelSectionCreateUtilities.createSnippet(channelId, 1);
-    const channelSection2 = ChannelSectionCreateUtilities.create(channelSectionSnippet2, '456');
+    const channelSection2 = ChannelSectionCreateUtilities
+      .create(channelSectionSnippet2, '456', channelSectionContentDetail);
 
     const channelSections: ChannelSection[] = [channelSection2, channelSection1];
 
@@ -208,10 +203,13 @@ describe('', () => {
   }
 
   function createChannelSectionWithType(type: ChannelSectionType): ChannelSection {
+    const channelSectionContentDetail = ChannelCreateUtilities
+      .createContentDetails(['123'], ['123']);
+
     const channelSectionSnippet = ChannelSectionCreateUtilities
       .createSnippet('123', 0, type);
     const channelSection = ChannelSectionCreateUtilities
-      .create(channelSectionSnippet);
+      .create(channelSectionSnippet, undefined, channelSectionContentDetail);
 
     return channelSection;
   }

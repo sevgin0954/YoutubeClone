@@ -1,11 +1,16 @@
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { ChannelSectionSnippet } from 'src/app/models/channel-section/channel-section-snippet';
 import { ChannelSectionType } from 'src/app/shared/enums/channel-section-type';
+import { ChannelContentDetails } from 'src/app/models/channel-section/channel-content-details';
 
 export class ChannelSectionCreateUtilities {
-  public static create(snippet?: ChannelSectionSnippet, id?: string): ChannelSection {
-    const channelSection = {
-      contentDetails: undefined,
+  public static create(
+    snippet?: ChannelSectionSnippet,
+    id?: string,
+    contentDetails?: ChannelContentDetails
+    ): ChannelSection {
+    const channelSection: ChannelSection = {
+      contentDetails: contentDetails,
       id: id,
       snippet: snippet
     };

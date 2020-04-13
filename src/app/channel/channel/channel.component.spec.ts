@@ -6,10 +6,27 @@ import { ChannelComponent } from './channel.component';
 import { Channel } from 'src/app/models/channel/channel';
 import { Observable, of } from 'rxjs';
 import { ChannelCreateUtilities } from 'src/tests-common/create-utilities/channel-create-utilities';
+import { ChannelThumbnails } from 'src/app/models/channel/channel-thumbnails';
+import { Thumbnail } from 'src/app/models/thumbnail/thumbnail';
 
 describe('', () => {
   const channelBrandingSettings = ChannelCreateUtilities.createBrandingSettings();
-  const channel: Channel = ChannelCreateUtilities.create(channelBrandingSettings);
+
+  const thumbnail: Thumbnail = {
+    height: 1,
+    url: '',
+    width: 1
+  };
+  const channelThumbnails: ChannelThumbnails = {
+    default: thumbnail,
+    high: thumbnail,
+    medium: thumbnail
+  };
+
+  const channelSnippet = ChannelCreateUtilities.createSnippet(undefined, channelThumbnails);
+
+  const channel: Channel = ChannelCreateUtilities
+    .create(channelBrandingSettings, channelSnippet);
   const routerData: Observable<Data> = of({
     channel: channel
   });
@@ -55,20 +72,4 @@ describe('', () => {
       expect(component.channel).toEqual(channel);
     });
   });
-
-  describe('ChannelComponent\'s template', () => {
-
-    it('should contain picture tag', () => {
-      // Arrange
-      const expectedTag = 'picture';
-      const nativeElement: HTMLElement = fixture.nativeElement;
-
-      // Act
-      fixture.detectChanges();
-
-      // Assert
-      expect(nativeElement.getElementsByTagName(expectedTag).length).toBeGreaterThanOrEqual(1);
-    });
-  });
-
 })

@@ -69,37 +69,9 @@ describe('', () => {
       expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
     });
 
-    it('with not number type for totalRepliesCount should throw an exception', () => {
-      // Arrange
-      const totalRepliesCount = 'a';
-      setupComponentWithTotalRepliesCount(totalRepliesCount);
-      const exceptionRegex = new RegExp(ExceptionConstants.INCORRECT_TYPE);
-
-      // Act
-
-      // Assert
-
-      // @ts-ignore
-      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
-    });
-
     it('without parentId should throw an exception', () => {
       // Arrange
       const exceptionRegex = new RegExp(ExceptionConstants.REQUIRED_INPUT);
-
-      // Act
-
-      // Assert
-
-      // @ts-ignore
-      expect(() => component.ngOnChanges()).toThrowError(exceptionRegex);
-    });
-
-    it('with not string type for parentId should throw an exception', () => {
-      // Arrange
-      const parentId = 3;
-      setupComponentWithParentId(parentId);
-      const exceptionRegex = new RegExp(ExceptionConstants.INCORRECT_TYPE);
 
       // Act
 
