@@ -1,8 +1,8 @@
-<div class="d-flex">
+<header class="d-flex">
   <div>
-    <header class="video-title">
+    <h1 id="{{ mainElementId }}" class="video-title" tabindex="0">
       {{ video.snippet.title }}
-    </header>
+    </h1>
 
     <div class="info-medium">
       {{ formatterService.getFormattedNumberString(video.statistics.viewCount) }} Views -
@@ -11,13 +11,15 @@
   </div>
 
   <div class="video-buttons-container">
-    <button class="thumb-button" #likeBtn (click)="onThumbClick(RatingType.like)">
+    <button #likeBtn class="thumb-button" (click)="onThumbClick(RatingType.like)"
+    [attr.aria-label]="getAriaLabel('like', video.statistics.likeCount)">
       <i class="fas fa-thumbs-up"></i>
       {{ formatterService.getFormattedNumberString(video.statistics.likeCount) }}
     </button>
-    <button class="thumb-button" #dislikeBtn (click)="onThumbClick(RatingType.dislike)">
+    <button #dislikeBtn class="thumb-button" (click)="onThumbClick(RatingType.dislike)"
+      [attr.aria-label]="getAriaLabel('dislike', video.statistics.dislikeCount)">
       <i class="fas fa-thumbs-down"></i>
       {{ formatterService.getFormattedNumberString(video.statistics.dislikeCount) }}
     </button>
   </div>
-</div>
+</header>

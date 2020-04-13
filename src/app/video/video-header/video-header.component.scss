@@ -1,13 +1,15 @@
 @import './../../../variables.scss';
 
 .thumb-button {
-  font-size: 1.2rem;
-  color: grey;
-  border: none;
   background-color: inherit;
+  border: none;
+  color: grey;
+  font-size: 1.2rem;
   white-space: nowrap;
 }
 .thumb-button:focus {
+  border: 1px dotted $dark-blue;
+  border-radius: 0.25rem;
   outline: none;
 }
 

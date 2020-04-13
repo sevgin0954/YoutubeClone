@@ -16,10 +16,12 @@ import { ChannelResource } from 'src/app/shared/enums/resource-properties/channe
 })
 export class VideoComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('playerContainer') playerContainer: ElementRef;
+  @ViewChild('playerContainer')
+  playerContainer: ElementRef;
+
   channel: Channel;
-  video: Video;
   maxDisplayedCharacters: number = 120;
+  video: Video;
   private resizeSubscription: any;
   private subscribtion: RxjsSubscribtion;
 

@@ -4,6 +4,8 @@ import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Video } from 'src/app/models/video/video';
 import { VideoRatingService } from '../services/video-rating.service';
 import { RatingType } from 'src/app/shared/enums/rating-type';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import isRequired from 'src/app/decorators/isRequired';
 
 @Component({
   selector: 'app-video-header',
@@ -12,11 +14,19 @@ import { RatingType } from 'src/app/shared/enums/rating-type';
 })
 export class VideoHeaderComponent implements AfterViewInit {
 
-  @Input() video: Video;
-  @ViewChild('likeBtn') likeButton: ElementRef;
-  @ViewChild('dislikeBtn') dislikeButton: ElementRef;
+  @isRequired
+  @Input()
+  video: Video;
+
+  @ViewChild('likeBtn')
+  likeButton: ElementRef;
+
+  @ViewChild('dislikeBtn')
+  dislikeButton: ElementRef;
+
   currentRating: RatingType;
   RatingType = RatingType;
+  mainElementId = MainConstants.SKIP_TO_ELEMENT_ID;
 
   constructor(
     public formatterService: FormatterService,
@@ -37,6 +47,17 @@ export class VideoHeaderComponent implements AfterViewInit {
         this.dislikeButton.nativeElement.classList.add('thumb-active-button');
       }
     });
+  }
+
+  getAriaLabel(buttonType: 'like' | 'dislike', ratingCount: number): string {
+    let label = `${buttonType} this video`;
+
+    const isRatingAvailible = ratingCount != null
+    if (isRatingAvailible) {
+      label += ` along with ${ratingCount} people`;
+    }
+
+    return label;
   }
 
   onThumbClick(clickedRating: RatingType): void {
