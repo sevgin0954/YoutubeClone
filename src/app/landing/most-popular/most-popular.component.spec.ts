@@ -2,13 +2,13 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MostPopularComponent } from './most-popular.component';
-import { GeolocationService } from '../services-singleton/geolocation.service';
-import { WindowService } from '../services-singleton/window.service';
-import { VideoService } from '../services-singleton/video.service';
-import { RegionCode } from '../shared/enums/region-code';
+import { GeolocationService } from '../../services-singleton/geolocation.service';
+import { WindowService } from '../../services-singleton/window.service';
+import { VideoService } from '../../services-singleton/video.service';
+import { RegionCode } from '../../shared/enums/region-code';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 import { of } from 'rxjs';
-import { Video } from '../models/video/video';
+import { Video } from '../../models/video/video';
 import { ServiceModelCreateUtilities } from 'src/tests-common/create-utilities/service-model-create-utilities';
 import { VideoCreateUtilities } from 'src/tests-common/create-utilities/video-create-utilities';
 

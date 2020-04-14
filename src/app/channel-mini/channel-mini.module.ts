@@ -7,8 +7,6 @@ import { ChannelBannerComponent } from './components/channel-banner/channel-bann
 import { ChannelSubscribersInfoComponent } from './components/channel-subscribers-info/channel-subscribers-info.component';
 import { ChannelSubscribeButtonComponent } from './channel-subscribe-button/channel-subscribe-button.component';
 
-
-
 @NgModule({
   declarations: [
     ChannelMiniComponent,

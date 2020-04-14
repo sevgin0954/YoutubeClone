@@ -1,21 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Channel } from '../models/channel/channel';
-import { ChannelService } from '../services-singleton/channel.service';
 import { Subscription } from 'rxjs';
-import { PageArguments } from '../shared/arguments/page-arguments';
-import { ChannelResource } from '../shared/enums/resource-properties/channel-resource';
-import { MainConstants } from '../shared/Constants/main-constants';
+import { Channel } from 'src/app/models/channel/channel';
+import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { ChannelService } from 'src/app/services-singleton/channel.service';
+import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
 
 const MAX_RESULTS_PER_PAGE = 30;
 const TITLE = 'Subscription';
 
 @Component({
-  selector: 'app-subscriptions',
-  templateUrl: './subscriptions.component.html',
-  styleUrls: ['./subscriptions.component.scss']
+  selector: 'app-channels',
+  templateUrl: './channels.component.html',
+  styleUrls: ['./channels.component.scss']
 })
-export class SubscriptionsComponent implements OnInit, OnDestroy {
+export class ChannelsComponent implements OnInit, OnDestroy {
 
   channels: Channel[] = [];
   isCurrentlyLoading: boolean = false;
