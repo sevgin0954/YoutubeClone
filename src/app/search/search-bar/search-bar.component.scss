@@ -1,0 +1,15 @@
+@import './../../../variables.scss';
+
+form {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.input-search {
+  flex-basis: 1000px;
+}
+
+.search-button:hover, .search-button:focus  {
+  border: 0.1rem $dark-blue;
+  box-shadow: 0 0 0.2rem 0.1rem $dark-blue;
+}

@@ -1,9 +1,9 @@
 import { SubscriptionsService } from "./subscriptions.service";
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { ExceptionConstants } from '../shared/constants/exception-constants';
 import { Observable, of } from 'rxjs';
 import { Subscription } from '../models/subscribption/subscription';
 import { SubscriptionResource } from '../shared/enums/resource-properties/subscription-resource';
-import { MainConstants } from '../shared/Constants/main-constants';
+import { MainConstants } from '../shared/constants/main-constants';
 import { ServiceModel } from '../models/service-models/service-model';
 import { SubscriptionSnippetResourceId } from '../models/subscribption/subscription-snippet-resourceId';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';

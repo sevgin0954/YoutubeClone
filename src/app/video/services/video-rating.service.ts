@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RatingType } from 'src/app/shared/enums/rating-type';
 import { Url } from 'src/app/shared/url';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 import { HttpClient } from '@angular/common/http';
 import { pluck, map } from 'rxjs/operators';
 import { Config } from 'protractor';
-import { DataValidator } from 'src/app/shared/Validation/data-validator';
+import { DataValidator } from 'src/app/shared/validation/data-validator';
 
 const BASE_URL = MainConstants.YOUTUBE_BASE_URL + '/videos'
 

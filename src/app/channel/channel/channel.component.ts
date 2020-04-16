@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Channel } from 'src/app/models/channel/channel';
 import { Subscription } from 'rxjs';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 
 @Component({
   selector: 'app-channel',

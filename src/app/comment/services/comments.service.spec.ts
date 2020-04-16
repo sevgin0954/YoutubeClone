@@ -4,9 +4,9 @@ import { Observable, of } from 'rxjs';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { CommentResource } from 'src/app/shared/enums/resource-properties/comment-resource';
 import { Comment } from 'src/app/models/comment/comment';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 
 describe('', () => {
   let httpClient: any;

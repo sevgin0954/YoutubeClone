@@ -1,11 +1,5 @@
 @import "./../../../../variables.scss";
 
-:host ::ng-deep {
-  .thumbnail {
-    width: 246px;
-  }
-}
-
 .loading-container {
   margin-bottom: $navbar-bottom-height;
 }
@@ -17,27 +11,4 @@
 .video-container {
   display: flex;
   margin-bottom: 1.3rem;
-}
-
-.video-info {
-  margin-left: 0.4rem;
-  margin-right: 0.4rem;
-}
-
-@media(max-width: $videos-mobile-max-width) {
-  :host ::ng-deep {
-    .thumbnail {
-      max-height: 200px;
-      width: 100%;
-    }
-  }
-
-  .video-description {
-    display: none;
-  }
-
-  .video-container {
-    flex-direction: column;
-    margin-left: 0;
-  }
 }

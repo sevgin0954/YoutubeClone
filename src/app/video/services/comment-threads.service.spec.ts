@@ -4,8 +4,8 @@ import { PageArguments } from '../../shared/arguments/page-arguments';
 import { CommentThread } from '../../models/comment/comment-thread';
 import { ServiceModel } from '../../models/service-models/service-model';
 import { Observable, of } from 'rxjs';
-import { MainConstants } from '../../shared/Constants/main-constants';
-import { ExceptionConstants } from '../../shared/Constants/exception-constants';
+import { MainConstants } from '../../shared/constants/main-constants';
+import { ExceptionConstants } from '../../shared/constants/exception-constants';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 
 describe('', () => {

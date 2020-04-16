@@ -1,4 +1,4 @@
-import { ExceptionConstants } from '../Constants/exception-constants';
+import { ExceptionConstants } from '../constants/exception-constants';
 
 export class ElementValidator {
   public static hasAttribute(element: Element, attribute: string): void {

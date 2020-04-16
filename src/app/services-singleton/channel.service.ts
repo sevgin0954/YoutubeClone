@@ -5,10 +5,10 @@ import { Channel } from 'src/app/models/channel/channel';
 import { ServiceModel } from 'src/app/models/service-models/service-model';
 import { Url } from 'src/app/shared/url';
 import { Observable } from 'rxjs';
-import { MainConstants } from '../shared/Constants/main-constants';
+import { MainConstants } from '../shared/constants/main-constants';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { ChannelResource } from '../shared/enums/resource-properties/channel-resource';
-import { DataValidator } from '../shared/Validation/data-validator';
+import { DataValidator } from '../shared/validation/data-validator';
 import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
 import { pluck, map } from 'rxjs/operators';
 

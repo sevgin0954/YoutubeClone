@@ -1,5 +1,5 @@
 import { ElementUtilities } from 'src/tests-common/utilities/element-utilities';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 import { SetupStubs } from 'src/tests-common/utilities/setup-stubs-utilities';
 import { PlaylistElementService } from './playlist-element.service';
 

@@ -5,7 +5,7 @@ import { PlaylistItemsService } from 'src/app/playlist/services/playlist-items.s
 import { VideoService } from 'src/app/services-singleton/video.service';
 import { concatMap } from 'rxjs/operators';
 import { Video } from 'src/app/models/video/video';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistItemResource } from 'src/app/shared/enums/resource-properties/playlist-item-resource';
 import { VideoResource } from 'src/app/shared/enums/resource-properties/video-resource';

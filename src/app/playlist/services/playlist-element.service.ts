@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { ElementsPredicateService } from 'src/app/services-singleton/elements-predicate.service';
-import { DataValidator } from 'src/app/shared/Validation/data-validator';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { DataValidator } from 'src/app/shared/validation/data-validator';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 import { ElementValidator } from 'src/app/shared/validation/element-validator';
 import { WindowService } from 'src/app/services-singleton/window.service';
 import { ElementDisplayService } from 'src/app/services-singleton/element-display.service';

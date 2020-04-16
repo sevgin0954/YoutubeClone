@@ -6,8 +6,8 @@ import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { CommentResource } from 'src/app/shared/enums/resource-properties/comment-resource';
 import isRequired from 'src/app/decorators/isRequired';
 import isInRange from 'src/app/decorators/isInRange';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
-import { DataValidator } from 'src/app/shared/Validation/data-validator';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
+import { DataValidator } from 'src/app/shared/validation/data-validator';
 
 const MAX_RESULTS = 20;
 

@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 
 import { ServiceModel } from '../../models/service-models/service-model';
 import { Playlist } from '../../models/playlist/playlist';
-import { MainConstants } from '../../shared/Constants/main-constants';
+import { MainConstants } from '../../shared/constants/main-constants';
 import { Url } from '../../shared/url';
 import { Observable } from 'rxjs';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
 import { QueryParamsUtility } from 'src/app/shared/utilities/query-params-utility';
-import { DataValidator } from 'src/app/shared/Validation/data-validator';
+import { DataValidator } from 'src/app/shared/validation/data-validator';
 import { pluck, map } from 'rxjs/operators';
 
 const PATH: string = 'playlists';

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
 import * as moment from 'moment';
-import { MainConstants } from '../shared/Constants/main-constants';
-import { DataValidator } from '../shared/Validation/data-validator';
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { MainConstants } from '../shared/constants/main-constants';
+import { DataValidator } from '../shared/validation/data-validator';
+import { ExceptionConstants } from '../shared/constants/exception-constants';
 
 @Injectable({
   providedIn: 'root'

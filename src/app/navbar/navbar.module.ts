@@ -4,6 +4,7 @@ import { NavbarSideComponent } from './navbar-side/navbar-side.component';
 import { NavbarTopComponent } from './components/navbar-top/navbar-top.component';
 import { NavbarBottomComponent } from './navbar-bottom/navbar-bottom.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { SearchModule } from '../search/search.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { AppRoutingModule } from '../app-routing.module';
     NavbarBottomComponent
   ],
   imports: [
-    AppRoutingModule
+    AppRoutingModule,
+    SearchModule
   ],
   exports: [
     NavbarBottomComponent,

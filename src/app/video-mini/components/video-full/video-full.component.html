@@ -1,0 +1,21 @@
+<article>
+  <app-video-thumbnail
+    [video]="video"
+    [size]="thumbnailSize">
+  </app-video-thumbnail>
+
+  <div class="video-info">
+    <app-video-info class="video-title"
+      [video]="video"
+      [titleMaxDisplayedRows]="titleMaxDisplayedRows">
+    </app-video-info>
+
+    <div class="info-small video-description">
+      <app-text-reveal
+        [text]="video.snippet.description"
+        [maxDisplayedRows]="descriptionMaxDisplayedRows"
+        [shouldShowButtons]="false">
+      </app-text-reveal>
+    </div>
+  </div>
+</article>

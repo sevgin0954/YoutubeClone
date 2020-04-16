@@ -1,6 +1,6 @@
 import { FormatterService } from './formatter.service';
-import { MainConstants } from '../shared/Constants/main-constants';
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { MainConstants } from '../shared/constants/main-constants';
+import { ExceptionConstants } from '../shared/constants/exception-constants';
 
 describe('', () => {
   let service: any;

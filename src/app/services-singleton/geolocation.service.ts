@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { RegionCode } from '../shared/enums/region-code';
 import { Observable } from 'rxjs';
-import { MainConstants } from '../shared/Constants/main-constants';
+import { MainConstants } from '../shared/constants/main-constants';
 import { Url } from '../shared/url';
 import { pluck, map } from 'rxjs/operators';
 import { SecurityConstants } from '../shared/constants/security-constants';

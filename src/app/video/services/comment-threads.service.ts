@@ -4,12 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ServiceModel } from '../../models/service-models/service-model';
 import { Url } from '../../shared/url';
-import { MainConstants } from '../../shared/Constants/main-constants';
+import { MainConstants } from '../../shared/constants/main-constants';
 import { CommentThread } from '../../models/comment/comment-thread';
 import { CommentThreadOrder } from '../../shared/enums/comment-thread-order';
 import { PageArguments } from '../../shared/arguments/page-arguments';
 import { QueryParamsUtility } from '../../shared/utilities/query-params-utility';
-import { DataValidator } from '../../shared/Validation/data-validator';
+import { DataValidator } from '../../shared/validation/data-validator';
 
 const BASE_URL = MainConstants.YOUTUBE_BASE_URL + '/commentThreads';
 

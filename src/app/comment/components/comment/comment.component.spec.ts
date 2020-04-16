@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommentComponent } from './comment.component';
 import { Comment } from 'src/app/models/comment/comment';
 import { CommentCreateUtilities } from 'src/tests-common/create-utilities/comment-create-utilities';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 import { FormatterService } from 'src/app/services-singleton/formatter.service';
 
 describe('', () => {

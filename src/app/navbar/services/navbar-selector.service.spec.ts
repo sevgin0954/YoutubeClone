@@ -1,5 +1,5 @@
 import { NavbarSelectorService } from './navbar-selector.service';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 
 describe('', () => {
   let service: any;

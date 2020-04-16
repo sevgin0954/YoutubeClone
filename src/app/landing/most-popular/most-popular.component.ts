@@ -4,7 +4,7 @@ import { VideoService } from '../../services-singleton/video.service';
 import { RegionCode } from '../../shared/enums/region-code';
 import { GeolocationService } from '../../services-singleton/geolocation.service';
 import { loadVideosCallback } from '../../types';
-import { MainConstants } from '../../shared/Constants/main-constants';
+import { MainConstants } from '../../shared/constants/main-constants';
 
 const TITLE = 'Trending videos';
 

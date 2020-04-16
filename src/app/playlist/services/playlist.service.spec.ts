@@ -1,12 +1,12 @@
 import { PlaylistService } from './playlist.service';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 import { ServiceModel } from 'src/app/models/service-models/service-model';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { Observable, of } from 'rxjs';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 import { ServiceModelCreateUtilities } from 'src/tests-common/create-utilities/service-model-create-utilities';
 
 describe('', () => {

@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommentRepliesComponent } from './comment-replies.component';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 import { CommentsService } from '../services/comments.service';
 import { Comment } from 'src/app/models/comment/comment';
 import { of } from 'rxjs';

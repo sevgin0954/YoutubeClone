@@ -1,6 +1,6 @@
 import { SimpleChanges } from '@angular/core';
 
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 
 export default function isRequired(targetPrototype: any, propertyName: string): void {
 

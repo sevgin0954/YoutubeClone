@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { DataValidator } from '../shared/Validation/data-validator';
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { DataValidator } from '../shared/validation/data-validator';
+import { ExceptionConstants } from '../shared/constants/exception-constants';
 
 @Injectable({
   providedIn: 'root'

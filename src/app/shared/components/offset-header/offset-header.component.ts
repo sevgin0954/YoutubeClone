@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import isRequired from 'src/app/decorators/isRequired';
-import { MainConstants } from '../../Constants/main-constants';
+import { MainConstants } from '../../constants/main-constants';
 
 @Component({
   selector: 'app-offset-header',

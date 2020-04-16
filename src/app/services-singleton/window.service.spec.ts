@@ -1,5 +1,5 @@
 import { WindowService } from './window.service';
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { ExceptionConstants } from '../shared/constants/exception-constants';
 import { ElementUtilities } from 'src/tests-common/utilities/element-utilities';
 
 describe('', () => {

@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ChannelSection } from '../../models/channel-section/channel-section';
 import { Url } from '../../shared/url';
-import { MainConstants } from '../../shared/Constants/main-constants';
+import { MainConstants } from '../../shared/constants/main-constants';
 import { pluck } from 'rxjs/operators';
 import { ChannelSectionResource } from 'src/app/shared/enums/resource-properties/channel-section-resource';
 import { QueryParamsUtility } from 'src/app/shared/utilities/query-params-utility';
-import { DataValidator } from 'src/app/shared/Validation/data-validator';
+import { DataValidator } from 'src/app/shared/validation/data-validator';
 
 const PATH = 'channelSections';
 

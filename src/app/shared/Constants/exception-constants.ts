@@ -18,4 +18,5 @@ export class ExceptionConstants {
   public static readonly NOT_SUPPORTED = 'The operation is not supported.';
   public static readonly NUMBER_OUT_OF_RANGE = 'Then number was out of range.';
   public static readonly REQUIRED_INPUT = 'Input is required.';
+  public static readonly VIDEO_FILTER_ARGUMENTS_NOT_VIDEO_TYPE = 'If you specify a value for this parameter, you must also set the type parameter\'s value to video';
 }

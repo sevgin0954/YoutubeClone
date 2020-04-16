@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot } from '@angular/router';
 
 import { ChannelResolverService } from './channel-resolver.service';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
 import { of, Observable } from 'rxjs';
 import { Channel } from 'src/app/models/channel/channel';

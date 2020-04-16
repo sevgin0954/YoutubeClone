@@ -1,11 +1,11 @@
 import { ChannelSectionService } from "./channel-section.service";
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { Observable, of } from 'rxjs';
 import { ChannelSectionResource } from 'src/app/shared/enums/resource-properties/channel-section-resource';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 import { ChannelSectionCreateUtilities } from 'src/tests-common/create-utilities/channel-section-create-utilities';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 
 describe('', () => {
   let service: ChannelSectionService;

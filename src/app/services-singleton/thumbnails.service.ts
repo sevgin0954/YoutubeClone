@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { ThumbnailSize } from '../shared/enums/thumbnail-size';
-import { DataValidator } from '../shared/Validation/data-validator';
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { DataValidator } from '../shared/validation/data-validator';
+import { ExceptionConstants } from '../shared/constants/exception-constants';
 import { Thumbnail } from '../models/thumbnail/thumbnail';
 
 @Injectable({

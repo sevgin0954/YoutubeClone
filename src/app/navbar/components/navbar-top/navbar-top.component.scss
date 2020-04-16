@@ -1,8 +1,11 @@
-@import "./../../../../variables.scss";
-@import "./../../styles.scss";
+@import './../../../../variables.scss';
+@import './../../styles.scss';
 
-.input-search {
-  flex-basis: 1000px;
+.search-container {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
 }
 
 .navbar-brand {
@@ -19,17 +22,4 @@
 }
 .navbar-menu:focus {
   box-shadow: none;
-}
-
-.search-button:hover, .search-button:focus  {
-  border: 0.1rem $dark-blue;
-  box-shadow: 0 0 0.2rem 0.1rem $dark-blue;
-}
-
-.search-container {
-  display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%;
-  flex-wrap: nowrap;
 }

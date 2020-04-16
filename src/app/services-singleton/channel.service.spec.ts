@@ -1,12 +1,12 @@
 import { ChannelService } from './channel.service';
 import { of, Observable } from 'rxjs';
-import { MainConstants } from '../shared/Constants/main-constants';
+import { MainConstants } from '../shared/constants/main-constants';
 import { TestConstants } from 'src/tests-common/test-constants';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { ChannelResource } from '../shared/enums/resource-properties/channel-resource';
 import { Channel } from '../models/channel/channel';
 import { ServiceModel } from '../models/service-models/service-model';
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { ExceptionConstants } from '../shared/constants/exception-constants';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 
 describe('', () => {

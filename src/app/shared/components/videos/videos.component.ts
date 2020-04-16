@@ -4,7 +4,7 @@ import { Video } from '../../../models/video/video';
 import isRequired from 'src/app/decorators/isRequired';
 import { ThumbnailSize } from '../../enums/thumbnail-size';
 import { Subscription } from 'rxjs';
-import { ExceptionConstants } from '../../Constants/exception-constants';
+import { ExceptionConstants } from '../../constants/exception-constants';
 import { VideoResource } from '../../enums/resource-properties/video-resource';
 import { PageArguments } from '../../arguments/page-arguments';
 import { finalize } from 'rxjs/operators';
@@ -30,8 +30,8 @@ export class VideosComponent implements OnChanges, OnDestroy {
   filterArgument: any;
 
   thumbnailSize: ThumbnailSize = ThumbnailSize.medium;
-  videoDescriptionMaxDisplayedRows: number = VIDEO_DESCRIPTION_DISPLAYED_ROWS;
-  videoTitleMaxDisplayedRows: number = VIDEO_TITLE_DISPLAYED_ROWS;
+  descriptionMaxDisplayedRows: number = VIDEO_DESCRIPTION_DISPLAYED_ROWS;
+  titleMaxDisplayedRows: number = VIDEO_TITLE_DISPLAYED_ROWS;
 
   areMoreVideos: boolean = true;
   isCurrentlyLoading: boolean = false;

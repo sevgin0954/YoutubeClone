@@ -6,7 +6,7 @@ import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { of } from 'rxjs';
 import { ChannelSectionService } from '../services/channel-section.service';
 import { ChannelSectionCreateUtilities } from 'src/tests-common/create-utilities/channel-section-create-utilities';
-import { ExceptionConstants } from 'src/app/shared/Constants/exception-constants';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 import { ChannelSectionType } from 'src/app/shared/enums/channel-section-type';
 import { ChannelCreateUtilities } from 'src/tests-common/create-utilities/channel-create-utilities';

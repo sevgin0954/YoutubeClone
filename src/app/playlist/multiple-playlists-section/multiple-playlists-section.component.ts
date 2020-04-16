@@ -6,7 +6,7 @@ import { ThumbnailSize } from 'src/app/shared/enums/thumbnail-size';
 import { PlaylistService } from 'src/app/playlist/services/playlist.service';
 import { Subscription } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
 import isRequired from 'src/app/decorators/isRequired';

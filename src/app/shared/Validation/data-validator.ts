@@ -1,4 +1,4 @@
-import { ExceptionConstants } from '../Constants/exception-constants';
+import { ExceptionConstants } from '../constants/exception-constants';
 
 // TODO: Split to smaller classes
 export class DataValidator {

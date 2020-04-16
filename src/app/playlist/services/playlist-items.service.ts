@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { PlaylistItem } from '../../models/playlist/playlist-item';
-import { MainConstants } from '../../shared/Constants/main-constants';
+import { MainConstants } from '../../shared/constants/main-constants';
 import { Url } from '../../shared/url';
 import { ServiceModel } from '../../models/service-models/service-model';
 import { QueryParamsUtility } from '../../shared/utilities/query-params-utility';
 import { PageArguments } from '../../shared/arguments/page-arguments';
 import { PlaylistItemResource } from '../../shared/enums/resource-properties/playlist-item-resource';
-import { DataValidator } from '../../shared/Validation/data-validator';
+import { DataValidator } from '../../shared/validation/data-validator';
 
 const PATH = 'playlistItems';
 

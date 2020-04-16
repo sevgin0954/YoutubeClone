@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { VideoService } from 'src/app/services-singleton/video.service';
 import { loadVideosCallback } from 'src/app/types';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 
 @Component({
   selector: 'app-category-video',

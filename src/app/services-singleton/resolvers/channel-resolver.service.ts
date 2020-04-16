@@ -7,7 +7,7 @@ import { ChannelService } from '../channel.service';
 import { map } from 'rxjs/operators';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
-import { DataValidator } from 'src/app/shared/Validation/data-validator';
+import { DataValidator } from 'src/app/shared/validation/data-validator';
 
 @Injectable({
   providedIn: 'root'

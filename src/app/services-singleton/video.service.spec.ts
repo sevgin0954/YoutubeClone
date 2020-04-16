@@ -1,5 +1,5 @@
 import { VideoService } from "./video.service";
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { ExceptionConstants } from '../shared/constants/exception-constants';
 import { Observable } from 'rxjs';
 import { ServiceModel } from '../models/service-models/service-model';
 import { Video } from '../models/video/video';
@@ -7,7 +7,7 @@ import { PageArguments } from '../shared/arguments/page-arguments';
 import { VideoResource } from '../shared/enums/resource-properties/video-resource';
 import { RegionCode } from '../shared/enums/region-code';
 import { UrlUtilities } from 'src/tests-common/utilities/url-utilities';
-import { MainConstants } from '../shared/Constants/main-constants';
+import { MainConstants } from '../shared/constants/main-constants';
 import { ArgumentsUtilities } from 'src/tests-common/utilities/arguments-utilities';
 
 describe('', () => {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DataValidator } from '../shared/Validation/data-validator';
+import { DataValidator } from '../shared/validation/data-validator';
 
 @Injectable({
   providedIn: 'root'

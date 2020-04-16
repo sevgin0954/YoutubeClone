@@ -4,7 +4,7 @@ import { ThumbnailsService } from './thumbnails.service';
 import { ThumbnailSize } from '../shared/enums/thumbnail-size';
 import { VideoThumbnails } from '../models/thumbnail/video-thumbnails';
 import { Thumbnail } from '../models/thumbnail/thumbnail';
-import { ExceptionConstants } from '../shared/Constants/exception-constants';
+import { ExceptionConstants } from '../shared/constants/exception-constants';
 
 describe('', () => {
   let service: any;

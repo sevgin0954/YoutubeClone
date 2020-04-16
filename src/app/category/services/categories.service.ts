@@ -6,7 +6,7 @@ import { VideoCategoryResource } from 'src/app/shared/enums/resource-properties/
 import { Observable } from 'rxjs';
 import { QueryParamsUtility } from 'src/app/shared/utilities/query-params-utility';
 import { Url } from 'src/app/shared/url';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 import { VideoCategory } from 'src/app/models/video-category/video-category';
 import { pluck } from 'rxjs/operators';
 

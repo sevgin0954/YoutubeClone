@@ -4,7 +4,7 @@ import { FormatterService } from 'src/app/services-singleton/formatter.service';
 import { Video } from 'src/app/models/video/video';
 import { VideoRatingService } from '../services/video-rating.service';
 import { RatingType } from 'src/app/shared/enums/rating-type';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 import isRequired from 'src/app/decorators/isRequired';
 
 @Component({

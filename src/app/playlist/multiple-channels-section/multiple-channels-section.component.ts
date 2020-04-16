@@ -4,7 +4,7 @@ import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style'
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { Channel } from 'src/app/models/channel/channel';
 import { ChannelService } from 'src/app/services-singleton/channel.service';
-import { MainConstants } from 'src/app/shared/Constants/main-constants';
+import { MainConstants } from 'src/app/shared/constants/main-constants';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
 import isRequired from 'src/app/decorators/isRequired';

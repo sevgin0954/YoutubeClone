@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { WindowService } from 'src/app/services-singleton/window.service';
-import { DataValidator } from '../shared/Validation/data-validator';
+import { DataValidator } from '../shared/validation/data-validator';
 import { ElementValidator } from '../shared/validation/element-validator';
 
 @Injectable({
