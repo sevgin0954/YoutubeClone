@@ -6,12 +6,12 @@ import isInRange from 'src/app/decorators/isInRange';
 import { ThumbnailSize } from 'src/app/shared/enums/thumbnail-size';
 
 @Component({
-  selector: 'app-video-full',
-  templateUrl: './video-full.component.html',
-  styleUrls: ['./video-full.component.scss'],
+  selector: 'app-video-mini',
+  templateUrl: './video-mini.component.html',
+  styleUrls: ['./video-mini.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class VideoFullComponent {
+export class VideoMiniComponent {
 
   @isRequired
   @Input()

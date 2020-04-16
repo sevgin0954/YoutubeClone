@@ -1,6 +1,4 @@
-import {
-  VideoSnippet, VideoContantDetails, VideoPlayer, VideoStreamingDetails,
-  VideoLocalization, VideoStatus, VideoStatistics } from '.'
+import { VideoSnippet, VideoContantDetails, VideoPlayer, VideoStreamingDetails, VideoLocalization, VideoStatus, VideoStatistics } from '.'
 import { VideoFileDetails } from './video-file-details';
 
 export interface Video {

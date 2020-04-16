@@ -5,13 +5,13 @@ import { RouterModule } from '@angular/router';
 import { VideoInfoComponent } from './components/video-info/video-info.component';
 import { VideoThumbnailComponent } from './components/video-thumbnail/video-thumbnail.component';
 import { TextModule } from '../text/text.module';
-import { VideoFullComponent } from './components/video-full/video-full.component';
+import { VideoMiniComponent } from './components/video-mini/video-mini.component';
 
 @NgModule({
   declarations: [
     VideoInfoComponent,
     VideoThumbnailComponent,
-    VideoFullComponent
+    VideoMiniComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +21,7 @@ import { VideoFullComponent } from './components/video-full/video-full.component
   exports: [
     VideoInfoComponent,
     VideoThumbnailComponent,
-    VideoFullComponent
+    VideoMiniComponent
   ]
 })
 export class VideoMiniModule { }

@@ -1,6 +1,7 @@
 <article>
   <app-video-thumbnail
-    [video]="video"
+    [videoId]="video.id"
+    [thumbnails]="video.snippet.thumbnails"
     [size]="thumbnailSize">
   </app-video-thumbnail>
 

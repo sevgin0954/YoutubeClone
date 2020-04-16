@@ -1,10 +1,10 @@
 <div class="video-container" *ngFor="let video of videos">
-  <app-video-full
+  <app-video-mini
     [descriptionMaxDisplayedRows]="descriptionMaxDisplayedRows"
     [titleMaxDisplayedRows]="titleMaxDisplayedRows"
     [thumbnailSize]="thumbnailSize"
     [video]="video">
-  </app-video-full>
+  </app-video-mini>
 </div>
 
 <div class="d-flex" *ngIf="areMoreVideos">
