@@ -43,6 +43,7 @@ export class VideosComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     let isInputsNew = false;
 
+    // TODO: Refactor
     const callbackChanges = changes['loadVideosCallback'];
     const filterArgumentChanges = changes['filterArgument'];
     if (callbackChanges.isFirstChange() && filterArgumentChanges.isFirstChange()) {

@@ -6,7 +6,6 @@ import { SharedModule } from '../shared/shared.module';
 import { VideoMiniModule } from '../video-mini/video-mini.module';
 import { ArrowDisplayButtonService } from './services/arrow-display-button.service';
 import { ArrowClickButtonService } from './services/arrow-click-button.service';
-import { PlaylistService } from './services/playlist.service';
 import { PlaylistElementService } from './services/playlist-element.service';
 import { SinglePlaylistSectionComponent } from './single-playlist-section/single-playlist-section.component';
 import { MultipleChannelsSectionComponent } from './multiple-channels-section/multiple-channels-section.component';
@@ -36,7 +35,6 @@ import { PlaylistItemsService } from './services/playlist-items.service';
   providers: [
     ArrowDisplayButtonService,
     ArrowClickButtonService,
-    PlaylistService,
     PlaylistElementService,
     PlaylistItemsService
   ],

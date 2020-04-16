@@ -1,4 +1,5 @@
 export class ExceptionConstants {
+  public static readonly BIGGER_NUMBER = 'Number should be bigger.';
   public static readonly EMPTY_COLLECTION = 'Collection cannot be empty.';
   public static readonly EMPTY_STRING = 'String cannot be empty.';
   public static readonly EXCEEDED_MAX_VALUE = 'Element has exceeded the maximum value.';

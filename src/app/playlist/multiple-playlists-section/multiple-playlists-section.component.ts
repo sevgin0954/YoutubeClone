@@ -3,7 +3,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
 import { ChannelSection } from 'src/app/models/channel-section/channel-section';
 import { ThumbnailSize } from 'src/app/shared/enums/thumbnail-size';
-import { PlaylistService } from 'src/app/playlist/services/playlist.service';
+import { PlaylistService } from 'src/app/services-singleton/playlist.service';
 import { Subscription } from 'rxjs';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { MainConstants } from 'src/app/shared/constants/main-constants';

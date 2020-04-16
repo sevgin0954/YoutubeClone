@@ -1,0 +1,8 @@
+<app-search-elements *ngIf="searchResults.length > 0"
+  [elements]="searchResults">
+</app-search-elements>
+
+<app-loading-elements
+  [isLoadingDisabled]="isLoading"
+  [loadingCallback]="loadMoreResults">
+</app-loading-elements>

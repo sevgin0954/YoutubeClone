@@ -49,7 +49,7 @@ export class DataValidator {
 
   public static minNumber(number: number, minNumber: number, argumentsInfo: string): void {
     if (number < minNumber) {
-      const errorMessage = this.appendArgumentName(ExceptionConstants.NEGATIVE_NUMBER, argumentsInfo);
+      const errorMessage = this.appendArgumentName(ExceptionConstants.BIGGER_NUMBER, argumentsInfo);
       throw Error(errorMessage);
     }
   }

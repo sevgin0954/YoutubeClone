@@ -5,7 +5,6 @@ import { Url } from '../shared/url';
 import { Observable } from 'rxjs';
 import { ServiceModel } from '../models/service-models/service-model';
 import { Video } from '../models/video/video';
-import { pluck } from 'rxjs/operators';
 import { MainConstants } from '../shared/constants/main-constants';
 import { PageArguments } from '../shared/arguments/page-arguments';
 import { QueryParamsUtility } from '../shared/utilities/query-params-utility';
@@ -25,7 +24,64 @@ export class VideoService {
     private http: HttpClient
   ) { }
 
-  getMostPopular = (regionCode: RegionCode, pageArgs: PageArguments, resources: VideoResource[]):
+  getById = (
+    id: string,
+    resources: VideoResource[],
+    maxHeight?: number,
+    maxWidth?: number
+  ): Observable<ServiceModel<Video[]>> => {
+
+    this.validateGetByIdsArguments([id], resources);
+
+    const pageArgs = new PageArguments(1);
+    const data$ = this.getByIds([id], pageArgs, resources, maxHeight, maxWidth);
+
+    return data$;
+  }
+
+  getByIds = (
+    ids: string[],
+    pageArgs: PageArguments,
+    resources: VideoResource[],
+    maxHeight?: number,
+    maxWidth?: number
+  ): Observable<ServiceModel<Video[]>> => {
+
+    this.validateGetByIdsArguments(ids, resources);
+
+    const queryParams = {
+      id: ids.join(','),
+      maxResults: pageArgs.maxResults
+    };
+    this.tryAddMaxDimensions(queryParams, maxHeight, maxWidth);
+    QueryParamsUtility.addResources(queryParams, resources, VideoResource);
+    QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
+
+    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
+    const data$ = this.http.get<ServiceModel<Video[]>>(url.toString());
+
+    return data$;
+  }
+
+  private tryAddMaxDimensions(queryParams: any, maxHeight: number, maxWidth: number): void {
+    if (maxHeight != null) {
+      queryParams.maxHeight = maxHeight;
+    }
+    if (maxWidth != null) {
+      queryParams.maxWidth = maxWidth;
+    }
+  }
+
+  private validateGetByIdsArguments(ids: string[], resources: VideoResource[]): void {
+    DataValidator.validateCollection(ids, 'ids');
+    DataValidator.validateCollection(resources, 'resources');
+  }
+
+  getMostPopular = (
+    regionCode: RegionCode,
+    pageArgs: PageArguments,
+    resources: VideoResource[]
+  ):
     Observable<ServiceModel<Video[]>> => {
     this.validateGetMostPopularArguments(regionCode, pageArgs, resources);
 
@@ -53,38 +109,11 @@ export class VideoService {
     DataValidator.validateCollection(resources, 'resources');
   }
 
-  getByIds = (ids: string[], resources: VideoResource[], maxHeight?: number, maxWidth?: number): Observable<Video[]> => {
-    this.validateGetByIds(ids, resources);
-
-    const queryParams = {
-      id: ids.join(',')
-    };
-    this.tryAddMaxDimensions(queryParams, maxHeight, maxWidth);
-    QueryParamsUtility.addResources(queryParams, resources, VideoResource);
-    const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
-    const data$ = this.http.get(url.toString())
-      .pipe(
-        pluck<any, Video[]>('items')
-      );
-
-    return data$;
-  }
-
-  private tryAddMaxDimensions(queryParams: any, maxHeight: number, maxWidth: number): void {
-    if (maxHeight != null) {
-      queryParams.maxHeight = maxHeight;
-    }
-    if (maxWidth != null) {
-      queryParams.maxWidth = maxWidth;
-    }
-  }
-
-  private validateGetByIds(ids: string[], resources: VideoResource[]): void {
-    DataValidator.validateCollection(ids, 'ids');
-    DataValidator.validateCollection(resources, 'resources');
-  }
-
-  getByCategoryId = (categoryId: string, pageArgs: PageArguments, resources: VideoResource[])
+  getByCategoryId = (
+    categoryId: string,
+    pageArgs: PageArguments,
+    resources: VideoResource[]
+  )
     :Observable<ServiceModel<Video[]>> => {
     this.validateGetByCategoryId(categoryId, resources);
 

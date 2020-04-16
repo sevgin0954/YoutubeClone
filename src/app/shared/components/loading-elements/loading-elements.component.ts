@@ -1,5 +1,7 @@
 import { Component, HostListener, Input, ElementRef, ViewChild } from '@angular/core';
+
 import { WindowService } from 'src/app/services-singleton/window.service';
+import isRequired from 'src/app/decorators/isRequired';
 
 @Component({
   selector: 'app-loading-elements',
@@ -8,9 +10,16 @@ import { WindowService } from 'src/app/services-singleton/window.service';
 })
 export class LoadingElementsComponent {
 
-  @Input() isLoadingDisabled: boolean;
-  @Input() loadingCallback: Function;
-  @ViewChild('loading') private loadingElement: ElementRef;
+  @isRequired
+  @Input()
+  isLoadingDisabled: boolean;
+
+  @isRequired
+  @Input()
+  loadingCallback: Function;
+
+  @ViewChild('loading')
+  private loadingElement: ElementRef;
 
   constructor(
     private windowService: WindowService
@@ -28,7 +37,8 @@ export class LoadingElementsComponent {
       return;
     }
 
-    const isLoadingVisible = this.windowService.isElementInsideTheScreenVerticaly(loadingElement);
+    const isLoadingVisible = this.windowService
+      .isElementInsideTheScreenVerticaly(loadingElement);
     if (isLoadingVisible) {
       this.loadingCallback();
     }

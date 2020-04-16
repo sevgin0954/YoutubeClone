@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { ServiceModel } from '../../models/service-models/service-model';
-import { Playlist } from '../../models/playlist/playlist';
-import { MainConstants } from '../../shared/constants/main-constants';
-import { Url } from '../../shared/url';
+import { ServiceModel } from '../models/service-models/service-model';
+import { Playlist } from '../models/playlist/playlist';
+import { MainConstants } from '../shared/constants/main-constants';
+import { Url } from '../shared/url';
 import { Observable } from 'rxjs';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
@@ -14,7 +14,9 @@ import { pluck, map } from 'rxjs/operators';
 
 const PATH: string = 'playlists';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class PlaylistService {
 
   constructor(

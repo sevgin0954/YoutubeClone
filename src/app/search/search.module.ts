@@ -1,27 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Routes, RouterModule } from '@angular/router';
 
-import { SearchBarComponent } from './search-bar/search-bar.component';
 import { SuggestionService } from './services/suggestion.service';
-import { SearchResultComponent } from './components/search-result/search-result.component';
 import { VideoMiniModule } from '../video-mini/video-mini.module';
+import { SearchResultsComponent } from './search-results/search-results.component';
+import { RouteConstants } from '../shared/constants/route-constants';
+import { SharedModule } from '../shared/shared.module';
+import { SearchElementsComponent } from './search-elements/search-elements.component';
+
+const routes: Routes = [
+  { path: `${RouteConstants.SEARCH}/:query`, component: SearchResultsComponent }
+];
 
 @NgModule({
   declarations: [
-    SearchBarComponent,
-    SearchResultComponent
+    SearchResultsComponent,
+    SearchElementsComponent
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
-    VideoMiniModule
+    RouterModule.forChild(routes),
+    SharedModule,
+    VideoMiniModule,
   ],
   providers: [
     SuggestionService
   ],
-  exports: [
-    SearchBarComponent
-  ]
+  exports: []
 })
 export class SearchModule { }

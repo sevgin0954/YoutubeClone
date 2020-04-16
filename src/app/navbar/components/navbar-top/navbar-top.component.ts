@@ -1,10 +1,9 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 import { MainConstants } from 'src/app/shared/constants/main-constants';
-import { SearchService } from 'src/app/services-singleton/search.service';
-import { PageArguments } from 'src/app/shared/arguments/page-arguments';
+import { Router } from '@angular/router';
+import { RouteConstants } from 'src/app/shared/constants/route-constants';
 
-const MAX_RESULTS_PER_PAGE = 25;
 
 @Component({
   selector: 'app-navbar-top',
@@ -15,7 +14,7 @@ const MAX_RESULTS_PER_PAGE = 25;
 export class NavbarTopComponent {
 
   constructor(
-    private search: SearchService
+    private router: Router
   ) { }
 
   skipToMainContent(): void {
@@ -25,9 +24,6 @@ export class NavbarTopComponent {
   }
 
   onSubmit(query: string): void {
-    const pageArgs = new PageArguments(MAX_RESULTS_PER_PAGE);
-    this.search.getResults(query, pageArgs).subscribe(data => {
-      console.log(data);
-    });
+    this.router.navigate([`/${RouteConstants.SEARCH}`, query])
   }
 }

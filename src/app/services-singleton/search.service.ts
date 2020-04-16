@@ -26,7 +26,7 @@ export class SearchService {
     query: string,
     pageArgs: PageArguments,
     filterArgs: FilterArguments = new FilterArguments()
-  ): Observable<ServiceModel<Search>> {
+  ): Observable<ServiceModel<Search[]>> {
     const queryParams = {
       q: query,
       maxResults: pageArgs.maxResults
@@ -36,7 +36,7 @@ export class SearchService {
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);
 
     const url = new Url(MainConstants.YOUTUBE_BASE_URL, [PATH], queryParams);
-    const data$ = this.http.get<ServiceModel<Search>>(url.toString());
+    const data$ = this.http.get<ServiceModel<Search[]>>(url.toString());
 
     return data$;
   }

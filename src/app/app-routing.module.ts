@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { CustomPreloading } from './custom-preloading';
+import { RouteConstants } from './shared/constants/route-constants';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'trending' },
@@ -9,6 +10,10 @@ const routes: Routes = [
   { path: 'trending',
       loadChildren: () => import('./landing/landing.module')
       .then(m => m.LandingModule) },
+//------------------------------------------------------------------------------------------
+  { path: RouteConstants.SEARCH,
+      loadChildren: () => import('./search/search.module')
+      .then(m => m.SearchModule) },
 //------------------------------------------------------------------------------------------
   { path: 'signin',
       loadChildren: () => import('./authentication/authentication.module')

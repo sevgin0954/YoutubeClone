@@ -5,15 +5,19 @@ import { NavbarTopComponent } from './components/navbar-top/navbar-top.component
 import { NavbarBottomComponent } from './navbar-bottom/navbar-bottom.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { SearchModule } from '../search/search.module';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     NavbarSideComponent,
     NavbarTopComponent,
-    NavbarBottomComponent
+    NavbarBottomComponent,
+    SearchBarComponent
   ],
   imports: [
     AppRoutingModule,
+    ReactiveFormsModule,
     SearchModule
   ],
   exports: [

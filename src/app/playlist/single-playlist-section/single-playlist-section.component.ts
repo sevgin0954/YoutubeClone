@@ -12,9 +12,9 @@ import { VideoResource } from 'src/app/shared/enums/resource-properties/video-re
 import { ThumbnailSize } from 'src/app/shared/enums/thumbnail-size';
 import isRequired from 'src/app/decorators/isRequired';
 import { Playlist } from 'src/app/models/playlist/playlist';
-import { PlaylistService } from '../services/playlist.service';
+import { PlaylistService } from '../../services-singleton/playlist.service';
 import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Channel } from 'src/app/models/channel/channel';
 import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';
 import { ChannelService } from 'src/app/services-singleton/channel.service';
@@ -105,25 +105,26 @@ export class SinglePlaylistSectionComponent implements OnInit, OnDestroy {
           VideoResource.snippet,
           VideoResource.statistics
         ];
-        return this.videoService.getByIds(videoIds, resources);
+        const pageArgs = new PageArguments(videoIds.length);
+        return this.videoService.getByIds(videoIds, pageArgs, resources);
       })
-    ).subscribe(videos => {
-      const currentPageVideosCount = videos.length;
+    ).subscribe(data => {
+      const videosCount = data.items.length;
 
       // TODO: Move to a service
       let currentPageExpectedVideosCount;
-      const notLoadedVideosCount = pageArgs.maxResults - videos.length;
+      const notLoadedVideosCount = pageArgs.maxResults - videosCount;
       if (pageArgs.maxResults > notLoadedVideosCount) {
         currentPageExpectedVideosCount = notLoadedVideosCount;
       }
       else {
-        currentPageExpectedVideosCount = currentPageVideosCount - pageArgs.maxResults;
+        currentPageExpectedVideosCount = videosCount - pageArgs.maxResults;
       }
 
-      const missingVideosCount = currentPageExpectedVideosCount - currentPageVideosCount;
+      const missingVideosCount = currentPageExpectedVideosCount - videosCount;
       this.totalResultsCount -= missingVideosCount;
 
-      this.videos.push(...videos);
+      this.videos.push(...data.items);
 
       onLoadedMoreCallback();
     });
