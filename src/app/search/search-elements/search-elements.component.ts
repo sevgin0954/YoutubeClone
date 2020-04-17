@@ -1,4 +1,4 @@
-import { Component, Input, DoCheck } from '@angular/core';
+import { Component, Input, DoCheck, IterableDiffers, IterableDiffer } from '@angular/core';
 
 import { Search } from 'src/app/models/search/search';
 import isRequired from 'src/app/decorators/isRequired';
@@ -33,7 +33,7 @@ export class SearchElementsComponent implements DoCheck {
 
   @isRequired
   @Input()
-  elements: Search[];
+  elements: Search[] = [];
 
   descriptionMaxDisplayedRows: number = 3;
 
@@ -48,13 +48,17 @@ export class SearchElementsComponent implements DoCheck {
   thumbnailSize = ThumbnailSize.medium;
   titleMaxDisplayedRows: number = 2;
 
+  private iterableDiffer: IterableDiffer<Search>;
   private previousElementsLength: number = 0;
 
   constructor(
     private channelService: ChannelService,
+    iterable: IterableDiffers,
     private playlistService: PlaylistService,
     private videoService: VideoService
-  ) { }
+  ) {
+    this.iterableDiffer = iterable.find(this.elements).create();
+  }
 
   getChannelElement(id: string): Channel {
     return this.elementIdsElements[id] as Channel;
@@ -75,8 +79,8 @@ export class SearchElementsComponent implements DoCheck {
   }
 
   ngDoCheck(): void {
-    const hasChanged = this.previousElementsLength != this.elements.length;
-    if (hasChanged === false) {
+    const changes = this.iterableDiffer.diff(this.elements);
+    if (changes == null) {
       return;
     }
 
