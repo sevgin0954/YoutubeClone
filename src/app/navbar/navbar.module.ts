@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { NavbarSideComponent } from './navbar-side/navbar-side.component';
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     AppRoutingModule,
+    CommonModule,
     ReactiveFormsModule,
     SearchModule
   ],
