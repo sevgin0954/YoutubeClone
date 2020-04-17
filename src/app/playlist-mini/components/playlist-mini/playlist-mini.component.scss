@@ -22,7 +22,6 @@ article {
 @media(max-width: $videos-mobile-max-width) {
   :host ::ng-deep {
     .thumbnail {
-      height: auto;
       width: 100%;
     }
 

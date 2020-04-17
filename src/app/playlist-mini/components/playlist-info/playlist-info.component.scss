@@ -1,0 +1,12 @@
+@import './../../../../variables.scss';
+
+h1 {
+  display: block;
+}
+
+.channel-title {
+  color: $dark-blue;
+}
+.channel-title:hover {
+  text-decoration: none;
+}

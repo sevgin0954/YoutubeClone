@@ -14,11 +14,6 @@ article {
   display: flex;
 }
 
-.video-info {
-  margin-left: 0.4rem;
-  margin-right: 0.4rem;
-}
-
 @media(max-width: $videos-mobile-max-width) {
   :host ::ng-deep {
     .thumbnail {

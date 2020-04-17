@@ -1,1 +1,9 @@
-<p>playlist-info works!</p>
+<div class="video-info">
+  <h1 class="video-title">
+    {{ playlist.snippet.title }}
+  </h1>
+
+  <a class="channel-title info-small" [routerLink]="['/channel', playlist.snippet.channelId]">
+    {{ playlist.snippet.channelTitle }}
+  </a>
+</div>
