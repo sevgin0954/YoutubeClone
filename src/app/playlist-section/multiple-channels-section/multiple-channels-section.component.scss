@@ -8,6 +8,10 @@
   .subscribe-btn {
     margin-top: auto;
   }
+
+  app-channel-subscribe-button {
+    display: flex;
+  }
 }
 
 .playlists-container {

@@ -2,7 +2,7 @@
 @import './variables.scss';
 
 :host ::ng-deep {
-  .thumbnail {
+  img.thumbnail {
     width: $thumbnail-width;
     max-height: $thumbnail-height;
   }

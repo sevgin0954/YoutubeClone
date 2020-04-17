@@ -1,1 +1,11 @@
 @import './../styles.scss';
+
+:host ::ng-deep {
+  app-playlist-mini article {
+    flex-direction: column;
+  }
+
+  .video-info {
+    margin: 0;
+  }
+}
