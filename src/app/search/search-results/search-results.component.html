@@ -1,6 +1,8 @@
-<app-search-elements *ngIf="searchResults.length > 0"
-  [elements]="searchResults">
-</app-search-elements>
+<main>
+  <app-search-elements *ngIf="searchResults.length > 0"
+    [elements]="searchResults">
+  </app-search-elements>
+</main>
 
 <app-loading-elements
   [isLoadingDisabled]="isLoading"

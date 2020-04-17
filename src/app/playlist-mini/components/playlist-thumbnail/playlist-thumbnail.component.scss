@@ -3,8 +3,8 @@
 $thumbanilTextLineHeight: 1.5rem;
 
 .thumbnail-conteiner {
+  display: inline-block;
   position: relative;
-  width: 100%;
 }
 
 .thumbnail-overlay {

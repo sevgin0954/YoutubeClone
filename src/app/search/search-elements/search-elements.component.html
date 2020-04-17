@@ -1,16 +1,16 @@
 <ng-container *ngFor="let id of elementIds">
   <ng-container *ngIf="this.elementIdsElements[id] != null">
-    <div *ngIf="getElementResourceKind(id) === ResourceKind['youtube#channel']">
+    <div class="element-container" *ngIf="getElementResourceKind(id) === ResourceKind['youtube#channel']">
       <app-channel-mini [channel]="getChannelElement(id)">
       </app-channel-mini>
     </div>
-    <div *ngIf="getElementResourceKind(id) === ResourceKind['youtube#playlist']">
-      <app-playlist-thumbnail
+    <div class="element-container" *ngIf="getElementResourceKind(id) === ResourceKind['youtube#playlist']">
+      <app-playlist-mini
         [playlist]="getPlaylistElement(id)"
         [thumbnailSize]="thumbnailSize">
-      </app-playlist-thumbnail>
+      </app-playlist-mini>
     </div>
-    <div *ngIf="getElementResourceKind(id) === ResourceKind['youtube#video']">
+    <div class="element-container" *ngIf="getElementResourceKind(id) === ResourceKind['youtube#video']">
       <app-video-mini
         [descriptionMaxDisplayedRows]="descriptionMaxDisplayedRows"
         [video]="getVideoElement(id)"
