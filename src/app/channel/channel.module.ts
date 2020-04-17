@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { ChannelComponent } from './channel/channel.component';
 import { SharedModule } from '../shared/shared.module';
-import { PlaylistModule } from '../playlist/playlist.module';
+import { PlaylistSectionModule } from '../playlist-section/playlist-section.module';
 import { ChannelSectionsComponent } from './channel-sections/channel-sections.component';
 import { ChannelResolverService } from '../services-singleton/resolvers/channel-resolver.service';
 import { ChannelSectionService } from './services/channel-section.service';
@@ -24,7 +24,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     SharedModule,
-    PlaylistModule,
+    PlaylistSectionModule,
     CommonModule,
     ChannelMiniModule
   ],

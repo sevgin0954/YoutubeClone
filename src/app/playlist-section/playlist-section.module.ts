@@ -11,10 +11,10 @@ import { SinglePlaylistSectionComponent } from './single-playlist-section/single
 import { MultipleChannelsSectionComponent } from './multiple-channels-section/multiple-channels-section.component';
 import { PlaylistButtonsComponent } from './playlist-buttons/playlist-buttons.component';
 import { MultiplePlaylistsSectionComponent } from './multiple-playlists-section/multiple-playlists-section.component';
-import { ChannelMiniModule } from '../channel-mini/channel-mini.module';
-import { PlaylistComponent } from './components/playlist/playlist.component';
 import { PlaylistHeaderComponent } from './components/single-playlist-section-header/single-playlist-section-header.component';
 import { PlaylistItemsService } from './services/playlist-items.service';
+import { PlaylistMiniModule } from '../playlist-mini/playlist-mini.module';
+import { ChannelMiniModule } from '../channel-mini/channel-mini.module';
 
 @NgModule({
   declarations: [
@@ -22,15 +22,15 @@ import { PlaylistItemsService } from './services/playlist-items.service';
     SinglePlaylistSectionComponent,
     MultiplePlaylistsSectionComponent,
     PlaylistButtonsComponent,
-    PlaylistComponent,
     PlaylistHeaderComponent
   ],
   imports: [
     CommonModule,
+    ChannelMiniModule,
     RouterModule,
     SharedModule,
     VideoMiniModule,
-    ChannelMiniModule
+    PlaylistMiniModule
   ],
   providers: [
     ArrowDisplayButtonService,
@@ -45,4 +45,4 @@ import { PlaylistItemsService } from './services/playlist-items.service';
     MultiplePlaylistsSectionComponent
   ]
 })
-export class PlaylistModule { }
+export class PlaylistSectionModule { }

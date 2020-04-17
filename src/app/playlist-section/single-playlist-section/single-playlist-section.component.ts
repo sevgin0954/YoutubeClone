@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/core';
 
 import { ChannelSectionStyle } from 'src/app/shared/enums/channel-section-style';
-import { PlaylistItemsService } from 'src/app/playlist/services/playlist-items.service';
 import { VideoService } from 'src/app/services-singleton/video.service';
 import { concatMap } from 'rxjs/operators';
 import { Video } from 'src/app/models/video/video';
@@ -19,6 +18,7 @@ import { Channel } from 'src/app/models/channel/channel';
 import { ThumbnailsService } from 'src/app/services-singleton/thumbnails.service';
 import { ChannelService } from 'src/app/services-singleton/channel.service';
 import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
+import { PlaylistItemsService } from '../services/playlist-items.service';
 
 @Component({
   selector: 'app-single-playlist-section',

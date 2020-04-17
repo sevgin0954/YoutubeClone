@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, DoCheck, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, DoCheck } from '@angular/core';
 
 import { Search } from 'src/app/models/search/search';
 import isRequired from 'src/app/decorators/isRequired';
@@ -10,6 +10,19 @@ import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
 import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
 import { VideoResource } from 'src/app/shared/enums/resource-properties/video-resource';
+import { Channel } from 'src/app/models/channel/channel';
+import { Playlist } from 'src/app/models/playlist/playlist';
+import { Video } from 'src/app/models/video/video';
+import { ThumbnailSize } from 'src/app/shared/enums/thumbnail-size';
+
+type Element = {
+  id: string,
+  kind: string
+}
+
+type ElementIdsElements = {
+  [id: string]: Element
+}
 
 @Component({
   selector: 'app-search-elements',
@@ -18,34 +31,62 @@ import { VideoResource } from 'src/app/shared/enums/resource-properties/video-re
 })
 export class SearchElementsComponent implements DoCheck {
 
+  @isRequired
   @Input()
   elements: Search[];
 
+  descriptionMaxDisplayedRows: number = 3;
+
   elementIds: string[] = [];
-  elementIdsElements: { [id: string]: any } = { };
+  elementIdsElements: ElementIdsElements = { };
 
   newChannelElementIds: string[] = [];
   newPlaylistElementIds: string[] = [];
   newVideoElementIds: string[] = [];
 
+  ResourceKind = ResourceKind;
+  thumbnailSize = ThumbnailSize.medium;
+  titleMaxDisplayedRows: number = 2;
+
+  private previousElementsLength: number = 0;
+
   constructor(
-    private changeDetecionRef: ChangeDetectorRef,
     private channelService: ChannelService,
     private playlistService: PlaylistService,
     private videoService: VideoService
   ) { }
 
+  getChannelElement(id: string): Channel {
+    return this.elementIdsElements[id] as Channel;
+  }
+
+  getPlaylistElement(id: string): Playlist {
+    return this.elementIdsElements[id] as Playlist;
+  }
+
+  getVideoElement(id: string): Video {
+    return this.elementIdsElements[id] as Video;
+  }
+
+  getElementResourceKind(id: string): ResourceKind {
+    const kind = ResourceKind[this.elementIdsElements[id].kind];
+
+    return kind;
+  }
+
   ngDoCheck(): void {
-    console.log(this.elements)
-    if (this.elements.length > 0) {
-      this.changeDetecionRef.detectChanges();
+    const hasChanged = this.previousElementsLength != this.elements.length;
+    if (hasChanged === false) {
+      return;
     }
+
+    this.previousElementsLength = this.elements.length;
 
     this.updateNewElementIds();
 
-    // this.tryLoadChannels();
-    // this.tryLoadPlaylists();
-    // this.tryLoadVideos();
+    this.tryLoadChannels();
+    this.tryLoadPlaylists();
+    this.tryLoadVideos();
   }
 
   updateNewElementIds(): void {
@@ -60,19 +101,20 @@ export class SearchElementsComponent implements DoCheck {
       }
       else if (currentElement.id.kind == ResourceKind[ResourceKind["youtube#playlist"]]) {
         const id = currentElement.id.playlistId;
-        this.tryAddElementId(id, this.newChannelElementIds);
+        this.tryAddElementId(id, this.newPlaylistElementIds);
       }
       else if (currentElement.id.kind == ResourceKind[ResourceKind["youtube#video"]]) {
         const id = currentElement.id.videoId;
-        this.tryAddElementId(id, this.newChannelElementIds);
+        this.tryAddElementId(id, this.newVideoElementIds);
       }
     });
   }
 
   private tryAddElementId(id: string, elements: string[]): void {
-    if (this.elementIdsElements[id] == null) {
+    if (this.elementIdsElements[id] === undefined) {
       elements.push(id);
       this.elementIds.push(id);
+      this.elementIdsElements[id] = null;
     }
   }
 
@@ -99,9 +141,10 @@ export class SearchElementsComponent implements DoCheck {
 
     const pageArgs = new PageArguments(this.newPlaylistElementIds.length);
     const resources = [
-      PlaylistResource.snippet
+      PlaylistResource.snippet,
+      PlaylistResource.contentDetails
     ];
-    this.playlistService.getByIds(this.newChannelElementIds, pageArgs, resources)
+    this.playlistService.getByIds(this.newPlaylistElementIds, pageArgs, resources)
     .subscribe(data => {
       this.addElements(data.items);
     });
@@ -117,13 +160,13 @@ export class SearchElementsComponent implements DoCheck {
       VideoResource.snippet,
       VideoResource.statistics
     ];
-    this.videoService.getByIds(this.newChannelElementIds, pageArgs, resources)
+    this.videoService.getByIds(this.newVideoElementIds, pageArgs, resources)
     .subscribe(data => {
       this.addElements(data.items);
     });
   }
 
-  private addElements(elements: { id: string }[]): void {
+  private addElements(elements: Element[]): void {
     elements.forEach(currentItem => {
       const id = currentItem.id;
       this.elementIdsElements[id] = currentItem;

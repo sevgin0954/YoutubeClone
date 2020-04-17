@@ -4,7 +4,8 @@ import { VideoFileDetails } from './video-file-details';
 export interface Video {
   contentDetails: VideoContantDetails,
   fileDetails: VideoFileDetails,
-  id: string
+  id: string,
+  kind: "youtube#video",
   liveStreamingDetails: VideoStreamingDetails,
   localizations: VideoLocalization,
   snippet: VideoSnippet,
