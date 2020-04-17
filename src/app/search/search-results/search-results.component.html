@@ -4,7 +4,9 @@
   </app-search-elements>
 </main>
 
-<app-loading-elements
-  [isLoadingDisabled]="isLoading"
-  [loadingCallback]="loadMoreResults">
-</app-loading-elements>
+<div class="d-flex" *ngIf="areMoreResults">
+  <app-loading-elements class="loading-container"
+    [isLoadingDisabled]="isLoading"
+    [loadingCallback]="loadMoreResults">
+  </app-loading-elements>
+</div>

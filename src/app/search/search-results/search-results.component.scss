@@ -1,7 +1,11 @@
 @import './../../../variables.scss';
 
-:host(app-most-popular) {
+:host {
   width: 100%;
+}
+
+.loading-container {
+  margin-bottom: $navbar-bottom-height;
 }
 
 main {

@@ -15,10 +15,6 @@ const MAX_RESULTS_PER_PAGE = 25;
 })
 export class SearchResultsComponent implements OnInit {
 
-  resourceChannelKind = ResourceKind[ResourceKind["youtube#channel"]];
-  resourcePlaylistKind = ResourceKind[ResourceKind["youtube#playlist"]];
-  resourceVideoKind = ResourceKind[ResourceKind["youtube#video"]];
-
   areMoreResults: boolean = true;
   isLoading: boolean = false;
   searchResults: Search[] = [];
