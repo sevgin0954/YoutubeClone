@@ -1,5 +1,31 @@
 @import './../../../variables.scss';
 
+:host ::ng-deep {
+  .channel-container {
+    align-items: center;
+    margin-right: 2rem;
+  }
+
+  .channel-thumbnail {
+    height: 136px;
+    width: 136px;
+  }
+
+  .main-container {
+    align-items: center;
+  }
+
+  app-channel-banner {
+    margin-right: 2rem;
+  }
+}
+
+.channel-container {
+  align-items: center;
+  margin-left: 2rem;
+  margin-right: 2rem;
+}
+
 .element-container {
   margin-bottom: $element-margin-bottom;
 }

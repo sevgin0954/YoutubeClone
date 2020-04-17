@@ -1,6 +1,6 @@
 <ng-container *ngFor="let id of elementIds">
   <ng-container *ngIf="this.elementIdsElements[id] != null">
-    <div class="element-container" *ngIf="getElementResourceKind(id) === ResourceKind['youtube#channel']">
+    <div class="element-container channel-container" *ngIf="getElementResourceKind(id) === ResourceKind['youtube#channel']">
       <app-channel-mini
         [channel]="getChannelElement(id)"
         [thumbnailSize]="thumbnailSize">
