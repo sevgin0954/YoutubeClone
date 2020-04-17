@@ -33,7 +33,7 @@ export class VideoResolverService implements Resolve<Video> {
     const maxHeight = MAX_DIMENSIONS;
     const maxWidth = MAX_DIMENSIONS;
     const video$ = this.videoService.getById(id, resources, maxHeight, maxWidth).pipe(
-      map(data => data[0])
+      map(data => data.items[0])
     );
 
     return video$;

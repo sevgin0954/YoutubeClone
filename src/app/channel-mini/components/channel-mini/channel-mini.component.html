@@ -2,7 +2,7 @@
   <div class="d-flex mr-auto mb-2 channel-container" *ngIf="channel">
     <app-channel-banner
       [id]="channel.id"
-      [url]="channel.snippet.thumbnails.default.url">
+      [url]="getThumbnailUrl()">
     </app-channel-banner>
 
     <div class="ml-2">

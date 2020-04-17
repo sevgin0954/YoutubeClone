@@ -9,6 +9,11 @@
     margin-left: -0.5rem;
     margin-right: -0.5rem;
   }
+
+  .channel-thumbnail {
+    height: $channel-thumbnail-height;
+    width: $channel-thumbnail-width;
+  }
 }
 
 .player-container {
