@@ -18,6 +18,7 @@ export class CategoriesComponent implements OnInit {
   categories$: Observable<VideoCategory[]>;
   isLoading: boolean = true;
   mainContentId = MainConstants.SKIP_TO_ELEMENT_ID;
+  title: string = 'Categories';
 
   constructor(
     private categoriesService: CategoriesService,

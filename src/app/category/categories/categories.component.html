@@ -1,7 +1,5 @@
 <main class="categories-container">
-  <h1 id="{{ mainContentId }}" tabIndex="-1" class="offscreen-title">
-    Categories
-  </h1>
+  <app-offset-header [text]="title"></app-offset-header>
 
   <div class="category-container"
     *ngFor="let currentCategory of (categories$ | async)">
