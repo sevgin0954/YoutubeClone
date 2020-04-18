@@ -9,6 +9,9 @@ form {
   width: 100%;
 }
 
+.search-button {
+  margin-left: 1rem;
+}
 .search-button:hover, .search-button:focus  {
   border: 0.1rem $dark-blue;
   box-shadow: 0 0 0.2rem 0.1rem $dark-blue;

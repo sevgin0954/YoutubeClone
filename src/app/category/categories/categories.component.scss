@@ -7,9 +7,8 @@
 .categories-container {
   display: flex;
   flex-flow: wrap;
+  margin: $content-margin;
   margin-bottom: $navbar-bottom-height;
-  margin-left: $content-margin;
-  margin-top: $content-margin;
 }
 
 .category-container {

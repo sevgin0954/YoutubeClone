@@ -1,8 +1,15 @@
 @import './../../../../variables.scss';
 @import './../../styles.scss';
 
+.btn-skip {
+  padding: 0rem;
+  width: 12rem;
+  line-height: 1.3rem;
+}
+
 .search-container {
   display: block;
+  max-width: 68rem;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
