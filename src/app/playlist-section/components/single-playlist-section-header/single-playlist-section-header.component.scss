@@ -1,4 +1,16 @@
+@import './../../../../variables.scss';
 @import "./../../styles.scss";
+
+.playlist-container {
+  color: black;
+}
+.playlist-container:hover {
+  color: $dark-blue;
+
+  .info-medium {
+    color: $dark-blue;
+  }
+}
 
 .playlist-image {
   height: 2rem;

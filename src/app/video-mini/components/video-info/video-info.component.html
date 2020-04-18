@@ -1,5 +1,5 @@
 <header>
-  <a class="gb_title" routerLink="/video/{{ video.id }}">
+  <a class="gb-title" routerLink="/video/{{ video.id }}">
     <h1>
       <app-text-reveal
         [text]="video.snippet.title"
@@ -10,7 +10,7 @@
 </header>
 
 <div class="info-small">
-  <a class="channel-title" routerLink="/channel/{{ video.snippet.channelId }}">
+  <a class="gb-channel-title" routerLink="/channel/{{ video.snippet.channelId }}">
     {{ video.snippet.channelTitle }}
   </a> -
   {{ formatterService.getFormattedNumberString(video.statistics.viewCount) }} -

@@ -1,9 +1,10 @@
 <div class="gb-left-info">
-  <h1 class="gb_title">
+  <h1 class="gb-title">
     {{ playlist.snippet.title }}
   </h1>
 
-  <a class="channel-title info-small" [routerLink]="['/channel', playlist.snippet.channelId]">
+  <a class="gb-channel-title info-small"
+    [routerLink]="['/channel', playlist.snippet.channelId]">
     {{ playlist.snippet.channelTitle }}
   </a>
 </div>
