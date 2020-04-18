@@ -6,7 +6,7 @@
       <a class="channel" routerLink="/channel/{{ channel.snippet.resourceId.channelId }}">
         <img class="thumbnail" src="{{ channel.snippet.thumbnails.medium.url }}" alt="{{ channel.snippet.title }}">
 
-        <div class="video-info">
+        <div class="gb-left-info">
           <app-text-reveal [text]="channel.snippet.description" [maxDisplayedRows]="5"></app-text-reveal>
         </div>
       </a>
