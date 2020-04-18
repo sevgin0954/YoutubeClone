@@ -1,5 +1,6 @@
 @import "./variables.scss";
 
+// Overrides ----------------------------------------------------------------
 a {
   color: $dark-blue;
 }
@@ -23,25 +24,6 @@ body {
   background-color: $light-blue;
 }
 
-.btn-blue {
-  background-color: $dark-blue;
-  color: $white;
-}
-.btn-blue:hover, .btn-blue:focus {
-  box-shadow: none;
-  color: $white;
-}
-
-.btn-white {
-  background-color: $white;
-  color: $dark-blue;
-  border: 0.1rem solid $dark-blue;
-}
-.btn-white:hover, .btn-white:focus {
-  box-shadow: none;
-  color: $dark-blue;
-}
-
 button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
@@ -57,30 +39,31 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-.info-medium {
-  font-size: 1.1rem;
-  color: gray;
-}
-
-.info-small {
-  font-size: 0.9rem;
-  color: gray;
-}
-
 input.input:focus {
   border: 0.1rem $dark-blue;
   box-shadow: 0 0 0.2rem 0.1rem $dark-blue;
 }
 
-.loading-container {
-  display: flex;
-  font-size: 2.2rem;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
+// Classes ----------------------------------------------------------------
+.gb-btn-blue {
+  background-color: $dark-blue;
+  color: $white;
+}
+.gb-btn-blue:hover, .gb-btn-blue:focus {
+  box-shadow: none;
+  color: $white;
 }
 
-//-----------------------------
+.gb-btn-white {
+  background-color: $white;
+  color: $dark-blue;
+  border: 0.1rem solid $dark-blue;
+}
+.gb-btn-white:hover, .gb-btn-white:focus {
+  box-shadow: none;
+  color: $dark-blue;
+}
+
 .gb-channel-title {
   font-size: 1rem;
   color: $dark-blue;
@@ -97,6 +80,25 @@ input.input:focus {
 .gb-left-info {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.gb-info-medium {
+  font-size: 1.1rem;
+  color: gray;
+}
+
+.gb-info-small {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.gb-loading-container {
+  display: flex;
+  font-size: 2.2rem;
+  justify-content: center;
+  margin-bottom: $navbar-bottom-height;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .gb-no-results-text {
