@@ -7,8 +7,13 @@
       aria-label="Search"
       type="search"/>
 
-    <ul [attr.hidden]="isInputFocuces ? null : 'hidden'" class="suggestion-container">
-      <li *ngFor="let result of results$ | async"
+    <ul [attr.hidden]="(
+      isInputFocuces &&
+      results.length > 0 &&
+      isInputEmpty() === false
+    ) ? null : 'hidden'"
+      class="suggestion-container">
+      <li *ngFor="let result of results"
         (mousedown)="$event.preventDefault()"
         (mouseup)="inputElement.blur()"
         [value]="result"
