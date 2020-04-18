@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { SuggestionService } from '../../search/services/suggestion.service';
@@ -61,6 +61,11 @@ export class SearchBarComponent implements OnInit {
 
       this.changeDetectionRef.detectChanges();
     });
+  }
+
+  onSuggestionClicked(query: string): void {
+    const searchInput = this.searchForm.get(SEARCH_INPUT_NAME);
+    searchInput.setValue(query);
   }
 
   onSubmit(): void {

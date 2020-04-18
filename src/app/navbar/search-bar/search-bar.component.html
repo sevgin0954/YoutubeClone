@@ -13,9 +13,9 @@
       isInputEmpty() === false
     ) ? null : 'hidden'"
       class="suggestion-container">
-      <li *ngFor="let result of results"
+      <li #suggestionElement *ngFor="let result of results"
         (mousedown)="$event.preventDefault()"
-        (mouseup)="inputElement.blur()"
+        (mouseup)="inputElement.blur(); onSuggestionClicked(result);"
         [value]="result"
         [routerLink]="['/search', result]">
         {{ result }}

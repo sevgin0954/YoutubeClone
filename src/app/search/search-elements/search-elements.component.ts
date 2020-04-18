@@ -49,7 +49,6 @@ export class SearchElementsComponent implements DoCheck {
   titleMaxDisplayedRows: number = 2;
 
   private iterableDiffer: IterableDiffer<Search>;
-  private previousElementsLength: number = 0;
 
   constructor(
     private channelService: ChannelService,
@@ -83,8 +82,6 @@ export class SearchElementsComponent implements DoCheck {
     if (changes == null) {
       return;
     }
-
-    this.previousElementsLength = this.elements.length;
 
     this.updateNewElementIds();
 

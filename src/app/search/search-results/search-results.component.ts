@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { ResourceKind } from 'src/app/shared/enums/resource-kind';
 import { SearchService } from 'src/app/services-singleton/search.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { Search } from 'src/app/models/search/search';
@@ -27,7 +26,10 @@ export class SearchResultsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadMoreResults();
+    this.route.params.subscribe(params => {
+      this.searchResults = [];
+      this.loadMoreResults();
+    });
   }
 
   loadMoreResults = (): void => {
