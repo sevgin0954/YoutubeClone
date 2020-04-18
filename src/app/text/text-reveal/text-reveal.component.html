@@ -1,9 +1,11 @@
 <div class="text" #textElement>{{ text }}</div>
 <ng-container *ngIf="shouldShowButtons && canTextOverflow">
-  <button *ngIf="isTextOverflowing && isShowingMore === false" class="info-small show-button" (click)="showMore()">
+  <button *ngIf="isTextOverflowing && isShowingMore === false"
+    class="info-small gb-grey-button-no-borders" (click)="showMore()">
     Show more
   </button>
-  <button *ngIf="isTextOverflowing === false && isShowingMore" class="info-small show-button" (click)="showLess()">
+  <button *ngIf="isTextOverflowing === false && isShowingMore"
+    class="info-small gb-grey-button-no-borders" (click)="showLess()">
     Show less
   </button>
 </ng-container>

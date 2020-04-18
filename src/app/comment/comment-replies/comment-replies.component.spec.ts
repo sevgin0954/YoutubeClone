@@ -587,7 +587,8 @@ describe('', () => {
 
     function getHideCommentsButton(): HTMLElement {
       const rootElement: HTMLElement = fixture.nativeElement;
-      const buttons = rootElement.querySelectorAll('.comments-toggle-button, .show-button');
+      const buttons = rootElement
+        .querySelectorAll('.comments-toggle-button, .gb-grey-button-no-borders');
 
       const buttonText = 'Hide comments';
       const hideCommentsButton: any = Array.from(buttons).find(btn => btn.innerHTML.includes(buttonText));
@@ -597,7 +598,8 @@ describe('', () => {
 
     function getShowCommentsButton(repliesCount: number): HTMLElement {
       const rootElement: HTMLElement = fixture.nativeElement;
-      const buttons = rootElement.querySelectorAll('.comments-toggle-button, .show-button');
+      const buttons = rootElement
+        .querySelectorAll('.comments-toggle-button, .gb-grey-button-no-borders');
 
       const buttonText = `Show ${repliesCount} comments`;
       const showCommentsButton: any = Array.from(buttons).find(btn => btn.innerHTML.includes(buttonText));

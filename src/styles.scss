@@ -80,43 +80,41 @@ input.input:focus {
   margin-right: auto;
 }
 
-.no-results-text {
-  color: gray;
-  font-size: 1.3rem;
-  text-align: center;
-}
-
-.offscreen {
-  position: absolute;
-  top: -1000px;
-}
-.offscreen:focus {
-  position: static;
-  border: 1px dotted $dark-blue;
-  box-shadow: 0 0 0.2rem 0.1rem #28587B;
-  margin-right: 1rem;
-}
-
-.player-container {
-  max-height: 70vw;
-}
-
-.show-button {
-  border: none;
-  background-color: inherit;
-  padding: 0;
-  font-size: 1rem;
-  margin-top: 0.3rem;
-}
 //-----------------------------
 .gb-channel-title {
   font-size: 1rem;
   color: $dark-blue;
 }
 
+.gb-grey-button-no-borders {
+  border: none;
+  background-color: inherit;
+  padding: 0;
+  font-size: 1rem;
+  margin-top: 0.3rem;
+}
+
 .gb-left-info {
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+}
+
+.gb-no-results-text {
+  color: gray;
+  font-size: 1.3rem;
+  margin-bottom: $navbar-bottom-height;
+  text-align: center;
+}
+
+.gb-offscreen {
+  position: absolute;
+  top: -1000px;
+}
+.gb-offscreen:focus {
+  position: static;
+  border: 1px dotted $dark-blue;
+  box-shadow: 0 0 0.2rem 0.1rem #28587B;
+  margin-right: 1rem;
 }
 
 .gb-title {

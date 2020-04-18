@@ -15,12 +15,12 @@
   </button>
 </div>
 
-<button class="comments-toggle-button show-button" [attr.hidden]="shouldShowReplies ? 'hidden' : null"
+<button class="comments-toggle-button gb-grey-button-no-borders" [attr.hidden]="shouldShowReplies ? 'hidden' : null"
   (click)="onShowReplies()">
   <i class="far fa-arrow-alt-circle-down"></i>
   Show {{ totalRepliesCount }} comments
 </button>
-<button class="comments-toggle-button show-button" [attr.hidden]="shouldShowReplies ? null : 'hidden'"
+<button class="comments-toggle-button gb-grey-button-no-borders" [attr.hidden]="shouldShowReplies ? null : 'hidden'"
   (click)="onHideReplies()">
   <i class="far fa-arrow-alt-circle-up"></i>
   Hide comments

@@ -1,7 +1,7 @@
 @import './../../../../styles.scss';
 
 .offscreen-title {
-  @extend .offscreen;
+  @extend .gb-offscreen;
 
   display: block;
   margin-bottom: 1rem;
