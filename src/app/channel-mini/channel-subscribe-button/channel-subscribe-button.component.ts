@@ -5,6 +5,7 @@ import { SubscriptionResource } from 'src/app/shared/enums/resource-properties/s
 import isRequired from 'src/app/decorators/isRequired';
 import { Subscription } from 'rxjs';
 import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-channel-subscribe-button',
@@ -17,6 +18,7 @@ export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
   @Input()
   channelId: string;
 
+  isErrored: boolean = false;
   isSubscribed: boolean;
   private videoSubscription: VideoSubscribtion;
   private rxjsSubscription: Subscription;
@@ -31,7 +33,11 @@ export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
       SubscriptionResource.snippet
     ];
     this.rxjsSubscription = this.subscriptionsService
-      .getById(this.channelId, resources)
+      .getById(this.channelId, resources).pipe(
+        finalize(() => {
+          this.changeDetectionRef.detectChanges();
+        })
+      )
       .subscribe(videoSubscribtion => {
         if (videoSubscribtion) {
           this.isSubscribed = true;
@@ -40,8 +46,8 @@ export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
         else {
           this.isSubscribed = false;
         }
-
-        this.changeDetectionRef.detectChanges();
+    }, error => {
+      this.isErrored = true;
     });
   }
 
@@ -49,22 +55,30 @@ export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
     const resources = [
       SubscriptionResource.snippet
     ];
-    this.subscriptionsService.subscribe(this.channelId, resources).subscribe(data => {
+    this.subscriptionsService.subscribe(this.channelId, resources).pipe(
+      finalize(() => {
+        this.changeDetectionRef.detectChanges();
+      })
+    )
+    .subscribe(data => {
       this.isSubscribed = true;
       this.videoSubscription = data;
-
-      this.changeDetectionRef.detectChanges();
+    }, error => {
+      this.isErrored = true;
     });
   }
 
   onUnsubscribe(): void {
-    this.subscriptionsService.unsubscribe(this.videoSubscription.id).subscribe(data => {
+    this.subscriptionsService.unsubscribe(this.videoSubscription.id)
+    .subscribe(data => {
       if (data >= 200 && data <= 299) {
         this.isSubscribed = false;
         this.videoSubscription = undefined;
       }
 
       this.changeDetectionRef.detectChanges();
+    }, error => {
+      this.isErrored = true;
     });
   }
 

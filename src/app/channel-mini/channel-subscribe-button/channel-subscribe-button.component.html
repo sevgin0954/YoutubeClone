@@ -1,4 +1,19 @@
 <div class="subscribe-btn">
-  <button class="btn gb-btn-blue btn-subscribe" *ngIf="isSubscribed === false" (click)="onSubscribe()">Subscribe</button>
-  <button class="btn gb-btn-white btn-unsubscribe" *ngIf="isSubscribed === true" (click)="onUnsubscribe()">Subscribed</button>
+  <button
+    class="btn gb-btn-blue btn-subscribe"
+    [attr.disabled]="isErrored ? 'disabled' : null"
+    *ngIf="isSubscribed === false"
+    (click)="onSubscribe()">
+  Subscribe
+  </button>
+  <button
+    class="btn gb-btn-white btn-unsubscribe"
+    [attr.disabled]="isErrored ? 'disabled' : null"
+    *ngIf="isSubscribed === true"
+    (click)="onUnsubscribe()">
+    Subscribed
+  </button>
+</div>
+<div class="gb-error" role="alert" *ngIf="isErrored">
+  Something went wrong!
 </div>
