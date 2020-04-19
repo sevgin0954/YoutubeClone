@@ -35,8 +35,8 @@ export class SigninComponent implements OnInit {
     }
     else {
       window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' +
-      `client_id=${SecurityConstants.YOUTUBE_CLIENT_ID_2}&` +
-      'redirect_uri=http://localhost:4200/signin&' +
+      `client_id=${SecurityConstants.YOUTUBE_CLIENT_ID}&` +
+      'redirect_uri=http://localhostt:4200/signin&' +
       'response_type=token&' +
       'scope=' +
       'https://www.googleapis.com/auth/youtube.readonly ' +
