@@ -2,7 +2,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Observable, of, EMPTY, throwError } from 'rxjs';
+import { Observable, EMPTY, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from 'src/app/services-singleton/auth.service';
 import { MainConstants } from 'src/app/shared/constants/main-constants';
@@ -14,7 +14,8 @@ export class JwtInterceptorService implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const hasSkipHeader = request.headers.has(MainConstants.SKIP_INTERCEPTOR_HEADER);

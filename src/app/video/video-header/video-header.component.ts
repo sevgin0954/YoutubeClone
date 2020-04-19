@@ -24,6 +24,7 @@ export class VideoHeaderComponent implements OnChanges {
   @ViewChild('dislikeBtn')
   dislikeButton: ElementRef;
 
+  isErrored: boolean = false;
   isLikeButtonPressed: boolean = false;
   isDislikeButtonPressed: boolean = false;
   currentRating: RatingType;
@@ -112,9 +113,9 @@ export class VideoHeaderComponent implements OnChanges {
 
         this.currentRating = newRating;
       }
-      else {
-        // TODO: Throw exception
-      }
+    },
+    error => {
+      this.isErrored = true;
     });
   }
 }

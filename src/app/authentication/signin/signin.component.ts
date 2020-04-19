@@ -34,11 +34,8 @@ export class SigninComponent implements OnInit {
 
     }
     else {
-      //480889960057-qfp4tfrgudk5vo6kgt6jf4fncn31ka2p.apps.googleusercontent.com
-      // TODO: Add dynamically based on the required permissions
       window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' +
-      // `client_id=${SecurityConstants.YOUTUBE_CLIENT_ID}&` +
-      `client_id=480889960057-qfp4tfrgudk5vo6kgt6jf4fncn31ka2p.apps.googleusercontent.com&` +
+      `client_id=${SecurityConstants.YOUTUBE_CLIENT_ID_2}&` +
       'redirect_uri=http://localhost:4200/signin&' +
       'response_type=token&' +
       'scope=' +
