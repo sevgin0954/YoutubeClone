@@ -8,4 +8,5 @@ export class MainConstants {
   public static readonly SUGGESTION_BASE_URL = 'http://suggestqueries.google.com/complete/search';
   public static readonly MAX_PLAYLIST_ITEM_RESULTS = 5;
   public static readonly YOUTUBE_BASE_URL = 'https://www.googleapis.com/youtube/v3';
+  public static readonly YOUTUBE_IFRAME_BASE_URL = 'https://www.youtube.com/iframe_api';
 }

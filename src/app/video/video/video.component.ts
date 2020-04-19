@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Subscription as RxjsSubscribtion } from 'rxjs';
 import { Video } from 'src/app/models/video/video';
-import { YoutubeIframeService } from 'src/app/video/services/youtube-iframe.service';
 import { Channel } from 'src/app/models/channel/channel';
 import { ChannelService } from 'src/app/services-singleton/channel.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
@@ -14,47 +13,22 @@ import { ChannelResource } from 'src/app/shared/enums/resource-properties/channe
   templateUrl: './video.component.html',
   styleUrls: ['./video.component.scss']
 })
-export class VideoComponent implements OnInit, OnDestroy, AfterViewInit {
-
-  @ViewChild('playerContainer')
-  playerContainer: ElementRef;
+export class VideoComponent implements OnInit, OnDestroy {
 
   channel: Channel;
   maxDisplayedCharacters: number = 120;
   video: Video;
-  private resizeSubscription: any;
   private subscribtion: RxjsSubscribtion;
 
   constructor(
     private route: ActivatedRoute,
-    private channelService: ChannelService,
-    private youtubeIframeService: YoutubeIframeService
+    private channelService: ChannelService
   ) { }
 
   ngOnInit(): void {
     this.video = this.route.snapshot.data['video'];
 
     this.initChannel();
-  }
-
-  ngAfterViewInit(): void {
-    this.initVideo(() => {
-      // @ts-ignore
-      this.resizeSubscription = new ResizeObserver(subscribers => {
-        this.youtubeIframeService.resizeHeight();
-      });
-      this.resizeSubscription.observe(this.playerContainer.nativeElement);
-    });
-  }
-
-  private initVideo(onReadyCallback: Function): void {
-    const isResponsive = true;
-
-    const videoHeight = this.video.player.embedHeight;
-    const videoWidth = this.video.player.embedWidth;
-    const aspectRation = videoWidth / videoHeight;
-
-    this.youtubeIframeService.init(this.video.id, isResponsive, aspectRation, onReadyCallback);
   }
 
   private initChannel(): void {
@@ -71,7 +45,6 @@ export class VideoComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.resizeSubscription.unobserve(this.playerContainer.nativeElement);
     this.subscribtion.unsubscribe();
   }
 }

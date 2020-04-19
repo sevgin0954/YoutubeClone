@@ -15,6 +15,7 @@ import { CommentThreadsService } from './services/comment-threads.service';
 import { VideoMiniModule } from '../video-mini/video-mini.module';
 import { TextModule } from '../text/text.module';
 import { ChannelMiniModule } from '../channel-mini/channel-mini.module';
+import { VideoYoutubeIframeComponent } from './video-youtube-iframe/video-youtube-iframe.component';
 
 const routes: Routes = [
   { path: ':id', component: VideoComponent, resolve: { video: VideoResolverService } }
@@ -25,7 +26,8 @@ const routes: Routes = [
     VideoComponent,
     VideoCommentsComponent,
     VideoDescriptionComponent,
-    VideoHeaderComponent
+    VideoHeaderComponent,
+    VideoYoutubeIframeComponent
   ],
   imports: [
     RouterModule.forChild(routes),
