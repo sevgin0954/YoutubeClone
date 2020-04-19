@@ -16,10 +16,10 @@ const MAX_RESULTS_PER_PAGE = 25;
 })
 export class SearchResultsComponent implements OnInit {
 
-  areMoreResults: boolean = true;
-  isErrored: boolean = false;
-  isLoading: boolean = false;
-  searchResults: Search[] = [];
+  areMoreResults: boolean;
+  isErrored: boolean;
+  isLoading: boolean;
+  searchResults: Search[];
   exceptionMessage = ExceptionConstants.WEB;
   private pageToken: string;
 
@@ -29,10 +29,19 @@ export class SearchResultsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initFields();
+
     this.route.params.subscribe(params => {
-      this.searchResults = [];
+      this.initFields();
       this.loadMoreResults();
     });
+  }
+
+  private initFields(): void {
+    this.areMoreResults = true;
+    this.isErrored = false;
+    this.isLoading = false;
+    this.searchResults = [];
   }
 
   loadMoreResults = (): void => {

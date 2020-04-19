@@ -1,4 +1,6 @@
-<form class="form-inline my-2 my-lg-0" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+<form class="form-inline my-2 my-lg-0"
+  [formGroup]="searchForm"
+  (ngSubmit)="onSubmit(); inputElement.blur();">
   <div class="w-100">
     <input #inputElement (focus)="isInputFocuces = true" (blur)="isInputFocuces = false"
       class="form-control input mr-sm-2 input-search"
