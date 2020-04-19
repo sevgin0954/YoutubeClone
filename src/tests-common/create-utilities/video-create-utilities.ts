@@ -5,6 +5,7 @@ export class VideoCreateUtilities {
   public static create(id?: string, snippet?: VideoSnippet): Video {
     const video: Video = {
       id: id,
+      kind: "youtube#video",
       snippet: snippet,
       contentDetails: undefined,
       status: undefined,

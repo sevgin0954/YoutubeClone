@@ -16,6 +16,7 @@ export class ChannelCreateUtilities {
     const channel: Channel = {
       brandingSettings: channelBrandingSettings,
       id: '123',
+      kind: "youtube#channel",
       snippet: snippet,
       statistics: statistics
     };

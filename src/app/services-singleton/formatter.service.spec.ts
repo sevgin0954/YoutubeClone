@@ -41,7 +41,7 @@ describe('', () => {
     it('with negative number should throw an exception', () => {
       // Arrange
       const number = -1;
-      const exceptionRegex = new RegExp(ExceptionConstants.NEGATIVE_NUMBER);
+      const exceptionRegex = new RegExp(ExceptionConstants.BIGGER_NUMBER);
 
       // Act
 
@@ -181,7 +181,7 @@ describe('', () => {
       // Arrange
       const number = '1';
       const integralPart = -1;
-      const exceptionRegex = new RegExp(ExceptionConstants.NEGATIVE_NUMBER);
+      const exceptionRegex = new RegExp(ExceptionConstants.BIGGER_NUMBER);
 
       // Act
 

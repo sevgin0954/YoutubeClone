@@ -29,6 +29,7 @@ describe('', () => {
     let returnedChannel1: Channel = {
       id: '123',
       brandingSettings: null,
+      kind: "youtube#channel",
       snippet: null,
       statistics: null
     };
