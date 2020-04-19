@@ -17,10 +17,11 @@ const MAX_RESULTS_PER_PAGE = 25;
 export class SearchResultsComponent implements OnInit {
 
   areMoreResults: boolean;
+  exceptionMessage = ExceptionConstants.WEB;
   isErrored: boolean;
   isLoading: boolean;
   searchResults: Search[];
-  exceptionMessage = ExceptionConstants.WEB;
+  title = 'Search results';
   private pageToken: string;
 
   constructor(
