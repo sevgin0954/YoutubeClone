@@ -61,8 +61,8 @@ export class VideosComponent implements OnChanges, OnDestroy {
     }
   }
 
-  private loadMoreVideos = (): void => {
-    // this.validateIfAbleToLoadMoreVideos();
+  loadMoreVideos = (): void => {
+    this.validateIfAbleToLoadMoreVideos();
 
     this.isCurrentlyLoading = true;
 
@@ -98,14 +98,14 @@ export class VideosComponent implements OnChanges, OnDestroy {
     this.subscription.add(videoSubscription);
   }
 
-  // private validateIfAbleToLoadMoreVideos(): void {
-  //   if (this.isCurrentlyLoading) {
-  //     throw Error(ExceptionConstants.CURRENTLY_LOADING);
-  //   }
-  //   if (this.areMoreVideos === false) {
-  //     throw Error(ExceptionConstants.NO_MORE_ELEMENTS_TO_LOAD);
-  //   }
-  // }
+  private validateIfAbleToLoadMoreVideos(): void {
+    if (this.isCurrentlyLoading) {
+      throw Error(ExceptionConstants.CURRENTLY_LOADING);
+    }
+    if (this.areMoreVideos === false) {
+      throw Error(ExceptionConstants.NO_MORE_ELEMENTS_TO_LOAD);
+    }
+  }
 
   private updateAreMoreVideos(): void {
     if (this.nextPageToken === undefined && this.isFirstPage === false) {
