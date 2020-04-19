@@ -1,12 +1,12 @@
 import { Component, Input, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 
-import { Video } from '../../../models/video/video';
+import { Video } from '../../models/video/video';
 import isRequired from 'src/app/decorators/isRequired';
-import { ThumbnailSize } from '../../enums/thumbnail-size';
+import { ThumbnailSize } from '../../shared/enums/thumbnail-size';
 import { Subscription } from 'rxjs';
-import { ExceptionConstants } from '../../constants/exception-constants';
-import { VideoResource } from '../../enums/resource-properties/video-resource';
-import { PageArguments } from '../../arguments/page-arguments';
+import { ExceptionConstants } from '../../shared/constants/exception-constants';
+import { VideoResource } from '../../shared/enums/resource-properties/video-resource';
+import { PageArguments } from '../../shared/arguments/page-arguments';
 import { finalize } from 'rxjs/operators';
 import { loadVideosCallback } from 'src/app/types';
 

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { MostPopularComponent } from './most-popular/most-popular.component';
 import { SharedModule } from '../shared/shared.module';
+import { VideosModule } from '../videos/videos.module';
 
 const routes: Routes = [
   { path: '', component: MostPopularComponent }
@@ -16,7 +17,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    VideosModule
   ],
   exports: [
     MostPopularComponent

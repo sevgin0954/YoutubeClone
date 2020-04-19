@@ -7,6 +7,7 @@ import { CategoriesService } from './services/categories.service';
 import { SharedModule } from '../shared/shared.module';
 import { CategoryComponent } from './category/category.component';
 import { CategoryVideosComponent } from './category-videos/category-videos.component';
+import { VideosModule } from '../videos/videos.module';
 
 const routes: Routes = [
   { path: ':id/:name', component: CategoryVideosComponent },
@@ -22,7 +23,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
-    SharedModule
+    SharedModule,
+    VideosModule
   ],
   providers: [
     CategoriesService
