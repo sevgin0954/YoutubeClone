@@ -15,7 +15,7 @@ article.channel-container {
   padding: 2rem;
   word-wrap: break-word;
 }
-.channel:hover {
+.channel:hover, .channel:focus-within {
   outline: $dark-blue solid 1px;
   text-decoration: none;
 }

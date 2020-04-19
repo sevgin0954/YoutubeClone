@@ -15,7 +15,7 @@ export class TextElementService {
     let canOverflow = true;
 
     const rowsCount = this.countLinesOfText(textElement);
-    if (/* isTextOverflowing === false && */ isShowingMore && rowsCount <= maxDisplayedRows) {
+    if (/**isTextOverflowing === false**/ isShowingMore && rowsCount <= maxDisplayedRows) {
       canOverflow = false;
     }
 

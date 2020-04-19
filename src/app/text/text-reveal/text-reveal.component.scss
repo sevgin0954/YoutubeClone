@@ -1,5 +1,9 @@
 @import "./../../../variables.scss";
 
+.gb-info-small {
+  font-size: 1rem;
+}
+
 .text {
   overflow: hidden;
   text-overflow: ellipsis;

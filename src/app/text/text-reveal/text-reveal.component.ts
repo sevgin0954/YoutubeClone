@@ -10,33 +10,29 @@ import { TextElementService } from '../services/text-element.service';
 })
 export class TextRevealComponent implements AfterViewChecked, OnChanges {
 
-  @Input() shouldShowButtons: boolean = false;
-  @Input() text: string;
-  @Input() maxDisplayedRows: number;
-  @ViewChild('textElement') textElement: ElementRef;
+  @Input()
+  shouldShowButtons: boolean = false;
+
+  @Input()
+  text: string;
+
+  @Input()
+  maxDisplayedRows: number;
+
+  @ViewChild('textElement')
+  textElement: ElementRef;
+
   isShowingMore: boolean = false;
   isTextOverflowing: boolean = false;
   canTextOverflow: boolean = true;
 
   constructor(
-    private changeDetectionRef: ChangeDetectorRef,
+    private changeDetection: ChangeDetectorRef,
     private textElementService: TextElementService
   ) { }
 
   ngAfterViewChecked(): void {
-    if (this.isShowingMore === false) {
-      this.textElementService.setHiddenStyles(this.textElement.nativeElement, this.maxDisplayedRows);
-    }
-
-    // Update buttons
-    const isCurrentlyOverflowing = this.textElementService
-      .checkIsTextOverflowingParent(this.textElement.nativeElement);
-    if (isCurrentlyOverflowing !== this.isTextOverflowing) {
-      this.isTextOverflowing = isCurrentlyOverflowing;
-
-      // Updates the view and displays or hide the buttons
-      this.changeDetectionRef.detectChanges();
-    }
+    this.updateButtonsFields();
   }
 
   ngOnChanges(): void {
@@ -49,22 +45,48 @@ export class TextRevealComponent implements AfterViewChecked, OnChanges {
   }
 
   private addResizeListener(): void {
-    window.addEventListener('resize', this.updateButtonsFields.bind(this));
+    window.addEventListener('resize', this.onResize.bind(this));
   }
 
   private removeResizeListener(): void {
-    window.removeEventListener('resize', this.updateButtonsFields.bind(this));
+    window.removeEventListener('resize', this.onResize.bind(this));
+  }
+
+  onResize(): void {
+    this.isShowingMore = false;
+
+    this.updateButtonsFields();
+    this.tryDetectChanges();
   }
 
   updateButtonsFields(): void {
-    this.isShowingMore = false;
+    if (this.isShowingMore === false) {
+      this.textElementService
+        .setHiddenStyles(this.textElement.nativeElement, this.maxDisplayedRows);
+    }
+
     this.canTextOverflow = this.textElementService
       .checkIfTextCanOverflow(this.textElement.nativeElement, this.isShowingMore, this.maxDisplayedRows);
+
+    const isCurrentlyOverflowing = this.textElementService
+      .checkIsTextOverflowingParent(this.textElement.nativeElement);
+    if (isCurrentlyOverflowing !== this.isTextOverflowing) {
+      this.isTextOverflowing = isCurrentlyOverflowing;
+
+      this.tryDetectChanges();
+    }
+  }
+
+  private tryDetectChanges(): void {
+    if (this.shouldShowButtons) {
+      this.changeDetection.detectChanges();
+    }
   }
 
   showLess(): void {
     this.isShowingMore = false;
-    this.textElementService.setHiddenStyles(this.textElement.nativeElement, this.maxDisplayedRows);
+    this.textElementService
+      .setHiddenStyles(this.textElement.nativeElement, this.maxDisplayedRows);
   }
 
   showMore(): void {
