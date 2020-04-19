@@ -11,20 +11,20 @@
     width: 136px;
   }
 
-  .gb-channel-title {
-    font-size: 1.2rem;
-  }
-
-  .gb-info-small {
-    font-size: 1rem;
-  }
-
   .main-container {
     align-items: center;
   }
 
   app-channel-banner {
     margin-right: 2rem;
+  }
+
+  app-channel-mini .gb-channel-title {
+    font-size: 1.2rem;
+  }
+
+  app-channel-mini .gb-info-small {
+    font-size: 1rem;
   }
 }
 
