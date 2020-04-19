@@ -6,6 +6,7 @@ import { VideoRatingService } from '../services/video-rating.service';
 import { RatingType } from 'src/app/shared/enums/rating-type';
 import { MainConstants } from 'src/app/shared/constants/main-constants';
 import isRequired from 'src/app/decorators/isRequired';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 
 @Component({
   selector: 'app-video-header',
@@ -24,10 +25,11 @@ export class VideoHeaderComponent implements OnChanges {
   @ViewChild('dislikeBtn')
   dislikeButton: ElementRef;
 
+  currentRating: RatingType;
+  exceptionMessage = ExceptionConstants.WEB;
   isErrored: boolean = false;
   isLikeButtonPressed: boolean = false;
   isDislikeButtonPressed: boolean = false;
-  currentRating: RatingType;
   mainElementId = MainConstants.SKIP_TO_ELEMENT_ID;
   RatingType = RatingType;
 

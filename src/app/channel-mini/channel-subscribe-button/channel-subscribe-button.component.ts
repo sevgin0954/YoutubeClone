@@ -6,6 +6,7 @@ import isRequired from 'src/app/decorators/isRequired';
 import { Subscription } from 'rxjs';
 import { SubscriptionsService } from 'src/app/services-singleton/subscriptions.service';
 import { finalize } from 'rxjs/operators';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 
 @Component({
   selector: 'app-channel-subscribe-button',
@@ -18,6 +19,7 @@ export class ChannelSubscribeButtonComponent implements OnChanges, OnDestroy {
   @Input()
   channelId: string;
 
+  exceptionMessage = ExceptionConstants.WEB;
   isErrored: boolean = false;
   isSubscribed: boolean;
   private videoSubscription: VideoSubscribtion;

@@ -2,6 +2,20 @@
   <app-search-elements *ngIf="searchResults.length > 0"
     [elements]="searchResults">
   </app-search-elements>
+
+  <div class="gb-error" role="alert" *ngIf="isErrored">
+    {{ exceptionMessage }}
+  </div>
+  <div
+    class="gb-no-results-text"
+    *ngIf="areMoreResults === false && searchResults.length === 0">
+    No Results
+  </div>
+  <div
+    class="gb-no-results-text"
+    *ngIf="areMoreResults === false && searchResults.length > 0">
+    No more results
+  </div>
 </main>
 
 <div class="d-flex" *ngIf="areMoreResults">

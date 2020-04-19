@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { SearchService } from 'src/app/services-singleton/search.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { Search } from 'src/app/models/search/search';
+import { finalize } from 'rxjs/operators';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 
 const MAX_RESULTS_PER_PAGE = 25;
 
@@ -15,9 +17,10 @@ const MAX_RESULTS_PER_PAGE = 25;
 export class SearchResultsComponent implements OnInit {
 
   areMoreResults: boolean = true;
+  isErrored: boolean = false;
   isLoading: boolean = false;
   searchResults: Search[] = [];
-  private isFirstPage: boolean = true;
+  exceptionMessage = ExceptionConstants.WEB;
   private pageToken: string;
 
   constructor(
@@ -35,19 +38,23 @@ export class SearchResultsComponent implements OnInit {
   loadMoreResults = (): void => {
     this.isLoading = true;
 
-    if (this.pageToken == null && this.isFirstPage === false) {
-      this.areMoreResults = false;
-      return;
-    }
-
     const query = this.route.snapshot.params['query'];
 
     const pageArgs = new PageArguments(MAX_RESULTS_PER_PAGE, this.pageToken);
-    this.searchService.getResults(query, pageArgs).subscribe(data => {
+    this.searchService.getResults(query, pageArgs).pipe(
+    finalize(() => {
+      this.isLoading = false;
+    }))
+    .subscribe(data => {
       this.searchResults.push(...data.items);
       this.pageToken = data.nextPageToken;
 
-      this.isLoading = false;
+      if (this.pageToken == null) {
+        this.areMoreResults = false;
+      }
+    }, error => {
+      this.areMoreResults = false;
+      this.isErrored = true;
     });
   }
 }
