@@ -26,6 +26,8 @@ form {
   font-size: 1.1rem;
   list-style-type: none;
   margin-top: 0.3rem;
+  max-height: 65vh;
+  overflow: auto;
   padding: 0;
   padding-bottom: 1rem;
   padding-top: 0.7rem;
