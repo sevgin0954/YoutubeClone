@@ -10,7 +10,9 @@ form {
 }
 
 .search-button {
+  margin-bottom: 0.5rem;
   margin-left: 1rem;
+  margin-top: 0.5rem;
 }
 .search-button:hover, .search-button:focus  {
   border: 0.1rem $dark-blue;
@@ -39,5 +41,10 @@ form {
     background-color: $light-blue;
     color: $dark-blue;
   }
+}
 
+@media(max-width: $navbar-colapsed-max-width) {
+  .search-button {
+    margin-left: 0.5rem;
+  }
 }

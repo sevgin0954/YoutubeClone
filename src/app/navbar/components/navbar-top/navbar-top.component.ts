@@ -4,7 +4,6 @@ import { MainConstants } from 'src/app/shared/constants/main-constants';
 import { Router } from '@angular/router';
 import { RouteConstants } from 'src/app/shared/constants/route-constants';
 
-
 @Component({
   selector: 'app-navbar-top',
   templateUrl: './navbar-top.component.html',

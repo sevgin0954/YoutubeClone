@@ -31,3 +31,13 @@
 .navbar-menu:focus {
   box-shadow: none;
 }
+
+@media (max-width: $navbar-colapsed-max-width) {
+  .search-button {
+    margin-left: 0.5rem;
+  }
+
+  .search-container {
+    padding: 0;
+  }
+}

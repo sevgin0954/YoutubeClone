@@ -37,7 +37,7 @@ export class SigninComponent implements OnInit {
       const baseUrl = window.location.origin;
 
       window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' +
-      `client_id=${SecurityConstants.YOUTUBE_CLIENT_ID}&` +
+      `client_id=${SecurityConstants.YOUTUBE_CLIENT_ID_2}&` +
       `redirect_uri=${baseUrl}/signin&` +
       'response_type=token&' +
       'scope=' +
