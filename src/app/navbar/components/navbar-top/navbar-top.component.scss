@@ -1,6 +1,11 @@
 @import './../../../../variables.scss';
 @import './../../styles.scss';
 
+.navbar {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
 .btn-skip {
   padding: 0rem;
   width: 12rem;
@@ -12,7 +17,7 @@
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
-    padding-right: 1rem;
+  padding-right: 1rem;
   width: 100%;
 }
 
@@ -32,7 +37,13 @@
   box-shadow: none;
 }
 
-@media (max-width: $navbar-colapsed-max-width) {
+@media (max-width: $navbar-side-colapsed-max-width) {
+  #navbar-top nav {
+    height: 3.37rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
   .search-button {
     margin-left: 0.5rem;
   }

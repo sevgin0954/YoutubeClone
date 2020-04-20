@@ -1,15 +1,13 @@
 <header id="navbar-top" class="sticky-top">
   <nav class="navbar navbar-expand navbar-light">
-    <!-- <button class="btn navbar-menu">
-      <i class="fas fa-bars fa-lg"></i>
-    </button> -->
-
     <a class="navbar-brand" href="#">
       <i class="fab fa-youtube"></i>
       Youtube
     </a>
 
-    <button class="btn btn-skip gb-offscreen" (click)="skipToMainContent()">Skip to main content</button>
+    <button class="btn btn-skip gb-offscreen" (click)="skipToMainContent()">
+      Skip to main content
+    </button>
 
     <app-search-bar (appSubmit)="onSubmit($event)" class="search-container"></app-search-bar>
   </nav>

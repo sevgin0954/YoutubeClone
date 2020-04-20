@@ -19,7 +19,7 @@
   width: 185px;
 }
 
-@media (max-width: 874px) {
+@media (max-width: $navbar-side-colapsed-max-width) {
   $navbar-width: 50px;
 
   .menu-text {

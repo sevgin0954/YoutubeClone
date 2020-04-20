@@ -5,12 +5,12 @@ $navbarHeight: $navbar-bottom-height;
 $navbarWidth: 100%;
 
 .navbar {
+  bottom: 0;
   display: flex;
   height: $navbarHeight;
   padding-bottom: 0.3rem;
   padding-top: 0.3rem;
   position: fixed;
-  top: calc(100% - #{$navbarHeight});
   width: $navbarWidth;
   z-index: 1020;
 }

@@ -29,12 +29,6 @@
   #navbar-side {
     display: none;
   }
-
-  #navbar-top nav {
-    height: 3.37rem;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
 }
 
 $hide-bottom-navbar-min-width: calc(#{$bottom-navbar-max-width} + 1px);

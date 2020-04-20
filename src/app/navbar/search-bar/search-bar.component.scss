@@ -45,7 +45,7 @@ form {
   }
 }
 
-@media(max-width: $navbar-colapsed-max-width) {
+@media(max-width: $navbar-side-colapsed-max-width) {
   .search-button {
     margin-left: 0.5rem;
   }
