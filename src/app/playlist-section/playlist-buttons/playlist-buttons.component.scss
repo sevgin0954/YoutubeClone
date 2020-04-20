@@ -1,9 +1,35 @@
 @import './../styles.scss';
 @import './../../../variables.scss';
 
-button:focus {
-  border: 2px dotted white;
-  outline: none;
+.btn-arrow {
+  font-size: 1.1rem;
+  background-color: $dark-blue;
+  color: $light-blue;
+  border: none;
+}
+.btn-arrow:first-child {
+  margin-right: $video-margin;
+}
+.btn-arrow:disabled {
+  background-color: gray;
+  opacity: 40%;
+}
+
+.loading {
+  margin-right: auto;
+  text-orientation: mixed;
+  writing-mode: vertical-lr;
+  font: 1rem 'Open Sans Condensed', sans-serif;
+}
+
+.loading-btn {
+  background-color: rgba(grey, 0.5);
+  border: none;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.loading-btn:disabled {
+  opacity: 1;
 }
 
 :host ::ng-deep {

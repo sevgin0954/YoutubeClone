@@ -47,11 +47,15 @@ input.input:focus {
 // Classes ----------------------------------------------------------------
 .gb-btn-blue {
   background-color: $dark-blue;
-  color: $white;
+  color: $light-blue;
 }
 .gb-btn-blue:hover, .gb-btn-blue:focus {
   box-shadow: none;
-  color: $white;
+  color: $light-blue;
+}
+.gb-btn-blue:focus {
+  border: 2px dotted $light-blue !important;
+  outline: none;
 }
 
 .gb-btn-white {
@@ -62,6 +66,10 @@ input.input:focus {
 .gb-btn-white:hover, .gb-btn-white:focus {
   box-shadow: none;
   color: $dark-blue;
+}
+.gb-btn-white:focus {
+  border: 2px dotted $dark-blue;
+  outline: none;
 }
 
 .gb-channel-title {

@@ -1,5 +1,6 @@
 <article class="d-flex">
-  <button disabled #leftBtn class="btn-arrow" (click)="onLeftBtnClick()"
+  <button disabled #leftBtn class="btn-arrow gb-btn-blue"
+  (click)="onLeftBtnClick(); leftBtn.blur();"
     aria-label="previous">
     <i class="fas fa-arrow-circle-right"></i>
   </button>
@@ -11,7 +12,8 @@
     </ng-container>
   </div>
 
-  <button #rightBtn class="btn-arrow" (click)="onRightBtnClick()"
+  <button #rightBtn class="btn-arrow gb-btn-blue"
+  (click)="onRightBtnClick(); rightBtn.blur();"
     aria-label="next">
     <i class="fas fa-arrow-circle-left"></i>
   </button>

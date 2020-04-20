@@ -1,13 +1,13 @@
 <div class="subscribe-btn">
   <button
-    class="btn gb-btn-blue btn-subscribe"
+    class="btn gb-btn-blue"
     [attr.disabled]="isErrored ? 'disabled' : null"
     *ngIf="isSubscribed === false"
     (click)="onSubscribe()">
   Subscribe
   </button>
   <button
-    class="btn gb-btn-white btn-unsubscribe"
+    class="btn gb-btn-white"
     [attr.disabled]="isErrored ? 'disabled' : null"
     *ngIf="isSubscribed === true"
     (click)="onUnsubscribe()">
