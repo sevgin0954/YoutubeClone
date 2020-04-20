@@ -25,6 +25,7 @@ export class TextRevealComponent implements AfterViewChecked, OnChanges {
   isShowingMore: boolean = false;
   isTextOverflowing: boolean = false;
   canTextOverflow: boolean = true;
+  private canTextOverflowPreviousValue: boolean = true;
 
   constructor(
     private changeDetection: ChangeDetectorRef,
@@ -53,9 +54,13 @@ export class TextRevealComponent implements AfterViewChecked, OnChanges {
   }
 
   onResize(): void {
-    this.isShowingMore = false;
-
     this.updateButtonsFields();
+
+    if (this.canTextOverflow !== this.canTextOverflowPreviousValue) {
+      this.isShowingMore = false;
+    }
+    this.canTextOverflowPreviousValue = this.canTextOverflow;
+
     this.tryDetectChanges();
   }
 
