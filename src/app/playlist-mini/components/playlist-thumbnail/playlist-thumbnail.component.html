@@ -1,5 +1,6 @@
 <div class="thumbnail-conteiner">
-  <a class="thumbnail-button" [routerLink]="['/channel', playlist.snippet.channelId]">
+  <a class="thumbnail-button" [routerLink]="['/channel', playlist.snippet.channelId]"
+    tabindex="-1">
     <div class="thumbnail-overlay play-all-container">
       <div class="play-all-text">
         <i class="fas fa-play"></i>
@@ -18,6 +19,7 @@
       </div>
     </div>
 
-    <img class="thumbnail" src="{{ getThumnailUrl(playlist.snippet.thumbnails) }}" alt="{{ playlist.snippet.title }}">
+    <img class="thumbnail" src="{{ getThumnailUrl(playlist.snippet.thumbnails) }}"
+      role="presentation" alt="">
   </a>
 </div>
