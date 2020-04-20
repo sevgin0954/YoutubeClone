@@ -16,4 +16,6 @@ export class PlaylistHeaderComponent {
   @isRequired
   @Input()
   title: string;
+
+  maxDisplayedRows: number = 2;
 }
