@@ -20,7 +20,9 @@ export class GeolocationService {
   ) { }
 
   getRegionCode(): Observable<RegionCode> {
-    const url = new Url(MainConstants.APISTACK_BASE_URL, ['check'], {
+    const url = new Url(
+      MainConstants.CORS_ANYWHERE_BASE_URL,
+      [MainConstants.APISTACK_BASE_URL, 'check'], {
       'access_key': SecurityConstants.IPSTACK_API_KEY
     });
     const headers = {};

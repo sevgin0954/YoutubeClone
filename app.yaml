@@ -1,0 +1,12 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+handlers:
+- url: /(.*\.(gif|png|jpg|less|json|woff|woff2|ttf|eot|scss|css|js|ico|svg)(|\.map))$
+  static_files: youtubeClone/\1
+  upload: youtubeClone/(.*)(|\.map)
+- url: /(.*)
+  static_files: youtubeClone/index.html
+  upload: youtubeClone/index.html
+- url: /
+  static_dir: youtubeClone
