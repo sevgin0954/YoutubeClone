@@ -2,27 +2,13 @@ import { Component, Input, DoCheck, IterableDiffers, IterableDiffer } from '@ang
 
 import { Search } from 'src/app/models/search/search';
 import isRequired from 'src/app/decorators/isRequired';
-import { VideoService } from 'src/app/services-singleton/video.service';
-import { ChannelService } from 'src/app/services-singleton/channel.service';
-import { PlaylistService } from 'src/app/services-singleton/playlist.service';
 import { ResourceKind } from 'src/app/shared/enums/resource-kind';
-import { PageArguments } from 'src/app/shared/arguments/page-arguments';
-import { ChannelResource } from 'src/app/shared/enums/resource-properties/channel-resource';
-import { PlaylistResource } from 'src/app/shared/enums/resource-properties/playlist-resource';
-import { VideoResource } from 'src/app/shared/enums/resource-properties/video-resource';
 import { Channel } from 'src/app/models/channel/channel';
 import { Playlist } from 'src/app/models/playlist/playlist';
 import { Video } from 'src/app/models/video/video';
 import { ThumbnailSize } from 'src/app/shared/enums/thumbnail-size';
-
-type Element = {
-  id: string,
-  kind: string
-}
-
-type ElementIdsElements = {
-  [id: string]: Element
-}
+import { SearchElementsLoadService } from '../services/search-elements-load.service';
+import { SearchElementsService } from 'src/app/services-singleton/search-elements.service';
 
 @Component({
   selector: 'app-search-elements',
@@ -36,45 +22,25 @@ export class SearchElementsComponent implements DoCheck {
   elements: Search[] = [];
 
   descriptionMaxDisplayedRows: number = 3;
-
+  displayedElements: SearchElement[] = [];
   elementIds: string[] = [];
-  elementIdsElements: ElementIdsElements = { };
-
   newChannelElementIds: string[] = [];
   newPlaylistElementIds: string[] = [];
   newVideoElementIds: string[] = [];
-
   ResourceKind = ResourceKind;
   thumbnailSize = ThumbnailSize.medium;
   titleMaxDisplayedRows: number = 2;
 
+  private loadedElements: SearchElement[] = [];
+  private idsLoadedElementIndexes: { [id: string]: number } = {};
   private iterableDiffer: IterableDiffer<Search>;
 
   constructor(
-    private channelService: ChannelService,
     iterable: IterableDiffers,
-    private playlistService: PlaylistService,
-    private videoService: VideoService
+    private searchElementsLoadService: SearchElementsLoadService,
+    private searchElementsService: SearchElementsService
   ) {
     this.iterableDiffer = iterable.find(this.elements).create();
-  }
-
-  getChannelElement(id: string): Channel {
-    return this.elementIdsElements[id] as Channel;
-  }
-
-  getPlaylistElement(id: string): Playlist {
-    return this.elementIdsElements[id] as Playlist;
-  }
-
-  getVideoElement(id: string): Video {
-    return this.elementIdsElements[id] as Video;
-  }
-
-  getElementResourceKind(id: string): ResourceKind {
-    const kind = ResourceKind[this.elementIdsElements[id].kind];
-
-    return kind;
   }
 
   ngDoCheck(): void {
@@ -83,94 +49,105 @@ export class SearchElementsComponent implements DoCheck {
       return;
     }
 
-    this.updateNewElementIds();
+    this.updateNewElementIds2();
 
-    this.tryLoadChannels();
-    this.tryLoadPlaylists();
-    this.tryLoadVideos();
+    this.searchElementsLoadService
+      .tryLoadChannels(this.newChannelElementIds, this.onElementsLoad.bind(this));
+    this.searchElementsLoadService
+      .tryLoadPlaylists(this.newPlaylistElementIds, this.onElementsLoad.bind(this));
+    this.searchElementsLoadService
+      .tryLoadVideos(this.newVideoElementIds, this.onElementsLoad.bind(this));
   }
 
-  updateNewElementIds(): void {
+  private updateNewElementIds2(): void {
+    const newElements = this.getNewElements();
+    this.updateNewElementIds(newElements);
+    this.addElementsToIdsIndexes(newElements);
+  }
+
+  private getNewElements(): Search[] {
+    const newElements: Search[] = [];
+
+    this.elements.forEach(element => {
+      const elementId = this.searchElementsService.getId(element);
+      const isElementNew = this.idsLoadedElementIndexes[elementId] == null;
+      if (isElementNew) {
+        newElements.push(element);
+      }
+    });
+
+    return newElements;
+  }
+
+  private updateNewElementIds(newElements: Search[]): void {
     this.newChannelElementIds = [];
     this.newPlaylistElementIds = [];
     this.newVideoElementIds = [];
 
-    this.elements.forEach(currentElement => {
-      if (currentElement.id.kind == ResourceKind[ResourceKind["youtube#channel"]]) {
-        const id = currentElement.id.channelId;
-        this.tryAddElementId(id, this.newChannelElementIds);
+    newElements.forEach(element => {
+      if (element.id.kind === ResourceKind[ResourceKind["youtube#channel"]]) {
+        const id = element.id.channelId;
+        this.newChannelElementIds.push(id);
       }
-      else if (currentElement.id.kind == ResourceKind[ResourceKind["youtube#playlist"]]) {
-        const id = currentElement.id.playlistId;
-        this.tryAddElementId(id, this.newPlaylistElementIds);
+      else if (element.id.kind === ResourceKind[ResourceKind["youtube#playlist"]]) {
+        const id = element.id.playlistId;
+        this.newPlaylistElementIds.push(id);
       }
-      else if (currentElement.id.kind == ResourceKind[ResourceKind["youtube#video"]]) {
-        const id = currentElement.id.videoId;
-        this.tryAddElementId(id, this.newVideoElementIds);
+      else if (element.id.kind === ResourceKind[ResourceKind["youtube#video"]]) {
+        const id = element.id.videoId;
+        this.newVideoElementIds.push(id);
       }
     });
   }
 
-  private tryAddElementId(id: string, elements: string[]): void {
-    if (this.elementIdsElements[id] === undefined) {
-      elements.push(id);
-      this.elementIds.push(id);
-      this.elementIdsElements[id] = null;
-    }
-  }
-
-  tryLoadChannels(): void {
-    if (this.newChannelElementIds.length === 0) {
-      return;
-    }
-
-    const pageArgs = new PageArguments(this.newChannelElementIds.length);
-    const resources = [
-      ChannelResource.snippet,
-      ChannelResource.statistics
-    ];
-    this.channelService.getByIds(this.newChannelElementIds, pageArgs, resources)
-    .subscribe(data => {
-      this.addElements(data.items);
+  private addElementsToIdsIndexes(newElements: Search[]): void {
+    newElements.forEach((element, index) => {
+      const id = this.searchElementsService.getId(element);
+      this.idsLoadedElementIndexes[id] = index;
     });
   }
 
-  tryLoadPlaylists(): void {
-    if (this.newPlaylistElementIds.length === 0) {
-      return;
-    }
+  private onElementsLoad(elements: SearchElement[]): void {
+    this.addLoadedElements(elements);
 
-    const pageArgs = new PageArguments(this.newPlaylistElementIds.length);
-    const resources = [
-      PlaylistResource.snippet,
-      PlaylistResource.contentDetails
-    ];
-    this.playlistService.getByIds(this.newPlaylistElementIds, pageArgs, resources)
-    .subscribe(data => {
-      this.addElements(data.items);
+    this.updateDisplayedElements();
+  }
+
+  private addLoadedElements(elements: SearchElement[]): void {
+    elements.forEach(element => {
+      const elementIndex = this.idsLoadedElementIndexes[element.id];
+      this.loadedElements[elementIndex] = element;
     });
   }
 
-  tryLoadVideos(): void {
-    if (this.newVideoElementIds.length === 0) {
-      return;
-    }
+  private updateDisplayedElements(): void {
+    const startIndex = this.displayedElements.length;
+    for (let i = startIndex; i < this.loadedElements.length; i++) {
+      const element = this.loadedElements[i];
 
-    const pageArgs = new PageArguments(this.newVideoElementIds.length);
-    const resources = [
-      VideoResource.snippet,
-      VideoResource.statistics
-    ];
-    this.videoService.getByIds(this.newVideoElementIds, pageArgs, resources)
-    .subscribe(data => {
-      this.addElements(data.items);
-    });
+      if (element == null) {
+        break;
+      }
+
+      this.displayedElements.push(element);
+    }
   }
 
-  private addElements(elements: Element[]): void {
-    elements.forEach(currentItem => {
-      const id = currentItem.id;
-      this.elementIdsElements[id] = currentItem;
-    });
+  getChannelElement(element: SearchElement): Channel {
+    return element as Channel;
+  }
+
+  getPlaylistElement(element: SearchElement): Playlist {
+    return element as Playlist;
+  }
+
+  getVideoElement(element: SearchElement): Video {
+    return element as Video;
+  }
+
+  getElementResourceKind(element: SearchElement): ResourceKind {
+    const kind = ResourceKind[element.kind];
+
+    return kind;
   }
 }

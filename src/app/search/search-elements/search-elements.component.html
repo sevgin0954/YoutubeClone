@@ -1,21 +1,24 @@
-<ng-container *ngFor="let id of elementIds">
-  <ng-container *ngIf="this.elementIdsElements[id] != null">
-    <div class="element-container channel-container" *ngIf="getElementResourceKind(id) === ResourceKind['youtube#channel']">
+<ng-container *ngFor="let element of displayedElements">
+  <ng-container>
+    <div class="element-container channel-container"
+      *ngIf="getElementResourceKind(element) === ResourceKind['youtube#channel']">
       <app-channel-mini
-        [channel]="getChannelElement(id)"
+        [channel]="getChannelElement(element)"
         [thumbnailSize]="thumbnailSize">
       </app-channel-mini>
     </div>
-    <div class="element-container" *ngIf="getElementResourceKind(id) === ResourceKind['youtube#playlist']">
+    <div class="element-container"
+      *ngIf="getElementResourceKind(element) === ResourceKind['youtube#playlist']">
       <app-playlist-mini
-        [playlist]="getPlaylistElement(id)"
+        [playlist]="getPlaylistElement(element)"
         [thumbnailSize]="thumbnailSize">
       </app-playlist-mini>
     </div>
-    <div class="element-container" *ngIf="getElementResourceKind(id) === ResourceKind['youtube#video']">
+    <div class="element-container"
+      *ngIf="getElementResourceKind(element) === ResourceKind['youtube#video']">
       <app-video-mini
         [descriptionMaxDisplayedRows]="descriptionMaxDisplayedRows"
-        [video]="getVideoElement(id)"
+        [video]="getVideoElement(element)"
         [titleMaxDisplayedRows]="titleMaxDisplayedRows"
         [thumbnailSize]="thumbnailSize">
       </app-video-mini>

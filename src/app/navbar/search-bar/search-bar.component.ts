@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
-import { SuggestionService } from '../../search/services/suggestion.service';
+import { SuggestionService } from '../services/suggestion.service';
 import { distinctUntilChanged, switchMap, filter, map, debounceTime } from 'rxjs/operators';
 import { RegionCode } from 'src/app/shared/enums/region-code';
 import isRequired from 'src/app/decorators/isRequired';
