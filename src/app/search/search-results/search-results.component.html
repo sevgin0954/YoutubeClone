@@ -2,6 +2,7 @@
   <app-offset-header [text]="title"></app-offset-header>
 
   <app-search-elements *ngIf="searchResults.length > 0"
+    (searchElementsLoad)="onSearchElementLoaded()"
     [elements]="searchResults">
   </app-search-elements>
 

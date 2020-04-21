@@ -6,6 +6,7 @@ export class ExceptionConstants {
   public static readonly CANNOT_ACCESS_VIDEO_COMMENTS = 'Comments are disabled';
   public static readonly CURRENTLY_LOADING = 'Loading is already in progress.';
   public static readonly HAVING_ATTRIBUTE = 'Element should not have attribute.';
+  public static readonly INCORRECT_LENGTH = 'The collection has invalid length.';
   public static readonly INDEX_OUT_OF_RANGE = 'Index was out of range.';
   public static readonly INVALID_ARGUMENT = 'Element was invalid.';
   public static readonly INVALID_OPERATION = 'The operation was invalid.';

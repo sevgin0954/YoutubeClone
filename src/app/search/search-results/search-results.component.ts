@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { SearchService } from 'src/app/services-singleton/search.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { Search } from 'src/app/models/search/search';
-import { finalize } from 'rxjs/operators';
 import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 
 const MAX_RESULTS_PER_PAGE = 25;
@@ -16,11 +15,11 @@ const MAX_RESULTS_PER_PAGE = 25;
 })
 export class SearchResultsComponent implements OnInit {
 
-  areMoreResults: boolean;
+  areMoreResults: boolean = true;
   exceptionMessage = ExceptionConstants.WEB;
-  isErrored: boolean;
-  isLoading: boolean;
-  searchResults: Search[];
+  isErrored: boolean = false;
+  isLoading: boolean = false;
+  searchResults: Search[] = [];
   title = 'Search results';
   private pageToken: string;
 
@@ -30,19 +29,9 @@ export class SearchResultsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initFields();
-
     this.route.params.subscribe(params => {
-      this.initFields();
       this.loadMoreResults();
     });
-  }
-
-  private initFields(): void {
-    this.areMoreResults = true;
-    this.isErrored = false;
-    this.isLoading = false;
-    this.searchResults = [];
   }
 
   loadMoreResults = (): void => {
@@ -50,11 +39,8 @@ export class SearchResultsComponent implements OnInit {
 
     const query = this.route.snapshot.params['query'];
 
-    const pageArgs = new PageArguments(MAX_RESULTS_PER_PAGE, this.pageToken);
-    this.searchService.getResults(query, pageArgs).pipe(
-    finalize(() => {
-      this.isLoading = false;
-    }))
+    const pageArgs = new PageArguments(5, this.pageToken);
+    this.searchService.getResults(query, pageArgs)
     .subscribe(data => {
       this.searchResults.push(...data.items);
       this.pageToken = data.nextPageToken;
@@ -66,5 +52,9 @@ export class SearchResultsComponent implements OnInit {
       this.areMoreResults = false;
       this.isErrored = true;
     });
+  }
+
+  onSearchElementLoaded(): void {
+    this.isLoading = false;
   }
 }

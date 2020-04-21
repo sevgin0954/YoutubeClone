@@ -1,4 +1,4 @@
-import { Component, Input, DoCheck, IterableDiffers, IterableDiffer } from '@angular/core';
+import { Component, Input, DoCheck, IterableDiffers, IterableDiffer, EventEmitter, AfterViewChecked, Output, ChangeDetectionStrategy } from '@angular/core';
 
 import { Search } from 'src/app/models/search/search';
 import isRequired from 'src/app/decorators/isRequired';
@@ -9,17 +9,21 @@ import { Video } from 'src/app/models/video/video';
 import { ThumbnailSize } from 'src/app/shared/enums/thumbnail-size';
 import { SearchElementsLoadService } from '../services/search-elements-load.service';
 import { SearchElementsService } from 'src/app/services-singleton/search-elements.service';
+import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
 
 @Component({
   selector: 'app-search-elements',
   templateUrl: './search-elements.component.html',
   styleUrls: ['./search-elements.component.scss']
 })
-export class SearchElementsComponent implements DoCheck {
+export class SearchElementsComponent implements DoCheck, AfterViewChecked {
 
   @isRequired
   @Input()
   elements: Search[] = [];
+
+  @Output()
+  searchElementsLoad = new EventEmitter<number>();
 
   descriptionMaxDisplayedRows: number = 3;
   displayedElements: SearchElement[] = [];
@@ -30,10 +34,12 @@ export class SearchElementsComponent implements DoCheck {
 
   private idsLoadedElementIndexes: { [id: string]: number } = { };
   private iterableDiffer: IterableDiffer<Search>;
+  private hasChanges: boolean = true;
   private loadedElements: SearchElement[] = [];
   private newChannelElementIds: string[] = [];
   private newPlaylistElementIds: string[] = [];
   private newVideoElementIds: string[] = [];
+  private previousElementsLength: number = 0;
 
   constructor(
     iterable: IterableDiffers,
@@ -44,11 +50,17 @@ export class SearchElementsComponent implements DoCheck {
   }
 
   ngDoCheck(): void {
-    // TODO: Skip if currently loading
     const changes = this.iterableDiffer.diff(this.elements);
     if (changes == null) {
       return;
     }
+    // Throw an error if currently loading
+    if (this.previousElementsLength !== this.displayedElements.length) {
+      throw Error(ExceptionConstants.CURRENTLY_LOADING);
+    }
+
+    this.hasChanges = true;
+    this.previousElementsLength = this.elements.length;
 
     this.updateFields();
 
@@ -114,7 +126,6 @@ export class SearchElementsComponent implements DoCheck {
 
   private onElementsLoad(elements: SearchElement[]): void {
     this.addLoadedElements(elements);
-
     this.updateDisplayedElements();
   }
 
@@ -135,6 +146,13 @@ export class SearchElementsComponent implements DoCheck {
       }
 
       this.displayedElements.push(element);
+    }
+  }
+
+  ngAfterViewChecked(): void {
+    if (this.loadedElements.length === this.elements.length && this.hasChanges) {
+      this.searchElementsLoad.emit(this.displayedElements.length);
+      this.hasChanges = false;
     }
   }
 
