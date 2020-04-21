@@ -24,16 +24,16 @@ export class SearchElementsComponent implements DoCheck {
   descriptionMaxDisplayedRows: number = 3;
   displayedElements: SearchElement[] = [];
   elementIds: string[] = [];
-  newChannelElementIds: string[] = [];
-  newPlaylistElementIds: string[] = [];
-  newVideoElementIds: string[] = [];
   ResourceKind = ResourceKind;
   thumbnailSize = ThumbnailSize.medium;
   titleMaxDisplayedRows: number = 2;
 
-  private loadedElements: SearchElement[] = [];
-  private idsLoadedElementIndexes: { [id: string]: number } = {};
+  private idsLoadedElementIndexes: { [id: string]: number } = { };
   private iterableDiffer: IterableDiffer<Search>;
+  private loadedElements: SearchElement[] = [];
+  private newChannelElementIds: string[] = [];
+  private newPlaylistElementIds: string[] = [];
+  private newVideoElementIds: string[] = [];
 
   constructor(
     iterable: IterableDiffers,
@@ -44,12 +44,13 @@ export class SearchElementsComponent implements DoCheck {
   }
 
   ngDoCheck(): void {
+    // TODO: Skip if currently loading
     const changes = this.iterableDiffer.diff(this.elements);
     if (changes == null) {
       return;
     }
 
-    this.updateNewElementIds2();
+    this.updateFields();
 
     this.searchElementsLoadService
       .tryLoadChannels(this.newChannelElementIds, this.onElementsLoad.bind(this));
@@ -59,7 +60,11 @@ export class SearchElementsComponent implements DoCheck {
       .tryLoadVideos(this.newVideoElementIds, this.onElementsLoad.bind(this));
   }
 
-  private updateNewElementIds2(): void {
+  private updateFields(): void {
+    // Reset fields
+    this.idsLoadedElementIndexes = { };
+    this.loadedElements = [];
+
     const newElements = this.getNewElements();
     this.updateNewElementIds(newElements);
     this.addElementsToIdsIndexes(newElements);
