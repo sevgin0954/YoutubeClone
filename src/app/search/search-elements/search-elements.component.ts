@@ -1,4 +1,4 @@
-import { Component, Input, DoCheck, IterableDiffers, IterableDiffer, EventEmitter, AfterViewChecked, Output, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, DoCheck, IterableDiffers, IterableDiffer, EventEmitter, AfterViewChecked, Output } from '@angular/core';
 
 import { Search } from 'src/app/models/search/search';
 import isRequired from 'src/app/decorators/isRequired';
@@ -54,7 +54,7 @@ export class SearchElementsComponent implements DoCheck, AfterViewChecked {
     if (changes == null) {
       return;
     }
-    // Throw an error if currently loading
+    // Throws an error if currently loading
     if (this.previousElementsLength !== this.displayedElements.length) {
       throw Error(ExceptionConstants.CURRENTLY_LOADING);
     }
