@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { SearchService } from 'src/app/services-singleton/search.service';
 import { PageArguments } from 'src/app/shared/arguments/page-arguments';
 import { Search } from 'src/app/models/search/search';
 import { ExceptionConstants } from 'src/app/shared/constants/exception-constants';
+import { SearchElementsService } from 'src/app/services-singleton/search-elements.service';
+import { SearchService } from 'src/app/services-singleton/search.service';
 
 const MAX_RESULTS_PER_PAGE = 25;
 
@@ -21,11 +22,14 @@ export class SearchResultsComponent implements OnInit {
   isLoading: boolean = false;
   searchResults: Search[] = [];
   title = 'Search results';
+
+  private searchResultIds = new Set<string>();
   private pageToken: string;
 
   constructor(
     private route: ActivatedRoute,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private searchElementService: SearchElementsService
   ) { }
 
   ngOnInit(): void {
@@ -39,10 +43,10 @@ export class SearchResultsComponent implements OnInit {
 
     const query = this.route.snapshot.params['query'];
 
-    const pageArgs = new PageArguments(5, this.pageToken);
+    const pageArgs = new PageArguments(MAX_RESULTS_PER_PAGE, this.pageToken);
     this.searchService.getResults(query, pageArgs)
     .subscribe(data => {
-      this.searchResults.push(...data.items);
+      this.addDistinctSearchResults(data.items);
       this.pageToken = data.nextPageToken;
 
       if (this.pageToken == null) {
@@ -51,6 +55,17 @@ export class SearchResultsComponent implements OnInit {
     }, error => {
       this.areMoreResults = false;
       this.isErrored = true;
+    });
+  }
+
+  private addDistinctSearchResults(results: Search[]): void {
+    results.forEach(currentResult => {
+      const id = this.searchElementService.getId(currentResult);
+
+      if (this.searchResultIds.has(id) === false) {
+        this.searchResults.push(currentResult);
+        this.searchResultIds.add(id);
+      }
     });
   }
 

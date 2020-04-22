@@ -56,16 +56,7 @@ export class SearchElementsComponent implements DoCheck, AfterViewChecked {
       return;
     }
 
-    const elementIds = this.elements.map(e => this.searchElementsService.getId(e));
-    const uniqueElementLength = [...new Set(elementIds)].length;
-    const areElementsUnique = uniqueElementLength === this.elements.length;
-    if (areElementsUnique === false) {
-      throw Error(ExceptionConstants.NOT_UNIQUE_COLLECTION);
-    }
-    // Throws an error if currently loading
-    if (this.previousElementsLength !== this.displayedElements.length) {
-      throw Error(ExceptionConstants.CURRENTLY_LOADING);
-    }
+    this.validateChange();
 
     this.hasChanges = true;
     this.previousElementsLength = this.elements.length;
@@ -78,6 +69,21 @@ export class SearchElementsComponent implements DoCheck, AfterViewChecked {
       .tryLoadPlaylists(this.newPlaylistElementIds, this.onElementsLoad.bind(this));
     this.searchElementsLoadService
       .tryLoadVideos(this.newVideoElementIds, this.onElementsLoad.bind(this));
+  }
+
+  private validateChange(): void {
+    // Throws an error if elements are not unique
+    const elementIds = this.elements.map(e => this.searchElementsService.getId(e));
+    const uniqueElementLength = [...new Set(elementIds)].length;
+    const areElementsUnique = uniqueElementLength === this.elements.length;
+    if (areElementsUnique === false) {
+      throw Error(ExceptionConstants.NOT_UNIQUE_COLLECTION);
+    }
+
+    // Throws an error if currently loading
+    if (this.previousElementsLength !== this.displayedElements.length) {
+      throw Error(ExceptionConstants.CURRENTLY_LOADING);
+    }
   }
 
   private updateFields(): void {
@@ -146,19 +152,19 @@ export class SearchElementsComponent implements DoCheck, AfterViewChecked {
   private updateDisplayedElements(): void {
     while (this.newLoadedElementsIndex < this.newLoadedElements.length) {
       const element = this.newLoadedElements[this.newLoadedElementsIndex];
-      this.newLoadedElementsIndex++;
 
       if (element == null) {
         break;
       }
 
       this.displayedElements.push(element);
+      this.newLoadedElementsIndex++;
     }
   }
 
   ngAfterViewChecked(): void {
     const hasNewElemeentsLoaded =
-      this.newLoadedElements.length === this.newLoadedElementsIndex;
+      this.displayedElements.length === this.elements.length;
     if (hasNewElemeentsLoaded && this.hasChanges) {
       this.searchElementsLoad.emit(this.displayedElements.length);
       this.hasChanges = false;
