@@ -35,7 +35,8 @@ export class SearchElementsComponent implements DoCheck, AfterViewChecked {
   private idsLoadedElementIndexes: { [id: string]: number } = { };
   private iterableDiffer: IterableDiffer<Search>;
   private hasChanges: boolean = true;
-  private loadedElements: SearchElement[] = [];
+  private newLoadedElements: SearchElement[] = [];
+  private newLoadedElementsIndex: number = 0;
   private newChannelElementIds: string[] = [];
   private newPlaylistElementIds: string[] = [];
   private newVideoElementIds: string[] = [];
@@ -53,6 +54,13 @@ export class SearchElementsComponent implements DoCheck, AfterViewChecked {
     const changes = this.iterableDiffer.diff(this.elements);
     if (changes == null) {
       return;
+    }
+
+    const elementIds = this.elements.map(e => this.searchElementsService.getId(e));
+    const uniqueElementLength = [...new Set(elementIds)].length;
+    const areElementsUnique = uniqueElementLength === this.elements.length;
+    if (areElementsUnique === false) {
+      throw Error(ExceptionConstants.NOT_UNIQUE_COLLECTION);
     }
     // Throws an error if currently loading
     if (this.previousElementsLength !== this.displayedElements.length) {
@@ -73,9 +81,8 @@ export class SearchElementsComponent implements DoCheck, AfterViewChecked {
   }
 
   private updateFields(): void {
-    // Reset fields
-    this.idsLoadedElementIndexes = { };
-    this.loadedElements = [];
+    this.newLoadedElements = [];
+    this.newLoadedElementsIndex = 0;
 
     const newElements = this.getNewElements();
     this.updateNewElementIds(newElements);
@@ -125,21 +132,21 @@ export class SearchElementsComponent implements DoCheck, AfterViewChecked {
   }
 
   private onElementsLoad(elements: SearchElement[]): void {
-    this.addLoadedElements(elements);
+    this.addNewLoadedElements(elements);
     this.updateDisplayedElements();
   }
 
-  private addLoadedElements(elements: SearchElement[]): void {
+  private addNewLoadedElements(elements: SearchElement[]): void {
     elements.forEach(element => {
       const elementIndex = this.idsLoadedElementIndexes[element.id];
-      this.loadedElements[elementIndex] = element;
+      this.newLoadedElements[elementIndex] = element;
     });
   }
 
   private updateDisplayedElements(): void {
-    const startIndex = this.displayedElements.length;
-    for (let i = startIndex; i < this.loadedElements.length; i++) {
-      const element = this.loadedElements[i];
+    while (this.newLoadedElementsIndex < this.newLoadedElements.length) {
+      const element = this.newLoadedElements[this.newLoadedElementsIndex];
+      this.newLoadedElementsIndex++;
 
       if (element == null) {
         break;
@@ -150,7 +157,9 @@ export class SearchElementsComponent implements DoCheck, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
-    if (this.loadedElements.length === this.elements.length && this.hasChanges) {
+    const hasNewElemeentsLoaded =
+      this.newLoadedElements.length === this.newLoadedElementsIndex;
+    if (hasNewElemeentsLoaded && this.hasChanges) {
       this.searchElementsLoad.emit(this.displayedElements.length);
       this.hasChanges = false;
     }

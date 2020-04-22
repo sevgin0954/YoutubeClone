@@ -16,6 +16,7 @@ export class ExceptionConstants {
   public static readonly NO_MORE_ELEMENTS_TO_LOAD = 'The are no more elements to load.';
   public static readonly NOT_A_NUMBER = 'Element is not a number.';
   public static readonly NOT_FOUND = 'Element cannot be found.';
+  public static readonly NOT_UNIQUE_COLLECTION = 'Elements in the collection should be unique.';
   public static readonly NULL_OR_UNDEFINED = 'Null or Undefinied exception.';
   public static readonly NOT_SUPPORTED = 'The operation is not supported.';
   public static readonly NUMBER_OUT_OF_RANGE = 'Then number was out of range.';
