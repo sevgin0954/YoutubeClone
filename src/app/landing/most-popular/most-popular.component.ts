@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { VideoService } from '../../services-singleton/video.service';
-import { RegionCode } from '../../shared/enums/region-code';
 import { GeolocationService } from '../../services-singleton/geolocation.service';
 import { loadVideosCallback } from '../../types';
 import { MainConstants } from '../../shared/constants/main-constants';
@@ -15,10 +14,9 @@ const TITLE = 'Trending videos';
 })
 export class MostPopularComponent {
 
-  loadVideosCallback: loadVideosCallback = this.videoService.getMostPopular;
+  loadVideosCallback: loadVideosCallback;
   isCurrentlyLoading: boolean = true;
   mainContentId = MainConstants.SKIP_TO_ELEMENT_ID;
-  regionCode: RegionCode;
   title: string = TITLE;
 
   constructor(
@@ -29,8 +27,10 @@ export class MostPopularComponent {
   ngOnInit() {
     this.isCurrentlyLoading = true;
 
-    this.geolacationService.getRegionCode().subscribe(data => {
-      this.regionCode = data;
+    this.geolacationService.getRegionCode().subscribe(regionCode => {
+      this.loadVideosCallback = (pageArgs, resources) => this.videoService
+        .getMostPopular(regionCode, pageArgs, resources);
+
       this.isCurrentlyLoading = false;
     });
   }

@@ -1,5 +1,6 @@
 <article>
-  <a class="no-style" [routerLink]="['/category', category.id ,category.snippet.title]">
+  <a class="no-style"
+    [routerLink]="['/category', category.snippet.title, regionCode, category.id ]">
     <div class="category-container">
       <p class="icon" [innerHTML]="icon"></p>
       <div class="text">

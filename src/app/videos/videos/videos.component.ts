@@ -25,10 +25,6 @@ export class VideosComponent implements OnChanges, OnDestroy {
   @Input()
   loadVideosCallback: loadVideosCallback;
 
-  @isRequired
-  @Input()
-  filterArgument: any;
-
   thumbnailSize: ThumbnailSize = ThumbnailSize.medium;
   descriptionMaxDisplayedRows: number = VIDEO_DESCRIPTION_DISPLAYED_ROWS;
   titleMaxDisplayedRows: number = VIDEO_TITLE_DISPLAYED_ROWS;
@@ -43,16 +39,14 @@ export class VideosComponent implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges): void {
     let isInputsNew = false;
 
-    // TODO: Refactor
     const callbackChanges = changes['loadVideosCallback'];
-    const filterArgumentChanges = changes['filterArgument'];
-    if (callbackChanges.isFirstChange() && filterArgumentChanges.isFirstChange()) {
+    if (callbackChanges.isFirstChange()) {
       isInputsNew = true;
     }
-    else if (filterArgumentChanges.isFirstChange() === false && filterArgumentChanges.previousValue !== filterArgumentChanges.currentValue) {
-      isInputsNew = true;
-    }
-    else if (callbackChanges.isFirstChange() === false && callbackChanges.previousValue !== callbackChanges.currentValue && filterArgumentChanges.previousValue !== filterArgumentChanges.currentValue) {
+    else if (
+      callbackChanges.isFirstChange() === false &&
+      callbackChanges.previousValue !== callbackChanges.currentValue
+    ) {
       isInputsNew = true;
     }
 
@@ -75,7 +69,6 @@ export class VideosComponent implements OnChanges, OnDestroy {
       VideoResource.player
     ];
     const videoSubscription = this.loadVideosCallback(
-      this.filterArgument,
       pageArgument,
       resources
     ).pipe(

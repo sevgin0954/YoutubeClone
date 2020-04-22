@@ -3,7 +3,7 @@
 
   <div class="category-container"
     *ngFor="let currentCategory of (categories$ | async)">
-    <app-category [category]="currentCategory"></app-category>
+    <app-category [category]="currentCategory" [regionCode]="regionCode"></app-category>
   </div>
 
   <div class="gb-loading-container" *ngIf="isLoading">

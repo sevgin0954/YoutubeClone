@@ -7,5 +7,5 @@ type EnumType = {
   [num: number]: string;
 }
 
-type loadVideosCallback = (filterArgument: any, pageArgs: PageArguments, resources: any[])
+type loadVideosCallback = (pageArgs: PageArguments, resources: any[])
   => Observable<ServiceModel<Video[]>>;

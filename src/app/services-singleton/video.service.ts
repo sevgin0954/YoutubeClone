@@ -112,15 +112,16 @@ export class VideoService {
   getByCategoryId = (
     categoryId: string,
     pageArgs: PageArguments,
-    resources: VideoResource[]
-  )
-    :Observable<ServiceModel<Video[]>> => {
+    resources: VideoResource[],
+    regionCode: RegionCode
+  ):Observable<ServiceModel<Video[]>> => {
     this.validateGetByCategoryId(categoryId, resources);
 
     const queryParams = {
       chart: MOST_POPULAR_FILTER,
-      videoCategoryId: categoryId,
       maxResults: pageArgs.maxResults,
+      videoCategoryId: categoryId,
+      regionCode: RegionCode[regionCode]
     };
     QueryParamsUtility.addResources(queryParams, resources, VideoResource);
     QueryParamsUtility.tryAddPageToken(queryParams, pageArgs.pageToken);

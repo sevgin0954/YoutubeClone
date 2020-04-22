@@ -10,7 +10,7 @@ import { CategoryVideosComponent } from './category-videos/category-videos.compo
 import { VideosModule } from '../videos/videos.module';
 
 const routes: Routes = [
-  { path: ':id/:name', component: CategoryVideosComponent },
+  { path: ':name/:region/:id', component: CategoryVideosComponent },
   { path: '', pathMatch: 'full', component: CategoriesComponent },
 ];
 

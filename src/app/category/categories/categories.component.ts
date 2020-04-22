@@ -7,6 +7,7 @@ import { finalize, map } from 'rxjs/operators';
 import { VideoCategoryResource } from 'src/app/shared/enums/resource-properties/video-category-resource';
 import { Observable } from 'rxjs';
 import { MainConstants } from 'src/app/shared/constants/main-constants';
+import { RegionCode } from 'src/app/shared/enums/region-code';
 
 @Component({
   selector: 'app-categories',
@@ -18,6 +19,7 @@ export class CategoriesComponent implements OnInit {
   categories$: Observable<VideoCategory[]>;
   isLoading: boolean = true;
   mainContentId = MainConstants.SKIP_TO_ELEMENT_ID;
+  regionCode: RegionCode;
   title: string = 'Categories';
 
   constructor(
@@ -27,6 +29,8 @@ export class CategoriesComponent implements OnInit {
 
   ngOnInit() {
     this.geolocationService.getRegionCode().subscribe(regionCode => {
+      this.regionCode = regionCode;
+
       const resources = [
         VideoCategoryResource.snippet
       ];

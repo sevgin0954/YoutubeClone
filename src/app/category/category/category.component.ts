@@ -5,6 +5,7 @@ import { VideoCategory } from 'src/app/models/video-category/video-category';
 import isRequired from 'src/app/decorators/isRequired';
 import getCategoryIcon from '../categoryIcon';
 import { VideoCategoryType } from 'src/app/shared/enums/video-category-type';
+import { RegionCode } from 'src/app/shared/enums/region-code';
 
 @Component({
   selector: 'app-category',
@@ -16,6 +17,10 @@ export class CategoryComponent implements OnChanges {
   @isRequired
   @Input()
   category: VideoCategory;
+
+  @isRequired
+  @Input()
+  regionCode: RegionCode;
 
   private _icon: string;
 

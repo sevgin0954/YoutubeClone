@@ -12,19 +12,22 @@ import { MainConstants } from 'src/app/shared/constants/main-constants';
 })
 export class CategoryVideosComponent implements OnInit {
 
-  categoryId: string;
   mainContentId = MainConstants.SKIP_TO_ELEMENT_ID;
   title: string;
-  loadVideosCallback: loadVideosCallback = this.videoService.getByCategoryId;
+  loadVideosCallback: loadVideosCallback;
 
   constructor(
     private videoService: VideoService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
-    this.categoryId = this.route.snapshot.params['id'];
     const categoryName = this.route.snapshot.params['name'];
+    const regionCode = this.route.snapshot.params['region'];
+    const categoryId = this.route.snapshot.params['id'];
+
+    this.loadVideosCallback = (pageArgs, resources) => this.videoService
+      .getByCategoryId(categoryId, pageArgs, resources, regionCode);
 
     this.title = `Videos in ${categoryName} category`;
   }
