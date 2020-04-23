@@ -2,7 +2,9 @@
   [formGroup]="searchForm"
   (ngSubmit)="onSubmit(); inputElement.blur();">
   <div class="w-100">
-    <input #inputElement (focus)="isInputFocuces = true" (blur)="isInputFocuces = false"
+    <input #inputElement
+      (focus)="isInputFocused = true;"
+      (blur)="isInputFocused = false"
       class="form-control input mr-sm-2 input-search"
       formControlName="search"
       placeholder="Search"
@@ -10,7 +12,8 @@
       type="search"/>
 
     <ul [attr.hidden]="(
-      isInputFocuces &&
+      isInputFocused &&
+      shouldShowSuggestions &&
       results.length > 0 &&
       isInputEmpty() === false
     ) ? null : 'hidden'"

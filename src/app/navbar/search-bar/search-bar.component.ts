@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } fro
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { SuggestionService } from '../services/suggestion.service';
-import { distinctUntilChanged, switchMap, filter, map, debounceTime } from 'rxjs/operators';
+import { switchMap, filter, map, debounceTime, tap } from 'rxjs/operators';
 import { RegionCode } from 'src/app/shared/enums/region-code';
 import isRequired from 'src/app/decorators/isRequired';
 import isInRange from 'src/app/decorators/isInRange';
@@ -28,7 +28,8 @@ export class SearchBarComponent implements OnInit {
   @Output()
   appSubmit = new EventEmitter<string>();
 
-  isInputFocuces: boolean = false;
+  isInputFocused: boolean = false;
+  shouldShowSuggestions: boolean = false;
   results: string[] = [];
   searchForm: FormGroup;
 
@@ -51,13 +52,16 @@ export class SearchBarComponent implements OnInit {
 
     const searchInput = this.searchForm.get(SEARCH_INPUT_NAME);
     searchInput.valueChanges.pipe(
+      tap(() => {
+        this.shouldShowSuggestions = false;
+      }),
       debounceTime(500),
       map<string, string>(query => query.trim()),
       filter((query) => query != null && query != ''),
-      distinctUntilChanged(),
       switchMap((query) => this.suggestionService.getSuggestions(query, RegionCode.EN, 10))
     ).subscribe(results => {
       this.results = results;
+      this.shouldShowSuggestions = true;
 
       this.changeDetectionRef.detectChanges();
     });
