@@ -23,7 +23,7 @@ export class SearchResultsComponent implements OnInit {
   searchResults: Search[];
   title = 'Search results';
 
-  private searchResultIds = new Set<string>();
+  private searchResultIds: Set<string>;
   private pageToken: string;
 
   constructor(
@@ -46,6 +46,10 @@ export class SearchResultsComponent implements OnInit {
     this.isErrored = false;
     this.isLoading = false;
     this.searchResults = [];
+
+    // Privats fields
+    this.searchResultIds = new Set<string>();
+    this.pageToken = undefined;
   }
 
   loadMoreResults = (): void => {
