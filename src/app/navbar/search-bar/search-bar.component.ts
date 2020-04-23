@@ -70,6 +70,8 @@ export class SearchBarComponent implements OnInit {
   onSuggestionClicked(query: string): void {
     const searchInput = this.searchForm.get(SEARCH_INPUT_NAME);
     searchInput.setValue(query);
+
+    this.onSubmit();
   }
 
   onSubmit(): void {

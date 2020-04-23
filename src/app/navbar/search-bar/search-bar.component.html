@@ -21,8 +21,7 @@
       <li #suggestionElement *ngFor="let result of results"
         (mousedown)="$event.preventDefault()"
         (mouseup)="inputElement.blur(); onSuggestionClicked(result);"
-        [value]="result"
-        [routerLink]="['/search', result]">
+        [value]="result">
         {{ result }}
       </li>
     </ul>
