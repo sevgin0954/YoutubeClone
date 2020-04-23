@@ -88,6 +88,8 @@ export class SinglePlaylistSectionComponent implements OnInit, OnDestroy {
 
     this.isFirstPage = false;
 
+    let currentPageResults = -1;
+
     const maxResults = MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
     const pageArgs = new PageArguments(maxResults, this.nextPageToken);
     const resources = [
@@ -100,6 +102,8 @@ export class SinglePlaylistSectionComponent implements OnInit, OnDestroy {
         this.nextPageToken = data.nextPageToken;
         this.totalResultsCount = data.pageInfo.totalResults;
 
+        currentPageResults = data.items.length;
+
         const resources = [
           VideoResource.contentDetails,
           VideoResource.snippet,
@@ -110,18 +114,7 @@ export class SinglePlaylistSectionComponent implements OnInit, OnDestroy {
       })
     ).subscribe(data => {
       const videosCount = data.items.length;
-
-      // TODO: Move to a service
-      let currentPageExpectedVideosCount;
-      const notLoadedVideosCount = pageArgs.maxResults - videosCount;
-      if (pageArgs.maxResults > notLoadedVideosCount) {
-        currentPageExpectedVideosCount = notLoadedVideosCount;
-      }
-      else {
-        currentPageExpectedVideosCount = videosCount - pageArgs.maxResults;
-      }
-
-      const missingVideosCount = currentPageExpectedVideosCount - videosCount;
+      const missingVideosCount = currentPageResults - videosCount;
       this.totalResultsCount -= missingVideosCount;
 
       this.videos.push(...data.items);
