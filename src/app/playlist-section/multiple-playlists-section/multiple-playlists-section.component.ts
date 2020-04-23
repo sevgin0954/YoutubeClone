@@ -47,21 +47,23 @@ export class MultiplePlaylistsSectionComponent implements OnInit, OnDestroy {
 
   loadMorePlaylists(onLoadedMoreCallback: Function): void {
     const playlistIds = this.channelSection.contentDetails.playlists;
+    this.totalResultsCount = playlistIds.length;
 
-    const playlistsEndIndex = this.playlistsStartIndex + MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
+    const playlistsEndIndex =
+      this.playlistsStartIndex + MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
 
-    const currentPagePlaylistIds = playlistIds.slice(this.playlistsStartIndex, playlistsEndIndex);
+    const currentPagePlaylistIds = playlistIds
+      .slice(this.playlistsStartIndex, playlistsEndIndex);
     const pageArgs = new PageArguments(MAX_RESULTS_PER_PAGE, this.nextPageToken);
     const resources = [
       PlaylistResource.snippet,
       PlaylistResource.contentDetails
     ];
-
-    this.subscription = this.playlistsService.getByIds(currentPagePlaylistIds, pageArgs, resources)
+    this.subscription = this.playlistsService
+      .getByIds(currentPagePlaylistIds, pageArgs, resources)
       .subscribe(data => {
       this.nextPageToken = data.nextPageToken;
       this.playlists.push(...data.items);
-      this.totalResultsCount = data.pageInfo.totalResults;
 
       this.playlistsStartIndex = playlistsEndIndex;
 

@@ -43,6 +43,7 @@ export class MultipleChannelsSectionComponent implements OnInit {
 
   loadMoreVideos(onLoadedMoreCallback: Function): void {
     const channelIds = this.channelSection.contentDetails.channels;
+    this.totalResultsCount = channelIds.length;
 
     const channelsEndIndex = this.channelsStartIndex + MainConstants.MAX_PLAYLIST_ITEM_RESULTS;
 
@@ -57,7 +58,6 @@ export class MultipleChannelsSectionComponent implements OnInit {
       .subscribe(data => {
         this.pageToken = data.nextPageToken;
         this.channels.push(...data.items);
-        this.totalResultsCount = data.pageInfo.totalResults;
         this.channelsStartIndex = channelsEndIndex;
 
         onLoadedMoreCallback();
