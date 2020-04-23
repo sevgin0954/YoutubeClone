@@ -4,8 +4,6 @@ import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
 import { VideoMiniModule } from '../video-mini/video-mini.module';
-import { ArrowDisplayButtonService } from './services/arrow-display-button.service';
-import { ArrowClickButtonService } from './services/arrow-click-button.service';
 import { PlaylistElementService } from './services/playlist-element.service';
 import { SinglePlaylistSectionComponent } from './single-playlist-section/single-playlist-section.component';
 import { MultipleChannelsSectionComponent } from './multiple-channels-section/multiple-channels-section.component';
@@ -33,8 +31,6 @@ import { ChannelMiniModule } from '../channel-mini/channel-mini.module';
     PlaylistMiniModule
   ],
   providers: [
-    ArrowDisplayButtonService,
-    ArrowClickButtonService,
     PlaylistElementService,
     PlaylistItemsService
   ],

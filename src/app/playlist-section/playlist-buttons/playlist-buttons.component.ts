@@ -2,8 +2,6 @@ import { Component, ElementRef, ViewChild, TemplateRef, Input, ContentChild, Que
 
 import { WindowService } from 'src/app/services-singleton/window.service';
 import isRequired from 'src/app/decorators/isRequired';
-import { ArrowDisplayButtonService } from '../services/arrow-display-button.service';
-import { ArrowClickButtonService } from '../services/arrow-click-button.service';
 import { PlaylistElementService } from '../services/playlist-element.service';
 
 @Component({
@@ -39,8 +37,6 @@ export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked
   private resizeSubscription: any;
 
   constructor(
-    private arrowDisplayButtonService: ArrowDisplayButtonService,
-    private arrowClickButtonService: ArrowClickButtonService,
     private playlistElementService: PlaylistElementService,
     private windowService: WindowService,
   ) { }
@@ -60,14 +56,14 @@ export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked
   }
 
   ngAfterViewChecked(): void {
-    this.updatePlaylist();
+    this.update();
   }
 
   private onWindowResize(): void {
-    this.updatePlaylist();
+    this.update();
   }
 
-  private updatePlaylist(): void {
+  private update(): void {
     if (this.playlistViewElements.first && this.playlistViewElements.last) {
       this.updatePlaylistElementsHiddenAttribute();
       this.updateButtons();
@@ -112,21 +108,35 @@ export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked
   }
 
   private updateButtons(): void {
-    const isLastElementHidden = this.playlistViewElements.last.nativeElement.hasAttribute('hidden');
-    this.arrowDisplayButtonService.updateRightButtonDisabledAttribute(
-      this.rightBtn,
-      isLastElementHidden,
-      this.playlistViewElements.length,
-      this.totalResultsCount
-    );
+    this.updateRightDisabledButton();
+    this.updateLeftDisabledButton();
+  }
 
-    const isFirstElementHidden = this.playlistViewElements.first.nativeElement.hasAttribute('hidden');
-    this.arrowDisplayButtonService.updateLeftButtonDisabledAttribute(this.leftBtn, isFirstElementHidden);
+  private updateRightDisabledButton(): void {
+    const lastElement = this.playlistViewElements.last;
+    const isLastElementHidden = lastElement.nativeElement.hasAttribute('hidden');
+    if (isLastElementHidden || this.playlistViewElements.length < this.totalResultsCount) {
+      this.rightBtn.nativeElement.removeAttribute('disabled');
+    }
+    else {
+      this.rightBtn.nativeElement.setAttribute('disabled', 'disabled');
+    }
+  }
+
+  private updateLeftDisabledButton(): void {
+    const firstElement = this.playlistViewElements.first;
+    const isFirstElementHidden = firstElement.nativeElement.hasAttribute('hidden');
+    if (isFirstElementHidden) {
+      this.leftBtn.nativeElement.removeAttribute('disabled');
+    }
+    else {
+      this.leftBtn.nativeElement.setAttribute('disabled', 'disabled');
+    }
   }
 
   onLeftBtnClick(): void {
     const playlistElements: Element[] = this.playlistViewElements.map(e => e.nativeElement);
-    this.arrowClickButtonService.onLeftBtnClick(playlistElements);
+    this.playlistElementService.showLastHiddenElementFromLeft(playlistElements);
   }
 
   onRightBtnClick(): void {
@@ -134,17 +144,39 @@ export class PlaylistButtonsComponent implements AfterViewInit, AfterViewChecked
     const loadMoreCallBack: Function = () => this.loadMoreCallBack(() => {
       this.playlistElementService.hideFirstShownElement(playlistElements);
 
-      this.loadingBtn.nativeElement.setAttribute('hidden', 'hidden');
-      this.rightBtn.nativeElement.removeAttribute('hidden');
+      this.hideLoadingButton();
     });
 
-    this.arrowClickButtonService.onRightBtnClick(
-      playlistElements,
-      this.totalResultsCount,
-      this.rightBtn.nativeElement,
-      this.loadingBtn.nativeElement,
-      loadMoreCallBack
-    );
+    const lastElement = playlistElements[playlistElements.length - 1];
+    if (this.canLoadMore(lastElement, playlistElements)) {
+      this.showLoadingButton();
+
+      loadMoreCallBack();
+    }
+    else {
+      this.playlistElementService.showFirstHiddenElementFromRight(playlistElements);
+      this.playlistElementService.hideFirstShownElement(playlistElements);
+    }
+  }
+
+  private canLoadMore(
+    lastElement: Element,
+    playlistElements: Element[]
+  ): boolean {
+    const isLastElementHidden = lastElement.hasAttribute('hidden') === false;
+    const areMoreElementToLoad = playlistElements.length < this.totalResultsCount;
+
+    return isLastElementHidden && areMoreElementToLoad;
+  }
+
+  private showLoadingButton(): void {
+    this.loadingBtn.nativeElement.removeAttribute('hidden');
+    this.rightBtn.nativeElement.setAttribute('hidden', 'hidden');
+  }
+
+  private hideLoadingButton(): void {
+    this.loadingBtn.nativeElement.setAttribute('hidden', 'hidden');
+    this.rightBtn.nativeElement.removeAttribute('hidden');
   }
 
   ngOnDestroy(): void {
